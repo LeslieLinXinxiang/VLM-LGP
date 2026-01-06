@@ -1,0 +1,16 @@
+// scene_10.json (Base on table, 3 cyls on base, Base on top)
+{
+  "image_id": "scene_10",
+  "spatial_structure": [
+    { "object_class": "base", "color": "white", "location": "table_center" },
+    { "object_class": "cylinder", "color": "magenta", "location": "front_slot_of_base_gray" },
+    { "object_class": "cylinder", "color": "cyan", "location": "backleft_slot_of_base_gray" },
+    { "object_class": "cylinder", "color": "magenta", "location": "backright_slot_of_base_gray" },
+    { 
+      "object_class": "base", 
+      "color": "blue", 
+      "location": "supported_by", 
+      "supports": ["cylinder_yellow", "cylinder_magenta", "cylinder_cyan"] 
+    }
+  ] 
+}

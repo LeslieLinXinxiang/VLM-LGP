@@ -1,0 +1,13 @@
+[
+  { "anon_id": "obj_01", "shape": "cylinder", "color_rgb": [0.0, 0.8, 0.0] },
+  { "anon_id": "obj_02", "shape": "cylinder", "color_rgb": [1.0, 0.9, 0.0] },
+  { "anon_id": "obj_03", "shape": "cylinder", "color_rgb": [0.0, 0.9, 0.9] },
+  { "anon_id": "obj_04", "shape": "cylinder", "color_rgb": [0.9, 0.0, 0.9] },
+  { "anon_id": "obj_05", "shape": "cylinder", "color_rgb": [1.0, 0.5, 0.0] },
+  { "anon_id": "obj_06", "shape": "cylinder", "color_rgb": [0.5, 0.0, 0.8] },
+  { "anon_id": "obj_07", "shape": "cylinder", "color_rgb": [1.0, 0.4, 0.7] },
+  { "anon_id": "obj_08", "shape": "cylinder", "color_rgb": [0.6, 0.3, 0.1] },
+  { "anon_id": "obj_09", "shape": "box", "color_rgb": [0.8, 0.8, 0.8] },
+  { "anon_id": "obj_10", "shape": "box", "color_rgb": [0.9, 0.1, 0.1] },
+  { "anon_id": "obj_11", "shape": "box", "color_rgb": [0.1, 0.1, 0.9] }
+]

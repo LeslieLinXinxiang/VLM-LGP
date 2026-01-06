@@ -1,0 +1,13 @@
+[
+  {
+    "object": "base",
+    "placed_on": "table",
+    "at_slot": null
+  },
+  {
+    "object": "cylinder",
+    "placed_on": "base",
+    "at_slot": "bottom_right",
+    "description": "WARNING: The color of the cylinder in this image is RANDOM and IRRELEVANT. Match ONLY based on spatial position. This slot is strictly BOTTOM-RIGHT. CRITICAL DEFINITION: To be bottom_right, the object must satisfy TWO conditions: 1. It is clearly BELOW the central handle (lower half). 2. It is clearly to the RIGHT of the central handle. If it is on the horizontal midline, it is mid_right, NOT bottom_right."
+  }
+]

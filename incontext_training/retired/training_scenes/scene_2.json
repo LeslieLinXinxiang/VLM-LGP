@@ -1,0 +1,15 @@
+// scene_2.json (Cyls on table, Base on top) 
+{
+  "image_id": "scene_2",
+  "spatial_structure": [
+    { "object_class": "cylinder", "color": "yellow", "location": "table_frontleft_slot" },
+    { "object_class": "cylinder", "color": "cyan", "location": "table_frontright_slot" },
+    { "object_class": "cylinder", "color": "magenta", "location": "table_back_slot" },
+    { 
+      "object_class": "base", 
+      "color": "red", 
+      "location": "supported_by", 
+      "supports": ["cylinder_yellow", "cylinder_cyan", "cylinder_magenta"] 
+    }
+  ]
+}

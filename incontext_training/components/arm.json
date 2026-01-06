@@ -1,0 +1,12 @@
+{
+  "id": "l_panda",
+  "type": "robot",
+  "visual_properties": {
+    "color_name": "White and Black",
+    "shape_description": "Articulated Robotic Arm"
+  },
+  "spatial_info": {
+    "relative_pose": "t(0 -0.3 .05)",
+    "location_description": "Mounted on the table surface, situated centrally between the supply area (Cylinders, x < 0) and the placement area (Bases, x > 0)."
+  }
+}

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../git/rai/test"
+		},
+		{
+			"path": "../../git/rai/src"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

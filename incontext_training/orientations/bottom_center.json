@@ -1,0 +1,13 @@
+[
+  {
+    "object": "base",
+    "placed_on": "table",
+    "at_slot": null
+  },
+  {
+    "object": "cylinder",
+    "placed_on": "base",
+    "at_slot": "bottom_center",
+    "description": "WARNING: The color of the cylinder in this image is RANDOM and IRRELEVANT. Do NOT use color for matching. Match ONLY based on spatial position. This slot is strictly in the BOTTOM-CENTER position. This slot is located BELOW the central handle. CRITICAL: Due to 3D perspective parallax, the cylinder might visually appear slightly shifted to the left or right. Unless it is clearly deep in a corner, it should still be classified as 'bottom_center'. Trust the general alignment over pixel-perfect centering."
+  }
+]

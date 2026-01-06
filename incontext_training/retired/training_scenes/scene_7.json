@@ -1,0 +1,15 @@
+// scene_7.json (3 Cyls on table [Front, BL, BR], Base on top) -> 【重点修正】
+{
+  "image_id": "scene_7",
+  "spatial_structure": [
+    { "object_class": "cylinder", "color": "magenta", "location": "table_front_slot" },
+    { "object_class": "cylinder", "color": "cyan", "location": "table_backleft_slot" },
+    { "object_class": "cylinder", "color": "yellow", "location": "table_backright_slot" },
+    { 
+      "object_class": "base", 
+      "color": "red", 
+      "location": "supported_by", 
+      "supports": ["cylinder_cyan", "cylinder_magenta", "cylinder_yellow"] 
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// scene_5.json (4 Cyls on table, Base on top) 
+{
+  "image_id": "scene_5",
+  "spatial_structure": [
+    { "object_class": "cylinder", "color": "green", "location": "table_frontleft_slot" },
+    { "object_class": "cylinder", "color": "magenta", "location": "table_frontright_slot" },
+    { "object_class": "cylinder", "color": "cyan", "location": "table_backleft_slot" },
+    { "object_class": "cylinder", "color": "yellow", "location": "table_backright_slot" },
+    { 
+      "object_class": "base", 
+      "color": "red", 
+      "location": "supported_by", 
+      "supports": ["cylinder_green", "cylinder_magenta", "cylinder_cyan", "cylinder_yellow"] 
+    }
+  ]
+}

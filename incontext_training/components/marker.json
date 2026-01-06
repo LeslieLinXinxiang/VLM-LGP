@@ -1,0 +1,10 @@
+{
+  "id": "target_marker",
+  "type": "logical_target",
+  "visual_properties": {
+    "shape": "ssBox",
+    "dimensions": [0.05, 0.05, 0.001, 0.001],
+    "color_rgb": [0.8, 0.5, 0.5],
+    "color_name": "Pinkish Red"
+  }
+}

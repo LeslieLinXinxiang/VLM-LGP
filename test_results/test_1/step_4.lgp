@@ -1,0 +1,4 @@
+fol: <step_4.fol>
+terminal: " (on cyl8 cyl2 cyl1 base2) "
+genericCollisions: true
+coll: []

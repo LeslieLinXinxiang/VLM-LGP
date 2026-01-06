@@ -1,0 +1,46 @@
+# ===================================================================
+#  KNOWLEDGE BASE: SEMANTIC & ZONE ATLAS
+# ===================================================================
+
+You are provided with a visual reference library below. Use these modules to ground your reasoning.
+
+# -------------------------------------------------------------------
+#  MODULE A: COMPONENT LIBRARY (Visual Dictionary)
+# -------------------------------------------------------------------
+# [PYTHON SCRIPT INJECTS COMPONENT IMAGES HERE]
+
+**GUIDANCE FOR MODULE A:**
+The images above define the **IMMUTABLE** mapping between Visual Color and Logical ID.
+You must memorize this lookup table:
+
+*   **CYLINDERS (Support Legs):**
+    *   **Green**     -> `cyl1`
+    *   **Yellow**    -> `cyl2`
+    *   **Cyan**      -> `cyl3`
+    *   **Magenta**   -> `cyl4`
+    *   **Orange**    -> `cyl5`
+    *   **Purple**    -> `cyl6`
+    *   **Pink**      -> `cyl7`
+    *   **Chocolate** -> `cyl8`
+
+*   **BASES (Plates):**
+    *   **Grey**      -> `base1` (Foundation)
+    *   **Red**       -> `base2` (Level 2 Platform)
+    *   **Blue**      -> `base3` (Level 3 Platform)
+
+# -------------------------------------------------------------------
+#  MODULE B: GLOBAL SCENE LAYOUT (Zones)
+# -------------------------------------------------------------------
+# [PYTHON SCRIPT INJECTS INITIAL SCENE IMAGES HERE]
+
+**GUIDANCE FOR MODULE B:**
+The workspace is strictly divided. Refer to the images above to understand the flow:
+
+1.  **Purple Box (LEFT)**: **Plate Supply Zone**.
+    *   Source of `base1`, `base2`, `base3`.
+2.  **Purple Box (RIGHT)**: **Cylinder Supply Zone**.
+    *   Source of all cylinders (`cyl1` - `cyl8`).
+3.  **Orange Box (CENTER FRONT)**: **Construction Work Zone**.
+    *   **DESTINATION ONLY.**
+    *   **Logic Anchor:** The specific pink target patch on the table here is named **`place_base1`**.
+    *   **Rule:** When placing the first object (`base1`), you must target `place_base1` (NOT `table`).

@@ -1,0 +1,59 @@
+{
+  "scene_context": {
+    "viewpoint": "Top-Down Overhead View",
+    "spatial_definitions": {
+      "front": "Bottom of the image (closest to the viewer)",
+      "back": "Top of the image (furthest from the viewer)",
+      "left": "Left side of the image",
+      "right": "Right side of the image"
+    }
+  },
+  "regions": [
+    {
+      "region_id": "plate_supply_zone",
+      "visual_marker": "Purple Bounding Box (Left)",
+      "location": "Left Side",
+      "role": "Initial Storage (Source)",
+      "description": "Contains the stack of base plates waiting to be picked.",
+      "inventory": [
+        {
+          "id": "base3",
+          "color": "Blue",
+          "position": "Back (Top of the stack)"
+        },
+        {
+          "id": "base2",
+          "color": "Red",
+          "position": "Center (Middle of the stack)"
+        },
+        {
+          "id": "base1",
+          "color": "Grey",
+          "position": "Front (Bottom of the stack)"
+        }
+      ]
+    },
+    {
+      "region_id": "cylinder_supply_zone",
+      "visual_marker": "Purple Bounding Box (Right)",
+      "location": "Right Side",
+      "role": "Initial Storage (Source)",
+      "description": "Contains the grid of 8 support cylinders waiting to be picked.",
+      "inventory_summary": "Grid of cylinders including Green(cyl1), Yellow(cyl2), Cyan(cyl3), Magenta(cyl4), Orange(cyl5), Purple(cyl6), Pink(cyl7), Chocolate(cyl8)."
+    },
+    {
+      "region_id": "assembly_work_zone",
+      "visual_marker": "Orange Bounding Box (Center-Front)",
+      "location": "Front Center (Below the robot)",
+      "role": "Construction Area (Target)",
+      "description": "The empty designated area where the final assembly structure will be built.",
+      "current_state": "Empty",
+      "visual_cues": "Contains a single pinkish logical target marker indicating the starting position for the foundation."
+    }
+  ],
+  "agent_info": {
+    "id": "l_panda",
+    "location": "Center",
+    "orientation": "Base is centered between the two purple supply zones, facing the orange work zone."
+  }
+}

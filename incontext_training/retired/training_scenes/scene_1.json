@@ -1,0 +1,10 @@
+// scene_1.json (Base on table, cyls on base)
+{
+  "image_id": "scene_1",
+  "spatial_structure": [
+    { "object_class": "base", "color": "red", "location": "table_center" },
+    { "object_class": "cylinder", "color": "yellow", "location": "frontleft_slot_of_base_red" },
+    { "object_class": "cylinder", "color": "cyan", "location": "frontright_slot_of_base_red" },
+    { "object_class": "cylinder", "color": "magenta", "location": "back_slot_of_base_red" }
+  ]
+}

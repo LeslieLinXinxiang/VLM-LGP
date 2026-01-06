@@ -1,0 +1,10 @@
+{
+  "id": "cyl1",
+  "type": "table",
+  "visual_properties": {
+    "shape": "cylinder",
+    "dimensions": [0.07, 0.03],
+    "color_rgb": [0.0, 0.8, 0.0],
+    "color_name": "Green"
+  }
+}

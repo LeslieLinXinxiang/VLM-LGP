@@ -1,0 +1,31 @@
+{
+  "concept_id": "spatial_orientation_rules",
+  "description": "Rules for mapping natural language spatial commands to specific logical target IDs on a base plate.",
+  "frame_of_reference": {
+    "visual_view": "Top-Down / High-Angle View",
+    "anchor_object": "The Base Plate (Square)",
+    "definition_mode": "3x3 Grid Matrix"
+  },
+  "grid_definitions": {
+    "visual_rows": {
+      "Back": "The edge furthest from the camera view (Top side of the plate in image).",
+      "Center_Row": "The middle horizontal section of the plate.",
+      "Front": "The edge closest to the camera view (Bottom side of the plate in image)."
+    },
+    "visual_columns": {
+      "Left": "The left side of the plate in the image.",
+      "Center_Col": "The middle vertical section.",
+      "Right": "The right side of the plate in the image."
+    }
+  },
+  "slot_mapping_matrix": [
+    ["backleft",   "back",   "backright"],
+    ["left",       "center", "right"    ],
+    ["frontleft",  "front",  "frontright"]
+  ],
+  "example_mapping": {
+    "instruction": "Place cylinder on the front-right corner of base1.",
+    "reasoning": "1. Identify 'base1'. 2. Locate 'Front' (Bottom edge). 3. Locate 'Right' (Right edge). 4. Intersection is bottom-right corner.",
+    "target_id": "frontright_base1"
+  }
+}

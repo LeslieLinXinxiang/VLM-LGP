@@ -1,0 +1,13 @@
+[
+  {
+    "object": "base",
+    "placed_on": "table",
+    "at_slot": null
+  },
+  {
+    "object": "cylinder",
+    "placed_on": "base",
+    "at_slot": "mid_left",
+    "description": "WARNING: The color of the cylinder in this image is RANDOM and IRRELEVANT. Match ONLY based on spatial position. This slot is strictly MID-LEFT. CRITICAL DEFINITION: The object is far to the left, but VERTICALLY CENTERED relative to the handle. It is NOT in the top corner and NOT in the bottom corner. It sits on the horizontal midline."
+  }
+]

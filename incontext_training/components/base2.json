@@ -1,0 +1,18 @@
+{
+  "id": "base2",
+  "type": "table",
+  "visual_properties": {
+    "shape": "ssBox",
+    "dimensions": [0.45, 0.35, 0.03, 0.002],
+    "color_rgb": [0.9, 0.1, 0.1],
+    "color_name": "Red"
+  },
+  "sub_components": [
+    {
+      "id": "base2_handle",
+      "shape": "ssBox",
+      "dimensions": [0.04, 0.04, 0.04, 0.002],
+      "relative_pose": "t(0 0 .035)"
+    }
+  ]
+}

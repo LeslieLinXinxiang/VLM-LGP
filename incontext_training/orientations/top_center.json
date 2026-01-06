@@ -1,0 +1,13 @@
+[
+  {
+    "object": "base",
+    "placed_on": "table",
+    "at_slot": null
+  },
+  {
+    "object": "cylinder",
+    "placed_on": "base",
+    "at_slot": "top_center",
+    "description": "WARNING: The color of the cylinder in this image is RANDOM and IRRELEVANT. Do NOT use color for matching. Match ONLY based on spatial position. This slot is strictly in the TOP-CENTER position. This slot is defined as being directly ABOVE the central handle, aligned with the vertical axis. It can sometimes be confused with 'top_left' or 'top_right' due to perspective, but its defining feature is this central alignment."
+  }
+]

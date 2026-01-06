@@ -1,0 +1,15 @@
+# Ignore compile artifacts
+*.o
+*.exe
+bin/x.exe
+
+# Ignore temp generation
+generated/*
+!generated/.gitkeep
+
+# Ignore system/IDE files
+.DS_Store
+__pycache__/
+*.pyc
+.vscode/
+.idea/

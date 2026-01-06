@@ -1,0 +1,37 @@
+{
+  "file_type": "visual_decoding_rules",
+  "target_image": "spatial_calibration.png",
+  "description": "Rules to decode the isometric perspective using the visual axes drawn in the reference image.",
+  
+  "axis_definitions": {
+    "Red_Arrow_Line": {
+      "axis": "Y-Axis (Depth)",
+      "visual_direction_UP": {
+        "logical_meaning": "BACK / FAR",
+        "reasoning": "Due to perspective, points further away appear higher in the image."
+      },
+      "visual_direction_DOWN": {
+        "logical_meaning": "FRONT / NEAR",
+        "reasoning": "Points closer to the camera appear lower."
+      }
+    },
+    "Blue_Arrow_Line": {
+      "axis": "X-Axis (Width)",
+      "visual_direction_LEFT": {
+        "logical_meaning": "LEFT"
+      },
+      "visual_direction_RIGHT": {
+        "logical_meaning": "RIGHT"
+      }
+    }
+  },
+
+  "quadrant_lookup_table": {
+    "visual_top_left": "Back-Left Slot",
+    "visual_top_right": "Back-Right Slot",
+    "visual_bottom_left": "Front-Left Slot",
+    "visual_bottom_right": "Front-Right Slot"
+  },
+
+  "center_reference_logic": "To determine an object's slot, draw an imaginary line from the object to the CENTER. If the line goes UP-LEFT relative to the Red/Blue crosshair, the object is in Back-Left."
+}

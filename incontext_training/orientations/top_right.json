@@ -1,0 +1,13 @@
+[
+  {
+    "object": "base",
+    "placed_on": "table",
+    "at_slot": null
+  },
+  {
+    "object": "cylinder",
+    "placed_on": "base",
+    "at_slot": "top_right",
+    "description": "WARNING: The color of the cylinder in this image is RANDOM and IRRELEVANT. Match ONLY based on spatial position. This slot is strictly TOP-RIGHT. CRITICAL DEFINITION: The object is clearly ABOVE the central handle (upper half) AND to the RIGHT. It must be distinct from mid_right (which is vertically centered)."
+  }
+]
