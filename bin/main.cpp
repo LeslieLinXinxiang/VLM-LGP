@@ -14,6 +14,35 @@
 
 namespace fs = std::filesystem;
 
+void printTrajectoryToStdout(KOMO* komo) {
+    if(!komo) return;
+
+    // 1. 获取数据
+    arr q_path = komo->getPath_qOrg();  // 关节角度 [T, 7]
+    arr times = komo->getPath_times();  // 时间戳 [T]
+
+    // 2. 打印起始标记 (Python 用这个标记来截取数据)
+    std::cout << "\n>>> V-LGP TRAJECTORY START <<<" << std::endl;
+    
+    // 3. 打印元数据 (行数 T, 列数 D)
+    std::cout << "DIM: " << q_path.d0 << " " << q_path.d1 << std::endl;
+
+    // 4. 打印每一行: time, q0, q1, ... q6
+    for(uint t=0; t<q_path.d0; t++){
+        // 如果 times 为空或长度不匹配，这就用索引作为伪时间
+        double time_val = (times.N > t) ? times(t) : (double)t * 0.1; 
+        
+        std::cout << time_val; // 第一列是时间
+        for(uint i=0; i<q_path.d1; i++){
+            std::cout << " " << q_path(t, i); // 后续列是关节角
+        }
+        std::cout << std::endl; // 换行
+    }
+
+    // 5. 打印结束标记
+    std::cout << ">>> V-LGP TRAJECTORY END <<<" << std::endl;
+}
+
 void writeCleanKinematicState(const rai::Configuration&, const rai::Configuration&, const char*);
 
 int main(int argc, char** argv) {
@@ -73,6 +102,7 @@ int main(int argc, char** argv) {
                     if (!shared_viewer) shared_viewer = solved_komo->get_viewer();
                     else solved_komo->set_viewer(shared_viewer);
                     solved_komo->view_play(false, current_lgp_path.c_str(), 1.0);
+                    printTrajectoryToStdout(solved_komo.get());
                 }
 
                 if(solved_komo && solved_komo->timeSlices.N > 0){
@@ -116,6 +146,7 @@ int main(int argc, char** argv) {
              if (!shared_viewer) shared_viewer = komo.get_viewer();
              else komo.set_viewer(shared_viewer);
              komo.view_play(false, "HOMING_ACTION", 1.0);
+             printTrajectoryToStdout(&komo);
 
              rai::Configuration C_final_homed;
              komo.getConfiguration_full(C_final_homed, komo.T - 1, 0);
