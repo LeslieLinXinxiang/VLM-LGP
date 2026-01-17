@@ -121,7 +121,7 @@ def run_phase2_pipeline(node_data, current_g_path, full_target_graph, inventory_
     solver_path = os.path.join(root_dir, "bin/x.exe")
     solver = SolverBridge(executable_path=solver_path)
     
-    success, output_g_path = solver.run(task_dir, current_g_path)
+    success, output_g_path, stdout = solver.run(task_dir, current_g_path)
     
     result_img_path = None
     if success and output_g_path:
@@ -129,4 +129,4 @@ def run_phase2_pipeline(node_data, current_g_path, full_target_graph, inventory_
         result_img_path = os.path.join(generated_dir, f"node_{node_id}_result.png")
         camera.capture(save_path=result_img_path)
 
-    return success, output_g_path, result_img_path, node_summary, used_ids
+    return success, output_g_path, result_img_path, node_summary, used_ids, stdout

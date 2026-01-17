@@ -1,0 +1,4 @@
+fol: <trivial_case.fol>
+genericCollisions: true
+coll: [roof cyl1]
+terminal: "( poseEq roof_target roof_handle)"

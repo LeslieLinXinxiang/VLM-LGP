@@ -1,0 +1,10 @@
+# /home/leslie/Projects/VLM_LGP/rai/test/house_stacking/house.lgp (Version 2.0)
+
+fol: <house.fol>
+
+
+terminal: "(poseEq base_target base) (poseEq cyl1_target cyl1) (poseEq cyl2_target cyl2) (poseEq cyl3_target cyl3) (poseEq cyl4_target cyl4) (poseEq roof_target roof)"
+
+
+
+genericCollisions: true

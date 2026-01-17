@@ -1,0 +1,5 @@
+# step_2.lgp
+fol: <house.fol>
+terminal: "(on backright_base1 cyl4 ) " 
+genericCollisions: false
+coll: []

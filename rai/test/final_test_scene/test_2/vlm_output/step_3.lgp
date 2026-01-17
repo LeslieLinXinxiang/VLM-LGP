@@ -1,0 +1,5 @@
+# step_2.lgp
+fol: <step_3.fol>
+terminal: "  (on front_base1 cyl3 )" 
+genericCollisions: true
+coll: []

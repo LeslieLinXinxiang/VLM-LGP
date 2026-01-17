@@ -1,0 +1,3 @@
+fol: <house.fol>
+genericCollisions: true
+terminal: "( poseEq roof2_target roof2)"

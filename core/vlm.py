@@ -9,7 +9,7 @@ from core.utils import clean_vlm_json_output, load_json
 
 # [CONFIG] Gemini 2.5 Pro (Stable)
 MODEL_NAME = 'gemini-3-flash-preview'
-GOOGLE_API_KEY = "AIzaSyARsSHUFi9oG3II1R-tLr6mnhdy6rZk_cQ" # Check your key
+GOOGLE_API_KEY = "<API_KEY>" # Check your key
 genai.configure(api_key=GOOGLE_API_KEY)
 
 class VLMClient:

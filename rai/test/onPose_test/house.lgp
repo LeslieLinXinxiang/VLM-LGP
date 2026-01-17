@@ -1,0 +1,5 @@
+# step_2.lgp
+fol: <house.fol>
+terminal: " (on placeR objR)"
+genericCollisions: true
+coll: []

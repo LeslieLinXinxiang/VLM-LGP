@@ -1,0 +1,9 @@
+# 1. Load the logic rules for 2-block stacking
+fol: <stacking_2_blocks.fol>
+
+# 2. Define the terminal state (2-block stack)
+# Goal: Green block on top of White block
+terminal: "(on objW objG)"
+
+# 3. Global configuration
+genericCollisions: true

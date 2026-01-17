@@ -1,0 +1,3 @@
+# /home/leslie/Projects/VLM_LGP/rai/test/staged_planning/staged.lgp
+fol: <staged.fol>
+genericCollisions: true

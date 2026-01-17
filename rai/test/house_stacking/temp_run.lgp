@@ -1,0 +1,4 @@
+fol: <house.fol>
+genericCollisions: true
+coll: [cyl1 table cyl1 base1 cyl1 base2 cyl1 base3 cyl1 cyl2 cyl1 cyl3 cyl1 cyl4 cyl1 cyl5 cyl1 cyl6 cyl1 cyl7 cyl1 cyl8 cyl2 table cyl2 base1 cyl2 base2 cyl2 base3 cyl2 cyl1 cyl2 cyl3 cyl2 cyl4 cyl2 cyl5 cyl2 cyl6 cyl2 cyl7 cyl2 cyl8 cyl3 table cyl3 base1 cyl3 base2 cyl3 base3 cyl3 cyl1 cyl3 cyl2 cyl3 cyl4 cyl3 cyl5 cyl3 cyl6 cyl3 cyl7 cyl3 cyl8 cyl4 table cyl4 base1 cyl4 base2 cyl4 base3 cyl4 cyl1 cyl4 cyl2 cyl4 cyl3 cyl4 cyl5 cyl4 cyl6 cyl4 cyl7 cyl4 cyl8]
+terminal: "(poseEq cyl4_target cyl4)"

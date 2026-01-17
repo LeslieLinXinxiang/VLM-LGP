@@ -1,0 +1,29 @@
+# === Core AI & VLM ===
+google-generativeai>=0.8.5
+google-api-python-client
+google-auth
+google-auth-httplib2
+absl-py
+
+# === Math & Logic ===
+numpy>=2.0.0
+networkx
+lark>=1.3.1  # 你的解析器需要这个
+idna
+
+# === Perception & Vision ===
+opencv-python
+pillow
+image-geometry  # 这是一个纯Py库，可以pip装
+
+# === Simulation & Physics ===
+mujoco>=3.4.0
+glfw
+PyOpenGL
+
+# === Utilities ===
+tqdm
+termcolor
+PyYAML
+requests
+pydantic

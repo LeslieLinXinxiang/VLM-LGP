@@ -1,0 +1,3 @@
+fol: <house.fol>
+genericCollisions: true
+terminal: "( poseEq cyl1_target cyl1)"

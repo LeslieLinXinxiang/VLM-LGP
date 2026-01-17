@@ -1,0 +1,5 @@
+# step_7.lgp
+fol: <house.fol>
+terminal: " (on right_base2 cyl5) "
+genericCollisions: true
+coll: []

@@ -1,0 +1,9 @@
+# /home/leslie/Projects/VLM_LGP/rai/test/house_stacking/house.lgp 
+
+fol: <house.fol>
+
+terminal: " ( on base1 cyl1)"
+
+genericCollisions: true
+
+coll: []

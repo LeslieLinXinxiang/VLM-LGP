@@ -1,0 +1,63 @@
+## step_1.fol - Minimal Logic for Base Transport
+
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+
+## basic predicates
+is_gripper
+is_object
+is_place
+is_box      # Base 通常是 Box
+is_cylinder # 虽然这里没用 pick_cylinder，但保留作为类型标记无害
+
+## state predicates
+on
+busy
+movable
+
+## pruning predicates
+INFEASIBLE
+INFEASIBLE_pick
+
+## geometric keywords
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+
+## initial state
+START_STATE {}
+
+### RULES
+
+### 1. Pick Logic (Generic/Box)
+DecisionRule pick_touch {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj)! (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+### 2. Place Logic (Generic)
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}

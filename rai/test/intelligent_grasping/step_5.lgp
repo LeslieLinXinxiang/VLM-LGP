@@ -1,0 +1,5 @@
+# step_5.lgp
+fol: <house.fol>
+terminal: " (poseEq base3_target base3) "
+genericCollisions: true
+coll: [base3 table base3 base1 base3 base2 base3 cyl1 base3 cyl2 base3 cyl3 base3 cyl4 base3 cyl5 base3 cyl6 base3 cyl7 base3 cyl8]

@@ -1,7 +1,7 @@
 #目前的相关内容:
 ##house.lgp:
 '''
-        # /home/leslie/git/rai/test/house_stacking/house.lgp 
+        # /home/leslie/Projects/VLM_LGP/rai/test/house_stacking/house.lgp 
 
 fol: <house.fol>
 
@@ -138,7 +138,7 @@ DecisionRule pick_cylinder {
 
 '''  
 ##house.g
-        # /home/leslie/git/rai/test/house_stacking/house.g (Version 2.1)
+        # /home/leslie/Projects/VLM_LGP/rai/test/house_stacking/house.g (Version 2.1)
 
 world {}
 

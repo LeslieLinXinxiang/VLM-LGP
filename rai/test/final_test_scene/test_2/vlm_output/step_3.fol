@@ -1,0 +1,63 @@
+## step_2.fol - Minimal Logic for Cylinder Transport
+
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+
+## basic predicates
+is_gripper
+is_object
+is_place
+is_cylinder # 关键类型
+
+## state predicates
+on
+busy
+movable
+
+## pruning predicates
+INFEASIBLE
+INFEASIBLE_pick
+
+## geometric keywords
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+
+## initial state
+START_STATE {}
+
+### RULES
+
+### 1. Pick Logic (Specialized for Cylinder)
+# 注意：这里只保留 pick_cylinder，去掉了 pick_touch
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+### 2. Place Logic (Generic)
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}

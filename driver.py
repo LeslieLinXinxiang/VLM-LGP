@@ -1,18 +1,18 @@
 import os
 import sys
-import json
-import cv2
 import time
+import json
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from pipelines.run_phase0 import execute_phase0
 from pipelines.run_phase1 import execute_phase1
 from pipelines.run_phase2 import run_phase2_pipeline
-from pipelines.run_phase3 import Phase3Manager
-# from core.vision import ImageSlicer # [REMOVED] No longer needed for Phase 3 logic
+
+# [NEW] 引入重构后的 ExecutionManager
+from core.ros2_bridge import ExecutionManager
 from core.solver_bridge import SolverBridge
-from core.utils import load_json, extract_and_save_files_from_xml
+from core.utils import load_json
 
 def print_banner(text):
     print("\n" + "#" * 60)
@@ -23,10 +23,37 @@ class SystemDriver:
     def __init__(self):
         self.root_dir = os.path.abspath(os.path.dirname(__file__))
         self.generated_dir = os.path.join(self.root_dir, "generated")
+        
+        # 初始场景文件 (State Chain 的起点)
         self.current_g_file = os.path.join(self.generated_dir, "scene_named.g")
+        
         self.target_graph = None
         self.inventory_data = [] 
-        self.solver_bridge = SolverBridge(os.path.join(self.root_dir, "bin/x.exe"))
+        
+        # 物理执行管理器
+        self.exec_manager = ExecutionManager()
+        
+        # Master Log 路径
+        self.master_log_path = os.path.join(self.generated_dir, "node_1_run", "raw_trajectory.log")
+
+    def init_master_log(self):
+        """初始化全局日志文件"""
+        log_dir = os.path.dirname(self.master_log_path)
+        if not os.path.exists(log_dir): os.makedirs(log_dir)
+        
+        with open(self.master_log_path, "w") as f:
+            f.write(f"--- V-LGP MASTER EXPERIMENT LOG ---\n")
+            f.write(f"Timestamp: {time.ctime()}\n")
+            f.write(f"Mode: Sync Plan-Execute Loop\n")
+        print(f"[Driver] Master Log initialized at: {self.master_log_path}")
+
+    def append_to_log(self, node_id, content):
+        """追加轨迹到全局日志"""
+        with open(self.master_log_path, "a") as f:
+            f.write(f"\n\n>>> NODE {node_id} DATA START <<<\n")
+            f.write(content)
+            f.write(f"\n>>> NODE {node_id} DATA END <<<\n")
+        print(f"[Driver] Trajectory for Node {node_id} saved to Master Log.")
 
     def run_phase0_init(self):
         print_banner("PHASE 0: INITIALIZATION & BINDING")
@@ -51,74 +78,97 @@ class SystemDriver:
         if not self.inventory_data: return False
         for item in self.inventory_data: item['status'] = 'available'
         return True
-    
-    def update_inventory_status(self, used_ids):
-        if not used_ids: return
-        for item in self.inventory_data:
-            if item['logical_id'] in used_ids: item['status'] = 'used'
 
-    def run_execution_loop(self):
-        print_banner("ENTERING EXECUTION LOOP")
+    def run_main_loop(self):
+        print_banner("ENTERING PLAN-EXECUTE LOOP")
         if not self.init_inventory_status(): return False
         
+        # 1. 初始化 Log 和 机器人
+        self.init_master_log()
+        self.exec_manager.home_robot()
+        
         self.history_chain = []
-        
-        # [CHANGE] No longer slicing images. We compare logic against logic.
-        
-        # Initialize Phase 3 Manager (No args needed now)
-        p3_manager = Phase3Manager()
-        
         nodes = self.target_graph.get('assembly_nodes', [])
         
+        # =========================================================
+        # MAIN LOOP: Plan -> Execute -> Update State -> Next
+        # =========================================================
         for i, node in enumerate(nodes):
             node_id = node.get('node_id', i+1)
-            print(f"\n>>> PROCESSING NODE {node_id}")
+            print_banner(f"PROCESSING NODE {node_id}")
+
+            expected_task_dir = os.path.join(self.generated_dir, f"node_{node_id}_run")
+            if not os.path.exists(expected_task_dir): os.makedirs(expected_task_dir)
             
-            # --- PHASE 2: EXECUTION ---
-            p2_success, new_g_path, result_img_path, node_summary, used_ids = run_phase2_pipeline(
+            # --- STEP 1: PLAN (LGP Solver) ---
+            print(f"[Driver] Input Scene: {os.path.basename(self.current_g_file)}")
+            print(f"[Driver] History Context: {len(self.history_chain)} previous nodes")
+            
+            # Debug: 打印当前传入的库存状态，确认是否更新
+            available_items = [item['logical_id'] for item in self.inventory_data if item['status'] == 'available']
+            print(f"[Driver] Current Available Inventory: {available_items}")
+
+            # [FIX 1] 捕获 used_ids (第5个返回值)
+            p2_success, output_g_file, _, node_summary, used_ids, stdout = run_phase2_pipeline(
                 node, 
                 self.current_g_file, 
                 self.target_graph, 
-                self.inventory_data, 
+                self.inventory_data, # 这里传入的是对象引用，但在循环外修改它会生效
                 self.history_chain
             )
             
-            if not p2_success: 
-                print(f"[Driver] Phase 2 Execution Failed at Node {node_id}")
+            if not p2_success or not stdout: 
+                print(f"[Driver] ❌ Phase 2 Planning Failed at Node {node_id}. Stopping.")
                 return False
-            
-            # Update State
-            if node_summary: self.history_chain.append(node_summary)
-            self.update_inventory_status(used_ids)
-            self.current_g_file = new_g_path
 
-            # --- PHASE 3: ADJUDICATION (AAJ Architecture) ---
-            print(f"[Driver] Phase 3: Validating execution against Target Node {node_id}...")
+            # [FIX 2] 立即更新 Live Inventory
+            # 这一步是打通链路的关键：把 Node 1 用掉的东西标记为 'used'
+            if used_ids:
+                print(f"[Driver] 📦 Updating Inventory Status for: {used_ids}")
+                update_count = 0
+                for item in self.inventory_data:
+                    if item['logical_id'] in used_ids:
+                        if item['status'] != 'used':
+                            item['status'] = 'used'
+                            update_count += 1
+                            print(f"   -> Marked '{item['logical_id']}' as USED.")
+                if update_count == 0:
+                    print(f"[Driver] ⚠️ Warning: used_ids {used_ids} returned but no matching items found in inventory.")
             
-            if result_img_path and os.path.exists(result_img_path):
-                # [CORE LOGIC CHANGE] 
-                # Call validate_node with (Image, Target_JSON_Node)
-                is_match, report = p3_manager.validate_node(result_img_path, node)
-                
-                if is_match:
-                    print(f"[Driver] Node {node_id} VERIFIED. Proceeding.")
-                else:
-                    print(f"[Driver] Node {node_id} FAILED VALIDATION.")
-                    print(f"[Driver] Verification Report:\n{report}")
-                    
-                    # [TODO] Future: Inject Debug/Correction Logic here.
-                    # For now, we print the error and stop (or continue based on your preference).
-                    print("[Driver] Stopping due to verification failure.")
-                    return False 
+            # [FIX 3] 更新历史记忆
+            if node_summary:
+                print(f"[Driver] 🧠 Memory Updated: Captured summary for Node {node_id}")
+                self.history_chain.append(node_summary)
             else:
-                print("[Driver] Error: No result image found for Phase 3.")
-                return False
+                print(f"[Driver] ⚠️ Warning: No semantic summary returned for Node {node_id}")
 
-        print("\n>>> ALL NODES EXECUTED SUCCESSFULLY.")
+            # --- STEP 2: LOGGING ---
+            self.append_to_log(node_id, stdout)
+
+            # --- STEP 3: EXECUTE (Physical Action) ---
+            exec_success = self.exec_manager.execute_trajectory_string(stdout, node_id)
+            if not exec_success:
+                print(f"[Driver] ⚠️ Warning: Physical execution flagged issues.")
+
+            # --- STEP 4: STATE CHAIN UPDATE ---
+            if output_g_file and os.path.exists(output_g_file):
+                print(f"[Driver] 🔗 State Chain Updated: {os.path.basename(output_g_file)}")
+                self.current_g_file = output_g_file
+            else:
+                print(f"[Driver] ❌ CRITICAL: State file lost. Expected: {output_g_file}")
+                fallback = os.path.join(expected_task_dir, "output_state.g")
+                if os.path.exists(fallback):
+                     print(f"[Driver] ℹ️ Found via fallback search: {fallback}")
+                     self.current_g_file = fallback
+                else:
+                     print(f"[Driver] ⚠️ Stopping chain due to broken physics state.")
+                     return False
+
+        print_banner("ALL NODES COMPLETED")
         return True
 
 if __name__ == "__main__":
     driver = SystemDriver()
     if driver.run_phase0_init():
         if driver.run_phase1_plan():
-            driver.run_execution_loop()
+            driver.run_main_loop()

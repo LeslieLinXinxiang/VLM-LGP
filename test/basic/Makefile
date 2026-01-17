@@ -1,4 +1,4 @@
-BASE = /home/leslie/git/rai
+BASE = /home/leslie/Projects/VLM_LGP/rai
 
 DEPEND = Core Kin Gui Geo KOMO LGP Logic Optim
 

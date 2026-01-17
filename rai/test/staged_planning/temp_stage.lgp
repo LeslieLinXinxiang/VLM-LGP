@@ -1,0 +1,3 @@
+fol: <staged.fol>
+terminal: "(on base_target base) (stableOn base_target base)"
+genericCollisions: true

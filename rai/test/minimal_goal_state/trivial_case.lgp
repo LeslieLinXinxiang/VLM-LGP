@@ -1,0 +1,10 @@
+# /home/leslie/Projects/VLM_LGP/rai/test/minimal_goal/trivial_case.lgp 
+
+fol: <trivial_case.fol>
+
+
+terminal: "( poseEq roof_target roof_handle) "
+
+genericCollisions: true
+
+coll:  [ roof cyl1 ]

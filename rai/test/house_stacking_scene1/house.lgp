@@ -1,0 +1,9 @@
+# /home/leslie/Projects/VLM_LGP/rai/test/house_stacking/house.lgp 
+
+fol: <house.fol>
+
+terminal: " ( poseEq base1_target base1) ( stableOn base1 cyl3)"
+
+genericCollisions: true
+
+

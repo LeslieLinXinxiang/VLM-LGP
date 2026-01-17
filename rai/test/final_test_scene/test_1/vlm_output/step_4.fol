@@ -1,0 +1,81 @@
+## step_4.fol - Minimal Logic for Multi-Support Assembly (4 Supports)
+
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+
+## basic predicates
+is_gripper
+is_object
+is_place
+is_box     # Base2
+is_cylinder # Supports
+
+## state predicates
+on
+busy
+movable
+
+## geometric/logic keywords for multi-support
+stableOnMulti
+
+## pruning predicates
+INFEASIBLE
+INFEASIBLE_pick
+
+## geometric keywords
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+
+## initial state
+START_STATE {}
+
+### RULES
+
+### 1. Pick Logic (Generic/Box for Base2)
+DecisionRule pick_touch {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj)! (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+### 2. Place Logic (Multi-Support 4)
+# 这是一个专用的几何规则，它会触发 C++ 中 action_place_on_multi_support
+DecisionRule place_on_4_supports {
+  # Supports
+  S1, S2, S3, S4, 
+  # Object to place
+  Obj, 
+  # Gripper
+  Hand,
+  
+  { 
+    (is_object S1), (is_object S2), (is_object S3), (is_object S4), (is_object Obj),
+    (is_gripper Hand),
+    (on Hand Obj) 
+  }
+
+  { 
+    (on Hand Obj)!, (busy Hand)!, (movable Obj)!,
+    # Logic effect: The object is now ON all 4 supports
+    (on S1 S2 S3 S4 Obj),             
+    # Geometric effect: Use the multi-support stable mode
+    (stableOnMulti S1 S2 S3 S4 Obj)   
+  }
+}

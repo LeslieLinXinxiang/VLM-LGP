@@ -1,0 +1,2 @@
+(pick_touch objR table l_gripper)
+(place_straightOn objR l_gripper trayR)

@@ -1,0 +1,10 @@
+# 1. 
+fol: <bimanual_hook_task.fol>
+
+# 2. Define the terminal
+
+terminal: "(on trayR objR)"
+
+# 3. 
+	
+genericCollisions: true

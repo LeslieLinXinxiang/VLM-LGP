@@ -1,0 +1,12 @@
+grasp base
+place base on table
+grasp cyl1
+stack cyl1 on base
+grasp cyl2
+stack cyl2 on base
+grasp cyl3
+stack cyl3 on base
+grasp cyl4
+stack cyl4 on base
+grasp roof
+stack roof on base

@@ -1,0 +1,9 @@
+# 1. Load the logic rules for stacking
+fol: <stacking_3_blocks.fol>
+
+# 2. Define the terminal state (The 5-block stack)
+# Order from bottom to top: White -> Green -> Blue -> Yellow -> Red
+terminal: " (poseEq objG_target objG)  (poseEq objB_target objB) "
+
+# 3. Global configuration
+genericCollisions: true
