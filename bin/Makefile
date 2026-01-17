@@ -1,6 +1,6 @@
-BASE = /home/leslie/git/rai
+BASE = ../rai
 
-DEPEND = Core Kin Gui Geo KOMO LGP Logic Optim
+DEPEND = Core Kin Gui Geo KOMO LGP Logic Optim Algo
 
 OBJS = main.o
 

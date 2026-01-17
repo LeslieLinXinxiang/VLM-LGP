@@ -5,41 +5,72 @@
 #include <Kin/viewer.h>
 #include <Optim/NLP_Solver.h>
 #include <Core/graph.h>
+#include <Algo/spline.h> // [NEW] 引入样条插值库
 #include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <Kin/F_qFeatures.h>
 
 namespace fs = std::filesystem;
 
-void printTrajectoryToStdout(KOMO* komo) {
+// [NEW] 高级重采样打印函数
+// 作用: 将稀疏轨迹重采样为符合 ROS 频率(100Hz) 的稠密慢速轨迹
+void resampleAndPrintTrajectory(KOMO* komo, double speed_scale, double freq) {
     if(!komo) return;
 
-    // 1. 获取数据
-    arr q_path = komo->getPath_qOrg();  // 关节角度 [T, 7]
-    arr times = komo->getPath_times();  // 时间戳 [T]
+    // 1. 获取原始稀疏数据
+    arr q_path = komo->getPath_qOrg();
+    arr times = komo->getPath_times();
 
-    // 2. 打印起始标记 (Python 用这个标记来截取数据)
-    std::cout << "\n>>> V-LGP TRAJECTORY START <<<" << std::endl;
-    
-    // 3. 打印元数据 (行数 T, 列数 D)
-    std::cout << "DIM: " << q_path.d0 << " " << q_path.d1 << std::endl;
-
-    // 4. 打印每一行: time, q0, q1, ... q6
-    for(uint t=0; t<q_path.d0; t++){
-        // 如果 times 为空或长度不匹配，这就用索引作为伪时间
-        double time_val = (times.N > t) ? times(t) : (double)t * 0.1; 
-        
-        std::cout << time_val; // 第一列是时间
-        for(uint i=0; i<q_path.d1; i++){
-            std::cout << " " << q_path(t, i); // 后续列是关节角
-        }
-        std::cout << std::endl; // 换行
+    // 防御性编程: 如果时间为空，手动生成伪时间
+    if(times.N != q_path.d0){
+        times.clear();
+        for(uint i=0; i<q_path.d0; i++) times.append((double)i * 0.1); 
     }
 
-    // 5. 打印结束标记
+    // 2. 创建三次 B-Spline (C2 连续，保证加速度平滑)
+    rai::BSpline spline;
+    spline.set(3, q_path, times); 
+
+    // 3. 计算重采样参数
+    double logical_duration = times.last(); // 原始逻辑时长 (例如 2.0)
+    
+    // 目标: 动作放慢 speed_scale 倍 (例如 5.0倍)
+    double real_duration = logical_duration * speed_scale;
+    
+    // 目标: 生成符合 100Hz 的点数
+    // 例如 10秒 * 100Hz = 1000 个点
+    uint num_steps = (uint)(real_duration * freq); 
+
+    // 4. 打印头信息
+    std::cout << "\n>>> V-LGP TRAJECTORY START <<<" << std::endl;
+    std::cout << "DIM: " << num_steps << " " << q_path.d1 << std::endl;
+
+    // 5. 重采样循环
+    for(uint i=0; i<num_steps; i++){
+        // 当前物理时间 (0.00, 0.01, 0.02 ...)
+        double t_real = (double)i / freq;
+        
+        // 映射回逻辑时间用于插值
+        double t_logical = t_real / speed_scale;
+        
+        // 边界钳制 (防止浮点误差导致越界)
+        if(t_logical > logical_duration) t_logical = logical_duration;
+        if(t_logical < 0.) t_logical = 0.;
+
+        // [核心] 计算插值关节角
+        arr q_smooth = spline.eval(t_logical);
+
+        // 打印: time q0 q1 ... q6
+        std::cout << t_real;
+        for(uint j=0; j<q_smooth.N; j++){
+            std::cout << " " << q_smooth(j);
+        }
+        std::cout << std::endl;
+    }
     std::cout << ">>> V-LGP TRAJECTORY END <<<" << std::endl;
 }
 
@@ -81,6 +112,10 @@ int main(int argc, char** argv) {
     std::shared_ptr<rai::ConfigurationViewer> shared_viewer = nullptr;
     std::string& current_state_file = temp_state_file;
 
+    // --- CONFIGURATION ZONE ---
+    double SPEED_SCALE = 1.0; // [关键] 慢放倍数 (1.0 -> 5.0)
+    double ROS_FREQ = 500.0;  // [关键] 对齐 ROS update_rate (100Hz)
+
     // --- PHASE A: EXECUTE LGP TASKS ---
     if (!lgp_files.empty()) {
         for (const auto& lgp_path : lgp_files) {
@@ -101,8 +136,11 @@ int main(int argc, char** argv) {
                 if (solved_komo) {
                     if (!shared_viewer) shared_viewer = solved_komo->get_viewer();
                     else solved_komo->set_viewer(shared_viewer);
+                    // 视图播放不需要变慢，保持 1.0 方便调试
                     solved_komo->view_play(false, current_lgp_path.c_str(), 1.0);
-                    printTrajectoryToStdout(solved_komo.get());
+                    
+                    // [MODIFIED] 使用重采样打印函数
+                    resampleAndPrintTrajectory(solved_komo.get(), SPEED_SCALE, ROS_FREQ);
                 }
 
                 if(solved_komo && solved_komo->timeSlices.N > 0){
@@ -118,24 +156,22 @@ int main(int argc, char** argv) {
         }
     }
 
-    // --- PHASE B: HOMING ROUTINE (CORRECTED API) ---
+    // --- PHASE B: HOMING ROUTINE (ONE-SHOT) ---
     std::cout << ">>> INITIATING HOMING SEQUENCE..." << std::endl;
     try {
         rai::Configuration C_end;
         C_end.addFile(current_state_file.c_str());
 
         KOMO komo;
-        // [FIX 1] Use setConfig instead of setModel
         komo.setConfig(C_end, true); 
         
-        komo.setTiming(1.0, 20, 4.0, 2); 
+        // 单阶段归位, 逻辑时长 2.0s
+        komo.setTiming(1.0, 20, 1.0, 2); 
         
-        // [FIX 2] Use addControlObjective instead of add_qControlObjective
-        // Arguments: (times, order, scale). {} means all times.
         komo.addControlObjective({}, 2, 1e-1);
-        
-        // Objective 2: Reach q_home at the end
         komo.addObjective({1.0}, FS_qItself, {}, OT_eq, {1e1}, q_home);
+        komo.addObjective({1.0}, FS_qItself, {"l_panda_finger_joint1"}, OT_eq, {1e2}, {0.04});
+        komo.addObjective({1.0}, FS_qItself, {"l_panda_finger_joint2"}, OT_eq, {1e2}, {0.04});
         
         komo.add_collision(true);
 
@@ -146,7 +182,9 @@ int main(int argc, char** argv) {
              if (!shared_viewer) shared_viewer = komo.get_viewer();
              else komo.set_viewer(shared_viewer);
              komo.view_play(false, "HOMING_ACTION", 1.0);
-             printTrajectoryToStdout(&komo);
+             
+             // [MODIFIED] 归位动作不需要放慢 5 倍，1.0 倍速(即 2秒)即可，但也需要 100Hz 对齐
+             resampleAndPrintTrajectory(&komo, 1.0, ROS_FREQ);
 
              rai::Configuration C_final_homed;
              komo.getConfiguration_full(C_final_homed, komo.T - 1, 0);
