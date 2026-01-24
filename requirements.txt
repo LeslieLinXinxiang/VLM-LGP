@@ -1,29 +1,18 @@
-# === Core AI & VLM ===
-google-generativeai>=0.8.5
-google-api-python-client
-google-auth
-google-auth-httplib2
-absl-py
-
-# === Math & Logic ===
+# Core Computation
 numpy>=2.0.0
-networkx
-lark>=1.3.1 
-idna
+opencv-python-headless>=4.10.0
 
-# === Perception & Vision ===
-opencv-python
-pillow
-image-geometry 
+# Communication
+pyzmq==27.1.0
+requests==2.32.5
+protobuf>=4.0.0
 
-# === Simulation & Physics ===
-mujoco>=3.4.0
-glfw
-PyOpenGL
+# VLM APIs (Explicitly from your env)
+google-generativeai==0.8.6
+# openai>=1.0.0      # Uncomment if needed
+# dashscope>=1.0.0   # Uncomment if needed
 
-# === Utilities ===
+# Utilities
+Pillow>=10.0.0
+pyyaml
 tqdm
-termcolor
-PyYAML
-requests
-pydantic
