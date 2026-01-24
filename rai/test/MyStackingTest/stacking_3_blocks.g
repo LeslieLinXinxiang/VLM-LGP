@@ -11,7 +11,7 @@ table(table_base): {
 
 # --- 双臂机器人加载 ---
 Prefix: "l_"
-Include: <../LGP/newLGP/problems/rai-robotModels/panda/panda.g>
+Include: <../LGP/newLGP/rai-robotModels/panda/panda.g>
 Prefix: False
 
 

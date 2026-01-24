@@ -25,7 +25,7 @@ class SystemDriver:
         self.generated_dir = os.path.join(self.root_dir, "generated")
         
         # 初始场景文件 (State Chain 的起点)
-        self.current_g_file = os.path.join(self.generated_dir, "scene_named.g")
+        self.current_g_file = os.path.join(self.generated_dir, "scene", "scene_named.g")
         
         self.target_graph = None
         self.inventory_data = [] 

@@ -28,7 +28,7 @@ def execute_phase0():
     
     capture_png = os.path.join(root_dir, "generated/phase0_capture.png")
     layout_json = os.path.join(root_dir, "generated/phase0_layout.json")
-    scene_named_g = os.path.join(root_dir, "generated/scene_named.g")
+    scene_named_g = os.path.join(root_dir, "generated/scene/scene_named.g")
     
     # 2. Capture Scene
     print(f"[Step 1] Capturing Scene...")

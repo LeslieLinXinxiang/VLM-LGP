@@ -21,7 +21,7 @@ SOLVER_BIN = os.path.join(ROOT_DIR, "bin/x.exe")
 
 # [CRITICAL] MASTER LOG LOCATION
 # 所有轨迹将汇总于此。如果此文件存在，直接读取，不重新计算。
-MASTER_LOG_PATH = os.path.join(ROOT_DIR, "generated/node_1_run/raw_trajectory.log")
+MASTER_LOG_PATH = os.path.join(ROOT_DIR, "test/raw_trajectory.log")
 
 def print_banner(text):
     print("\n" + "=" * 60)
@@ -52,13 +52,14 @@ def ensure_planning_complete():
     solver = SolverBridge(executable_path=SOLVER_BIN)
     
     # 2. 状态链初始化 (从 scene_named.g 开始)
-    current_input_g = os.path.join(ROOT_DIR, "generated", "scene_named.g")
+    current_input_g = os.path.join(ROOT_DIR, "test", "scene", "scene_named.g")
+
     
     for node_id in NODES_TO_EXECUTE:
         print(f"\n>>> Planning Node {node_id}...")
         print(f"   [INPUT SCENE] {os.path.basename(current_input_g)}")
         
-        task_dir = os.path.join(ROOT_DIR, "generated", f"node_{node_id}_run")
+        task_dir = os.path.join(ROOT_DIR, "test", f"node_{node_id}_run")
         if not os.path.exists(task_dir):
             print(f"❌ [ERROR] Task directory missing: {task_dir}")
             return False

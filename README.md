@@ -1,139 +1,83 @@
-# V-LGP: Vision-Language Geometric Programming
-### 🧠 Neuro-Symbolic Robot Manipulation with Receding Horizon Planning
+# VLM-LGP: Vision-Language Logic-Geometric Programming
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![ROS2](https://img.shields.io/badge/ROS2-Jazzy-blue)](https://docs.ros.org/en/jazzy/)
-[![Physics](https://img.shields.io/badge/MuJoCo-3.x-orange)](https://mujoco.org/)
+VLM-LGP is a closed-loop robotic manipulation framework that integrates Vision-Language Models (VLM) with Logic-Geometric Programming (LGP). The system utilizes high-level semantic reasoning to drive low-level geometric motion planning.
 
-**V-LGP** bridges the semantic reasoning of **VLMs** (e.g., Gemini, Qwen) with the rigorous constraints of **Logic-Geometric Programming** (RAI/KOMO). It enables robust Sim-to-Real transfer for complex, multi-stage manipulation tasks.
+## 🧠 System Logic
+![System Architecture](./assets/pipeline.png)
 
----
+## ⚖️ LGP Solver Optimizations
+The solver is an optimized fork of the [rai](https://github.com/MarcToussaint/rai) library. We have refined existing core functions and **introduced additional functions** to better adapt the solver to our specific experiments and satisfy the practical requirements of **real-machine hardware deployment**.
 
-## 🏗️ Architecture
+## 🚀 Quick Start (Solver Setup)
 
-The system uses a **Hybrid Architecture**:
-1.  **Host (Planner)**: Runs VLM logic & C++ Geometric Solver (`rai`).
-2.  **Docker (Physics)**: Runs high-fidelity MuJoCo simulation & ROS 2 Controllers.
-
-![System Pipeline](assets/pipeline.png)
-
----
-
-## 💻 Prerequisites (Host)
-
-*   **OS**: Ubuntu 22.04 or 24.04.
-*   **ROS 2**: Distribution **Jazzy** (installed on Host).
-*   **Hardware**: 32GB+ RAM, NVIDIA GPU.
-
----
-
-## 🛠️ Installation
-
-### 1. Install Dependencies & Clone
+### 1. Environment
 ```bash
-# System Libs
-sudo apt update && sudo apt install build-essential cmake g++ git python3-dev \
-    liblapack-dev libblas-dev libf2c2-dev libhdf5-openmpi-dev \
-    libassimp-dev libqhull-dev libgl1-mesa-dev libglew-dev libglfw3-dev freeglut3-dev
-
-# Clone Project (Recursive is MUST)
-mkdir -p ~/Projects && cd ~/Projects
-git clone --recursive https://github.com/YourUsername/VLM_LGP.git
-cd VLM_LGP
-```
-
-### 2. Compile Solver (`rai`)
-We compile the solver locally. **Do NOT use `pip install robotic`.**
-```bash
-# Compile Core
-cd rai
-make -j$(nproc)
-
-# Compile Python Bindings
-cd src/ry
-make -j$(nproc)
-```
-
-### 3. Setup Python Environment
-We use **Conda** for AI libs, but inherit **ROS 2** from the system.
-```bash
-conda create -n vlm_jazzy python=3.10
-conda activate vlm_jazzy
+git clone https://github.com/LeslieLinXinxiang/VLM-LGP.git
+cd VLM-LGP
+conda create -n vlgp python=3.10
+conda activate vlgp
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment
-Add to your `~/.bashrc`:
+### 2. System Dependencies
 ```bash
-export VLM_LGP_ROOT="$HOME/Projects/VLM_LGP"
-export RAI_PATH="$VLM_LGP_ROOT/rai"
-export PYTHONPATH="$RAI_PATH/lib:$RAI_PATH/src/ry:$PYTHONPATH"
-export LD_LIBRARY_PATH="$RAI_PATH/lib:$LD_LIBRARY_PATH"
-export GEMINI_API_KEY="AIzaSyYourKeyHere"
-```
-*Apply:* `source ~/.bashrc`
-
----
-
-## 🐳 Simulation Setup
-
-### 1. Build & Run Docker
-```bash
-cd $VLM_LGP_ROOT/docker
-docker build -t vlm-lgp:latest .
-
-# Run Container (with code mapping)
-xhost +local:root
-docker run -it --rm --net=host --ipc=host --pid=host \
-    --gpus all \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $VLM_LGP_ROOT/simulation:/root/ros2_ws/src \
-    vlm-lgp:latest /bin/bash
+sudo apt-get install -y build-essential g++ cmake git wget zip liblapack-dev libf2c2-dev libqhull-dev libeigen3-dev libjsoncpp-dev libyaml-cpp-dev libhdf5-dev libx11-dev libglu1-mesa-dev libglfw3-dev libglew-dev freeglut3-dev libglm-dev libfreetype-dev libpng-dev libassimp-dev
 ```
 
-### 2. Compile Inside Docker (One-Time)
-Inside the container, run the auto-setup script:
+### 3. Build Solver (rai)
 ```bash
-# This compiles the simulation controllers
-./setup_container.sh
+cd rai/_make
+./install.sh libann && ./install.sh libccd && ./install.sh fcl && ./install.sh physx
+cd ..
+make -j$(nproc)
+```
+
+### 4. Build Executable
+```bash
+cd ../bin
+make
+```
+
+### 5. Path Setup
+Add to `~/.bashrc`:
+```bash
+export PYTHONPATH=$HOME/VLM-LGP/rai/lib:$PYTHONPATH
+export LD_LIBRARY_PATH=$HOME/VLM-LGP/rai/lib:$LD_LIBRARY_PATH
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🤖 Simulation & ROS 2
 
-You need **Two Terminals**.
+VLM-LGP uses **MuJoCo** and **ROS 2** for high-fidelity simulation.
 
-### Terminal 1: Physics Server (Docker)
+### Integration Setup
+To use our simulation suite, we recommend symlinking the simulation folder into your ROS 2 workspace:
+
+1. **Prerequisite**: Install [mujoco_ros2_control](https://github.com/moveit/mujoco_ros2_control).
+2. **Workspace Setup**:
+   ```bash
+   cd ~/ros2_ws/src
+   ln -s ~/VLM-LGP/simulation .
+   cd ..
+   colcon build --symlink-install
+   ```
+
+### Running the Simulation
+To launch the Panda MuJoCo simulation environment:
 ```bash
-# Inside Docker
-source /root/ros2_ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch interactive_marker interactive_marker.launch.py
 ```
-*Wait for the MuJoCo window to appear.*
 
-### Terminal 2: The Planner (Host)
+---
+
+## ✅ Verification
+Run the solver bridge test to verify the LGP-to-ROS2 pipeline:
 ```bash
-# On Host
-conda activate vlm_jazzy
-source /opt/ros/jazzy/setup.bash
-
-cd ~/Projects/VLM_LGP
-python3 driver.py
+python3 test_bridge.py
 ```
-*The robot will automatically scan the scene, plan, and execute the task.*
 
----
-
-## ⚠️ Troubleshooting
-
-*   **"ModuleNotFoundError: ry"**: Check `PYTHONPATH` in `~/.bashrc`.
-*   **Physics Jitter**: Ensure XML uses `solimp="0.9 0.95 0.001"`.
-*   **Docker Error**: If `setup_container.sh` fails, ensure you mounted the volume correctly.
-
----
-
-## 🤝 Acknowledgements
-
-The action solver in this project is based on an optimized version of the [RAI](https://github.com/MarcToussaint/rai) framework by Marc Toussaint.
+## Documentation
+- Solver Core: [rai/README.md](rai/README.md)
+- Simulation Framework: [mujoco_ros2_control](https://github.com/moveit/mujoco_ros2_control)

@@ -11,10 +11,10 @@ table(table_base): {
 
 # --- 双臂机器人加载 ---
 Prefix: "l_"
-Include: <../LGP/newLGP/problems/rai-robotModels/panda/panda.g>
+Include: <../LGP/newLGP/rai-robotModels/panda/panda.g>
 Prefix: False
 Prefix: "r_"
-Include: <../LGP/newLGP/problems/rai-robotModels/panda/panda.g>
+Include: <../LGP/newLGP/rai-robotModels/panda/panda.g>
 Prefix: False
 
 Edit l_panda_base (table): { Q: "t(-.4 -.2 .05) d(90 0 0 1)" }

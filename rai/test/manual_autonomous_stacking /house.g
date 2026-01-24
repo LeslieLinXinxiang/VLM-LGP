@@ -6,7 +6,7 @@ table (world) { shape:ssBox, size:[2. 4. .1 .02], Q:"t(0 0 .6)", color:[.3 .3 .3
 
 # 机器人 (位置微调，确保能覆盖左右供料区和前方施工区)
 Prefix: "l_"
-Include: </home/leslie/Projects/VLM_LGP/rai/test/LGP/newLGP/problems/rai-robotModels/panda/panda.g>
+Include: </home/leslie/Projects/VLM_LGP/rai/test/LGP/newLGP/rai-robotModels/panda/panda.g>
 Prefix: False
 # 机器人后退一点点 (y=-0.4)，给前方留出更多操作空间
 Edit l_panda_base (table): { Q: "t(0 -.3 .05) d(90 0 0 1)" }

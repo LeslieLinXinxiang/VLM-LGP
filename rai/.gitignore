@@ -41,11 +41,11 @@ tags
 *.orig
 
 # Data
-*.h5
+
 
 # PYTHON
 *.pyc
-_*.py
+
 .ipynb_checkpoints
 
 # EXECUTION
@@ -142,3 +142,5 @@ srv_gen
 *Feedback.msg
 *Goal.msg
 *Result.msg
+
+

@@ -1,0 +1,4 @@
+fol: <step_2_batch_1.fol>
+terminal: " (on cyl1 cyl2 cyl3 base2) "
+genericCollisions: true
+coll: []

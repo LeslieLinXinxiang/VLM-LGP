@@ -5,7 +5,7 @@ world {}
 table (world) { shape:ssBox, size:[2. 2. .1 .02], Q:"t(0 0 .6)", color:[.3 .3 .3], contact:1 }
 
 #Prefix: "l_"
-#Include: <../LGP/newLGP/problems/rai-robotModels/panda/panda.g>
+#Include: <../LGP/newLGP/rai-robotModels/panda/panda.g>
 #Prefix: False
 
 # 让机器人不可见，以便清晰观察场景

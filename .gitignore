@@ -1,15 +1,33 @@
-# Ignore compile artifacts
+# === 基础忽略 (黑名单) ===
+__pycache__/
+*.pyc
 *.o
+*.a
 *.exe
-bin/x.exe
+*.log
+*.so
+*.drawio
+.DS_Store
+.vscode/
+.idea/
+*.code-workspace
 
-# Ignore temp generation
+# 忽略编译目录和临时数据
+build/
+obj/
 generated/*
 !generated/.gitkeep
 
-# Ignore system/IDE files
-.DS_Store
-__pycache__/
-*.pyc
-.vscode/
-.idea/
+# === 核心豁免 (白名单 - 强制保留) ===
+# 即使上面忽略了 .so 或在子目录里被忽略，也要强制保留这些：
+!rai/_make/config.mk
+!rai/lib/
+!rai/lib/*.py
+!*.h5
+!bin/
+!assets/
+!simulation/
+!LICENSE
+
+# 排除 bin 里的可执行文件但保留源码
+bin/*.exe
