@@ -2,44 +2,73 @@
 
 VLM-LGP is a closed-loop robotic manipulation framework that integrates Vision-Language Models (VLM) with Logic-Geometric Programming (LGP). The system utilizes high-level semantic reasoning to drive low-level geometric motion planning.
 
-## 🧠 System Logic
+## 🧠 System Architecture
 ![System Architecture](./assets/pipeline.png)
 
 ## ⚖️ LGP Solver Optimizations
-The solver is an optimized fork of the [rai](https://github.com/MarcToussaint/rai) library. We have refined existing core functions and **introduced additional functions** to better adapt the solver to our specific experiments and satisfy the practical requirements of **real-machine hardware deployment**.
+The solver is an optimized fork of the [rai](https://github.com/MarcToussaint/rai) library. We have refined core functions and introduced specialized modules to satisfy the practical requirements of **real-machine hardware deployment**.
 
-## 🚀 Quick Start (Solver Setup)
+---
 
-### 1. Environment
+## 🐳 Docker Deployment (Recommended for Leeds Deployment)
+To ensure ABI compatibility and avoid dependency conflicts (especially FCL and PhysX), we provide a pre-configured Docker environment. 
+
+**Note**: The Docker version is **Headless**. It disables all GUI pop-ups to optimize performance and ensures raw trajectory output directly to the bridge.
+
+### 1. Build the Image
 ```bash
-git clone https://github.com/LeslieLinXinxiang/VLM-LGP.git
-cd VLM-LGP
-conda create -n vlgp python=3.10
-conda activate vlgp
-pip install -r requirements.txt
+# Build the brain with a fully isolated 22.04 environment
+docker build -t vlm-lgp:final .
 ```
 
-### 2. System Dependencies
+### 2. Run the Container
 ```bash
-sudo apt-get install -y build-essential g++ cmake git wget zip liblapack-dev libf2c2-dev libqhull-dev libeigen3-dev libjsoncpp-dev libyaml-cpp-dev libhdf5-dev libx11-dev libglu1-mesa-dev libglfw3-dev libglew-dev freeglut3-dev libglm-dev libfreetype-dev libpng-dev libassimp-dev
+# Use --net=host for low-latency ZMQ communication with the Host
+docker run --net=host -it --rm vlm-lgp:final
 ```
 
-### 3. Build Solver (rai)
+### 3. Headless Solver Execution
+Inside the container, the solver runs in **Headless Mode**:
+- **No GUI windows** will be initialized.
+- **Trajectory Output**: High-frequency (100Hz/500Hz) resampled trajectories are printed to `stdout` and sent via ZMQ.
+- **Solver Location**: The headless executable is located at `/app/docker_bin/x.exe`.
+
+---
+
+## 🤖 Simulation & Bridge Testing
+
+VLM-LGP uses a **Split-Brain Architecture**:
+- **Brain (Docker)**: Computes LGP nodes and generates trajectories.
+- **Body (Host/Robot)**: Receives trajectories and executes via ROS 2 or MuJoCo.
+
+### Communication Verification (Mock Loop)
+1. **On Host**: Start the mock robot agent to listen for trajectories:
+   ```bash
+   python3 host_mock.py
+   ```
+2. **In Docker**: Execute the solver bridge:
+   ```bash
+   python3 test_bridge_docker.py
+   ```
+*If communication is successful, the Host will display the received joint-space waypoints.*
+
+---
+
+## 🛠️ Native Installation (Legacy/Manual)
+
+*Use this only if you prefer to build directly on your Ubuntu 22.04+ system.*
+
+### 1. Dependencies & rai Build
+Refer to the original instructions to install system-level libraries:
 ```bash
 cd rai/_make
+# Ensure FCL 0.5.0 is manually compiled if system version is 0.7+
 ./install.sh libann && ./install.sh libccd && ./install.sh fcl && ./install.sh physx
 cd ..
 make -j$(nproc)
 ```
 
-### 4. Build Executable
-```bash
-cd ../bin
-make
-```
-
-### 5. Path Setup
-Add to `~/.bashrc`:
+### 2. Path Setup
 ```bash
 export PYTHONPATH=$HOME/VLM-LGP/rai/lib:$PYTHONPATH
 export LD_LIBRARY_PATH=$HOME/VLM-LGP/rai/lib:$LD_LIBRARY_PATH
@@ -47,35 +76,13 @@ export LD_LIBRARY_PATH=$HOME/VLM-LGP/rai/lib:$LD_LIBRARY_PATH
 
 ---
 
-## 🤖 Simulation & ROS 2
-
-VLM-LGP uses **MuJoCo** and **ROS 2** for high-fidelity simulation.
-
-### Integration Setup
-To use our simulation suite, we recommend symlinking the simulation folder into your ROS 2 workspace:
-
-1. **Prerequisite**: Install [mujoco_ros2_control](https://github.com/moveit/mujoco_ros2_control).
-2. **Workspace Setup**:
-   ```bash
-   cd ~/ros2_ws/src
-   ln -s ~/VLM-LGP/simulation .
-   cd ..
-   colcon build --symlink-install
-   ```
-
-### Running the Simulation
-To launch the Panda MuJoCo simulation environment:
+## ✅ Verification & ROS 2 Integration
+VLM-LGP uses **MuJoCo** for high-fidelity simulation. Symlink the simulation folder into your ROS 2 workspace:
 ```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch interactive_marker interactive_marker.launch.py
-```
-
----
-
-## ✅ Verification
-Run the solver bridge test to verify the LGP-to-ROS2 pipeline:
-```bash
-python3 test_bridge.py
+cd ~/ros2_ws/src
+ln -s ~/VLM-LGP/simulation .
+cd ..
+colcon build --symlink-install
 ```
 
 ## Documentation
