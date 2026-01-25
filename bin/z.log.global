@@ -1,5 +1,5 @@
 ** compiled at:     Jan 16 2026 15:22:37
-** execution start: 2026-01-23 15:22:05:231198
+** execution start: 2026-01-25 15:53:18:577631
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
@@ -62,8 +62,8 @@ util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
 util.cpp:getIs:1104(3) opening input file 'temp_state.g'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
-** execution stop: 2026-01-23 15:24:00:378353
-** real time: 115.147sec
-** CPU time: 347.62
+** execution stop: 2026-01-25 15:54:58:253784
+** real time: 99.6762sec
+** CPU time: 342.347
 
 ** set+queried params:
