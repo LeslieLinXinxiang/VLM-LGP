@@ -10,7 +10,7 @@ The solver is an optimized fork of the [rai](https://github.com/MarcToussaint/ra
 
 ---
 
-## 🐳 Docker Deployment (Recommended for Leeds Deployment)
+## 🐳 Docker Deployment 
 To ensure ABI compatibility and avoid dependency conflicts (especially FCL and PhysX), we provide a pre-configured Docker environment. 
 
 **Note**: The Docker version is **Headless**. It disables all GUI pop-ups to optimize performance and ensures raw trajectory output directly to the bridge.
