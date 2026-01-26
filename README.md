@@ -28,6 +28,18 @@ docker run --net=host -it --rm vlm-lgp:final
 ```
 
 ### 3. Headless Solver Execution
+VLM-LGP requires specific executables for different running modes. You must compile the one matching your usage (or both).
+
+```bash
+# [Target A] Native GUI Solver (For driver.py)
+cd ~/VLM-LGP/rai/bin
+make -j$(nproc)
+
+# [Target B] Headless/Docker Solver (For docker_driver.py)
+cd ~/VLM-LGP/rai/docker_bin
+make -j$(nproc)
+```
+
 Inside the container, the solver runs in **Headless Mode**:
 - **No GUI windows** will be initialized.
 - **Trajectory Output**: High-frequency (100Hz/500Hz) resampled trajectories are printed to `stdout` and sent via ZMQ.
@@ -39,7 +51,7 @@ Inside the container, the solver runs in **Headless Mode**:
 
 VLM-LGP uses a **Split-Brain Architecture**:
 - **Brain (Docker)**: Computes LGP nodes and generates trajectories.
-- **Body (Host/Robot)**: Receives trajectories and executes via ROS 2 or MuJoCo.
+- **Body (Host/Robot)**: Receives trajectories and executes via ZMQ.
 
 ### Communication Verification (Mock Loop)
 1. **On Host**: Start the mock robot agent to listen for trajectories:
