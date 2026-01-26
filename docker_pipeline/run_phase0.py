@@ -4,13 +4,13 @@ print(">>> [DEBUG] Module pipelines.run_phase0 is loading...")
 import sys
 import os
 import json
-import shutil # [NEW] 用于文件复制
+import shutil  # [Core] 用于在 Docker 模式下“伪造”截图
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 try:
-    # 延迟加载 SimCamera，防止在 Docker 环境下因为导入 GUI 库而崩溃
-    # from core.vision import SimCamera 
+    # 尝试导入 SimCamera，但在 Docker 模式下我们不会调用它，所以即使它依赖缺失也没关系
+    from core.vision import SimCamera
     from core.vlm import VLMClient
     from core.utils import parse_and_inject, extract_mapping_from_layout
     print(">>> [DEBUG] Imports successful.")
@@ -18,58 +18,62 @@ except ImportError as e:
     print(f">>> [FATAL ERROR] Import failed: {e}")
     sys.exit(1)
 
-# [FIX] 添加 image_path 参数，默认为 None (兼容旧代码)
+# [INTERFACE FIX] 增加 image_path 参数，默认为 None (兼容旧代码)
 def execute_phase0(image_path=None):
     print(">>> STARTING PHASE 0: WORLD BINDING")
     
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     
-    unnamed_g = os.path.join(root_dir, "test/scene/unnamed.g")
+    # 定义物理路径锚点
+    unnamed_g = os.path.join(root_dir, "unnamed.g")
     specs_json = os.path.join(root_dir, "generated/phase0_specs.json")
     prompt_file = os.path.join(root_dir, "prompts/phase0_binding_prompt.md")
     
+    # [关键路径] 无论图片从哪来，最终都要存在这里
     capture_png = os.path.join(root_dir, "generated/phase0_capture.png")
+    
     layout_json = os.path.join(root_dir, "generated/phase0_layout.json")
     scene_named_g = os.path.join(root_dir, "generated/scene/scene_named.g")
     
-    # 2. Image Acquisition Logic (Hybrid Mode)
+    # ========================================================
+    # [Step 1] Image Acquisition Logic (The Branch)
+    # ========================================================
     if image_path:
-        # --- 分支 A: Docker/Headless 模式 (注入图片) ---
-        print(f"[Step 1] Headless Mode: Injecting provided image...")
+        # --- 路径 A: Docker/指定图片模式 ---
+        # 逻辑：用户已选好图片，我们直接将其视为“当前截图”
+        print(f"[Step 1] Headless Mode: Using provided image...")
         print(f"   -> Source: {image_path}")
         
         if not os.path.exists(image_path):
             print(f"[ERROR] Source image not found: {image_path}")
             return
 
+        # 物理复制：将选中的图覆盖到 capture_png
         os.makedirs(os.path.dirname(capture_png), exist_ok=True)
         shutil.copy(image_path, capture_png)
-        print(f"   -> Copied to: {capture_png}")
-        
-        # 此时 img 对象就是路径本身，或者需要读取它传给 VLM
-        # VLMClient 通常接受路径或 cv2 对象，这里我们统一传路径给 VLM 
-        # (注意：如果 VLMClient.match_objects 强行要求 cv2 image，这里需要 cv2.imread)
-        import cv2
-        img = cv2.imread(capture_png)
+        print(f"   -> Image copied to buffer: {capture_png}")
         
     else:
-        # --- 分支 B: Native 模式 (SimCamera 渲染) ---
+        # --- 路径 B: Native/GUI 模式 ---
+        # 逻辑：调用仿真器摄像头实时截图
         print(f"[Step 1] Native Mode: Capturing Scene via SimCamera...")
         try:
-            # 仅在需要时导入 SimCamera
-            from core.vision import SimCamera
             sim = SimCamera(unnamed_g)
-            img = sim.capture(save_path=capture_png)
+            sim.capture(save_path=capture_png)
+            # SimCamera 已将图片保存到 capture_png
         except Exception as e:
-            print(f"[ERROR] Vision module failed: {e}")
+            print(f"[ERROR] SimCamera capture failed: {e}")
             return
     
-    # 3. VLM Processing
+    # ========================================================
+    # [Step 2] VLM Processing (Unified Pipeline)
+    # ========================================================
+    # 此时，generated/phase0_capture.png 已经就位，VLM 对来源一无所知
     print(f"[Step 2] VLM Semantic Matching...")
     try:
         vlm = VLMClient()
-        # img 可以是 cv2 对象，VLMClient 应该能处理
-        vlm_results_list = vlm.match_objects(img, specs_json, prompt_file)
+        # VLM 读取标准路径
+        vlm_results_list = vlm.match_objects(capture_png, specs_json, prompt_file)
     except Exception as e:
         print(f"[ERROR] VLM module failed: {e}")
         import traceback
@@ -80,13 +84,14 @@ def execute_phase0(image_path=None):
     with open(layout_json, 'w') as f:
         json.dump(vlm_results_list, f, indent=2)
     
-    # 4. Data Cleaning
+    # ========================================================
+    # [Step 3] Data Injection (Unified Pipeline)
+    # ========================================================
     print(f"[Step 3] Transforming Data...")
     try:
         mapping_dict = extract_mapping_from_layout(vlm_results_list)
         print(f"   -> Extracted {len(mapping_dict)} objects.")
 
-        # 5. Injection
         print(f"[Step 4] Injecting Names...")
         parse_and_inject(unnamed_g, mapping_dict, scene_named_g)
         print(f">>> PHASE 0 COMPLETE. Scene Ready: {scene_named_g}")

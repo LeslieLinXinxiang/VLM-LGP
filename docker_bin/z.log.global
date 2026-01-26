@@ -1,10 +1,10 @@
-** compiled at:     Jan 16 2026 15:22:37
-** execution start: 2026-01-23 15:22:05:231198
+** compiled at:     Jan 26 2026 10:17:56
+** execution start: 2026-01-26 11:30:23:769425
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
 graph.cpp:initParameters:1608(3)  - failed
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_2_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_2_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'output_state.g'
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/test/node_2_run'
 util.cpp:getIs:1104(3) opening input file 'link0.h5'
@@ -36,34 +36,34 @@ util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/test/node_2_run'
 util.cpp:getIs:1104(3) opening input file 'finger.h5'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_2_run'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'temp_state.g'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
 LGP_TAMP_default.cpp:Default_LGP_TAMP_Abstraction:22(0) using lgpFile: '/home/leslie/Projects/VLM_LGP/test/node_3_run/step_3_batch_1.lgp'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'step_3_batch_1.lgp'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
 LGP_TAMP_default.cpp:Default_LGP_TAMP_Abstraction:31(0) using folFile '/home/leslie/Projects/VLM_LGP/test/node_3_run/step_3_batch_1.fol'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'step_3_batch_1.fol'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'temp_state.g'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
 LGP_TAMP_default.cpp:Default_LGP_TAMP_Abstraction:22(0) using lgpFile: '/home/leslie/Projects/VLM_LGP/test/node_3_run/step_3_batch_2.lgp'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'step_3_batch_2.lgp'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
 LGP_TAMP_default.cpp:Default_LGP_TAMP_Abstraction:31(0) using folFile '/home/leslie/Projects/VLM_LGP/test/node_3_run/step_3_batch_2.fol'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'step_3_batch_2.fol'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/bin'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/node_3_run' from '/home/leslie/Projects/VLM_LGP/docker_bin'
 util.cpp:getIs:1104(3) opening input file 'temp_state.g'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
-** execution stop: 2026-01-23 15:24:00:378353
-** real time: 115.147sec
-** CPU time: 347.62
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/docker_bin'
+** execution stop: 2026-01-26 11:35:51:820852
+** real time: 328.051sec
+** CPU time: 563.635
 
 ** set+queried params:
