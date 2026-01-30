@@ -677,6 +677,7 @@ void ManipulationHelper::action_place_on_multi_support(double time, const str& o
   // ==============================================================================
   // 逻辑: 在 time-0.1 时刻，强制物体位于虚拟锚点正上方 5cm 处。
   // 因为 virtualAnchor 就在最终接触位置，所以相对坐标直接设为 0.05
+  komo->addObjective({time-0.5}, FS_positionRel, {obj, virtualAnchorName}, OT_sos, arr{0, 0, 1e2}, {0., 0., 0.05});
   komo->addObjective({time-0.1}, FS_positionRel, {obj, virtualAnchorName}, OT_sos, arr{1e2, 1e2, 1e2}, {0., 0., 0.05});
 
   // ==============================================================================

@@ -1,4 +1,4 @@
-fol: <step_2_batch_1.fol>
+fol: <step_1_batch_4.fol>
 terminal: " (on cyl1 cyl2 cyl3 base2) "
 genericCollisions: true
 coll: []

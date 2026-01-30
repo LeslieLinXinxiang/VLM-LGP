@@ -13,7 +13,7 @@ from core.trajectory_parser import TrajectoryParser
 from core.ros2_bridge import get_robot
 
 # [MIT-S2] CONFIGURATION
-NODES_TO_EXECUTE = [1, 2, 3] 
+# NODES_TO_EXECUTE = [1, 2, 3] 
 SLOW_MOTION_FACTOR = 5.0    
 GRIPPER_OPEN = 0.04
 GRIPPER_CLOSE = 0.0
@@ -32,14 +32,14 @@ def ensure_planning_complete():
     """
     检查 Master Log 是否存在。
     - 如果存在: 返回 True (Offline Mode)
-    - 如果不存在: 执行 Node 1->2->3 连锁规划，生成 Log (Online Mode)
+    - 如果不存在: 自动扫描 test 目录下的 node_X_run 文件夹，直到找不到为止。
     """
     if os.path.exists(MASTER_LOG_PATH):
         print(f"📦 [CACHE HIT] Found existing Master Log at: {MASTER_LOG_PATH}")
         print(f"   Skipping solver. Loading trajectories directly...")
         return True
 
-    print_banner("PHASE 1: MULTI-NODE CHAINED PLANNING (Calculating...)")
+    print_banner("PHASE 1: MULTI-NODE CHAINED PLANNING (Auto-Discovery Mode)")
     
     # 1. 初始化目录和文件
     log_dir = os.path.dirname(MASTER_LOG_PATH)
@@ -51,20 +51,31 @@ def ensure_planning_complete():
 
     solver = SolverBridge(executable_path=SOLVER_BIN)
     
-    # 2. 状态链初始化 (从 scene_named.g 开始)
+    # 2. 状态链初始化
+    # 初始输入必须是场景文件
     current_input_g = os.path.join(ROOT_DIR, "test", "scene", "scene_named.g")
-
     
-    for node_id in NODES_TO_EXECUTE:
+    # [关键修改] 使用计数器循环，而不是固定列表
+    node_id = 1
+    
+    while True:
+        task_dir = os.path.join(ROOT_DIR, "test", f"node_{node_id}_run")
+        
+        # [退出条件] 如果目录不存在，说明任务链结束
+        if not os.path.exists(task_dir):
+            if node_id == 1:
+                print(f"❌ [ERROR] No task directories found! (Checked {task_dir})")
+                return False
+            else:
+                print(f"\n🏁 [FINISH] No directory found for Node {node_id}. Sequence completed.")
+                break
+
         print(f"\n>>> Planning Node {node_id}...")
         print(f"   [INPUT SCENE] {os.path.basename(current_input_g)}")
         
-        task_dir = os.path.join(ROOT_DIR, "test", f"node_{node_id}_run")
-        if not os.path.exists(task_dir):
-            print(f"❌ [ERROR] Task directory missing: {task_dir}")
-            return False
-
         # A. 调用求解器
+        # 注意：这里需要确保 run_pipeline.py 里的 run_solver_live 逻辑被正确封装在 SolverBridge 中
+        # 如果你的 SolverBridge 需要 master_home_g，请确保这里也传递了
         success, _, stdout = solver.run(task_dir, current_input_g)
         
         if success and stdout and "V-LGP TRAJECTORY START" in stdout:
@@ -76,18 +87,21 @@ def ensure_planning_complete():
                 f.write(stdout)
                 f.write(f"\n>>> NODE {node_id} DATA END <<<\n")
             
-            # C. 链接下一个状态 (output_state.g -> next input)
+            # C. 链接下一个状态
             output_state_path = os.path.join(task_dir, "output_state.g")
             if os.path.exists(output_state_path):
                 print(f"   [CHAIN] Linked output state to next node.")
                 current_input_g = output_state_path
             else:
-                print(f"   ⚠️ [WARNING] No output_state.g found. Physics continuity at risk.")
+                print(f"   ⚠️ [WARNING] No output_state.g found in Node {node_id}. Chain logic might fail next.")
         else:
             print(f"❌ Node {node_id} Failed. Chain Broken.")
             return False
+            
+        # [计数器递增]
+        node_id += 1
 
-    print(f"\n✅ All Nodes Planned. Log saved to: {MASTER_LOG_PATH}")
+    print(f"\n✅ All Detected Nodes Planned. Log saved to: {MASTER_LOG_PATH}")
     return True
 
 def run_execution_loop():

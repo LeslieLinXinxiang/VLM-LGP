@@ -37,16 +37,14 @@ START_STATE {}
 ### Reward
 REWARD {}
 
-DecisionRule pick_cylinder {
+DecisionRule pick_touch {
   Obj, From, Hand, 
-  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj)! (on From Obj) (is_place From) (busy Hand)! }
   { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
     (on Hand Obj) (busy Hand) (movable Obj) (touch Hand Obj) (stable Hand Obj) }
 }
 
-DecisionRule place_straightOn {
-  Obj, Hand, To,
-  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
-  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
-    (on To Obj) (stableOn To Obj) }
+DecisionRule place_on_3_supports { S1, S2, S3, Obj, Hand,
+  { (is_gripper Hand), (on Hand Obj), (is_object S1), (is_object S2), (is_object S3) }
+  { (on Hand Obj)!, (busy Hand)!, (movable Obj)!, (on S1 S2 S3 Obj), (stableOnMulti S1 S2 S3 Obj) }
 }
