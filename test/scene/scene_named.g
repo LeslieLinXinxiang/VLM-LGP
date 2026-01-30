@@ -23,15 +23,15 @@ Edit l_panda_finger_joint2 { q: 0.04 }
 
 desk (table) { shape:ssBox, size:[2. 1.8 .11 .02], Q:"t(0 0 0.105)", color:[.3 .3 .3], contact:1, logical:{ is_place } }
 
-cyl1 (desk) { Q:"t(-0.4 0.35 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .8 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-cyl2 (desk) { Q:"t(-0.4 0.2 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[1 .9 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-cyl3 (desk) { Q:"t(-0.5 0.35 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .9 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-cyl4 (desk) { Q:"t(-0.5 0.2 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.9 0 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+cyl1 (desk) { Q:"t(-0.4 0.47 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .8 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+cyl2 (desk) { Q:"t(-0.4 0.32 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[1 .9 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+cyl3 (desk) { Q:"t(-0.5 0.47 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .9 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+cyl4 (desk) { Q:"t(-0.5 0.32 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.9 0 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
 
 
 # base1 
 
-base1 (desk) { Q:"t(0.2 0.25 .0825)", joint:rigid, shape:ssBox, size:[.238 .245 .055 .002], color:[.8 .8 .8], contact:1, mass:.5, logical:{ is_object, is_place } } 
+base1 (desk) { Q:"t(0.2 0.37 .0825)", joint:rigid, shape:ssBox, size:[.238 .245 .055 .002], color:[.8 .8 .8], contact:1, mass:.5, logical:{ is_object, is_place } } 
 base1_handle (base1) { Q:"t(0 0 .05)", shape:ssBox, size:[.045 .045 .045 .002], color:[.5 .5 .5], contact:1, mass:.2, logical:{ is_object } } 
 
 bottom_left_base1 (base1)   { Q: [0.075 0.075 .0275],   shape:ssBox, size: [.03 .03 .001 .001], color:[.8 .5 .5 0], contact:0, logical:{ is_place } }
@@ -48,7 +48,7 @@ mid_right_base1 (base1)     { Q: [-0.075 0 .0275],      shape:ssBox, size: [.03 
 # base2
 
 # --- Red Base (base2) ---
-base2 (desk) { Q:"t(0.45 0.25 .0825)", joint:rigid, shape:ssBox, size:[.238 .245 .055 .002], color:[.9 .1 .1], contact:1, mass:.5, logical:{ is_object, is_place } } 
+base2 (desk) { Q:"t(0.45 0.37 .0825)", joint:rigid, shape:ssBox, size:[.238 .245 .055 .002], color:[.9 .1 .1], contact:1, mass:.5, logical:{ is_object, is_place } } 
 base2_handle (base2) { Q:"t(0 0 .05)", shape:ssBox, size:[.045 .045 .045 .002], color:[.5 .5 .5], contact:1, mass:.2, logical:{ is_object } }
 
 bottom_left_base2 (base2)   { Q: [0.075 0.075 .0275],   shape:ssBox, size: [.03 .03 .001 .001], color:[.8 .5 .5 0], contact:0, logical:{ is_place } }

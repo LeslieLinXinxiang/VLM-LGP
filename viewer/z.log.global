@@ -1,5 +1,5 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-01-30 16:34:11:580402
+** execution start: 2026-01-30 19:14:35:488392
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
@@ -43,3 +43,8 @@ util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/n
 util.cpp:getIs:1104(3) opening input file 'finger.h5'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/scene'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/viewer'
+** execution stop: 2026-01-30 19:15:58:60080
+** real time: 82.5717sec
+** CPU time: 4.90003
+
+** set+queried params:
