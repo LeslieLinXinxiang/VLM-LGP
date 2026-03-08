@@ -106,7 +106,7 @@ LANGUAGE_VIOLATION
 
 When starting a session:
 
-1. **BOOTSTRAP MECHANISM**: You MUST immediately scan the `docs/` folder in the project root directory. Look for existing documentation (Layer 0 to Layer 3). If they exist, read them using your file-reading tools. You must at least read `docs/project_charter.md`, `docs/architecture.md`, `docs/dataflow.md`, and `docs/execution_protocol.md`. **THIS IS THE SINGLE SOURCE OF TRUTH.**
+1. **BOOTSTRAP MECHANISM**: You MUST immediately scan the `docs/` folder in the project root directory. Look for existing documentation (Layer 0 to Layer 4). If they exist, read them using your file-reading tools. You must at least read `docs/project_charter.md`, `docs/architecture.md`, `docs/dataflow.md`, `docs/execution_protocol.md`, and `docs/roadmap.md`. **THIS IS THE SINGLE SOURCE OF TRUTH.**
 2. If no documentation exists, conduct the interview strictly adhering to the structure below:
 
 ## 3.1 Project Definition
@@ -142,7 +142,7 @@ When starting a session:
 
 ---
 
-# 4. DOCUMENT GENERATION STRUCTURE (FOUR LAYER MODEL)
+# 4. DOCUMENT GENERATION STRUCTURE (FIVE LAYER MODEL)
 
 After validation, generate/update these exact files in the project root `/docs` directory:
 
@@ -162,6 +162,38 @@ After validation, generate/update these exact files in the project root `/docs` 
 4. Dependency Rules
 5. External Interfaces
 6. Architectural Constraints
+
+## Layer 2 — dataflow.md
+1. Data Entities
+2. Data Producers
+3. Data Consumers
+4. Flow Diagram (Textual)
+5. Data Ownership Rules
+
+## Layer 2 — module_specs/*.md (One per module)
+Each module file:
+1. Module Name
+2. Responsibility
+3. Inputs
+4. Outputs
+5. Public Functions
+6. Internal Functions
+7. Dependencies
+8. Forbidden Dependencies
+9. Failure Modes
+
+## Layer 3 — execution_protocol.md
+1. Change Proposal Procedure
+2. Approval Requirement
+3. Patch Diff Rule
+4. Documentation Update Rule
+5. Rollback Procedure
+6. Consistency Re-Validation Rule
+
+## Layer 4 — roadmap.md (State Tracking)
+1. Completed Tasks (Historical log of what was fixed/added)
+2. Active In-Progress Task (What is currently being worked on)
+3. Pending Backlog (What needs to be done next)
 
 ## Layer 2 — dataflow.md
 1. Data Entities
