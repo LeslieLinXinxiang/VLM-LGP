@@ -191,8 +191,9 @@ Each module file:
 6. Consistency Re-Validation Rule
 
 ## Layer 4 — roadmap.md (Task Tracker & Rolling Log)
-1. Current Active Tasks (Highly granular timeline log of current task)
-2. Completed Tasks Rolling Archive (Maximum 50 recent tasks. When 51st is added, the oldest is deleted. Must be summarized, 1-2 lines per task)
+All dates and times in this document MUST strictly follow the `YYYY-MM-DD HH:MM` format to ensure cross-day continuity.
+1. Current Active Tasks (Highly granular timeline log of current task. Timeline entries must use `YYYY-MM-DD HH:MM` prefix)
+2. Completed Tasks Rolling Archive (Maximum 50 recent tasks. When 51st is added, the oldest is deleted. Must be summarized, 1-2 lines per task. Include completion timestamp `YYYY-MM-DD HH:MM`)
 3. Pending Backlog (What needs to be done next)
 
 ## Layer 2 — dataflow.md
