@@ -21,19 +21,24 @@ Edit l_panda_finger_joint1 { q: 0.04 }
 Edit l_panda_finger_joint2 { q: 0.04 }
 
 # -----------------------------------------------------------
-# Cylinders (obj_01 ~ obj_08)
-# height = 0.1m, radius = 0.03m
-# z = 0.05 (table half) + 0.05 (half height)
+# Object Setup (Cylinders, Rectangular Prisms, Cubes, Triangular Prisms)
 # -----------------------------------------------------------
 
-obj_01 (table) { Q:"t(-0.5 0 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .8 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_02 (table) { Q:"t(-0.5 -0.15 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[1 .9 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_03 (table) { Q:"t(-0.6 0 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .9 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_04 (table) { Q:"t(-0.6 -0.15 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.9 0 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_05 (table) { Q:"t(-0.7 0 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[1 .5 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_06 (table) { Q:"t(-0.7 -0.15 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.5 0 .8], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_07 (table) { Q:"t(-0.8 0 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[1 .4 .7], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
-obj_08 (table) { Q:"t(-0.8 -0.15 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.6 .3 .1], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+# Cylinders (height = 0.03m, radius = 0.015m, z = 0.05 + 0.015 = 0.065)
+obj_01 (table) { Q:"t(-0.5 0 .065)", joint:rigid, shape:cylinder, size:[.03 .015], color:[0 .8 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+obj_02 (table) { Q:"t(-0.5 -0.15 .065)", joint:rigid, shape:cylinder, size:[.03 .015], color:[1 .9 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+
+# Rectangular Prisms (60x30x30 mm, z = 0.05 + 0.015 = 0.065)
+obj_03 (table) { Q:"t(-0.6 0 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .9 .9], contact:1, mass:.2, logical:{ is_object, is_box, is_place} } 
+obj_04 (table) { Q:"t(-0.6 -0.15 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.9 0 .9], contact:1, mass:.2, logical:{ is_object, is_box, is_place} } 
+
+# Cubes (30x30x30 mm, z = 0.05 + 0.015 = 0.065)
+obj_05 (table) { Q:"t(-0.7 0 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[1 .5 0], contact:1, mass:.2, logical:{ is_object, is_box, is_place} } 
+obj_06 (table) { Q:"t(-0.7 -0.15 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[.5 0 .8], contact:1, mass:.2, logical:{ is_object, is_box, is_place} } 
+
+# Triangular Prisms (40x35x20 mm, mesh is 20mm thick, z = 0.05 + 0.01 = 0.06)
+obj_07 (table) { Q:"t(-0.8 0 .06)", joint:rigid, shape:mesh, mesh:"../generated/triangular_prism.obj", color:[1 .4 .7], contact:1, mass:.2, logical:{ is_object, is_place} } 
+obj_08 (table) { Q:"t(-0.8 -0.15 .06)", joint:rigid, shape:mesh, mesh:"../generated/triangular_prism.obj", color:[.6 .3 .1], contact:1, mass:.2, logical:{ is_object, is_place} }
 
 # -----------------------------------------------------------
 # Marker

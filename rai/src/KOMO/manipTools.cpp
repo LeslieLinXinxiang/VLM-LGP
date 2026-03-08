@@ -798,11 +798,22 @@ void ManipulationHelper::action_place_on_multi_support(
   rai::Frame *objF = komo->world.getFrame(obj);
   CHECK(objF, "Object frame '" << obj << "' not found");
 
+  auto get_Z_dim = [](rai::Frame *f) -> double {
+    if (!f || !f->shape)
+      return 0.0;
+    if (f->shape->type() == rai::ST_cylinder ||
+        f->shape->type() == rai::ST_ssCylinder ||
+        f->shape->type() == rai::ST_capsule)
+      return f->shape->size(0);
+    if (f->shape->size.N > 2)
+      return f->shape->size(2);
+    return 0.0;
+  };
+
+  double rel_z = 0.5 * (get_Z_dim(first_support) + get_Z_dim(objF));
   double support_top_z_world =
-      first_support->getPosition()(2) + 0.5 * first_support->getSize()(0);
-  double obj_half_z = (objF->getShapeType() == rai::ST_cylinder)
-                          ? 0.5 * objF->getSize()(0)
-                          : 0.5 * objF->getSize()(2);
+      first_support->getPosition()(2) + 0.5 * get_Z_dim(first_support);
+  double obj_half_z = 0.5 * get_Z_dim(objF);
 
   rai::Transformation targetWorldPose;
   targetWorldPose.pos.set(centroid_world(0), centroid_world(1),
@@ -810,7 +821,7 @@ void ManipulationHelper::action_place_on_multi_support(
   targetWorldPose.rot.setDeg(0, 1, 0, 0);
 
   // ==============================================================================
-  // 2. 拓扑: 虚拟锚点 (Virtual Anchor) — 锁死不动
+  // 2. 拓扑: 虚拟锚点 (Virtual Anchor) — 保留作为漏斗和切换参考
   // ==============================================================================
   str virtualAnchorName;
   virtualAnchorName << "virtualAnchor_for_" << obj << '_' << time;
@@ -824,29 +835,30 @@ void ManipulationHelper::action_place_on_multi_support(
     virtualAnchor->joint->setDofs(q_initial);
   }
 
-  // 锚点位置硬锁定: 一旦计算好就不再变动，全时段冻结
+  // 锚点位置硬锁定: 一旦计算好就不再变动，全时段冻结 (提供预放置漏斗参考)
   komo->addObjective({}, FS_pose, {virtualAnchorName}, OT_eq,
                      {1e2}, targetWorldPose.getArr7d());
 
   // 切换所有权 (Kinematic Switch)
   komo->addRigidSwitch(time, {virtualAnchorName, obj}, true);
 
-  // 物体最终必须精确和锚点重合 (硬约束)
-  komo->addObjective({time}, FS_poseDiff, {virtualAnchorName, obj}, OT_eq,
-                     {1e2});
+  // A. 高度接触 (相对约束，防止悬空核心)
+  komo->addObjective({time}, FS_positionDiff, {obj, supports(0)}, OT_eq, arr{0, 0, 1} * 1e2, {rel_z});
 
-  // 姿态约束: 垂直向上 (硬约束)
+  // A2. XY 中心硬对齐 (确保放在支撑群的正中心)
+  komo->addObjective({time}, FS_position, {obj}, OT_eq, arr{1e2, 1e2, 0}, {centroid_world(0), centroid_world(1), 0.});
+
+  // B. 姿态约束
+  // 物体总体上靠近锚点姿态 (极低权重的位姿引导，防止完全不受限产生的旋转自由度漂移)
+  komo->addObjective({time}, FS_poseDiff, {virtualAnchorName, obj}, OT_sos, {1e0});
+  
+  // 严格要求垂直向上 (硬约束)
   komo->addObjective({time}, FS_vectorZ, {obj}, OT_eq, {1e2}, {0., 0., 1.});
 
   // ==============================================================================
   // [NEW] 3. 预放置漏斗 (Pre-Place Funnel) — 仅全运动规划时生效
   // ==============================================================================
-<<<<<<< HEAD
-  // 逻辑: 在 time-0.1 时刻，强制物体位于虚拟锚点正上方 5cm 处。
-  // 因为 virtualAnchor 就在最终接触位置，所以相对坐标直接设为 0.05
-  komo->addObjective({time-0.5}, FS_positionRel, {obj, virtualAnchorName}, OT_sos, arr{0, 0, 1e2}, {0., 0., 0.05});
-  komo->addObjective({time-0.1}, FS_positionRel, {obj, virtualAnchorName}, OT_sos, arr{1e2, 1e2, 1e2}, {0., 0., 0.05});
-=======
+
   if (komo->stepsPerPhase >= 10) {
     komo->addObjective({time - 0.5}, FS_vectorZ, {obj}, OT_sos, {1e1},
                        {0., 0., 1.});
@@ -855,7 +867,6 @@ void ManipulationHelper::action_place_on_multi_support(
     komo->addObjective({time - 0.1}, FS_positionRel, {obj, virtualAnchorName},
                        OT_sos, arr{1e2, 1e2, 1e2}, {0., 0., 0.02});
   }
->>>>>>> 77fff47 (backup: local state before merge with remote main (2026-03-08))
 
   // ==============================================================================
   // 4. 避障逻辑: 族谱豁免 + 严格障碍物定义

@@ -26,7 +26,11 @@ desk (table) { shape:ssBox, size:[2. 1.8 .11 .02], Q:"t(0 0 0.105)", color:[.3 .
 cyl1 (desk) { Q:"t(-0.4 0.47 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .8 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
 cyl2 (desk) { Q:"t(-0.4 0.32 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[1 .9 0], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
 cyl3 (desk) { Q:"t(-0.5 0.47 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[0 .9 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+<<<<<<< Updated upstream
 cyl4 (desk) { Q:"t(-0.5 0.32 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.9 0 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+=======
+#cyl4 (desk) { Q:"t(-0.5 0.32 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.9 0 .9], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
+>>>>>>> Stashed changes
 
 
 # base1 

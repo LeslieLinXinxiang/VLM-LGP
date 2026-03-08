@@ -51,7 +51,7 @@ For **EACH** batch, generate a pair of `.fol` and `.lgp` files.
 *   **Condition:** `placed_on` is a LIST of objects.
 *   **Frame Naming:** Use object IDs directly.
     *   Target: `(on cyl1 cyl2 cyl8 base2)`
-*   **Required Rule:** `place_on_3_supports` or `place_on_4_supports`.
+*   **Required Rule:** `place_on_2_supports`, `place_on_3_supports` or `place_on_4_supports`.
 
 ## B. SMART RULE INJECTION
 Determine which rules are needed for this specific batch and include them in the `.fol` file.
@@ -60,7 +60,7 @@ Determine which rules are needed for this specific batch and include them in the
     *   If object is a **Cylinder** -> Use `pick_cylinder`.
     *   If object is a **Base/Box** -> Use `pick_touch`.
 2.  **Placing Logic:** 
-    *   Inject the specific placement rule determined in "SUPPORT LOGIC" above (e.g., `place_on_3_supports`).
+    *   Inject the specific placement rule determined in "SUPPORT LOGIC" above (e.g., `place_on_2_supports`, `place_on_3_supports`).
 
 ## C. LGP SYNTAX (CRITICAL - NO OPERATORS)
 Construct the terminal string for the current batch.
@@ -109,7 +109,15 @@ DecisionRule place_straightOn {
 }
 ```
 
-**4. Place on 3 Supports**
+**4. Place on 2 Supports**
+```lisp
+DecisionRule place_on_2_supports { S1, S2, Obj, Hand,
+  { (is_gripper Hand), (on Hand Obj), (is_object S1), (is_object S2) }
+  { (on Hand Obj)!, (busy Hand)!, (movable Obj)!, (on S1 S2 Obj), (stableOnMulti S1 S2 Obj) }
+}
+```
+
+**5. Place on 3 Supports**
 ```lisp
 DecisionRule place_on_3_supports { S1, S2, S3, Obj, Hand,
   { (is_gripper Hand), (on Hand Obj), (is_object S1), (is_object S2), (is_object S3) }
@@ -117,7 +125,7 @@ DecisionRule place_on_3_supports { S1, S2, S3, Obj, Hand,
 }
 ```
 
-**5. Place on 4 Supports**
+**6. Place on 4 Supports**
 ```lisp
 DecisionRule place_on_4_supports { S1, S2, S3, S4, Obj, Hand,
   { (is_object S1), (is_object S2), (is_object S3), (is_object S4), (is_object Obj), (is_gripper Hand), (on Hand Obj) }
