@@ -190,9 +190,9 @@ Each module file:
 5. Rollback Procedure
 6. Consistency Re-Validation Rule
 
-## Layer 4 — roadmap.md (State Tracking)
-1. Completed Tasks (Historical log of what was fixed/added)
-2. Active In-Progress Task (What is currently being worked on)
+## Layer 4 — roadmap.md (Task Tracker & Rolling Log)
+1. Current Active Tasks (Highly granular timeline log of current task)
+2. Completed Tasks Rolling Archive (Maximum 50 recent tasks. When 51st is added, the oldest is deleted. Must be summarized, 1-2 lines per task)
 3. Pending Backlog (What needs to be done next)
 
 ## Layer 2 — dataflow.md
