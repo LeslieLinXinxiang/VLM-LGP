@@ -258,7 +258,17 @@ Only then are you authorized to use file-writing tools to modify the code.
 
 ---
 
-# 7. MULTI-PROJECT ISOLATION RULE
+# 7. TASK COMPLETION PROTOCOL
+
+When the current active task (from `roadmap.md`) is fully implemented and tested, you MUST execute this completion sequence:
+1. **Confirm**: Confirm with the human that the task is considered successfully completed.
+2. **Update Tracker**: Move the task from "Current Active Tasks" to "Completed Tasks Rolling Archive" in `roadmap.md`. Append the `YYYY-MM-DD HH:MM` completion timestamp.
+3. **Update Specs**: Scan Layer 1 (Architecture) and Layer 2 (Dataflow/Module Specs) documents. If the completed task altered the system's design or module behavior, update these `.md` files to reflect the new reality.
+4. **Git & Close**: Remind the human to commit the changes to Git (`git commit`) and explicitly advise them to close the current AI conversation window to prevent context poisoning before starting the next task.
+
+---
+
+# 8. MULTI-PROJECT ISOLATION RULE
 Each project must begin in a new conversation window.
 If project identifier changes inside conversation:
 
@@ -269,9 +279,9 @@ Stop.
 
 ---
 
-# 8. VERSIONING
+# 9. VERSIONING
 Protocol ID must be printed at start of session:
 ```
-DDE-Bootstrap v1.2
+DDE-Bootstrap v1.3
 ```
 If modified, increment minor version.
