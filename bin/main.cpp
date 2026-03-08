@@ -21,25 +21,40 @@ void resampleAndPrintTrajectory(KOMO* komo, double speed_scale, double freq) {
     if(!komo) return;
     arr q_path = komo->getPath_qOrg();
     arr times = komo->getPath_times();
-    if(times.N != q_path.d0){
-        times.clear();
-        for(uint i=0; i<q_path.d0; i++) times.append((double)i * 0.1); 
-    }
+    
+    // 硬核设定：1000Hz 采样率
+    freq = 1000.0; 
+
     rai::BSpline spline;
     spline.set(3, q_path, times); 
+
     double logical_duration = times.last(); 
     double real_duration = logical_duration * speed_scale;
     uint num_steps = (uint)(real_duration * freq); 
+
     std::cout << "\n>>> V-LGP TRAJECTORY START <<<" << std::endl;
-    std::cout << "DIM: " << num_steps << " " << q_path.d1 << std::endl;
+    // 21维：7*Pos, 7*Vel, 7*Acc
+    std::cout << "DIM: " << num_steps << " 21" << std::endl; 
+
     for(uint i=0; i<num_steps; i++){
         double t_real = (double)i / freq;
         double t_logical = t_real / speed_scale;
+        
         if(t_logical > logical_duration) t_logical = logical_duration;
         if(t_logical < 0.) t_logical = 0.;
-        arr q_smooth = spline.eval(t_logical);
+
+        // 解析求导：B-Spline 的 0阶、1阶、2阶导数
+        arr q = spline.eval(t_logical);       
+        arr v = spline.eval(t_logical, 1);    
+        arr a = spline.eval(t_logical, 2);    
+
         std::cout << t_real;
-        for(uint j=0; j<q_smooth.N; j++) std::cout << " " << q_smooth(j);
+        // Pos
+        for(double x : q) std::cout << " " << x;
+        // Vel: 物理速度 = 逻辑速度 / speed_scale
+        for(double x : v) std::cout << " " << (x / speed_scale);
+        // Acc: 物理加速度 = 逻辑加速度 / (speed_scale^2)
+        for(double x : a) std::cout << " " << (x / (speed_scale * speed_scale));
         std::cout << std::endl;
     }
     std::cout << ">>> V-LGP TRAJECTORY END <<<" << std::endl;

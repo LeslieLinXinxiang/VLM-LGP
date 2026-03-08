@@ -144,6 +144,13 @@ struct Default_LGP_TAMP_Abstraction : LGP_TAMP_Abstraction {
       StringA supports = action.sub({1, 4});
       
       manip.action_place_on_multi_support(time, obj, supports);
+
+    } else if(action(0) == "place_on_2_supports"){
+      str& obj = action(3);
+      
+      StringA supports = action.sub({1, 3});
+      
+      manip.action_place_on_multi_support(time, obj, supports);
     
     }else if(action(0)=="place_box"){
       str& obj = action(1);
