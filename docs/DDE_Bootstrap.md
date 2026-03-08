@@ -260,11 +260,18 @@ Only then are you authorized to use file-writing tools to modify the code.
 
 # 7. TASK COMPLETION PROTOCOL
 
-When the current active task (from `roadmap.md`) is fully implemented and tested, you MUST execute this completion sequence:
-1. **Confirm**: Confirm with the human that the task is considered successfully completed.
-2. **Update Tracker**: Move the task from "Current Active Tasks" to "Completed Tasks Rolling Archive" in `roadmap.md`. Append the `YYYY-MM-DD HH:MM` completion timestamp.
-3. **Update Specs**: Scan Layer 1 (Architecture) and Layer 2 (Dataflow/Module Specs) documents. If the completed task altered the system's design or module behavior, update these `.md` files to reflect the new reality.
-4. **Git & Close**: Remind the human to commit the changes to Git (`git commit`) and explicitly advise them to close the current AI conversation window to prevent context poisoning before starting the next task.
+When you believe the current active task (from `roadmap.md`) is fully implemented and tested, you MUST enter a formalized completion lifecycle:
+
+**Phase 1: Completion Request**
+You must output a summary of the changes made and explicitly ask the human: "Is this task considered complete? If so, please reply with `[TASK_COMPLETED]`."
+**NO ROADMAP OR SPEC UPDATES ALLOWED YET.**
+
+**Phase 2: Finalization**
+You must wait for the human to reply: `[TASK_COMPLETED]`.
+Only upon receiving this exact string, you are authorized to execute the completion sequence:
+1. **Update Tracker**: Move the task from "Current Active Tasks" to "Completed Tasks Rolling Archive" in `roadmap.md`. Append the `YYYY-MM-DD HH:MM` completion timestamp.
+2. **Update Specs**: Scan Layer 1 (Architecture) and Layer 2 (Dataflow/Module Specs) documents. If the completed task altered the system's design or module behavior, update these `.md` files to reflect the new reality.
+3. **Git & Close**: Prompt the human to commit the changes and explicitly advise them to **CLOSE the current conversation window** to start a fresh bootstrap for the next task.
 
 ---
 
