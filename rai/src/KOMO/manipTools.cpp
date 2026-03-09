@@ -550,8 +550,8 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
                      arr{1, 0, 0} * 1e2);
   komo->addObjective({time}, FS_positionRel, {gripper, targetF->name}, OT_eq,
                      arr{0, 1, 0} * 1e2);
-  komo->addObjective({time}, FS_positionDiff, {gripper, targetF->name}, OT_sos,
-                     {1e2});
+  // REMOVED OVERLAPPING OT_sos:
+  // komo->addObjective({time}, FS_positionDiff, {gripper, targetF->name}, OT_sos, {1e2});
 
   // =================================================================
   // 5. [Phase 4] 全程避障 (Global Collision Avoidance)
@@ -849,8 +849,8 @@ void ManipulationHelper::action_place_on_multi_support(
   komo->addObjective({time}, FS_position, {obj}, OT_eq, arr{1e2, 1e2, 0}, {centroid_world(0), centroid_world(1), 0.});
 
   // B. 姿态约束
-  // 物体总体上靠近锚点姿态 (极低权重的位姿引导，防止完全不受限产生的旋转自由度漂移)
-  komo->addObjective({time}, FS_poseDiff, {virtualAnchorName, obj}, OT_sos, {1e0});
+  // 移除全范围的 PoseDiff 避免和下方的 VectorZ 冲突拉扯
+  komo->addObjective({time}, FS_vectorXDiff, {virtualAnchorName, obj}, OT_sos, {1e0}); // 只用极微弱力度约束面内旋转
   
   // 严格要求垂直向上 (硬约束)
   komo->addObjective({time}, FS_vectorZ, {obj}, OT_eq, {1e2}, {0., 0., 1.});
