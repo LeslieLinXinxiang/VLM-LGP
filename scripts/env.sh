@@ -3,6 +3,12 @@
 export VLM_LGP_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 export RAI_PATH="$VLM_LGP_ROOT/rai"
 
+# 自动加载本地环境变量与机密 (如 QWEN_API_KEY)
+if [ -f "$VLM_LGP_ROOT/.env" ]; then
+    export $(grep -v '^#' "$VLM_LGP_ROOT/.env" | xargs)
+    echo "🔑 Loaded Secrets from .env"
+fi
+
 # 路径对齐
 export PYTHONPATH="$RAI_PATH/lib:$RAI_PATH/src/ry:$PYTHONPATH"
 export LD_LIBRARY_PATH="$RAI_PATH/lib:$LD_LIBRARY_PATH"

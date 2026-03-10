@@ -8,16 +8,16 @@ sys.path.insert(0, root_path)
 import robotic as ry
 
 def run_viewer():
-    g_file = os.path.join(root_path, "test_2supports_scene.g")
+    if len(sys.argv) > 1:
+        g_file = sys.argv[1]
+    else:
+        g_file = os.path.join(root_path, "generated", "scene_named.g")
 
     C = ry.Config()
     C.addFile(g_file)
 
     print("\n-----------------------------------------------------------")
-    print("2-Supports Test Scene Loaded.")
-    print("  - cube_L (orange) and cube_R (yellow) side by side in front of arm")
-    print("  - RectPrism (blue) to the right, waiting to be placed on top of cubes")
-    print("Confirm everything looks correct before running the solver.")
+    print(f"Loaded Scene: {g_file}")
     print("Close window or Ctrl+C to exit.")
     print("-----------------------------------------------------------\n")
 

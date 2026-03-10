@@ -1,47 +1,130 @@
-# core/vlm.py (V16.0 Architecture: Generic Phase 1 + Inventory Phase 2)
-import google.generativeai as genai
 import os
 import json
 import time
 import cv2
+import base64
+from io import BytesIO
 from PIL import Image
 from core.utils import clean_vlm_json_output, load_json
 
-# [CONFIG] Gemini 2.5 Pro (Stable)
-MODEL_NAME = 'gemini-3-flash-preview'
-GOOGLE_API_KEY = "AIzaSyAZwB5CMwfgzsTXoaA6yVRWpuX_A1jYO7M" # Check your key
-genai.configure(api_key=GOOGLE_API_KEY)
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
+
+try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
+
+# [CONFIG] Gemini vs Qwen
+MODEL_NAME = os.getenv("VLM_MODEL_NAME", "qwen3-vl-plus-2025-12-19")
+VLM_TEMPERATURE = float(os.getenv("VLM_TEMPERATURE", "0.05"))
+VLM_TOP_P = float(os.getenv("VLM_TOP_P", "0.35"))
+VLM_PRINT_RAW_OUTPUT = os.getenv("VLM_PRINT_RAW_OUTPUT", "1") == "1"
+VLM_SAVE_RAW_OUTPUT = os.getenv("VLM_SAVE_RAW_OUTPUT", "0") == "1"
+VLM_RAW_OUTPUT_PATH = os.getenv("VLM_RAW_OUTPUT_PATH", "generated/phase1_raw_output.txt")
 
 class VLMClient:
     def __init__(self):
+        self.client_type = None
+        self.model = None
+        self.openai_client = None
         try:
-            self.model = genai.GenerativeModel(MODEL_NAME)
-            print(f"[Core.VLM] Initializing model: {MODEL_NAME}...")
+            qwen_key = os.getenv("QWEN_API_KEY")
+            openai_key = os.getenv("OPENAI_API_KEY")
+            gemini_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+            if qwen_key or openai_key or "qwen" in MODEL_NAME.lower():
+                if not OpenAI:
+                    raise RuntimeError("openai package not installed. Run 'pip install openai'.")
+                api_key = qwen_key or openai_key
+                if not api_key:
+                    raise RuntimeError("Missing QWEN_API_KEY or OPENAI_API_KEY")
+                base_url = os.getenv("OPENAI_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+                self.openai_client = OpenAI(api_key=api_key, base_url=base_url)
+                self.client_type = "openai"
+                print(f"[Core.VLM] Initializing OpenAI/Qwen client for: {MODEL_NAME}...")
+            elif gemini_key:
+                genai.configure(api_key=gemini_key)
+                self.model = genai.GenerativeModel(MODEL_NAME)
+                self.client_type = "gemini"
+                print(f"[Core.VLM] Initializing Gemini model: {MODEL_NAME}...")
+            else:
+                print("[Core.VLM] Missing API keys for VLM.")
         except Exception as e:
             print(f"[Core.VLM] Error initializing model: {e}")
 
     def _call_gemini_with_retry(self, prompt_content, is_json_output=True):
-        # ... (保持原有的流式输出和重试逻辑不变) ...
-        generation_config = genai.types.GenerationConfig(
-            max_output_tokens=65536, 
-            temperature=0.1
-        )
-        req_opts = {'timeout': 900} 
-        
+        if not self.client_type:
+            raise RuntimeError("VLM client is not initialized.")
+
         for attempt in range(3):
             try:
-                # print(f"   >>> [VLM] Requesting (Attempt {attempt+1})...", end="", flush=True)
-                response_stream = self.model.generate_content(prompt_content, generation_config=generation_config, stream=True, request_options=req_opts)
-                full_text = ""
-                for chunk in response_stream:
-                    if chunk.text: full_text += chunk.text
-                        # print(".", end="", flush=True)
-                # print(" Done.")
+                if self.client_type == "openai":
+                    messages_content = []
+                    for item in prompt_content:
+                        if isinstance(item, str):
+                            messages_content.append({"type": "text", "text": item})
+                        elif isinstance(item, Image.Image):
+                            # OpenAI image_url path expects JPEG/PNG bytes. Convert alpha modes to RGB for JPEG safety.
+                            image_for_upload = item
+                            if image_for_upload.mode in ("RGBA", "LA"):
+                                alpha = image_for_upload.getchannel("A")
+                                bg = Image.new("RGB", image_for_upload.size, (255, 255, 255))
+                                bg.paste(image_for_upload.convert("RGBA"), mask=alpha)
+                                image_for_upload = bg
+                            elif image_for_upload.mode == "P":
+                                image_for_upload = image_for_upload.convert("RGBA").convert("RGB")
+                            elif image_for_upload.mode != "RGB":
+                                image_for_upload = image_for_upload.convert("RGB")
 
+                            buffered = BytesIO()
+                            image_for_upload.save(buffered, format="JPEG")
+                            img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+                            messages_content.append({
+                                "type": "image_url",
+                                "image_url": {"url": f"data:image/jpeg;base64,{img_str}"}
+                            })
+                    response = self.openai_client.chat.completions.create(
+                        model=MODEL_NAME,
+                        messages=[{"role": "user", "content": messages_content}],
+                        temperature=VLM_TEMPERATURE,
+                        top_p=VLM_TOP_P,
+                        stream=False
+                    )
+                    full_text = response.choices[0].message.content
+                elif self.client_type == "gemini":
+                    generation_config = genai.types.GenerationConfig(
+                        max_output_tokens=65536, 
+                        temperature=VLM_TEMPERATURE,
+                        top_p=VLM_TOP_P
+                    )
+                    req_opts = {'timeout': 900} 
+                    response_stream = self.model.generate_content(prompt_content, generation_config=generation_config, stream=True, request_options=req_opts)
+                    full_text = ""
+                    for chunk in response_stream:
+                        if chunk.text: full_text += chunk.text
+                
                 if not full_text:
                     print(f"\n[VLM] Warning: Empty response.")
                     time.sleep(2)
                     continue 
+
+                if VLM_PRINT_RAW_OUTPUT:
+                    print("\n=== VLM RAW OUTPUT START ===")
+                    print(full_text)
+                    print("=== VLM RAW OUTPUT END ===\n")
+
+                if VLM_SAVE_RAW_OUTPUT:
+                    try:
+                        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+                        save_path = os.path.join(root_dir, VLM_RAW_OUTPUT_PATH)
+                        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+                        with open(save_path, "w", encoding="utf-8") as f:
+                            f.write(full_text)
+                    except Exception as save_err:
+                        print(f"[VLM] Warning: failed to save raw output: {save_err}")
 
                 if is_json_output:
                     try:

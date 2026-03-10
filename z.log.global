@@ -1,15 +1,53 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-03-09 13:32:31:276175
+** execution start: 2026-03-10 14:09:30:125906
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
 graph.cpp:initParameters:1608(3)  - failed
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP' from '/home/leslie/Projects/VLM_LGP'
-util.cpp:getIs:1104(3) opening input file 'unnamed.g'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/../../../rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP'
-util.cpp:cd_file:1078(-2) couldn't change to directory '/home/leslie/Projects/VLM_LGP/../../../rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP'
-** execution stop: 2026-03-09 13:32:31:330719
-** real time: 0.054581sec
-** CPU time: 3.60621
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/generated' from '/home/leslie/Projects/VLM_LGP'
+util.cpp:getIs:1104(3) opening input file 'scene_named.g'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'panda.g'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda'
+util.cpp:getIs:1104(3) opening input file 'panda_arm_hand_conv.yml'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link0.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link1.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link2.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link3.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link4.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link5.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link6.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'link7.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'hand.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'finger.h5'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/generated' from '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:getIs:1104(3) opening input file 'triangular_prism.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
+** execution stop: 2026-03-10 14:15:36:712344
+** real time: 366.586sec
+** CPU time: 6.53849
 
 ** set+queried params:
