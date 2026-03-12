@@ -37,13 +37,14 @@ def validate_plan(plan_json, valid_inventory_list):
     """
     errors = []
 
-    # Prefer new schema if present.
+    # Prefer object-list schema if present.
     if isinstance(plan_json, dict) and "objects" in plan_json:
         objects = plan_json.get("objects")
         if not isinstance(objects, list) or not objects:
             return False, "CRITICAL: 'objects' must be a non-empty array."
 
         allowed_objects = {"Triangular Prism", "Cube", "Rectangular Prism", "Cylinder"}
+        allowed_positions = {"left", "center", "right"}
 
         ids = []
         for obj in objects:
@@ -61,6 +62,77 @@ def validate_plan(plan_json, valid_inventory_list):
         expected_id_set = set(range(len(objects)))
         if valid_id_set != expected_id_set:
             errors.append("- object ids must be consecutive and exactly 0..N-1.")
+
+        # New format: objects + edges[{supporter, position?}]
+        has_edges_schema = any(isinstance(obj, dict) and "edges" in obj for obj in objects)
+        if has_edges_schema:
+            obj_by_id = {obj.get("id"): obj for obj in objects if isinstance(obj, dict) and isinstance(obj.get("id"), int)}
+
+            table_obj = obj_by_id.get(0)
+            if not isinstance(table_obj, dict):
+                errors.append("- id 0 table object is required in edges schema.")
+            else:
+                if str(table_obj.get("object", "")).lower() != "table":
+                    errors.append("- id 0 object must be 'table' in edges schema.")
+                table_edges = table_obj.get("edges")
+                if not isinstance(table_edges, list) or table_edges:
+                    errors.append("- id 0 table must have empty 'edges': [].")
+
+            has_table_support = False
+            for obj in objects:
+                if not isinstance(obj, dict):
+                    continue
+
+                obj_id = obj.get("id")
+                obj_name = obj.get("object")
+                edges = obj.get("edges")
+
+                if obj_id == 0:
+                    continue
+
+                if obj_name not in allowed_objects:
+                    errors.append(f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
+
+                if not isinstance(edges, list) or not edges:
+                    errors.append(f"- [Object {obj_id}] 'edges' must be a non-empty array.")
+                    continue
+
+                supporter_set = set()
+                for edge in edges:
+                    if not isinstance(edge, dict):
+                        errors.append(f"- [Object {obj_id}] edge entry must be JSON object.")
+                        continue
+
+                    supporter = edge.get("supporter")
+                    if not isinstance(supporter, int):
+                        errors.append(f"- [Object {obj_id}] edge.supporter must be integer.")
+                        continue
+
+                    if supporter not in valid_id_set:
+                        errors.append(f"- [Object {obj_id}] supporter id {supporter} not found.")
+                    if isinstance(obj_id, int) and supporter >= obj_id:
+                        errors.append(f"- [Object {obj_id}] supporter id {supporter} must satisfy supporter < id.")
+
+                    if supporter in supporter_set:
+                        errors.append(f"- [Object {obj_id}] duplicate supporter id {supporter} in edges.")
+                    supporter_set.add(supporter)
+
+                    if supporter == 0:
+                        has_table_support = True
+
+                    if "position" in edge:
+                        pos = edge.get("position")
+                        if not isinstance(pos, str) or pos.lower() not in allowed_positions:
+                            errors.append(
+                                f"- [Object {obj_id}] invalid position {pos!r}. Must be one of {sorted(allowed_positions)}."
+                            )
+
+            if not has_table_support:
+                errors.append("- at least one object must be supported by table (supporter=0).")
+
+            if errors:
+                return False, "\n".join(errors)
+            return True, "Valid (edges schema)"
 
         has_table_support = False
         for obj in objects:

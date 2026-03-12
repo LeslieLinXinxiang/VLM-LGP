@@ -306,3 +306,37 @@ class VLMClient:
         
         print(f"   >>> [P3] Architect digitizing state...")
         return self._call_gemini_with_retry(prompt_content, is_json_output=True)
+
+    # --- PHASE 2 (NEW): Graph-first strategist / selector JSON APIs ---
+    def phase2_generate_strategies(self, phase1_json, prompt_path, rejection_feedback=None):
+        with open(prompt_path, "r", encoding="utf-8") as f:
+            template = f.read()
+
+        payload = {"phase1_json": phase1_json}
+        if rejection_feedback:
+            payload["rejection_feedback"] = rejection_feedback
+
+        prompt_content = [
+            template,
+            "\n--- INPUT DATA ---\n",
+            json.dumps(payload, ensure_ascii=True),
+        ]
+        return self._call_gemini_with_retry(prompt_content, is_json_output=True)
+
+    def phase2_select_strategy(self, phase1_json, prompt1_output, prompt_path, rejection_feedback=None):
+        with open(prompt_path, "r", encoding="utf-8") as f:
+            template = f.read()
+
+        payload = {
+            "phase1_json": phase1_json,
+            "strategies": prompt1_output.get("strategies", prompt1_output.get("candidates", [])),
+        }
+        if rejection_feedback:
+            payload["rejection_feedback"] = rejection_feedback
+
+        prompt_content = [
+            template,
+            "\n--- INPUT DATA ---\n",
+            json.dumps(payload, ensure_ascii=True),
+        ]
+        return self._call_gemini_with_retry(prompt_content, is_json_output=True)

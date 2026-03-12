@@ -36,6 +36,19 @@ obj_07 (table) { Q:"t(-0.8 0 .1)", joint:rigid, shape:cylinder, size:[.1 .03], c
 obj_08 (table) { Q:"t(-0.8 -0.15 .1)", joint:rigid, shape:cylinder, size:[.1 .03], color:[.6 .3 .1], contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place} } 
 
 # -----------------------------------------------------------
+# Placement Patch Slots (for Phase2 terminal mapping)
+# -----------------------------------------------------------
+# Table-level left/right slots for layer-1 placements
+Table_Left  (table) { Q:"t(-0.08  0.05 .001)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Right (table) { Q:"t( 0.08  0.05 .001)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+
+# Rect-level left/right slots (obj_03 / obj_04 are rectangular prisms in this template)
+Rect_1_Left  (obj_03) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_1_Right (obj_03) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_2_Left  (obj_04) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_2_Right (obj_04) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+
+# -----------------------------------------------------------
 # Marker
 # -----------------------------------------------------------
 place_obj_09 (table) { Q:[0 0.35 .05], shape:ssBox, size:[.05 .05 .001 .001], color:[.8 .5 .5], contact:0, logical:{ is_place } }

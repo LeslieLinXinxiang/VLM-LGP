@@ -13,6 +13,7 @@ from pipelines.run_phase2 import run_phase2_pipeline
 from core.ros2_bridge import ExecutionManager
 from core.solver_bridge import SolverBridge
 from core.utils import load_json
+from core.graph_adapter import build_graph_from_phase1
 
 def print_banner(text):
     print("\n" + "#" * 60)
@@ -28,6 +29,7 @@ class SystemDriver:
         self.current_g_file = os.path.join(self.generated_dir, "scene", "scene_named.g")
         
         self.target_graph = None
+        self.target_graph_math = None
         self.inventory_data = [] 
         
         # 物理执行管理器
@@ -69,6 +71,17 @@ class SystemDriver:
         success, graph_path = execute_phase1()
         if not success: return False
         self.target_graph = load_json(graph_path)
+
+        if isinstance(self.target_graph, dict) and "objects" in self.target_graph:
+            self.target_graph_math = build_graph_from_phase1(self.target_graph)
+            print(
+                "[Driver] Phase1 JSON received (objects+edges). "
+                f"Built G=(V,E): |V|={self.target_graph_math['meta']['vertex_count']}, "
+                f"|E|={self.target_graph_math['meta']['edge_count']}"
+            )
+        else:
+            self.target_graph_math = None
+
         print(f"[Driver] Nodes to execute: {len(self.target_graph.get('assembly_nodes', []))}")
         return True
 

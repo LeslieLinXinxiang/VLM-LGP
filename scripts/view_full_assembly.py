@@ -8,7 +8,7 @@ sys.path.insert(0, root_path)
 import robotic as ry
 
 def run_viewer():
-    g_file = os.path.join(root_path, "full_assembly_scene.g")
+    g_file = os.path.join(root_path, "generated", "scene", "scene_named.g")
 
     C = ry.Config()
     C.addFile(g_file)
