@@ -237,6 +237,12 @@ def generate_step_files(
     """
     os.makedirs(out_dir, exist_ok=True)
 
+    # Remove stale .fol/.lgp files from previous runs so old files don't
+    # contaminate the current strategy's step sequence.
+    for fname in os.listdir(out_dir):
+        if fname.endswith(".fol") or fname.endswith(".lgp"):
+            os.remove(os.path.join(out_dir, fname))
+
     objects    = phase1_json["objects"]
     id_to_name = build_id_to_name(objects)
     id_to_obj  = {o["id"]: o for o in objects}

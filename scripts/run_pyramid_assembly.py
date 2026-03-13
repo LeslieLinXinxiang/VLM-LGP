@@ -12,7 +12,7 @@ import os, sys, subprocess, glob
 
 ROOT    = os.path.abspath(os.path.dirname(__file__) + "/..")
 SOLVER  = os.path.join(ROOT, "bin/x.exe")
-RUN_DIR = os.path.join(ROOT, "generated", "pyramid_assembly_run")
+RUN_DIR = os.path.join(ROOT, "generated", "node_1_run")
 
 lgp_files = sorted(glob.glob(os.path.join(RUN_DIR, "*.lgp")))
 
@@ -20,7 +20,7 @@ if not lgp_files:
     print(f"❌ No .lgp files found in {RUN_DIR}")
     sys.exit(1)
 
-scene = os.path.join(RUN_DIR, "scene_named.g")
+scene = os.path.join(ROOT, "generated", "scene_named.g")
 
 print("=" * 60)
 print("  Pyramid Assembly — Single-Directory Chained Planning")

@@ -3,108 +3,159 @@ import json
 import time
 import cv2
 import base64
-from io import BytesIO
 from PIL import Image
+from io import BytesIO
 from core.utils import clean_vlm_json_output, load_json
 
-try:
-    from openai import OpenAI
-except ImportError:
-    OpenAI = None
+import httpx
+import google.genai as genai
+from google.genai import types as genai_types
+from dotenv import load_dotenv
 
-try:
-    import google.generativeai as genai
-except ImportError:
-    genai = None
+# Load .env from project root
+_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+load_dotenv(os.path.join(_ROOT, ".env"), override=False)
 
-# [CONFIG] Gemini vs Qwen
-MODEL_NAME = os.getenv("VLM_MODEL_NAME", "qwen3-vl-plus-2025-12-19")
-VLM_TEMPERATURE = float(os.getenv("VLM_TEMPERATURE", "0.05"))
-VLM_TOP_P = float(os.getenv("VLM_TOP_P", "0.35"))
-VLM_PRINT_RAW_OUTPUT = os.getenv("VLM_PRINT_RAW_OUTPUT", "1") == "1"
-VLM_SAVE_RAW_OUTPUT = os.getenv("VLM_SAVE_RAW_OUTPUT", "0") == "1"
-VLM_RAW_OUTPUT_PATH = os.getenv("VLM_RAW_OUTPUT_PATH", "generated/phase1_raw_output.txt")
+# ============================================================================
+# Backend Switch — set VLM_BACKEND=qwen or VLM_BACKEND=gemini in .env
+# ============================================================================
+VLM_BACKEND = os.getenv("VLM_BACKEND", "qwen")
+
+QWEN_API_KEY = os.getenv("QWEN_API_KEY", "")
+QWEN_MODEL   = os.getenv("QWEN_MODEL_NAME", "qwen3.5-flash")
+QWEN_PROXY   = os.getenv("QWEN_PROXY_URL") or None
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+GEMINI_MODEL   = os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash-preview")
+GEMINI_PROXY   = os.getenv("GEMINI_PROXY_URL") or None
+
+# Active config — resolved at import time; rest of file uses these unchanged
+API_KEY    = QWEN_API_KEY   if VLM_BACKEND == "qwen" else GEMINI_API_KEY
+MODEL_NAME = QWEN_MODEL     if VLM_BACKEND == "qwen" else GEMINI_MODEL
+PROXY_URL  = QWEN_PROXY     if VLM_BACKEND == "qwen" else GEMINI_PROXY
+# ============================================================================
+
+# ============================================================================
+VLM_TEMPERATURE = 0.0
+VLM_TOP_P = 0.35
+VLM_PRINT_RAW_OUTPUT = True
+VLM_SAVE_RAW_OUTPUT = False
+VLM_RAW_OUTPUT_PATH = "generated/phase1_raw_output.txt"
 
 class VLMClient:
     def __init__(self):
-        self.client_type = None
-        self.model = None
-        self.openai_client = None
-        try:
-            qwen_key = os.getenv("QWEN_API_KEY")
-            openai_key = os.getenv("OPENAI_API_KEY")
-            gemini_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+        self.backend = VLM_BACKEND
+        if self.backend == "gemini":
+            _http = httpx.Client(proxy=PROXY_URL)
+            self.client = genai.Client(api_key=API_KEY, http_options={"httpx_client": _http})
+            self.model = MODEL_NAME
+            print(f"[Core.VLM] Initialized Gemini: {self.model} (proxy={PROXY_URL})")
+        elif self.backend == "qwen":
+            self.http_client = httpx.Client(trust_env=False)
+            self.model = MODEL_NAME
+            print(f"[Core.VLM] Initialized Qwen: {self.model}")
+    
+    def _image_to_base64(self, image_bgr):
+        _, buffer = cv2.imencode('.jpg', image_bgr)
+        return base64.b64encode(buffer).decode('utf-8')
 
-            if qwen_key or openai_key or "qwen" in MODEL_NAME.lower():
-                if not OpenAI:
-                    raise RuntimeError("openai package not installed. Run 'pip install openai'.")
-                api_key = qwen_key or openai_key
-                if not api_key:
-                    raise RuntimeError("Missing QWEN_API_KEY or OPENAI_API_KEY")
-                base_url = os.getenv("OPENAI_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
-                self.openai_client = OpenAI(api_key=api_key, base_url=base_url)
-                self.client_type = "openai"
-                print(f"[Core.VLM] Initializing OpenAI/Qwen client for: {MODEL_NAME}...")
-            elif gemini_key:
-                genai.configure(api_key=gemini_key)
-                self.model = genai.GenerativeModel(MODEL_NAME)
-                self.client_type = "gemini"
-                print(f"[Core.VLM] Initializing Gemini model: {MODEL_NAME}...")
-            else:
-                print("[Core.VLM] Missing API keys for VLM.")
-        except Exception as e:
-            print(f"[Core.VLM] Error initializing model: {e}")
-
-    def _call_gemini_with_retry(self, prompt_content, is_json_output=True):
-        if not self.client_type:
-            raise RuntimeError("VLM client is not initialized.")
-
+    def _prepare_qwen_messages(self, prompt_text, images_list=None):
+        content = []
+        if prompt_text:
+            content.append({"type": "text", "text": prompt_text})
+        if images_list:
+            for img in images_list:
+                if isinstance(img, Image.Image):
+                    buf = BytesIO()
+                    img.save(buf, format="JPEG")
+                    b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+                    content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}})
+                elif isinstance(img, str):
+                    content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img}"}})
+        return content
+    
+    def _call_vlm_with_retry(self, prompt_content, is_json_output=True):
+        """
+        统一的 VLM 调用接口，根据 backend 分发到不同实现
+        prompt_content 是列表，可包含：文本、PIL Image 等
+        """
+        if self.backend == "gemini":
+            return self._call_gemini_with_retry(prompt_content, is_json_output)
+        elif self.backend == "qwen":
+            return self._call_qwen_with_retry(prompt_content, is_json_output)
+    
+    def _call_qwen_with_retry(self, prompt_content, is_json_output=True):
+        QWEN_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
         for attempt in range(3):
             try:
-                if self.client_type == "openai":
-                    messages_content = []
-                    for item in prompt_content:
-                        if isinstance(item, str):
-                            messages_content.append({"type": "text", "text": item})
-                        elif isinstance(item, Image.Image):
-                            # OpenAI image_url path expects JPEG/PNG bytes. Convert alpha modes to RGB for JPEG safety.
-                            image_for_upload = item
-                            if image_for_upload.mode in ("RGBA", "LA"):
-                                alpha = image_for_upload.getchannel("A")
-                                bg = Image.new("RGB", image_for_upload.size, (255, 255, 255))
-                                bg.paste(image_for_upload.convert("RGBA"), mask=alpha)
-                                image_for_upload = bg
-                            elif image_for_upload.mode == "P":
-                                image_for_upload = image_for_upload.convert("RGBA").convert("RGB")
-                            elif image_for_upload.mode != "RGB":
-                                image_for_upload = image_for_upload.convert("RGB")
+                text_parts, images = [], []
+                for item in prompt_content:
+                    if isinstance(item, str):
+                        text_parts.append(item)
+                    elif isinstance(item, Image.Image):
+                        images.append(item)
 
-                            buffered = BytesIO()
-                            image_for_upload.save(buffered, format="JPEG")
-                            img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
-                            messages_content.append({
-                                "type": "image_url",
-                                "image_url": {"url": f"data:image/jpeg;base64,{img_str}"}
-                            })
-                    response = self.openai_client.chat.completions.create(
-                        model=MODEL_NAME,
-                        messages=[{"role": "user", "content": messages_content}],
-                        temperature=VLM_TEMPERATURE,
-                        top_p=VLM_TOP_P,
-                        stream=False
-                    )
-                    full_text = response.choices[0].message.content
-                elif self.client_type == "gemini":
-                    generation_config = genai.types.GenerationConfig(
-                        max_output_tokens=65536, 
-                        temperature=VLM_TEMPERATURE,
-                        top_p=VLM_TOP_P
-                    )
-                    req_opts = {'timeout': 900} 
-                    response_stream = self.model.generate_content(prompt_content, generation_config=generation_config, stream=True, request_options=req_opts)
-                    full_text = ""
-                    for chunk in response_stream:
-                        if chunk.text: full_text += chunk.text
+                payload = {
+                    "model": self.model,
+                    "messages": [{"role": "user", "content": self._prepare_qwen_messages("\n".join(text_parts), images or None)}],
+                    "temperature": VLM_TEMPERATURE,
+                    "top_p": VLM_TOP_P,
+                    "max_tokens": 65536,
+                }
+                headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+                response = self.http_client.post(QWEN_URL, json=payload, headers=headers, timeout=120)
+                response.raise_for_status()
+
+                choices = response.json().get("choices", [])
+                full_text = choices[0].get("message", {}).get("content", "") if choices else ""
+                if isinstance(full_text, list):
+                    full_text = "\n".join(x.get("text", "") for x in full_text if isinstance(x, dict))
+
+                if not full_text:
+                    time.sleep(2); continue
+
+                if VLM_PRINT_RAW_OUTPUT:
+                    print("\n=== VLM RAW OUTPUT START ==="); print(full_text); print("=== VLM RAW OUTPUT END ===\n")
+                if VLM_SAVE_RAW_OUTPUT:
+                    try:
+                        save_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")), VLM_RAW_OUTPUT_PATH)
+                        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+                        open(save_path, "w", encoding="utf-8").write(full_text)
+                    except Exception as e:
+                        print(f"[VLM] Warning: failed to save raw output: {e}")
+
+                if is_json_output:
+                    try:
+                        return json.loads(clean_vlm_json_output(full_text))
+                    except json.JSONDecodeError:
+                        time.sleep(1); continue
+                else:
+                    return full_text
+
+            except httpx.HTTPStatusError as e:
+                code = e.response.status_code if e.response is not None else "?"
+                print(f"\n[VLM] Qwen API Error: HTTP {code} - {(e.response.text if e.response else '')[:200]}")
+                time.sleep(2)
+            except Exception as e:
+                print(f"\n[VLM] Qwen API Error: {e}")
+                time.sleep(2)
+        raise RuntimeError("VLM call failed.")
+
+    def _call_gemini_with_retry(self, prompt_content, is_json_output=True):
+        """Call Gemini API with retry logic"""
+        for attempt in range(3):
+            try:
+                config = genai_types.GenerateContentConfig(
+                    max_output_tokens=65536,
+                    temperature=VLM_TEMPERATURE,
+                    top_p=VLM_TOP_P,
+                )
+                response = self.client.models.generate_content(
+                    model=self.model,
+                    contents=prompt_content,
+                    config=config,
+                )
+                full_text = response.text
                 
                 if not full_text:
                     print(f"\n[VLM] Warning: Empty response.")
@@ -147,7 +198,7 @@ class VLMClient:
         specs = load_json(specs_json_path)
         img_pil = Image.fromarray(cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB))
         prompt_content = [template, "\n--- INPUT DATA ---\n", "1. Scene Image:", img_pil, "2. Specs:", f"```json\n{json.dumps(specs)}\n```"]
-        return self._call_gemini_with_retry(prompt_content)
+        return self._call_vlm_with_retry(prompt_content)
 
     # --- PHASE 1: PLANNING (GENERIC - NO ID MAPPING) ---
     # [CHANGE] Removed 'mapping_list' argument
@@ -175,7 +226,7 @@ class VLMClient:
         if feedback_context:
             prompt_content.append(f"\n{feedback_context}")
             
-        return self._call_gemini_with_retry(prompt_content)
+        return self._call_vlm_with_retry(prompt_content)
     
     def run_phase1_analyst(self, target_img_path, prompt_path, example_content=None):
         with open(prompt_path, 'r') as f:
@@ -200,7 +251,7 @@ class VLMClient:
         
         # Force Text Output (is_json_output=False)
         print(f"   >>> [VLM] Running Analyst (Vision -> Text)...")
-        return self._call_gemini_with_retry(prompt_content, is_json_output=False)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=False)
 
     # [STEP 2] The Architect: Text Report -> JSON Structure
     def run_phase1_architect(self, analyst_report, prompt_path, feedback_context=None):
@@ -222,7 +273,7 @@ class VLMClient:
 
         # Force JSON Output (is_json_output=True)
         print(f"   >>> [VLM] Running Architect (Text -> JSON)...")
-        return self._call_gemini_with_retry(prompt_content, is_json_output=True)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=True)
 
     # --- PHASE 2: STRATEGY (ALLOCATION AWARE) ---
     def propose_strategies(self, current_img_bgr, initial_img_bgr, node_data, target_graph, inventory_data, prompt_path):
@@ -238,7 +289,7 @@ class VLMClient:
             "3. Generic Node Request:", f"```json\n{json.dumps(node_data)}\n```",
             "4. Target Graph:", f"```json\n{json.dumps(target_graph)}\n```"
         ]
-        return self._call_gemini_with_retry(prompt_content)
+        return self._call_vlm_with_retry(prompt_content)
 
     # --- PHASE 2: COMPILATION (Decider & Coder) ---
     # [CHANGE] Removed target_img_bgr argument
@@ -260,7 +311,7 @@ class VLMClient:
             "5. Current Scene:", img_curr_pil,
             "6. Generic Node Request:", f"```json\n{json.dumps(node_data)}\n```"
         ]
-        return self._call_gemini_with_retry(prompt_content, is_json_output=False)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=False)
     
     def run_phase3_analyst(self, reality_img_path, prompt_path, example_content=None):
         """
@@ -286,7 +337,7 @@ class VLMClient:
         ])
         
         print(f"   >>> [P3] Analyst scanning reality...")
-        return self._call_gemini_with_retry(prompt_content, is_json_output=False)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=False)
 
     def run_phase3_architect(self, inspector_report, prompt_path):
         """
@@ -305,7 +356,7 @@ class VLMClient:
         ]
         
         print(f"   >>> [P3] Architect digitizing state...")
-        return self._call_gemini_with_retry(prompt_content, is_json_output=True)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=True)
 
     # --- PHASE 2 (NEW): Graph-first strategist / selector JSON APIs ---
     def phase2_generate_strategies(self, phase1_json, prompt_path, rejection_feedback=None):
@@ -321,7 +372,7 @@ class VLMClient:
             "\n--- INPUT DATA ---\n",
             json.dumps(payload, ensure_ascii=True),
         ]
-        return self._call_gemini_with_retry(prompt_content, is_json_output=True)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=True)
 
     def phase2_select_strategy(self, phase1_json, prompt1_output, prompt_path, rejection_feedback=None):
         with open(prompt_path, "r", encoding="utf-8") as f:
@@ -339,4 +390,4 @@ class VLMClient:
             "\n--- INPUT DATA ---\n",
             json.dumps(payload, ensure_ascii=True),
         ]
-        return self._call_gemini_with_retry(prompt_content, is_json_output=True)
+        return self._call_vlm_with_retry(prompt_content, is_json_output=True)

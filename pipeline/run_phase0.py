@@ -64,7 +64,7 @@ def execute_phase0(
     image_path=None,
     scene_named_g_path=None,
     use_vlm=True,
-    auto_prepare_from_named_scene=False,
+    auto_prepare_from_named_scene=True,
     layout_output_path=None,
 ):
     """

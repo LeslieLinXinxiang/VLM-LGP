@@ -550,8 +550,8 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
                      arr{1, 0, 0} * 1e2);
   komo->addObjective({time}, FS_positionRel, {gripper, targetF->name}, OT_eq,
                      arr{0, 1, 0} * 1e2);
-  // REMOVED OVERLAPPING OT_sos:
-  // komo->addObjective({time}, FS_positionDiff, {gripper, targetF->name}, OT_sos, {1e2});
+  komo->addObjective({time}, FS_positionDiff, {gripper, targetF->name}, OT_sos,
+                     {1e2});
 
   // =================================================================
   // 5. [Phase 4] 全程避障 (Global Collision Avoidance)
@@ -654,18 +654,23 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   komo->addRigidSwitch(time, {snapFrame, obj}, true);
 
   // ==============================================================================
-  // [NEW] 3. 预放置引导 (Pre-Place Guidance / Funnel)
+  // 3. 预放置引导 (Pre-Place Guidance / Funnel)
   // ==============================================================================
-  // 时间: time - 0.1
-  // 目的: 构造一个漏斗，引导物体先飞到桌子上方 5cm 处，再垂直下降。
-  // Target Z: rel_z (接触面) + 0.05 (悬停高度)
-  // Mask: {1e2, 1e2, 1e2} 全向引导 (SOS 软约束)，允许微小偏差，但强烈建议对齐。
 
+  // t-0.5: Z方向软引导，推高物体（XY自由，飞行阶段不限制横向）
   komo->addObjective({time - 0.5}, FS_positionRel, {obj, table}, OT_sos,
                      arr{0, 0, 1e2}, {0., 0., rel_z + 0.1});
 
-  komo->addObjective({time - 0.1}, FS_positionRel, {obj, table}, OT_sos,
-                     arr{1e2, 1e2, 1e2}, {0., 0., rel_z + 0.02});
+  // t-0.2: 硬对齐到目标XY正上方 (OT_eq强制，确保进入垂直下落通道)
+  komo->addObjective({time - 0.2}, FS_positionDiff, {obj, table}, OT_eq,
+                     arr{1e2, 1e2, 0}, {0., 0., 0.});
+  // t-0.2: Z方向悬停软引导 (软约束，高度建议，给求解器留余地)
+  komo->addObjective({time - 0.2}, FS_positionRel, {obj, table}, OT_sos,
+                     arr{0, 0, 1e2}, {0., 0., rel_z + 0.05});
+
+  // [t-0.2, time]: 垂直下落通道 — XY全程锁定，只允许Z变化
+  komo->addObjective({time - 0.2, time}, FS_positionDiff, {obj, table}, OT_eq,
+                     arr{1e2, 1e2, 0}, {0., 0., 0.});
 
   // ==============================================================================
   // 4. 最终几何约束 (Final Geometric Constraints)
@@ -849,8 +854,8 @@ void ManipulationHelper::action_place_on_multi_support(
   komo->addObjective({time}, FS_position, {obj}, OT_eq, arr{1e2, 1e2, 0}, {centroid_world(0), centroid_world(1), 0.});
 
   // B. 姿态约束
-  // 移除全范围的 PoseDiff 避免和下方的 VectorZ 冲突拉扯
-  komo->addObjective({time}, FS_vectorXDiff, {virtualAnchorName, obj}, OT_sos, {1e0}); // 只用极微弱力度约束面内旋转
+  // 物体总体上靠近锚点姿态 (极低权重的位姿引导，防止完全不受限产生的旋转自由度漂移)
+  komo->addObjective({time}, FS_poseDiff, {virtualAnchorName, obj}, OT_sos, {1e0});
   
   // 严格要求垂直向上 (硬约束)
   komo->addObjective({time}, FS_vectorZ, {obj}, OT_eq, {1e2}, {0., 0., 1.});
