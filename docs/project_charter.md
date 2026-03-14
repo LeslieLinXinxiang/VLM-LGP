@@ -11,6 +11,7 @@ The robotic path planning and constraint satisfaction solver (KOMO) struggles wi
 - Python verification scripts for batch generation and visualization (`run_pyramid_assembly.py`, `view_full_assembly.py`).
 - 100% successful physical simulation placements without hovering, clipping, or violent oscillations.
 - Strict DDE-Bootstrap document management.
+- The formal academic manuscript and associated LaTeX/PDF assets documenting the VLM-LGP approach (`paper/`).
 
 ## 4. Non-Goals
 - Changing the fundamental solver libraries (e.g., replacing KOMO).
@@ -18,7 +19,7 @@ The robotic path planning and constraint satisfaction solver (KOMO) struggles wi
 - Real-world hardware deployment configurations (currently focusing on robust simulation `output_state.g`).
 
 ## 5. Scope Definition
-- **In-Scope**: `rai/src/KOMO/manipTools.cpp`, `bin/main.cpp`, python execution scripts (`scripts/*`), `.fol` and `.lgp` logic files, and local Git repository management.
+- **In-Scope**: `rai/src/KOMO/manipTools.cpp`, `bin/main.cpp`, python execution scripts (`scripts/*`), `.fol` and `.lgp` logic files, local Git repository management, and the `paper/` directory for academic documentation.
 - **Out-of-Scope**: Modifying core rai (Robotic Artificial Intelligence) library source code outside of the user's specific manipulator manipulation targets.
 
 ## 6. Assumptions

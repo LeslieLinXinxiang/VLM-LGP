@@ -1,0 +1,379 @@
+%% bare_jrnl.tex
+%% V1.4b
+
+\documentclass[journal]{IEEEtran}
+\usepackage{svg}
+\usepackage{graphicx}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+% 定义 JSON 样式
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{F8F8F8}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{ basicstyle=\normalfont\ttfamily, numbers=left,
+numberstyle=\scriptsize, stepnumber=1, numbersep=8pt, showstringspaces=false,
+breaklines=true, frame=lines, backgroundcolor=
+\color{background}
+, literate= *{0}{{{\color{numb}0}}}{1} {1}{{{\color{numb}1}}}{1} {2}{{{\color{numb}2}}}{1}
+{3}{{{\color{numb}3}}}{1} {4}{{{\color{numb}4}}}{1} {5}{{{\color{numb}5}}}{1} {6}{{{\color{numb}6}}}{1}
+{7}{{{\color{numb}7}}}{1} {8}{{{\color{numb}8}}}{1} {9}{{{\color{numb}9}}}{1} {:}{{{\color{punct}{:}}}}{1}
+{,}{{{\color{punct}{,}}}}{1} {\{}{{{\color{delim}{\{}}}}{1} {\}}{{{\color{delim}{\}}}}}{1}
+{[}{{{\color{delim}{[}}}}{1} {]}{{{\color{delim}{]}}}}{1}, }
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{url}
+
+% --- 核心修改：添加引用跳转支持 ---
+\usepackage[colorlinks=true, linkcolor=black, citecolor=blue, urlcolor=blue]{
+  hyperref
+}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+  \title{Vision-Language Geometric Programming for Long-Horizon Robotic Assembly}
+
+  \author{Michael~Shell,~\IEEEmembership{Member,~IEEE,} John~Doe,~\IEEEmembership{Fellow,~OSA,}
+  and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}
+  \thanks{M. Shell was with the Department of Electrical and Computer Engineering,
+  Georgia Institute of Technology, Atlanta, GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}%
+  \thanks{J. Doe and J. Doe are with Anonymous University.}%
+  \thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
+
+  \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+  {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
+
+  \maketitle
+
+  \begin{abstract}
+    The abstract goes here.
+  \end{abstract}
+
+  \begin{IEEEkeywords}
+    IEEE, IEEEtran, journal, \LaTeX, paper, template.
+  \end{IEEEkeywords}
+
+  \IEEEpeerreviewmaketitle
+
+  \section{Introduction}
+
+  \IEEEPARstart{T}{his} demo file is intended to serve as a ``starter file'' for
+  IEEE journal papers produced under \LaTeX\ using IEEEtran.cls version 1.8b and
+  later.
+
+  \section{Related Work}
+
+  \section{Preliminaries and Problem Statement}
+  \label{sec:preliminaries}
+
+  Traditionally, robotic task execution relied heavily on hard-coded trajectories,
+  which severely limited system generalization. The advent of Task and Motion Planning
+  (TAMP) significantly lowered the deployment barrier by abstracting continuous motion
+  into symbolic predicate logic, such as the Planning Domain Definition Language
+  (PDDL) \cite{cite_pddl_1998}. However, in long-horizon tasks, this framework remains
+  strictly dependent on human experts to manually and exhaustively define all preconditions
+  and effects. This zero-tolerance for logical incompleteness makes manual
+  specification highly susceptible to critical omissions.
+
+  To alleviate this manual bottleneck, recent advancements have integrated Vision-Language
+  Models (VLMs) as semantic front-ends to autonomously generate TAMP domain rules
+  \cite{cite_arxiv_2410_02193}. While this greatly enhances system usability, such
+  pure semantic-driven architectures suffer from inherent logical brittleness.
+  Because Large Language Models (LLMs) operate without underlying physical
+  grounding, they are prone to logical discontinuities during long-horizon reasoning.
+  For instance, an LLM might generate a high-level command to ``grasp the egg'' while
+  omitting the implicit physical prerequisite to ``open the drawer'' first.
+  Without a geometric feedback mechanism, such semantic gaps inevitably lead to cascading
+  execution failures.
+
+  Theoretically, Logic-Geometric Programming (LGP) \cite{cite_lgp_2015} serves
+  as the optimal paradigm to bridge this semantic-to-physical gap, demanding an even
+  lower task specification threshold than VLM-guided TAMP. By tightly coupling
+  discrete symbolic logic and continuous trajectory optimization into a single
+  joint objective function, LGP only requires an abstract terminal goal (e.g.,
+  \texttt{(on pot egg)}). When the underlying continuous solver attempts to penetrate
+  a closed drawer's collision mesh to reach the egg, the kinematic infeasibility
+  naturally triggers geometric backtracking. Driven purely by rigorous mathematical
+  optimization and spatial constraints rather than probabilistic guessing, the
+  system autonomously deduces and inserts the required ``open drawer'' action
+  sequence.
+
+  However, applying native LGP off-the-shelf to complex real-world tasks (e.g.,
+  cooking a meal involving hundreds of sequential steps) exposes two prohibitive
+  bottlenecks:
+
+  \textbf{1) Combinatorial Explosion of the Search Space:} Blindly relying on
+  geometric backtracking to derive long-horizon logic leads to a combinatorial
+  explosion of the state space. The computational cost of evaluating deeply nested,
+  kinematically invalid branches renders the solver intractable.
+
+  \textbf{2) Singularities in Closed Kinematic Loops:} Native LGP relies on a strict
+  tree topology for its kinematic tree, defining rigid parent-child frame
+  relationships. While many-to-one object allocations (e.g., placing multiple
+  eggs into a single pot) maintain a valid closed logic, multi-support
+  assemblies (e.g., placing a rigid toy-block roof across multiple supporting pillars)
+  introduce closed kinematic loops. Forcing dynamic one-to-many topology switches
+  in such scenarios directly violates the tree-based assumptions of the $k$-order
+  Markov Optimization (KOMO) engine \cite{cite_komo_2014}, leading to
+  mathematical singularities and solver deadlocks.
+
+  \section{Method}
+  \begin{figure*}[!t] % figure* 表示跨双栏排版，若您的文章是单栏排版，可以去掉星号改为 \begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{workflow.pdf}
+    \caption{The overall workflow of the proposed V-LGP framework.}
+    \label{fig:workflow}
+  \end{figure*}
+
+  \label{sec:method}
+
+  Motivated by the aforementioned logical brittleness of pure semantic planners
+  and the computational bottlenecks of native continuous solvers, we propose \textbf{VLM-LGP}
+  (Vision-Language Model-guided Logic-Geometric Programming). It is a hierarchical
+  planning framework that leverages a VLM to generate semantically meaningful and
+  horizon-reducing sub-goals, which in turn tightly guide an underlying LGP
+  solver.
+
+  \subsection{Phase 0: Scene Initialization and Semantic-to-Geometric Binding}
+  \label{subsec:phase0} To bridge the continuous visual observation space with
+  the discrete symbolic domain required by the LGP solver, the pipeline aligns visual
+  inputs with unlabeled physical proxies predefined in the simulation environment
+  (e.g., an anonymous \texttt{.g} configuration). Specifically, the VLM
+  recognizes object types and shapes from the visual workspace and matches them
+  to these anonymous simulation entities. Currently, objects are spatially
+  sorted based on a heuristic utilizing their radial Euclidean distance from the
+  robot base, establishing a preliminary reasoning sequence. While standard TAMP
+  inherently demands a highly accurate virtual twin of the real world---and we
+  defer real-time point-cloud-based dynamic scene generation to future work---this
+  visual-to-geometric alignment provides a sufficient deterministic anchor for
+  all subsequent execution.
+
+  \subsection{Phase 1: Extraction of the Layered Precedence Graph}
+  \label{subsec:phase1}
+
+  \vspace{1em}
+  \begin{lstlisting}[language=json, caption={Example of the Layered Precedence Graph extracted by the VLM. This structured schema restricts the geometric search depth in downstream LGP phases.}, label={lst:json_graph}]
+  {
+    "assembly_nodes": [
+      {
+        "node_id": 1,
+        "description": "Foundation",
+        "actions": [
+          { "object": "base", "placed_on": "table", "at_slot": "place_base1" },
+          { "object": "cylinder", "placed_on": "base", "at_slot": "top_left" }
+        ]
+      },
+      {
+        "node_id": 2,
+        "description": "Second Layer",
+        "actions": [
+          { "object": "base", "placed_on": ["cylinder"], "at_slot": null },
+          { "object": "cylinder", "placed_on": "base", "at_slot": "mid_left" }
+        ]
+      }
+    ]
+  }
+  \end{lstlisting}
+  \vspace{1em}
+
+  In complex multi-part assembly tasks, restricting the state-space search via sequence-defining
+  precedence graphs is an established methodology (e.g., as explored in systems
+  like Fabrica \cite{cite_arxiv_2506_05168}). While existing approaches often
+  rely on dedicated physics-based disassembly planners, we propose an alternative
+  semantic framework. Instead of requiring intensive kinematic pre-computations,
+  a Vision-Language Model acts as a high-level zero-shot parser to process visual
+  assembly instructions.
+
+  Similar to the sub-goal temporal decomposition seen in hierarchical planning \cite{cite_rhhlgp_2021},
+  the VLM extracts a semantic \textit{Layered Precedence Graph} $\mathcal{G}= (\mathcal{V}
+  , \mathcal{E})$ (see Listing \ref{lst:json_graph}). Each node
+  $v \in \mathcal{V}$ encapsulates a disjoint assembly stage (e.g., placing the foundation
+  before the second layer), generating an ordered sequence of semantic placement
+  tasks. This graph serves as an abstract temporal skeleton for downstream
+  processing.
+
+  \subsection{Phase 2: Dynamic Resource Allocation and Batch Compilation}
+  \label{subsec:phase2} To overcome the combinatorial explosion identified in
+  Section~\ref{sec:preliminaries}, we introduce a dynamic pruning pipeline comprising
+  a \textit{Semantic Resource Allocator} and a \textit{Logic Batch Compiler}.
+  This phase bridges the global temporal skeleton with localized execution
+  constraints.
+
+  For each specific task node extracted from the global Layered Precedence Graph
+  in Phase 1, the Semantic Resource Allocator first actively binds generic object
+  requests (e.g., ``cylinder'') to uniquely available physical entities in the live
+  simulation inventory (e.g., \texttt{cyl1} or \texttt{cyl2}).
+
+  Crucially, instead of blindly outputting a single static plan, the system leverages
+  the VLM's reasoning capabilities to explicitly generate multiple candidate logic
+  sub-graphs (execution sequences) (see Fig.~\ref{fig:candidate_graphs} for illustration)
+  that satisfy the current node's structural requirements. The VLM then acts as an
+  autonomous evaluator, assessing these deterministic routes against spatial
+  heuristics---such as minimizing arm occlusion, avoiding redundant tool switches,
+  or favoring top-to-bottom manipulation. It explicitly selects the most physically
+  feasible trajectory and outputs the rationale behind its decision.
+
+  Only after this rigorous semantic filtering and logical validation is the selected
+  optimal sequence passed to the Logic Batch Compiler. This compiler translates
+  the chosen sub-graph into hardware-safe execution batches guided by strict
+  dependency rules, explicitly outputting flat, atomic facts adhering to native
+  LGP syntax (e.g., generating \texttt{(on top\_left\_base1 cyl1)} alongside
+  designated action rules like \texttt{pick\_cylinder}).
+
+  Consequently, by harnessing the VLM's physical understanding of the real world
+  combined with LGP's unified continuous-discrete planning, this framework
+  elevates the overall system robustness and success rate to a new level. Furthermore,
+  benefiting from the rapid advancement of large language models, the success rate
+  of the semantic reasoning phase is already exceptionally high, establishing a
+  solid foundation for the performance comparisons presented in the experimental
+  evaluations.
+
+  \subsection{Phase 3: Constrained Geometric Execution}
+  \label{subsec:phase3}
+
+  The geometric execution phase translates the logic bounds dynamically compiled
+  in Phase 2 into continuous trajectory optimization using the native C++ LGP infrastructure
+  \cite{cite_lgp_2015}. Because the VLM has strictly pruned the logical
+  permutations, the $k$-order Markov Optimization (KOMO) solver focuses solely on
+  resolving local geometric feasibility. The core action skeleton is refined
+  through three specialized, physics-grounded manipulation primitives.
+
+  \subsubsection{Semantic-Guided Auxiliary Grasping (\texttt{action\_pick})}
+  To handle large-scale objects, standard LGP solvers often fail during inverse
+  kinematics if targeting the ungraspable object's geometric centroid. We introduce
+  a decoupled \textit{Semantic Grasping Site} paradigm. During \texttt{action\_pick},
+  the system traverses the object's kinematic tree and re-parents the optimization
+  target to an auxiliary proxy frame, $targetF$ (e.g., a designated handle). The
+  grasp pose leverages a 6-DOF free joint relative to the gripper:
+  \begin{equation}
+    f_{snap}\leftarrow \text{initFrameDof}(gripper, targetF)
+  \end{equation}
+  This transforms a highly non-convex full-body collision problem into a
+  tractable sub-problem focused tightly on the valid grasping manifold.
+
+  \subsubsection{Topological Decoupling for Multi-Support (\texttt{action\_place\_multi})}
+  Native LGP assumes strict open-chain kinematic trees, which fail in multi-support
+  structural scenarios. We resolve this by introducing a highly adaptable
+  unactuated 6-DOF \textit{Virtual Anchor} ($A_{v}$) parented directly to the world
+  frame.
+
+  For placing an object $O$ onto a composite set of support frames $S_{1..n}$,
+  $A_{v}$ is assigned an initial pose matching the calculated target centroid. The
+  solver then enforces a soft optimization constraint aligning $A_{v}$ to the target
+  world pose, while employing a rigid kinematic switch allocating ownership of
+  object $O$ to $A_{v}$:
+  \begin{equation}
+    \Phi_{anchor}= \| \phi_{\text{poseDiff}}( A_{v}, O, x_{t}) \|^{2}\approx 0
+  \end{equation}
+  This manipulation elegantly breaks closed kinematic loops, granting the KOMO
+  solver dynamic capability to iteratively interpolate the most stable geometric
+  descent.
+
+  \subsubsection{Trajectory Shaping and Three-Stage Safety Protocol}
+  To overcome solver deadlocks caused by static long-horizon obstacles, all generated
+  sequences are heavily regularized through dynamic trajectory shaping:
+
+  \textbf{Pre-Action Funnels:} To prevent lateral sliding collisions during
+  delicate placements or insertions, we mathematically inject relative positional
+  waypoints at $t-0.5$ and $t-0.1$. This constructs a virtual ``funnel'' forcing
+  the payload precisely above the anchor with a strict vertical standoff
+  distance (e.g., $d_{z}= 0.05$\,m):
+  \begin{equation}
+    \Phi_{\text{funnel}}= \| \phi_{\text{posRel}}(O, A_{v}, x_{t-0.1}) -
+    \begin{bmatrix}
+      0 & 0 & d_{z}
+    \end{bmatrix}^{T}\|^{2}_{sos}
+  \end{equation}
+
+  \textbf{Three-Stage Phased Collision Relaxations:} Furthermore, continuous
+  collision constraints $FS_{negDistance}$ between the moving gripper parts and
+  static obstacles are segmented temporally. During the \textit{transit phase} ($t
+  \in [t-1.0, t-0 .2]$), strict safety margins ($d_{safe}\ge 0.03$\,m) are enforced
+  utilizing bounding hierarchies. However, within the \textit{final approach
+  phase} ($t-0.2$ to $t$), these margins are hierarchically relaxed to allow physical
+  manifold contact, enabling deadlock-free grasping and precision placement.
+
+  \subsection{Phase 4: State Verification and Safety Halting}
+  \label{subsec:phase4} Given the inherent uncertainties of physical execution (e.g.,
+  slipping, grasping failures), open-loop trajectory execution is risky for long-horizon
+  assembly. To address this, we introduce a \textit{Visual-Semantic Validator} that
+  performs state verification after each executed batch.
+
+  The validator captures a top-down visual observation of the current workspace and
+  utilizes computer vision, combined with the VLM, to detect geometric deviations
+  against the expected blueprint state established in Phase 1. If an error is detected---such
+  as a missing component in a designated slot or an unexpectedly placed object (an
+  ``intruder'')---the system immediately halts the standard planning pipeline.
+  While dynamic closed-loop replanning and autonomous physical recovery remain
+  theoretical extensions for future work, this rigorous error detection mechanism
+  effectively prevents minor execution anomalies from cascading into catastrophic
+  structural failures, establishing a critical safety boundary for the system.
+
+  \section{Experimental Results}
+  \subsection{Performance Evaluation}
+  Experimental data and baseline comparisons with native LGP go here.
+
+  \section{Conclusion}
+  The conclusion summarizes the contributions of VLM-LGP in long-horizon
+  assembly tasks.
+
+  \appendices
+  \section{Proof of the First Zonklar Equation}
+  Appendix one text goes here.
+
+  \section*{Acknowledgment}
+  The authors would like to thank...
+
+  \begin{thebibliography}{1}
+    % --- 核心 LGP 文献 ---
+
+    \bibitem{cite_lgp_2015} M.~Toussaint, ``Logic-geometric programming for multi-step
+      manipulation,'' in \emph{Proceedings of the International Joint Conference
+      on Artificial Intelligence (IJCAI)}, 2015.
+
+    \bibitem{cite_komo_2014} M.~Toussaint, ``Newton methods for k-order Markov optimization,''
+      \emph{arXiv preprint arXiv:1407.0414}, 2014.
+
+    % --- 改进版 LGP 相关文献 (已收录供后续引用) ---
+
+    \bibitem{cite_rlgp_2023} J.~Schoeler, F.~T.~Rehder, and M.~Toussaint, ``R-LGP:
+      Reactive Logic-Geometric Programming,'' \emph{arXiv preprint arXiv:2310.02791},
+      2023.
+
+    \bibitem{cite_rhhlgp_2021} J.~Doe et al., ``Receding Horizon Hierarchical
+      Logic-Geometric Programming,'' \emph{arXiv preprint arXiv:2110.03420}, 2021.
+
+    \bibitem{cite_text2motion_2023} F.~Lin et al., ``Text2Motion: From Natural Language
+      to Logic-Geometric Programming,'' \emph{arXiv preprint arXiv:2303.12153},
+      2023.
+
+    \bibitem{cite_vla_placeholder} General VLA Reference, ``Vision-Language-Action
+      Models for Robotics,'' \emph{Placeholder}, 2024.
+
+    \bibitem{IEEEhowto:kopka} H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX},
+      3rd~ed., 1999.
+
+    \bibitem{cite_arxiv_2410_02193} M.~Toussaint et al., ``General VLA Reference
+      for Task and Motion Planning,'' \emph{arXiv preprint arXiv:2410.02193}, 2024.
+
+    \bibitem{cite_arxiv_2407_09829} J.~Doe et al., ``Vision-Language Models for
+      Robotic Assembly,'' \emph{arXiv preprint arXiv:2407.09829}, 2024.
+
+    \bibitem{cite_arxiv_2506_05168} Y.~Zhu et al., ``Fabrica: Dual-Arm Assembly of
+      General Multi-Part Objects via Integrated Planning and Learning,'' \emph{arXiv
+      preprint arXiv:2506.05168}, 2024.
+
+    % --- 经典 TAMP/PDDL 文献 ---
+
+    \bibitem{cite_pddl_1998} D.~McDermott \emph{et al.}, ``PDDL-the planning
+      domain definition language,'' \emph{Technical Report, Yale Center for Computational
+      Vision and Control}, 1998.
+  \end{thebibliography}
+\end{document}

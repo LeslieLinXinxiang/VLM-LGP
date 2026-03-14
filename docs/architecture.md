@@ -8,11 +8,13 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 - `LGP TAMP Core`: Tree search and logical node expansion for Task and Motion Planning.
 - `Python Scripting Layer`: Environment execution, batch running, and visual verification.
 - `Main Executable`: Reads `.lgp` configurations and executes the solver loop.
+- `Paper Documentation`: VLM-LGP framework manuscript, figures, and publication materials.
 
 ## 3. Module Responsibilities
 - **KOMO ManipTools**: Define exact mathematical objectives (e.g., `FS_positionDiff`, `FS_vectorZ`) to guide the robotic arm for picking, placing, and navigating without collisions.
 - **Python Scripting Layer**: Builds Phase0 assets (`phase0_capture.png`, `phase0_specs.json`, prompt markdown), dispatches semantic matching through `core/vlm.py`, and supports rule-only fallback when VLM is disabled.
 - **Main Executable**: Load trajectories, resample them (e.g., to 1000Hz for Pos/Vel/Acc), and interact with external interfaces.
+- **Paper Documentation**: Holds the academic documentation (`paper/`) that formalizes the Vision-Language Geometric Programming approach for publication.
 
 ## 4. Dependency Rules
 - The C++ Core does not depend on Python.
