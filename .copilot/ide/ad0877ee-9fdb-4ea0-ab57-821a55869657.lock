@@ -1,0 +1,14 @@
+{
+  "socketPath": "/tmp/mcp-rjOR03/mcp.sock",
+  "scheme": "unix",
+  "headers": {
+    "Authorization": "Nonce 36f5aa8b-a32e-4a96-818c-6215caadfb69"
+  },
+  "pid": 1164532,
+  "ideName": "Visual Studio Code",
+  "timestamp": 1773061486034,
+  "workspaceFolders": [
+    "/home/leslie/.copilot/skills"
+  ],
+  "isTrusted": true
+}

@@ -2,6 +2,10 @@
 
 This folder contains runtime, environment, network, and troubleshooting SOPs.
 
+## Contents
+- `NETWORK_TROUBLESHOOTING_SOP.md`
+- `CROSS_DEVICE_SYNC_SOP.md`
+
 ## Filing Rules
 - Keep actionable diagnostics and recovery steps.
 - Prefer command-based checklists with expected outputs.

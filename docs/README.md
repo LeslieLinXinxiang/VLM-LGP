@@ -56,6 +56,7 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 ### Supplementary
 - `docs/ops/README.md`
 - `docs/ops/NETWORK_TROUBLESHOOTING_SOP.md`
+- `docs/ops/CROSS_DEVICE_SYNC_SOP.md`
 - `docs/decisions/README.md`
 - `docs/decisions/DDR_TEMPLATE.md`
 - `docs/decisions/DDR-20260313-waypoint-gated-constraint-reachability.md`
