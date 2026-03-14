@@ -13,26 +13,34 @@
 \newlabel{sec:preliminaries}{{III}{1}{Preliminaries and Problem Statement}{section.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Method}{1}{section.4}\protected@file@percent }
 \newlabel{sec:method}{{IV}{1}{Method}{figure.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Phase 0: Scene Initialization and Semantic-to-Geometric Binding}{1}{subsection.4.1}\protected@file@percent }
-\newlabel{subsec:phase0}{{\mbox  {IV-A}}{1}{Phase 0: Scene Initialization and Semantic-to-Geometric Binding}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Phase 0: Scene Initialization and Reachability Pre-check}{1}{subsection.4.1}\protected@file@percent }
+\newlabel{subsec:phase0}{{\mbox  {IV-A}}{1}{Phase 0: Scene Initialization and Reachability Pre-check}{subsection.4.1}{}}
 \citation{cite_arxiv_2506_05168}
 \citation{cite_rhhlgp_2021}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The overall workflow of the proposed V-LGP framework.}}{2}{figure.1}\protected@file@percent }
-\newlabel{fig:workflow}{{1}{2}{The overall workflow of the proposed V-LGP framework}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The overall workflow of the proposed VLM-LGP framework.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:workflow}{{1}{2}{The overall workflow of the proposed VLM-LGP framework}{figure.1}{}}
+\newlabel{eq:reachability}{{1}{2}{Phase 0: Scene Initialization and Reachability Pre-check}{equation.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Phase 1: Extraction of the Layered Precedence Graph}{2}{subsection.4.2}\protected@file@percent }
 \newlabel{subsec:phase1}{{\mbox  {IV-B}}{2}{Phase 1: Extraction of the Layered Precedence Graph}{subsection.4.2}{}}
-\newlabel{lst:json_graph}{{1}{2}{Example of the Layered Precedence Graph extracted by the VLM. This structured schema restricts the geometric search depth in downstream LGP phases}{lstlisting.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}Example of the Layered Precedence Graph extracted by the VLM. This structured schema restricts the geometric search depth in downstream LGP phases.}{2}{lstlisting.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Examples of the Layered Precedence Graph extracted by the VLM from visual assembly instructions (left: simple structure; right: complex structure). Edges encode strict temporal dependencies between assembly layers.}}{2}{figure.2}\protected@file@percent }
+\newlabel{fig:layered_graph}{{2}{2}{Examples of the Layered Precedence Graph extracted by the VLM from visual assembly instructions (left: simple structure; right: complex structure). Edges encode strict temporal dependencies between assembly layers}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Phase 2: Dynamic Resource Allocation and Batch Compilation}{2}{subsection.4.3}\protected@file@percent }
+\newlabel{subsec:phase2}{{\mbox  {IV-C}}{2}{Phase 2: Dynamic Resource Allocation and Batch Compilation}{subsection.4.3}{}}
 \citation{cite_lgp_2015}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Phase 2: Dynamic Resource Allocation and Batch Compilation}{3}{subsection.4.3}\protected@file@percent }
-\newlabel{subsec:phase2}{{\mbox  {IV-C}}{3}{Phase 2: Dynamic Resource Allocation and Batch Compilation}{subsection.4.3}{}}
+\newlabel{subsubsec:active_constraints}{{\mbox  {IV-C}1}{3}{Waypoint-Gated Active Constraint Strategy}{subsubsection.4.3.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}1}Waypoint-Gated Active Constraint Strategy}{3}{subsubsection.4.3.1}\protected@file@percent }
+\newlabel{eq:active_constraints}{{2}{3}{Waypoint-Gated Active Constraint Strategy}{equation.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Phase 3: Constrained Geometric Execution}{3}{subsection.4.4}\protected@file@percent }
 \newlabel{subsec:phase3}{{\mbox  {IV-D}}{3}{Phase 3: Constrained Geometric Execution}{subsection.4.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-D}1}Semantic-Guided Auxiliary Grasping (\texttt  {action\_pick})}{3}{subsubsection.4.4.1}\protected@file@percent }
+\newlabel{subsubsec:shape_pick}{{\mbox  {IV-D}1}{3}{Shape-Aware Semantic Grasping Primitives}{subsubsection.4.4.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-D}1}Shape-Aware Semantic Grasping Primitives}{3}{subsubsection.4.4.1}\protected@file@percent }
+\newlabel{eq:snap_frame}{{3}{3}{Shape-Aware Semantic Grasping Primitives}{equation.3}{}}
+\newlabel{eq:pick_box}{{4}{3}{Shape-Aware Semantic Grasping Primitives}{equation.4}{}}
+\newlabel{eq:pick_cyl_axis}{{5}{3}{Shape-Aware Semantic Grasping Primitives}{equation.5}{}}
+\newlabel{eq:pick_cyl_slide}{{6}{3}{Shape-Aware Semantic Grasping Primitives}{equation.6}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-D}2}Topological Decoupling for Multi-Support (\texttt  {action\_place\_multi})}{3}{subsubsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-D}3}Trajectory Shaping and Three-Stage Safety Protocol}{3}{subsubsection.4.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Phase 4: State Verification and Safety Halting}{3}{subsection.4.5}\protected@file@percent }
-\newlabel{subsec:phase4}{{\mbox  {IV-E}}{3}{Phase 4: State Verification and Safety Halting}{subsection.4.5}{}}
+\newlabel{eq:anchor_lock}{{7}{3}{Topological Decoupling for Multi-Support (\texttt {action\_place\_multi})}{equation.7}{}}
+\newlabel{eq:anchor_align}{{8}{3}{Topological Decoupling for Multi-Support (\texttt {action\_place\_multi})}{equation.8}{}}
 \bibcite{cite_lgp_2015}{1}
 \bibcite{cite_komo_2014}{2}
 \bibcite{cite_rlgp_2023}{3}
@@ -44,6 +52,10 @@
 \bibcite{cite_arxiv_2407_09829}{9}
 \bibcite{cite_arxiv_2506_05168}{10}
 \bibcite{cite_pddl_1998}{11}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-D}3}Trajectory Shaping and Phased Collision Protocol}{4}{subsubsection.4.4.3}\protected@file@percent }
+\newlabel{eq:funnel}{{9}{4}{Trajectory Shaping and Phased Collision Protocol}{equation.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Phase 4: State Verification and Safety Halting}{4}{subsection.4.5}\protected@file@percent }
+\newlabel{subsec:phase4}{{\mbox  {IV-E}}{4}{Phase 4: State Verification and Safety Halting}{subsection.4.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}Experimental Results}{4}{section.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Performance Evaluation}{4}{subsection.5.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{4}{section.6}\protected@file@percent }

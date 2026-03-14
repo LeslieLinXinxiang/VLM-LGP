@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1773465059.29564 "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_demo_260302.tex" "VLM_LGP_Assembly_demo_260302.pdf" "VLM_LGP_Assembly_demo_260302" 1773465060.23093 0
-  "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_demo_260302.tex" 1773465047.64886 19282 716b5cdb8cdabece6495fae57d013701 ""
+["pdflatex"] 1773478587.11122 "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_demo_260302.tex" "VLM_LGP_Assembly_demo_260302.pdf" "VLM_LGP_Assembly_demo_260302" 1773478588.842 0
+  "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_demo_260302.tex" 1773478586.82228 24119 0473b530969a3990c9bcacce38e5e535 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -36,6 +36,7 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy9.tfm" 1136768653 1116 25a7bf822c58caf309a702ef79f4afbb ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1248133631 30251 6afa5cb1d0204815a708a080681d4674 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb" 1248133631 37912 77d683123f92148345f3fc36a38d9ab1 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1248133631 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
@@ -122,7 +123,6 @@
   "/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstpatch.sty" 1710360531 353 9024412f43e92cd5b21fe9ded82d0610 ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty" 1601326656 443 8c872229db56122037e86bcda49e14f3 ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty" 1601326656 325 f9f16d12354225b7dd52a3321f085955 ""
-  "/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/omspcr.fd" 1137110629 576 907c194ce74186f4e40247f2ba1986cf ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd" 1137110629 985 1ed784d7bfe47179f3550d2303b073f8 ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ot1ptm.fd" 1137110629 961 15056f4a61917ceed3a44e4ac11fcc52 ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/refcount/refcount.sty" 1576624809 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
@@ -138,10 +138,12 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1773459753 5541377 04880c840ca220163a28f1a3af0ee662 ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1773459667 3636768 f73ff9b9820612f3a8d4146c19606e04 ""
   "/usr/local/texlive/2026/texmf.cnf" 1772409725 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "VLM_LGP_Assembly_demo_260302.aux" 1773465060.14299 4693 2b1fda5e10eea00d8638a5607334927c "pdflatex"
-  "VLM_LGP_Assembly_demo_260302.out" 1773465060.14371 4038 404aeb1d63b3777f13ccc89940daf4f0 "pdflatex"
-  "VLM_LGP_Assembly_demo_260302.tex" 1773465047.64886 19282 716b5cdb8cdabece6495fae57d013701 ""
-  "workflow.png" 1773464938.96055 952446 65f5642b8a89322a86672d6fac51b431 ""
+  "VLM_LGP_Assembly_demo_260302.aux" 1773478588.7256 6120 5234bd0fbcd07d169189ac26b9e77a45 "pdflatex"
+  "VLM_LGP_Assembly_demo_260302.out" 1773478588.7264 4226 71ed21a8da2529b913178ca2ec3e4d21 "pdflatex"
+  "VLM_LGP_Assembly_demo_260302.tex" 1773478586.82228 24119 0473b530969a3990c9bcacce38e5e535 ""
+  "graph (1).png" 1773461829.59875 38929 321d980dd5217d2449cbf4f0cd4b973b ""
+  "graph (2).png" 1773461829.59898 40630 b6e008748ad53fb3976d7929e418e95c ""
+  "workflow.png" 1773474594.64043 1301562 dbe4d7fc7fc504315d0eb2f17d80a66f ""
   (generated)
   "VLM_LGP_Assembly_demo_260302.aux"
   "VLM_LGP_Assembly_demo_260302.log"

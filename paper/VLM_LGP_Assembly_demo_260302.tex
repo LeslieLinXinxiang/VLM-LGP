@@ -125,10 +125,10 @@ breaklines=true, frame=lines, backgroundcolor=
   mathematical singularities and solver deadlocks.
 
   \section{Method}
-  \begin{figure*}[!t] % figure* 表示跨双栏排版，若您的文章是单栏排版，可以去掉星号改为 \begin{figure}[!ht]
+  \begin{figure*}[!t]
     \centering
     \includegraphics[width=\textwidth]{workflow.png}
-    \caption{The overall workflow of the proposed V-LGP framework.}
+    \caption{The overall workflow of the proposed VLM-LGP framework.}
     \label{fig:workflow}
   \end{figure*}
 
@@ -141,63 +141,76 @@ breaklines=true, frame=lines, backgroundcolor=
   horizon-reducing sub-goals, which in turn tightly guide an underlying LGP
   solver.
 
-  \subsection{Phase 0: Scene Initialization and Semantic-to-Geometric Binding}
-  \label{subsec:phase0} To bridge the continuous visual observation space with
-  the discrete symbolic domain required by the LGP solver, the pipeline aligns visual
-  inputs with unlabeled physical proxies predefined in the simulation environment
-  (e.g., an anonymous \texttt{.g} configuration). Specifically, the VLM
-  recognizes object types and shapes from the visual workspace and matches them
-  to these anonymous simulation entities. Currently, objects are spatially
-  sorted based on a heuristic utilizing their radial Euclidean distance from the
-  robot base, establishing a preliminary reasoning sequence. While standard TAMP
-  inherently demands a highly accurate virtual twin of the real world---and we
-  defer real-time point-cloud-based dynamic scene generation to future work---this
-  visual-to-geometric alignment provides a sufficient deterministic anchor for
-  all subsequent execution.
+  \subsection{Phase 0: Scene Initialization and Reachability Pre-check}
+  \label{subsec:phase0}
+
+  To bridge the continuous visual observation space with the discrete symbolic
+  domain required by the LGP solver, the pipeline first utilizes Computer Vision
+  (CV) modules to recognize object shapes and confirm their 6-DOF poses, mapping
+  them to physical proxies in the simulation environment (e.g., an anonymous
+  \texttt{.g} configuration). Objects are spatially sorted based on their radial
+  Euclidean distance from the robot base to establish a preliminary reasoning
+  sequence.
+
+  To further enhance system robustness and avoid costly downstream failures, we
+  introduce a \textit{Reachability Pre-check} that runs \emph{in parallel} with
+  the subsequent VLM reasoning phases. For each identified object $o_i$, the system
+  invokes the Layer-1 LGP solver---a highly efficient waypoint generator operating
+  at $\texttt{stepsPerPhase}=1$---to test basic grasp feasibility under global
+  collision constraints:
+  \begin{equation}
+    \text{Reach}(o_i) =
+    \begin{cases}
+      \texttt{true}  & \text{if } \exists\, q^* :
+        \text{KOMO}_{wp}(o_i, q^*) \text{ feasible within } T_{max} \\
+      \texttt{false} & \text{otherwise}
+    \end{cases}
+    \label{eq:reachability}
+  \end{equation}
+  Objects that successfully yield a valid waypoint are categorized as
+  \textit{reachable}; those failing or timing out are flagged as
+  \textit{unreachable} and excluded from the task dictionary. By leveraging this
+  low-cost pre-filter concurrently with the semantic pipeline, the system
+  eliminates kinematically impossible candidates before the expensive full-motion
+  solver is ever invoked.
 
   \subsection{Phase 1: Extraction of the Layered Precedence Graph}
   \label{subsec:phase1}
 
-  \vspace{1em}
-  \begin{lstlisting}[language=json, caption={Example of the Layered Precedence Graph extracted by the VLM. This structured schema restricts the geometric search depth in downstream LGP phases.}, label={lst:json_graph}]
-  {
-    "assembly_nodes": [
-      {
-        "node_id": 1,
-        "description": "Foundation",
-        "actions": [
-          { "object": "base", "placed_on": "table", "at_slot": "place_base1" },
-          { "object": "cylinder", "placed_on": "base", "at_slot": "top_left" }
-        ]
-      },
-      {
-        "node_id": 2,
-        "description": "Second Layer",
-        "actions": [
-          { "object": "base", "placed_on": ["cylinder"], "at_slot": null },
-          { "object": "cylinder", "placed_on": "base", "at_slot": "mid_left" }
-        ]
-      }
-    ]
-  }
-  \end{lstlisting}
-  \vspace{1em}
+  In complex multi-part assembly tasks, restricting the state-space search via
+  sequence-defining precedence graphs is an established methodology (e.g., as
+  explored in systems like Fabrica \cite{cite_arxiv_2506_05168}). While existing
+  approaches often rely on dedicated physics-based disassembly planners, we propose
+  an alternative semantic framework. Instead of requiring intensive kinematic
+  pre-computations, a Vision-Language Model acts as a high-level zero-shot parser
+  to process visual assembly instructions.
 
-  In complex multi-part assembly tasks, restricting the state-space search via sequence-defining
-  precedence graphs is an established methodology (e.g., as explored in systems
-  like Fabrica \cite{cite_arxiv_2506_05168}). While existing approaches often
-  rely on dedicated physics-based disassembly planners, we propose an alternative
-  semantic framework. Instead of requiring intensive kinematic pre-computations,
-  a Vision-Language Model acts as a high-level zero-shot parser to process visual
-  assembly instructions.
+  Similar to the sub-goal temporal decomposition seen in hierarchical planning
+  \cite{cite_rhhlgp_2021}, the VLM extracts a semantic \textit{Layered Precedence
+  Graph} $\mathcal{G}= (\mathcal{V}, \mathcal{E})$ (see Fig.~\ref{fig:layered_graph}).
+  Each node $v \in \mathcal{V}$ encapsulates a disjoint assembly stage (e.g., placing
+  the foundation before the second layer), generating an ordered sequence of semantic
+  placement tasks. This graph serves as an abstract temporal skeleton for downstream
+  processing. The extracted graph $\mathcal{G}$ is simultaneously forwarded to a
+  Python compliance monitor. For any directed edge $(v_i, v_j) \in \mathcal{E}$,
+  $v_i$ must be fully completed before any action in $v_j$ can commence; if a
+  downstream strategy violates this topological ordering, it is immediately rejected.
 
-  Similar to the sub-goal temporal decomposition seen in hierarchical planning \cite{cite_rhhlgp_2021},
-  the VLM extracts a semantic \textit{Layered Precedence Graph} $\mathcal{G}= (\mathcal{V}
-  , \mathcal{E})$ (see Listing \ref{lst:json_graph}). Each node
-  $v \in \mathcal{V}$ encapsulates a disjoint assembly stage (e.g., placing the foundation
-  before the second layer), generating an ordered sequence of semantic placement
-  tasks. This graph serves as an abstract temporal skeleton for downstream
-  processing.
+  \begin{figure}[!ht]
+    \centering
+    \begin{minipage}{0.48\columnwidth}
+      \centering
+      \includegraphics[width=\linewidth]{graph (1).png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\columnwidth}
+      \centering
+      \includegraphics[width=\linewidth]{graph (2).png}
+    \end{minipage}
+    \caption{Examples of the Layered Precedence Graph extracted by the VLM from
+    visual assembly instructions (left: simple structure; right: complex structure).
+    Edges encode strict temporal dependencies between assembly layers.}
+    \label{fig:layered_graph}
+  \end{figure}
 
   \subsection{Phase 2: Dynamic Resource Allocation and Batch Compilation}
   \label{subsec:phase2} To overcome the combinatorial explosion identified in
@@ -213,12 +226,17 @@ breaklines=true, frame=lines, backgroundcolor=
 
   Crucially, instead of blindly outputting a single static plan, the system leverages
   the VLM's reasoning capabilities to explicitly generate multiple candidate logic
-  sub-graphs (execution sequences) (see Fig.~\ref{fig:candidate_graphs} for illustration)
+  sub-graphs (execution sequences) (see Fig.~\ref{fig:layered_graph} for illustration)
   that satisfy the current node's structural requirements. The VLM then acts as an
   autonomous evaluator, assessing these deterministic routes against spatial
   heuristics---such as minimizing arm occlusion, avoiding redundant tool switches,
   or favoring top-to-bottom manipulation. It explicitly selects the most physically
   feasible trajectory and outputs the rationale behind its decision.
+
+  Before forwarding the selected strategy to the Logic Batch Compiler, the Python
+  compliance monitor cross-validates the chosen execution sequence against the
+  Layered Precedence Graph $\mathcal{G}$ to guarantee that no layer-ordering
+  violations exist (see Section~\ref{subsec:phase1}).
 
   Only after this rigorous semantic filtering and logical validation is the selected
   optimal sequence passed to the Logic Batch Compiler. This compiler translates
@@ -235,6 +253,31 @@ breaklines=true, frame=lines, backgroundcolor=
   solid foundation for the performance comparisons presented in the experimental
   evaluations.
 
+  \subsubsection{Waypoint-Gated Active Constraint Strategy}
+  \label{subsubsec:active_constraints}
+
+  A notorious bottleneck in native TAMP and LGP solvers is the combinatorial
+  explosion of collision checking when scenes contain numerous objects. Evaluating
+  explicit collision constraints among all $N$ environmental entities imposes an
+  $\mathcal{O}(N^2)$ burden on the full-motion optimizer, the majority of which are
+  geometrically irrelevant.
+
+  To resolve this, we interleave a dynamic \textit{Active Constraint Strategy}
+  between the solver's waypoint generation and full-motion optimization stages.
+  Once the Layer-1 solver generates sparse waypoints for a sub-task, the system
+  selectively activates collision pairs based on geometric proximity:
+  \begin{equation}
+    C_{\text{active}}(w) = \{(l_i, o_j) \mid d(l_i^w, o_j) < r_{\text{active}}\}
+    \label{eq:active_constraints}
+  \end{equation}
+  where $l_i^w$ denotes the $i$-th robot link pose at waypoint $w$, and $o_j$ is an
+  obstacle frame. Only the object pairs within the dynamic spatial radius
+  $r_{\text{active}}$ are instantiated as explicit collision constraints in the LGP
+  configuration; the vast majority of irrelevant scene objects are safely ignored.
+  If the subsequent full-motion solve fails, the system expands $r_{\text{active}}$
+  and retries, providing a principled fallback. This optimization dramatically
+  shrinks the search manifold while strictly maintaining physical safety.
+
   \subsection{Phase 3: Constrained Geometric Execution}
   \label{subsec:phase3}
 
@@ -245,18 +288,58 @@ breaklines=true, frame=lines, backgroundcolor=
   resolving local geometric feasibility. The core action skeleton is refined
   through three specialized, physics-grounded manipulation primitives.
 
-  \subsubsection{Semantic-Guided Auxiliary Grasping (\texttt{action\_pick})}
-  To handle large-scale objects, standard LGP solvers often fail during inverse
-  kinematics if targeting the ungraspable object's geometric centroid. We introduce
-  a decoupled \textit{Semantic Grasping Site} paradigm. During \texttt{action\_pick},
-  the system traverses the object's kinematic tree and re-parents the optimization
-  target to an auxiliary proxy frame, $targetF$ (e.g., a designated handle). The
-  grasp pose leverages a 6-DOF free joint relative to the gripper:
+  \subsubsection{Shape-Aware Semantic Grasping Primitives}
+  \label{subsubsec:shape_pick}
+
+  Native LGP solvers typically rely on a single, hard-coded top-down grasping
+  approach that targets an object's geometric centroid. This severely restricts the
+  solver's maneuverability and frequently fails when deployed to real-robot
+  hardware in cluttered environments. To overcome this, we design shape-specific
+  manipulation primitives that maximize the solver's configuration-space freedom
+  while remaining deployable on physical platforms.
+
+  For all grasp types, the system first creates a 6-DOF free virtual snap frame
+  $f_{snap}$ attached to the gripper, and initializes it to a semantically
+  meaningful target pose:
   \begin{equation}
-    f_{snap}\leftarrow \text{initFrameDof}(gripper, targetF)
+    \begin{split}
+      f_{snap} &\leftarrow \text{addFrameDof}(gripper, \texttt{JT\_free}); \\
+      \text{pose}(f_{snap}) &\leftarrow \text{pose}(targetF)
+    \end{split}
+    \label{eq:snap_frame}
   \end{equation}
-  This transforms a highly non-convex full-body collision problem into a
-  tractable sub-problem focused tightly on the valid grasping manifold.
+  where $targetF$ is determined by traversing the object's kinematic tree (e.g., a
+  designated handle sub-frame for large objects).
+
+  \textbf{Box-type objects.}
+  The grasp constrains the gripper to be centered on the target frame in the XY
+  plane while leaving the Z axis free for the solver to optimize:
+  \begin{equation}
+    \phi_{\text{posRel}}^{x}(gripper, targetF) = 0, \quad
+    \phi_{\text{posRel}}^{y}(gripper, targetF) = 0
+    \label{eq:pick_box}
+  \end{equation}
+  A pre-grasp funnel guides the gripper from a standoff distance $d_{pre}$ above
+  the target before final descent, with soft orientation alignment enforced
+  throughout the approach corridor.
+
+  \textbf{Cylindrical objects.}
+  The primitive enforces strict orthogonality between the gripper's approach axis
+  and the cylinder's central axis, while permitting translational sliding along
+  the cylinder length:
+  \begin{equation}
+    \phi_{\text{posRel}}^{xy}(gripper, O) = 0, \quad
+    \langle \hat{x}_{gripper}, \hat{z}_{O} \rangle = 0
+    \label{eq:pick_cyl_axis}
+  \end{equation}
+  \begin{equation}
+    -\tfrac{L}{2} + m \leq \phi_{\text{posRel}}^{z}(gripper, O)
+    \leq \tfrac{L}{2} - m
+    \label{eq:pick_cyl_slide}
+  \end{equation}
+  where $L$ is the cylinder length and $m$ a safety margin. This formulation grants
+  the solver maximal freedom to determine the optimal grasp height along the
+  object's axis, which is critical for collision-free manipulation in dense scenes.
 
   \subsubsection{Topological Decoupling for Multi-Support (\texttt{action\_place\_multi})}
   Native LGP assumes strict open-chain kinematic trees, which fail in multi-support
@@ -265,40 +348,49 @@ breaklines=true, frame=lines, backgroundcolor=
   frame.
 
   For placing an object $O$ onto a composite set of support frames $S_{1..n}$,
-  $A_{v}$ is assigned an initial pose matching the calculated target centroid. The
-  solver then enforces a soft optimization constraint aligning $A_{v}$ to the target
-  world pose, while employing a rigid kinematic switch allocating ownership of
-  object $O$ to $A_{v}$:
+  $A_{v}$ is assigned an initial pose matching the calculated target centroid.
+  The solver first locks the anchor to the computed target world pose via a hard
+  equality constraint, then employs a soft alignment to guide the object towards
+  the anchor:
   \begin{equation}
-    \Phi_{anchor}= \| \phi_{\text{poseDiff}}( A_{v}, O, x_{t}) \|^{2}\approx 0
+    \Phi_{\text{lock}} = \| \text{pose}(A_v) - p_{\text{target}} \|^{2}_{eq} = 0
+    \label{eq:anchor_lock}
   \end{equation}
-  This manipulation elegantly breaks closed kinematic loops, granting the KOMO
-  solver dynamic capability to iteratively interpolate the most stable geometric
-  descent.
+  \begin{equation}
+    \Phi_{\text{align}} = \| \phi_{\text{poseDiff}}(A_v, O, x_t) \|^{2}_{sos}
+    \to \min
+    \label{eq:anchor_align}
+  \end{equation}
+  A rigid kinematic switch then transfers ownership of $O$ to $A_v$, elegantly
+  breaking the closed kinematic loop and granting the KOMO solver dynamic
+  capability to iteratively interpolate the most stable geometric descent.
 
-  \subsubsection{Trajectory Shaping and Three-Stage Safety Protocol}
-  To overcome solver deadlocks caused by static long-horizon obstacles, all generated
-  sequences are heavily regularized through dynamic trajectory shaping:
+  \subsubsection{Trajectory Shaping and Phased Collision Protocol}
+
+  To overcome solver deadlocks caused by static long-horizon obstacles, all
+  generated sequences are regularized through dynamic trajectory shaping:
 
   \textbf{Pre-Action Funnels:} To prevent lateral sliding collisions during
-  delicate placements or insertions, we mathematically inject relative positional
-  waypoints at $t-0.5$ and $t-0.1$. This constructs a virtual ``funnel'' forcing
-  the payload precisely above the anchor with a strict vertical standoff
-  distance (e.g., $d_{z}= 0.05$\,m):
+  delicate placements, we inject relative positional waypoints at intermediate
+  time steps $t_{far}$ and $t_{near}$ before the action time $t$. This constructs
+  a virtual ``funnel'' forcing the payload precisely above the target with
+  decreasing vertical standoff distances $d_z^{far}$ and $d_z^{near}$:
   \begin{equation}
-    \Phi_{\text{funnel}}= \| \phi_{\text{posRel}}(O, A_{v}, x_{t-0.1}) -
-    \begin{bmatrix}
-      0 & 0 & d_{z}
-    \end{bmatrix}^{T}\|^{2}_{sos}
+    \Phi_{\text{funnel}} = \| \phi_{\text{posRel}}(O, A_v, x_{t_{near}}) -
+    \begin{bmatrix} 0 & 0 & d_z^{near} \end{bmatrix}^{T} \|^{2}_{sos}
+    \label{eq:funnel}
   \end{equation}
+  The specific time offsets and standoff values are shape- and action-dependent.
 
-  \textbf{Three-Stage Phased Collision Relaxations:} Furthermore, continuous
-  collision constraints $FS_{negDistance}$ between the moving gripper parts and
-  static obstacles are segmented temporally. During the \textit{transit phase} ($t
-  \in [t-1.0, t-0 .2]$), strict safety margins ($d_{safe}\ge 0.03$\,m) are enforced
-  utilizing bounding hierarchies. However, within the \textit{final approach
-  phase} ($t-0.2$ to $t$), these margins are hierarchically relaxed to allow physical
-  manifold contact, enabling deadlock-free grasping and precision placement.
+  \textbf{Phased Collision Relaxations:} Continuous collision constraints
+  $FS_{negDistance}$ between moving gripper parts and static obstacles are
+  segmented temporally with parameterized safety margins $d_{safe}$. During the
+  \textit{transit phase} ($[t_{start},\, t_{transit}]$), strict safety margins are
+  enforced via per-pair distance checks. Within the \textit{final approach phase}
+  ($[t_{transit},\, t]$), these margins are hierarchically relaxed to allow physical
+  manifold contact, enabling deadlock-free grasping and precision placement. The
+  exact time boundaries and margin values vary across manipulation primitives to
+  accommodate different geometric and kinematic requirements.
 
   \subsection{Phase 4: State Verification and Safety Halting}
   \label{subsec:phase4} Given the inherent uncertainties of physical execution (e.g.,
@@ -315,6 +407,11 @@ breaklines=true, frame=lines, backgroundcolor=
   theoretical extensions for future work, this rigorous error detection mechanism
   effectively prevents minor execution anomalies from cascading into catastrophic
   structural failures, establishing a critical safety boundary for the system.
+
+  \textit{(Reviewer note: This verification and halting module ensures execution
+  integrity during long-horizon assembly. Depending on the final review focus,
+  this section may be expanded with quantitative recovery metrics or condensed to
+  focus on the planning-level optimizations.)}
 
   \section{Experimental Results}
   \subsection{Performance Evaluation}
