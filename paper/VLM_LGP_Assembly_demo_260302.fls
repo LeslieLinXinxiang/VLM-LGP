@@ -253,11 +253,11 @@ INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm
-INPUT ./workflow.pdf
-INPUT ./workflow.pdf
-INPUT ./workflow.pdf
-INPUT ./workflow.pdf
-INPUT ./workflow.pdf
+INPUT ./workflow.png
+INPUT ./workflow.png
+INPUT ./workflow.png
+INPUT ./workflow.png
+INPUT ./workflow.png
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map

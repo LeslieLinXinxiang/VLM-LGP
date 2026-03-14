@@ -9,6 +9,13 @@
 	* *2026-03-13 17:01*: Roadmap update applied. Promoted solver-time optimization from pending backlog to active task and moved MuJoCo debug loop back to pending backlog.
 	* *2026-03-13 17:01*: Define and integrate an active constraint set algorithm plus reachability detection to select collision pairs and pre-filter infeasible picks, reducing excessive TAMP constraints and improving solve time.
 
+### [TASK-009] Refine Paper — Synchronize Latest Workflow and Innovation Points
+* **Status**: `[In Progress]`
+* **Created**: 2026-03-14 13:54
+* **Completed**: N/A
+* **Timeline**:
+	* *2026-03-14 13:54*: Task created. Goal: align academic paper `paper/VLM_LGP_Assembly_demo_260302.tex` with the latest pipeline changes, including Active Constraint Strategy, Waypoint-Gated Reachability Pre-check, CV-based scene binding, and real-robot deployment stage.
+
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
 
