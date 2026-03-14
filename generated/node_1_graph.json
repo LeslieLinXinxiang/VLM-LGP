@@ -1,0 +1,26 @@
+{
+  "node_id": 1,
+  "description": "Build the foundation layer (Panel 1)",
+  "actions": [
+    {
+      "object": "base1",
+      "placed_on": "place_base1",
+      "at_slot": null
+    },
+    {
+      "object": "cyl8",
+      "placed_on": "base1",
+      "at_slot": "back"
+    },
+    {
+      "object": "cyl2",
+      "placed_on": "base1",
+      "at_slot": "frontleft"
+    },
+    {
+      "object": "cyl1",
+      "placed_on": "base1",
+      "at_slot": "frontright"
+    }
+  ]
+}

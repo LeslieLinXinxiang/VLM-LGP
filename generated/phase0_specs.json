@@ -1,0 +1,223 @@
+[
+  {
+    "anon_id": "obj_01",
+    "shape": "cylinder",
+    "object_type": "cylinder",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.8,
+      0.0
+    ]
+  },
+  {
+    "anon_id": "obj_02",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.9,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_03",
+    "shape": "cylinder",
+    "object_type": "cylinder",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.4,
+      1.0,
+      0.2
+    ]
+  },
+  {
+    "anon_id": "obj_04",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.7,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_05",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      1.0,
+      0.5,
+      0.0
+    ]
+  },
+  {
+    "anon_id": "obj_06",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "obj_07",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      1.0,
+      0.8,
+      0.0
+    ]
+  },
+  {
+    "anon_id": "obj_08",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.2,
+      0.3,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_09",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.3,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_10",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.0,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_11",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.8,
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_12",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.7,
+      0.0,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_13",
+    "shape": "mesh",
+    "object_type": "triprism",
+    "size_signature": [],
+    "color_rgb": [
+      1.0,
+      0.4,
+      0.7
+    ]
+  },
+  {
+    "anon_id": "obj_14",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.5,
+      0.0,
+      0.8
+    ]
+  },
+  {
+    "anon_id": "obj_15",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.3,
+      0.0,
+      0.7
+    ]
+  }
+]

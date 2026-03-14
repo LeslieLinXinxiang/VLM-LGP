@@ -1,0 +1,238 @@
+[
+  {
+    "anon_id": "obj_01",
+    "logical_id": "cyl_2",
+    "shape": "cylinder",
+    "object_type": "cylinder",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.8,
+      0.0
+    ]
+  },
+  {
+    "anon_id": "obj_02",
+    "logical_id": "rect_7",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.9,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_03",
+    "logical_id": "cyl_1",
+    "shape": "cylinder",
+    "object_type": "cylinder",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.4,
+      1.0,
+      0.2
+    ]
+  },
+  {
+    "anon_id": "obj_04",
+    "logical_id": "rect_5",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.7,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_05",
+    "logical_id": "cube_4",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      1.0,
+      0.5,
+      0.0
+    ]
+  },
+  {
+    "anon_id": "obj_06",
+    "logical_id": "rect_8",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "obj_07",
+    "logical_id": "cube_2",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      1.0,
+      0.8,
+      0.0
+    ]
+  },
+  {
+    "anon_id": "obj_08",
+    "logical_id": "rect_3",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.2,
+      0.3,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_09",
+    "logical_id": "cube_3",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.3,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_10",
+    "logical_id": "rect_6",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.0,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_11",
+    "logical_id": "cube_1",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.8,
+      0.1,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_12",
+    "logical_id": "rect_1",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.7,
+      0.0,
+      0.9
+    ]
+  },
+  {
+    "anon_id": "obj_13",
+    "logical_id": "tri_1",
+    "shape": "box",
+    "object_type": "triprism",
+    "size_signature": [],
+    "color_rgb": [
+      1.0,
+      0.4,
+      0.7
+    ]
+  },
+  {
+    "anon_id": "obj_14",
+    "logical_id": "rect_4",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.5,
+      0.0,
+      0.8
+    ]
+  },
+  {
+    "anon_id": "obj_15",
+    "logical_id": "rect_2",
+    "shape": "box",
+    "object_type": "rectprism",
+    "size_signature": [
+      0.06,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.3,
+      0.0,
+      0.7
+    ]
+  }
+]

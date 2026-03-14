@@ -1,0 +1,4 @@
+fol: <test_2supports_fol.g>
+terminal: " (on cube_L cube_R RectPrism) "
+genericCollisions: true
+coll: []
