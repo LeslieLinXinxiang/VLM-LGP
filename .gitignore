@@ -6,7 +6,6 @@ __pycache__/
 *.exe
 *.log
 *.so
-*.drawio
 .DS_Store
 .vscode/
 .idea/
