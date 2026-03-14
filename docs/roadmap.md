@@ -1,12 +1,13 @@
 # Layer 4: Project Roadmap & Task Tracker
 
 ## 1. Current Active Tasks (Timeline Log)
-### [TASK-006] MuJoCo Simulation Debug Loop Integration
+### [TASK-007] Active Constraint Set + Reachability Detection for TAMP Solver Acceleration
 * **Status**: `[In Progress]`
-* **Created**: 2026-03-12 22:42
+* **Created**: 2026-03-13 17:01
 * **Completed**: N/A
 * **Timeline**:
-	* *2026-03-12 22:42*: Task moved from backlog to active execution. Goal is to align MuJoCo scene with `generated/scene_named.g`, validate key manipulation actions (pick/place), and finalize reproducible simulation-side debug scripts.
+	* *2026-03-13 17:01*: Roadmap update applied. Promoted solver-time optimization from pending backlog to active task and moved MuJoCo debug loop back to pending backlog.
+	* *2026-03-13 17:01*: Define and integrate an active constraint set algorithm plus reachability detection to select collision pairs and pre-filter infeasible picks, reducing excessive TAMP constraints and improving solve time.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
@@ -19,4 +20,11 @@
 
 ## 3. Pending Backlog
 - Replace/optimize soft `OT_sos` objectives that conflict with hard `OT_eq` requirements in the manipulation logics.
-- Improve KOMO solver execution time for multi-step `LGP_TAMP` batches.
+
+### [TASK-006] MuJoCo Simulation Debug Loop Integration
+* **Status**: `[Pending]`
+* **Created**: 2026-03-12 22:42
+* **Completed**: N/A
+* **Timeline**:
+	* *2026-03-12 22:42*: Task moved from backlog to active execution. Goal is to align MuJoCo scene with `generated/scene_named.g`, validate key manipulation actions (pick/place), and finalize reproducible simulation-side debug scripts.
+	* *2026-03-13 17:03*: Task moved from `In Progress` back to `Pending Backlog`; preserved original execution timeline for future resumption.

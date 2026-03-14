@@ -26,7 +26,7 @@ QWEN_MODEL   = os.getenv("QWEN_MODEL_NAME", "qwen3.5-flash")
 QWEN_PROXY   = os.getenv("QWEN_PROXY_URL") or None
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL   = os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash-preview")
+GEMINI_MODEL   = os.getenv("GEMINI_MODEL_NAME", "gemini-3-flash-preview")
 GEMINI_PROXY   = os.getenv("GEMINI_PROXY_URL") or None
 
 # Active config — resolved at import time; rest of file uses these unchanged

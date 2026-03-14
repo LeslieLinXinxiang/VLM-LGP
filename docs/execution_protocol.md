@@ -68,3 +68,57 @@ When asked to test Phase1 input/output only (prompt + image -> JSON), execute th
 	- Allowed object labels: `Triangular Prism`, `Cube`, `Rectangular Prism`, `Cylinder`.
 	- Edge `source` is an existing vertex id.
 	- Edge `target` is existing vertex id or `table`.
+
+## 11. DDE Optional Extension Invocation Protocol
+The DDE protocol remains the single command authority. Extension skills are optional and subordinate helpers.
+
+### 11.1 Authority Rules
+1. `dde-bootstrap` remains the global coordinator for session state and document truth.
+2. `dde-code-guard` remains the only write gate for code file modifications.
+3. Extension skills can run discovery, testing, and verification commands, but cannot bypass `RFC_MODE`, `[APPROVED]`, or `[TASK_COMPLETED]`.
+
+### 11.2 Enabled Subordinate Extensions
+- `dde-ext-search-first`: research-before-implementation helper.
+- `dde-ext-verification-loop`: build/test/lint/type/security verification helper.
+- `dde-ext-cpp-testing`: C++ test workflow helper.
+- `dde-ext-python-testing`: Python pytest workflow helper.
+- `dde-ext-brainstorm`: pre-implementation ideation and tradeoff helper (advisory-only).
+
+### 11.3 Write Escalation Gate
+If any extension requires file writes to complete its objective, it MUST emit handoff metadata and return control to `dde-code-guard` proposal flow before editing files.
+
+Required handoff fields:
+- Reason
+- Target files
+- Expected effect
+- Risk notes
+
+### 11.4 Trigger Policy
+Extensions are opt-in:
+- explicit user request, or
+- explicit DDE workflow selection for the current task phase.
+
+Default behavior is no extension execution.
+
+## 12. Documentation Information Architecture Rule
+To keep `docs/` maintainable and reduce mixed-context drift:
+1. Layer 0-4 files remain fixed at `docs/` root:
+	- `project_charter.md`, `architecture.md`, `dataflow.md`, `execution_protocol.md`, `roadmap.md`
+2. Layer 2 module details remain under `docs/module_specs/`.
+3. Supplementary docs must be filed by purpose:
+	- `docs/ops/` for troubleshooting and runtime SOPs
+	- `docs/decisions/` for decision templates/records
+	- `docs/archive/` for historical handoff or one-off records
+	- `docs/governance/` for optional process governance notes
+4. `docs/README.md` is mandatory as the docs system index in every project using DDE.
+5. If these subfolders exist, each must include a local README:
+	- `docs/ops/README.md`
+	- `docs/decisions/README.md`
+	- `docs/archive/README.md`
+	- `docs/governance/README.md`
+	- `docs/module_specs/README.md`
+6. DDR template has dual source:
+	- skill-level template: `dde-ext-brainstorm/templates/DDR_TEMPLATE.md` (reusable source)
+	- project instance: `docs/decisions/DDR_TEMPLATE.md` (project-local working copy)
+7. Use project instance first; if missing, initialize from skill template and then continue.
+8. New documentation files must be registered in `docs/README.md`.
