@@ -573,11 +573,15 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
     komo->addObjective({time - 0.3, time}, FS_positionRel, {gripper, targetF->name},
                        OT_sos, arr{1e2, 1e2, 0}, {0., 0., 0.});
 
-    // 姿态强制对齐：下降阶段保持抓取姿态，不再有空中的旋转摆动
-    komo->addObjective({time - 0.3, time}, FS_vectorZDiff,
-                       {gripper, targetF->name}, OT_eq, {1e2});
-    komo->addObjective({time - 0.3, time}, FS_scalarProductXY,
-                       {gripper, targetF->name}, OT_eq, {1e2}, {1.});
+    // 姿态分段：先软引导后硬锁定，避免中段姿态突变
+    komo->addObjective({time - 0.3, time - 0.1}, FS_vectorZDiff,
+               {gripper, targetF->name}, OT_sos, {8e1});
+    komo->addObjective({time - 0.3, time - 0.1}, FS_scalarProductXY,
+               {gripper, targetF->name}, OT_sos, {8e1}, {1.});
+    komo->addObjective({time - 0.1, time}, FS_vectorZDiff,
+               {gripper, targetF->name}, OT_eq, {1e2});
+    komo->addObjective({time - 0.1, time}, FS_scalarProductXY,
+               {gripper, targetF->name}, OT_eq, {1e2}, {1.});
 
     // Z 高度引导：在 time-0.15 建议 2cm (柔性)
     komo->addObjective({time - 0.15}, FS_positionRel, {gripper, targetF->name},
@@ -609,15 +613,18 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
   FrameL obstacles;
   for (rai::Frame *fr : komo->world.frames) {
     if (fr->shape && fr->shape->type() != rai::ST_marker) {
-      if (!gripperParts.contains(fr->name)) {
-        obstacles.append(fr);
-      }
+      if (gripperParts.contains(fr->name)) continue;
+      // Do not repel the object currently being grasped (or its grasp handle)
+      // during pre-grasp approach, otherwise objectives fight each other.
+      if (fr == bodyF || fr == targetF) continue;
+      if (fr->parent == bodyF || fr->parent == targetF) continue;
+      obstacles.append(fr);
     }
   }
 
   if (komo->stepsPerPhase >= 10) {
-    // 避障: 从 t-1.0 到 t-0.3 (在 t-0.3 之后由 XY 走廊约束接管)
-    // 保持 3cm 安全距离
+    // 避障: CHOMP 分段势场
+    // 远端采用连续软势场，近端采用硬边界，末段交给接触/走廊约束处理。
     for (const str &handPart : gripperParts) {
       rai::Frame *handF = komo->world.getFrame(handPart);
       if (!handF || !handF->shape)
@@ -627,8 +634,12 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
           if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
+          // 远端连续软势场
           komo->addObjective({time - 1.0, time - 0.3}, FS_negDistance,
-                             {handPart, obs->name}, OT_ineq, {1e0}, {-0.03});
+                             {handPart, obs->name}, OT_sos, {2e-1}, {-0.04});
+          // 近端硬边界
+          komo->addObjective({time - 0.5, time - 0.1}, FS_negDistance,
+                             {handPart, obs->name}, OT_ineq, {1.5e0}, {-0.02});
         }
       }
     }
