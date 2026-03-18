@@ -8,6 +8,9 @@
 * **Timeline**:
 	* *2026-03-17 14:48*: Split legacy mixed task into two tracks: (1) active-constraint optimization and (2) reachability module closure.
 	* *2026-03-17 14:48*: Continue constraint-pair selection and objective-pruning strategy for solver speedup, decoupled from reachability reporting workflow.
+	* *2026-03-18 12:38*: Rolled back to the first stable Option-B runtime strategy: 5cm active radius, runtime `explicitCollisions` injection only, no `.lgp` write-back, and `useBroadCollisions=false` before full-motion.
+	* *2026-03-18 12:38*: Verified stable report generation for `node_1_run` and identified the next barrier: neighbor-object pair coverage is incomplete in some subtasks (example under `step_3_batch_2`: expected nearby relation such as `rect_2` and `cube_3` may not appear in active pairs).
+	* *2026-03-18 12:38*: Added documentation of the full active-collision chain and current blind spot for follow-up refinement planning.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.

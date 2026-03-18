@@ -12,9 +12,218 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <array>
+#include <set>
+#include <unordered_map>
+#include <iomanip>
+#include <sstream>
+#include <chrono>
+#include <cmath>
 #include <Kin/F_qFeatures.h>
 
 namespace fs = std::filesystem;
+
+struct ActiveCollisionSummary {
+    std::string lgp_file;
+    std::string action_summary;
+    double radius_m = 0.05;
+    std::vector<std::pair<std::string, std::string>> pairs;
+    double full_motion_solver_ms = -1.0;
+};
+
+static std::array<double, 3> toXYZ(const arr& p) {
+    std::array<double, 3> out{0.0, 0.0, 0.0};
+    if(p.N >= 3) {
+        out[0] = p(0);
+        out[1] = p(1);
+        out[2] = p(2);
+    }
+    return out;
+}
+
+static double dist3(const std::array<double, 3>& a, const std::array<double, 3>& b) {
+    const double dx = a[0] - b[0];
+    const double dy = a[1] - b[1];
+    const double dz = a[2] - b[2];
+    return std::sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+static std::string getActionSummary(const StringAA& plan) {
+    if(!plan.N) return "<empty>";
+    std::ostringstream oss;
+    for(uint i = 0; i < plan.N; ++i) {
+        if(i) oss << " | ";
+        for(uint j = 0; j < plan(i).N; ++j) {
+            if(j) oss << ' ';
+            oss << plan(i)(j).p;
+        }
+    }
+    return oss.str();
+}
+
+static std::vector<std::pair<std::string, std::string>> extractActivePairsFromWaypoints(
+    const std::shared_ptr<KOMO>& ways,
+    double radius_m
+) {
+    std::vector<std::pair<std::string, std::string>> out;
+    if(!ways || ways->T <= 0) return out;
+
+    std::vector<std::unordered_map<std::string, std::array<double, 3>>> snapshots;
+    snapshots.reserve(ways->T);
+
+    for(uint t = 0; t < ways->T; ++t) {
+        rai::Configuration Ct;
+        ways->getConfiguration_full(Ct, t, 0);
+
+        std::unordered_map<std::string, std::array<double, 3>> pos;
+        for(rai::Frame* fr : Ct.frames) {
+            if(!fr || !fr->shape || fr->shape->type() == rai::ST_marker) continue;
+            const std::string name = fr->name.p;
+            pos[name] = toXYZ(fr->getPosition());
+        }
+        snapshots.emplace_back(std::move(pos));
+    }
+
+    std::set<std::string> movingCenters;
+    for(size_t t = 1; t < snapshots.size(); ++t) {
+        for(const auto& kv : snapshots[t]) {
+            const auto prevIt = snapshots[t - 1].find(kv.first);
+            if(prevIt == snapshots[t - 1].end()) continue;
+            if(dist3(kv.second, prevIt->second) > 1e-6) movingCenters.insert(kv.first);
+        }
+    }
+
+    std::set<std::pair<std::string, std::string>> uniqPairs;
+    for(size_t t = 0; t < snapshots.size(); ++t) {
+        rai::Configuration Ct;
+        ways->getConfiguration_full(Ct, uint(t), 0);
+
+        std::unordered_map<std::string, std::array<double, 3>> current;
+        for(rai::Frame* fr : Ct.frames) {
+            if(!fr || !fr->shape || fr->shape->type() == rai::ST_marker) continue;
+            const std::string name = fr->name.p;
+            current[name] = toXYZ(fr->getPosition());
+        }
+
+        for(const std::string& center : movingCenters) {
+            const auto cIt = current.find(center);
+            if(cIt == current.end()) continue;
+
+            for(const auto& kv : current) {
+                const std::string& obs = kv.first;
+                if(obs == center) continue;
+                if(dist3(cIt->second, kv.second) > radius_m) continue;
+
+                std::pair<std::string, std::string> pair =
+                    (center < obs) ? std::make_pair(center, obs) : std::make_pair(obs, center);
+                uniqPairs.insert(pair);
+            }
+        }
+    }
+
+    out.assign(uniqPairs.begin(), uniqPairs.end());
+    return out;
+}
+
+static StringA toStringAFlatPairs(const std::vector<std::pair<std::string, std::string>>& pairs) {
+    StringA out;
+    for(const auto& p : pairs) {
+        out.append(p.first.c_str());
+        out.append(p.second.c_str());
+    }
+    return out;
+}
+
+static std::vector<std::pair<std::string, std::string>> keepPairsPresentInConfig(
+    const std::vector<std::pair<std::string, std::string>>& pairs,
+    const rai::Configuration& C
+) {
+    std::set<std::string> names;
+    for(rai::Frame* f : C.frames) {
+        if(!f) continue;
+        names.insert(f->name.p);
+    }
+
+    std::vector<std::pair<std::string, std::string>> out;
+    out.reserve(pairs.size());
+    for(const auto& p : pairs) {
+        if(!names.count(p.first) || !names.count(p.second)) continue;
+        out.push_back(p);
+    }
+    return out;
+}
+
+static std::string escapeJson(const std::string& s) {
+    std::string out;
+    out.reserve(s.size() + 8);
+    for(char c : s) {
+        if(c == '\\' || c == '"') out.push_back('\\');
+        out.push_back(c);
+    }
+    return out;
+}
+
+static void writeActiveCollisionReport(
+    const std::string& reportPath,
+    const std::string& taskDir,
+    double radius_m,
+    const std::vector<ActiveCollisionSummary>& summaries
+) {
+    std::ofstream os(reportPath);
+    if(!os.is_open()) {
+        std::cerr << "[WARN] Failed to write report: " << reportPath << std::endl;
+        return;
+    }
+
+    os << "{\n";
+    os << "  \"task_dir\": \"" << escapeJson(taskDir) << "\",\n";
+    os << "  \"radius_m\": " << radius_m << ",\n";
+    os << "  \"subtasks\": [\n";
+    for(size_t i = 0; i < summaries.size(); ++i) {
+        const auto& s = summaries[i];
+        os << "    {\n";
+        os << "      \"lgp_file\": \"" << escapeJson(s.lgp_file) << "\",\n";
+        os << "      \"action_summary\": \"" << escapeJson(s.action_summary) << "\",\n";
+        os << "      \"pair_count\": " << s.pairs.size() << ",\n";
+        os << "      \"full_motion_solver_ms\": " << s.full_motion_solver_ms << ",\n";
+        os << "      \"pairs\": [\n";
+        for(size_t j = 0; j < s.pairs.size(); ++j) {
+            os << "        [\"" << escapeJson(s.pairs[j].first) << "\", \"" << escapeJson(s.pairs[j].second) << "\"]";
+            os << (j + 1 < s.pairs.size() ? ",\n" : "\n");
+        }
+        os << "      ]\n";
+        os << "    }" << (i + 1 < summaries.size() ? ",\n" : "\n");
+    }
+    os << "  ]\n";
+    os << "}\n";
+}
+
+static void printActiveCollisionTable(const std::vector<ActiveCollisionSummary>& summaries) {
+    std::cout << "\n================ ACTIVE COLLISION PAIRS (PER SUBTASK) ================\n";
+    std::cout << std::left
+              << std::setw(26) << "subtask"
+              << std::setw(10) << "pairs"
+              << std::setw(12) << "solver_ms"
+              << "sample_pairs" << std::endl;
+    std::cout << std::string(96, '-') << std::endl;
+
+    for(const auto& s : summaries) {
+        std::ostringstream sample;
+        const size_t showN = std::min<size_t>(s.pairs.size(), 3);
+        for(size_t i = 0; i < showN; ++i) {
+            if(i) sample << "; ";
+            sample << s.pairs[i].first << "<->" << s.pairs[i].second;
+        }
+        if(s.pairs.size() > showN) sample << "; ...";
+
+        std::cout << std::left
+                  << std::setw(26) << s.lgp_file
+                  << std::setw(10) << s.pairs.size()
+                  << std::setw(12) << std::fixed << std::setprecision(1) << s.full_motion_solver_ms
+                  << sample.str() << std::endl;
+    }
+    std::cout << std::string(96, '=') << "\n";
+}
 
 // [HELPER] 轨迹重采样与打印
 void resampleAndPrintTrajectory(KOMO* komo, double speed_scale, double freq) {
@@ -103,6 +312,9 @@ int main(int argc, char** argv) {
 
     std::shared_ptr<rai::ConfigurationViewer> shared_viewer = nullptr;
     std::string& current_state_file = temp_state_file;
+    const double active_radius_m = 0.05;
+    std::vector<ActiveCollisionSummary> active_summaries;
+    const std::string report_file = (fs::path(task_directory) / "active_collision_report.json").string();
 
     // --- PHASE A: EXECUTE LGP TASKS ---
     if (!lgp_files.empty()) {
@@ -114,9 +326,49 @@ int main(int argc, char** argv) {
                 auto tamp = rai::default_LGP_TAMP_Abstraction(C_initial_step, current_lgp_path.c_str());
                 rai::LGP_Tool lgp(C_initial_step, *tamp);
                 lgp.solve();
+
+                auto ways = lgp.getSolvedKOMO();
+                StringAA solved_plan = lgp.getSolvedPlan();
+                std::vector<std::pair<std::string, std::string>> active_pairs =
+                    extractActivePairsFromWaypoints(ways, active_radius_m);
+                active_pairs = keepPairsPresentInConfig(active_pairs, C_initial_step);
+
+                tamp->explicitCollisions = toStringAFlatPairs(active_pairs);
+                tamp->useBroadCollisions = false;
+
+                ActiveCollisionSummary summary;
+                summary.lgp_file = lgp_path.filename().string();
+                summary.action_summary = getActionSummary(solved_plan);
+                summary.radius_m = active_radius_m;
+                summary.pairs = active_pairs;
+
+                std::cout << "\n[ACTIVE_COLL] subtask: " << summary.lgp_file
+                          << " | radius=" << active_radius_m << "m"
+                          << " | active_pairs=" << summary.pairs.size() << std::endl;
+
+                active_pairs = keepPairsPresentInConfig(active_pairs, C_initial_step);
+                tamp->explicitCollisions = toStringAFlatPairs(active_pairs);
+                tamp->useBroadCollisions = false;
+
+                auto t0 = std::chrono::steady_clock::now();
                 PTR<KOMO> solved_komo = lgp.get_fullMotionProblem(true);
                 if(solved_komo){
                     auto ret = rai::NLP_Solver(solved_komo->nlp(), 0).solve();
+                    (void)ret;
+                    auto t1 = std::chrono::steady_clock::now();
+                    summary.full_motion_solver_ms =
+                        std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+                }
+
+                if(solved_komo){
+                    summary.pairs = active_pairs;
+                    active_summaries.push_back(summary);
+
+                    // Incremental persistence: write partial report after each finished subtask.
+                    writeActiveCollisionReport(report_file, task_directory, active_radius_m, active_summaries);
+                    std::cout << "[ACTIVE_COLL] Partial report updated: " << report_file
+                              << " | completed=" << active_summaries.size() << std::endl;
+
                     if (!shared_viewer) shared_viewer = solved_komo->get_viewer();
                     else solved_komo->set_viewer(shared_viewer);
                     solved_komo->view_play(false, current_lgp_path.c_str(), 1.0);
@@ -133,6 +385,10 @@ int main(int argc, char** argv) {
                 return 1;
             }
         }
+
+        printActiveCollisionTable(active_summaries);
+        writeActiveCollisionReport(report_file, task_directory, active_radius_m, active_summaries);
+        std::cout << "[ACTIVE_COLL] Report written to: " << report_file << std::endl;
     }
 
 // ==============================================================================

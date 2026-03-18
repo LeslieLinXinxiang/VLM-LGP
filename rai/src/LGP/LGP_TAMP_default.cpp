@@ -72,14 +72,14 @@ struct Default_LGP_TAMP_Abstraction : LGP_TAMP_Abstraction {
 
   virtual std::shared_ptr<KOMO> setup_sequence(Configuration& C, uint K){
     ManipulationHelper manip;
-    manip.setup_sequence(C, K, -1e-2, 1e-2, false, false, true);
+    manip.setup_sequence(C, K, -1e-2, 1e-2, useBroadCollisions, false, true);
     // manip.setup_sequence(C, K,);
     return manip.komo;
   }
 
   virtual std::shared_ptr<KOMO> setup_motion(Configuration& C, uint K){
     ManipulationHelper manip;
-    manip.setup_motion(C, K, 30, -1.);
+    manip.setup_motion(C, K, 30, -1., 1e-1, useBroadCollisions);
     return manip.komo;
   }
 

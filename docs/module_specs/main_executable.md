@@ -23,6 +23,27 @@ The primary C++ entry point that loads task configurations, invokes the LGP solv
 ## 6. Internal Functions
 - N/A (Standard standalone helper functions).
 
+### Active Collision Runtime Injection (Option B - Stable Baseline)
+- `extractActivePairsFromWaypoints(ways, radius_m)`:
+	- Builds waypoint snapshots.
+	- Detects moving centers by inter-snapshot position delta.
+	- Generates active pairs by radius-neighbor expansion around each moving center.
+- `toStringAFlatPairs(...)` + `keepPairsPresentInConfig(...)`:
+	- Converts deduplicated pair list to flat `StringA`.
+	- Removes invalid frame-name pairs against current configuration.
+- Runtime override before full-motion solve:
+	- `tamp->explicitCollisions = ...`
+	- `tamp->useBroadCollisions = false`
+- Reporting:
+	- Per-subtask terminal summary (`[ACTIVE_COLL] ...`).
+	- Incremental + final JSON report at `<task_dir>/active_collision_report.json`.
+
+### Current Known Blind Spot (Tracked)
+- The moving-center strategy can bias pair coverage toward the task object and gripper family.
+- Some nearby static neighbors are not guaranteed to be enumerated when they are not selected as centers or are filtered out by center-driven expansion timing.
+- Example observed in `node_1_run` (`step_3_batch_2`): users expect additional nearby context pair coverage around `cube_4` placement neighborhood.
+- This is the next refinement focus for active-pair recall.
+
 ## 7. Dependencies
 - `LGP/LGP_Tool.h`, `KOMO/komo.h`, `Kin`, `Optim`.
 - Local `.g` scene file I/O.
