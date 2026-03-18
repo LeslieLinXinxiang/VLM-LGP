@@ -1,0 +1,20 @@
+{
+  "scene_path": "test/scenes/scene_pick_left_front_far.g",
+  "mode": "pick_waypoint_only",
+  "gripper": "l_gripper",
+  "trajectory_log_path": "generated/pick_waypoint_trajectory_left_far.log",
+  "results": {
+    "left_far": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "infeasible",
+      "message": "solver infeasible"
+    }
+  },
+  "summary": {
+    "total": 1,
+    "feasible": 0,
+    "infeasible": 1,
+    "error": 0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scene_path": "test/scenes/scene_dual_lr_with_big_overhead_obstacle.g",
+  "mode": "pick_waypoint_only",
+  "gripper": "l_gripper",
+  "trajectory_log_path": "generated/pick_waypoint_trajectory_dual_big_obstacle.log",
+  "results": {
+    "left_obj": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "infeasible",
+      "message": "solver infeasible"
+    },
+    "right_obj": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "infeasible",
+      "message": "solver infeasible"
+    }
+  },
+  "summary": {
+    "total": 2,
+    "feasible": 0,
+    "infeasible": 2,
+    "error": 0
+  }
+}

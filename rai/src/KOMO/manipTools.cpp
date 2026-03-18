@@ -9,6 +9,8 @@
 #include "manipTools.h"
 #include "skeletonSymbol.h"
 
+#include <algorithm>
+
 #include "../Kin/F_geometrics.h"
 #include "../Kin/F_pose.h"
 #include "../Kin/feature.h"
@@ -432,8 +434,10 @@ void ManipulationHelper::action_pick_cylinder(double time, str gripper,
   // 4. 几何约束 (Geometric Constraints)
   // =================================================================
   arr size = bodyFrame->getSize();
-  double margin = 0.02;
-  double pre_grasp_z = 0.5 * size(0) + 0.05;
+  const double halfHeight = .5 * size(0);
+  // Keep a non-zero feasible z-band even for short cylinders.
+  const double margin = std::min(0.005, std::max(0.0, 0.4 * halfHeight));
+  double pre_grasp_z = halfHeight + 0.05;
   // 修改:先靠近物体正上方
   komo->addObjective({time - 0.1}, FS_positionRel, {gripper, obj}, OT_sos,
                      arr{1e2, 1e2, 1e2}, {0., 0., pre_grasp_z});
@@ -441,10 +445,10 @@ void ManipulationHelper::action_pick_cylinder(double time, str gripper,
   komo->addObjective({time}, FS_positionRel, {gripper, obj}, OT_eq,
                      arr{{2, 3}, {1, 0, 0, 0, 1, 0}} * 1e3);
   komo->addObjective({time}, FS_positionRel, {gripper, obj}, OT_ineq,
-                     arr{0, 0, 1} * 1e2, arr{0., 0., .5 * size(0) - margin});
+                     arr{0, 0, 1} * 1e2, arr{0., 0., halfHeight - margin});
   komo->addObjective({time}, FS_positionRel, {gripper, obj}, OT_ineq,
-                     arr{0, 0, 1} * (-1e1),
-                     arr{0., 0., -.5 * size(0) + margin});
+                     arr{0, 0, 1} * (-1e2),
+                     arr{0., 0., -halfHeight + margin});
   komo->addObjective({time - 0.2, time}, FS_scalarProductXZ, {gripper, obj},
                      OT_sos, {1e0});
 
