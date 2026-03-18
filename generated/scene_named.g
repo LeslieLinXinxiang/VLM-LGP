@@ -79,11 +79,11 @@ tri_1    (table) { Q:"t(-0.45   0.10 .05)",  joint:rigid, shape:mesh, mesh:"/hom
 # Colored yellow to confirm placement, then set transparent.
 # Size: 25x25mm (matches Cube footprint), thin (2mm)
 # -----------------------------------------------------------
-Base_Center (table) { Q:"t( 0.00  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Left   (table) { Q:"t(-0.08  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Right  (table) { Q:"t( 0.08  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Top    (table) { Q:"t( 0.00 -0.03 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Bottom (table) { Q:"t( 0.00  0.13 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Center (table) { Q:"t( 0.00  0.10 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Left   (table) { Q:"t(-0.08  0.10 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Right  (table) { Q:"t( 0.08  0.10 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Top    (table) { Q:"t( 0.00  0.02 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Bottom (table) { Q:"t( 0.00  0.18 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on the Table (for layer-1 objects)
@@ -93,8 +93,8 @@ Base_Bottom (table) { Q:"t( 0.00  0.13 .051)", shape:ssBox, size:[.025 .025 .002
 # Assembly zone centered at (0, 0.05). Left = -X, Right = +X, 8cm apart.
 # Naming: Table_Left, Table_Right  (consistent with Rect_N_Left/Right)
 # -----------------------------------------------------------
-Table_Left  (table) { Q:"t(-0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
-Table_Right (table) { Q:"t( 0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Left  (table) { Q:"t(-0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Right (table) { Q:"t( 0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on each Rect

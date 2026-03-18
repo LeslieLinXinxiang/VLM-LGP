@@ -26,7 +26,7 @@ namespace fs = std::filesystem;
 struct ActiveCollisionSummary {
     std::string lgp_file;
     std::string action_summary;
-    double radius_m = 0.05;
+    double radius_m = 1;
     std::vector<std::pair<std::string, std::string>> pairs;
     double full_motion_solver_ms = -1.0;
 };
@@ -46,6 +46,46 @@ static double dist3(const std::array<double, 3>& a, const std::array<double, 3>&
     const double dy = a[1] - b[1];
     const double dz = a[2] - b[2];
     return std::sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+static bool isPatchTargetFrame(const std::string& name) {
+    if(name == "Table_Left" || name == "Table_Right") return true;
+
+    if(name.rfind("Rect_", 0) == 0) {
+        if(name.size() >= 5 && name.compare(name.size() - 5, 5, "_Left") == 0) return true;
+        if(name.size() >= 6 && name.compare(name.size() - 6, 6, "_Right") == 0) return true;
+    }
+    return false;
+}
+
+static bool isRobotWhitelistFrame(const std::string& name) {
+    // Keep only compact collision proxies + gripper contact geometry.
+    if(name.rfind("l_panda_coll", 0) == 0) return true;
+    if(name == "l_palm" || name == "l_finger1" || name == "l_finger2") return true;
+    return false;
+}
+
+static bool shouldUseForActiveCollision(const rai::Frame* fr) {
+    if(!fr || !fr->shape || fr->shape->type() == rai::ST_marker) return false;
+    if(fr->shape->cont == 0) return false;
+
+    const std::string name = fr->name.p;
+
+    if(isPatchTargetFrame(name)) return false;
+
+    // Apply explicit whitelist on robot-internal frames to avoid redundant mesh/joint pairs.
+    if(name.rfind("l_", 0) == 0 && !isRobotWhitelistFrame(name)) return false;
+
+    return true;
+}
+
+static bool isTaskRelevantCenterForTableFallback(const std::string& name) {
+    if(name == "l_finger1" || name == "l_finger2" || name == "l_palm") return true;
+    if(name.rfind("rect_", 0) == 0) return true;
+    if(name.rfind("cube_", 0) == 0) return true;
+    if(name.rfind("cyl_", 0) == 0) return true;
+    if(name.rfind("tri_", 0) == 0) return true;
+    return false;
 }
 
 static std::string getActionSummary(const StringAA& plan) {
@@ -77,7 +117,7 @@ static std::vector<std::pair<std::string, std::string>> extractActivePairsFromWa
 
         std::unordered_map<std::string, std::array<double, 3>> pos;
         for(rai::Frame* fr : Ct.frames) {
-            if(!fr || !fr->shape || fr->shape->type() == rai::ST_marker) continue;
+            if(!shouldUseForActiveCollision(fr)) continue;
             const std::string name = fr->name.p;
             pos[name] = toXYZ(fr->getPosition());
         }
@@ -100,7 +140,7 @@ static std::vector<std::pair<std::string, std::string>> extractActivePairsFromWa
 
         std::unordered_map<std::string, std::array<double, 3>> current;
         for(rai::Frame* fr : Ct.frames) {
-            if(!fr || !fr->shape || fr->shape->type() == rai::ST_marker) continue;
+            if(!shouldUseForActiveCollision(fr)) continue;
             const std::string name = fr->name.p;
             current[name] = toXYZ(fr->getPosition());
         }
@@ -118,6 +158,19 @@ static std::vector<std::pair<std::string, std::string>> extractActivePairsFromWa
                     (center < obs) ? std::make_pair(center, obs) : std::make_pair(obs, center);
                 uniqPairs.insert(pair);
             }
+        }
+    }
+
+    // Fallback: ensure table contact is always considered for task-relevant centers,
+    // even when center-point distance to table frame origin exceeds radius.
+    if(!snapshots.empty() && snapshots.front().count("table")) {
+        for(const std::string& center : movingCenters) {
+            if(center == "table") continue;
+            if(!isTaskRelevantCenterForTableFallback(center)) continue;
+            std::pair<std::string, std::string> pair =
+                (center < "table") ? std::make_pair(center, std::string("table"))
+                                   : std::make_pair(std::string("table"), center);
+            uniqPairs.insert(pair);
         }
     }
 
@@ -312,7 +365,7 @@ int main(int argc, char** argv) {
 
     std::shared_ptr<rai::ConfigurationViewer> shared_viewer = nullptr;
     std::string& current_state_file = temp_state_file;
-    const double active_radius_m = 0.05;
+    const double active_radius_m = 0.15;
     std::vector<ActiveCollisionSummary> active_summaries;
     const std::string report_file = (fs::path(task_directory) / "active_collision_report.json").string();
 
