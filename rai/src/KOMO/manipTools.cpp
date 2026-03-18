@@ -10,6 +10,7 @@
 #include "skeletonSymbol.h"
 
 #include <algorithm>
+#include <string>
 
 #include "../Kin/F_geometrics.h"
 #include "../Kin/F_pose.h"
@@ -25,6 +26,42 @@ ManipulationHelper::ManipulationHelper(const str &_info)
 ManipulationHelper::ManipulationHelper(const std::shared_ptr<KOMO> &_komo,
                                        const str &_info)
     : komo(_komo), info(_info) {}
+
+namespace {
+std::string normalizedPairKey(const str& a, const str& b) {
+  const std::string sa = a.p;
+  const std::string sb = b.p;
+  if (sa <= sb) return sa + "||" + sb;
+  return sb + "||" + sa;
+}
+} // namespace
+
+void ManipulationHelper::setExplicitCollisionPairsFilter(const StringA& flatPairs) {
+  explicitCollisionPairsFlat = flatPairs;
+  explicitPairKeySet.clear();
+
+  if (!flatPairs.N || (flatPairs.N % 2)) {
+    enableExplicitPairFilter = false;
+    return;
+  }
+
+  for (uint i = 0; i < flatPairs.N; i += 2) {
+    explicitPairKeySet.insert(normalizedPairKey(flatPairs.elem(i), flatPairs.elem(i + 1)));
+  }
+
+  enableExplicitPairFilter = true;
+}
+
+void ManipulationHelper::clearExplicitCollisionPairsFilter() {
+  explicitCollisionPairsFlat.clear();
+  explicitPairKeySet.clear();
+  enableExplicitPairFilter = false;
+}
+
+bool ManipulationHelper::isPairAllowedByExplicitFilter(const str& a, const str& b) const {
+  if (!enableExplicitPairFilter) return true;
+  return explicitPairKeySet.count(normalizedPairKey(a, b)) > 0;
+}
 
 void ManipulationHelper::setup_inverse_kinematics(rai::Configuration &C,
                                                   double homing_scale,
@@ -480,6 +517,7 @@ void ManipulationHelper::action_pick_cylinder(double time, str gripper,
         // 排除父子关系（比如 link 连着 link）避免自碰撞误报
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
           komo->addObjective({time - 0.9, time - 0.2}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e1}, {-0.02});
         }
@@ -588,6 +626,7 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
           komo->addObjective({time - 1.0, time - 0.3}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e0}, {-0.03});
         }
@@ -771,6 +810,7 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
           komo->addObjective({time - 0.9, time - 0.2}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e0}, {-0.02});
         }
@@ -936,6 +976,7 @@ void ManipulationHelper::action_place_on_multi_support(
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
           komo->addObjective({time - 0.95, time - 0.8}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e1}, {-0.01});
 

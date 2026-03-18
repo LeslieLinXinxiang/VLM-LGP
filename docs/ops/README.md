@@ -6,6 +6,7 @@ This folder contains runtime, environment, network, and troubleshooting SOPs.
 - `NETWORK_TROUBLESHOOTING_SOP.md`
 - `CROSS_DEVICE_SYNC_SOP.md`
 - `ACTIVE_COLLISION_PAIR_STRATEGY_CHAIN.md`
+- `ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`
 
 ## Filing Rules
 - Keep actionable diagnostics and recovery steps.

@@ -93,6 +93,7 @@ struct Default_LGP_TAMP_Abstraction : LGP_TAMP_Abstraction {
   
   
   ManipulationHelper manip(komo);
+  manip.setExplicitCollisionPairsFilter(this->explicitCollisions);
 
   if(action(0)=="pick_box" || action(0)=="handover" || action(0)=="pick_touch"){
     str& obj = action(1);

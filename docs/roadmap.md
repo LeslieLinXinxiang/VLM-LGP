@@ -11,6 +11,11 @@
 	* *2026-03-18 12:38*: Rolled back to the first stable Option-B runtime strategy: 5cm active radius, runtime `explicitCollisions` injection only, no `.lgp` write-back, and `useBroadCollisions=false` before full-motion.
 	* *2026-03-18 12:38*: Verified stable report generation for `node_1_run` and identified the next barrier: neighbor-object pair coverage is incomplete in some subtasks (example under `step_3_batch_2`: expected nearby relation such as `rect_2` and `cube_3` may not appear in active pairs).
 	* *2026-03-18 12:38*: Added documentation of the full active-collision chain and current blind spot for follow-up refinement planning.
+	* *2026-03-18 17:16*: Completed Step-1 active-pair filter experiment: added robot-shape whitelist and patch exclusion (`Rect_*_Left/Right`, `Table_Left/Right`) in `bin/main.cpp`; pair count dropped sharply but solver time and motion distortion regressed in several subtasks.
+	* *2026-03-18 17:16*: Applied table fallback activation plus tabletop patch shift (`+Y 0.05m`, away from robot) for `Base_*` and `Table_*`; rerun still shows conflict symptoms, indicating mismatch between upper explicit pairs and lower action-level phased collision constraints remains unresolved.
+	* *2026-03-18 17:16*: Exported pre-active-strategy baseline backup for A/B timing: `backups/pre_active_strategy/main.cpp.pre_active_503cdba.cpp` (source commit `503cdba`) and confirmed active-strategy introduction commits touched more than `bin/main.cpp`.
+	* *2026-03-18 17:28*: Locked next objective: refactor `rai/src/KOMO/manipTools.cpp` so action-level collision constraints are gated by upper `explicitCollisions` pair policy first (pair-set unification only), while keeping existing stage windows and weights unchanged for the first validation pass.
+	* *2026-03-18 17:28*: Added source-backed conflict report `docs/ops/ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`, enumerating all verified mismatch points between `LGP_TAMP_Abstraction` explicit pairs and `manipTools` local obstacle loops / accumulated-collision terms.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.

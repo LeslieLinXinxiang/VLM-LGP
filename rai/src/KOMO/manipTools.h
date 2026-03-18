@@ -10,6 +10,8 @@
 
 #include "komo.h"
 #include "../PathAlgos/RRT_PathFinder.h"
+#include <string>
+#include <unordered_set>
 
 //===========================================================================
 
@@ -22,6 +24,11 @@ struct ManipulationHelper {
   std::shared_ptr<SolverReturn> ret;
   arr qTarget;
   arr path;
+
+  // Optional pair filter sourced from upper-layer explicit collisions.
+  StringA explicitCollisionPairsFlat;
+  bool enableExplicitPairFilter=false;
+  std::unordered_set<std::string> explicitPairKeySet;
 
   ManipulationHelper(const str& _info={});
   ManipulationHelper(const std::shared_ptr<KOMO>& _komo, const str& _info = str{});
@@ -45,6 +52,9 @@ struct ManipulationHelper {
   void straight_push(arr times, str obj, str gripper, str table);
 
   void no_collisions(const arr& time_interval, const StringA& pairs, double margin=.001, double scale=1e1);
+  void setExplicitCollisionPairsFilter(const StringA& flatPairs);
+  void clearExplicitCollisionPairsFilter();
+  bool isPairAllowedByExplicitFilter(const str& a, const str& b) const;
   void freeze_joint(const arr& time_interval, const StringA& joints);
   void freeze_relativePose(const arr& time_interval, str to, str from);
 
