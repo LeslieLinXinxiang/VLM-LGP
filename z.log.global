@@ -1,5 +1,5 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-03-18 23:58:47:132218
+** execution start: 2026-03-19 15:41:18:82835
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'

@@ -75,3 +75,31 @@ Object frame names in `.lgp`/`.fol` files **must exactly match** names in `gener
 - Table slots: `Table_Left`, `Table_Right`
 - Rect top patches: `Rect_1_Left`, `Rect_1_Right`, … `Rect_8_Left`, `Rect_8_Right`
 - Main table: `table`
+
+## 12. Planned Refactor (2026-03-19): Motion-Grasp Decoupling
+
+### 12.1 New Boundary
+- `manipTools` contribution focus shifts to motion planning quality, not integrated grasp-contact shaping.
+- Pick/place contact approach is represented by deterministic vertical micro-actions around the terminal segment.
+
+### 12.2 Planned Behavior for `action_pick`
+- `time-1.0 ~ time-0.7`: add slow lift to `+5cm` over current grasp frame.
+- `time-0.7 ~ time-0.3`: transit to object-top waypoint (`XY=0`, `Z=+5cm` relative to target).
+- `time-0.3 ~ time`: fixed vertical descend `5cm` (no additional approach funnel competition).
+- Collision policy: transit-only `FS_negDistance` with `OT_sos` and target distance `0.05m` in `time-0.7~time-0.3`.
+- Do not add redundant single-point top lock at `time-0.3`.
+- Do not add midpoint height anchors (for example at `time-0.15`).
+
+### 12.3 Planned Behavior for `action_place_straightOn`
+- No mandatory initial lift phase.
+- `time-0.7 ~ time-0.3`: transit to destination top waypoint (`XY=0`, `Z=rel_z+0.05`).
+- `time-0.3 ~ time`: fixed vertical descend `5cm` to final placement.
+- Collision policy: transit-only `FS_negDistance` with `OT_sos` and target distance `0.05m` in `time-0.7~time-0.3`.
+- Do not add midpoint height anchors (for example at `time-0.15`).
+
+### 12.4 Expected Benefit
+- Reduce objective interference in problematic windows `time-1.0~time-0.6` and `time-0.3~time`.
+- Improve smoothness by replacing mixed near-contact optimization with deterministic terminal motion.
+
+### 12.5 Related Report
+- See `docs/ops/PICK_PLACE_DECOUPLED_MOTION_CHANGE_REPORT_2026-03-19.md` for function-level code touch points and implementation checklist.

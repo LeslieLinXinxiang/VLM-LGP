@@ -16,6 +16,14 @@
 	* *2026-03-18 17:16*: Exported pre-active-strategy baseline backup for A/B timing: `backups/pre_active_strategy/main.cpp.pre_active_503cdba.cpp` (source commit `503cdba`) and confirmed active-strategy introduction commits touched more than `bin/main.cpp`.
 	* *2026-03-18 17:28*: Locked next objective: refactor `rai/src/KOMO/manipTools.cpp` so action-level collision constraints are gated by upper `explicitCollisions` pair policy first (pair-set unification only), while keeping existing stage windows and weights unchanged for the first validation pass.
 	* *2026-03-18 17:28*: Added source-backed conflict report `docs/ops/ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`, enumerating all verified mismatch points between `LGP_TAMP_Abstraction` explicit pairs and `manipTools` local obstacle loops / accumulated-collision terms.
+	* *2026-03-19 15:27*: Requirement boundary updated: stop deep integrated grasp-approach tuning in KOMO; switch to motion-grasp decoupling strategy where solver focuses on transit motion and terminal contact is represented by fixed vertical micro-actions.
+	* *2026-03-19 15:27*: Locked first implementation scope to `action_pick` and `action_place_straightOn`: enforce top-of-target arrival (`XY aligned, Z +5cm`) then fixed descend `5cm`; pick adds early `+5cm` lift in `time-1.0~time-0.7`.
+	* *2026-03-19 15:27*: Collision policy simplification approved for next patch: keep only transit-window soft avoidance (`OT_sos`, distance target `5cm`) in `time-0.7~time-0.3`, remove fine-grained approach-phase barrier tuning.
+	* *2026-03-19 15:27*: Added implementation report `docs/ops/PICK_PLACE_DECOUPLED_MOTION_CHANGE_REPORT_2026-03-19.md` with function-level touch points and risk guardrails.
+	* *2026-03-19 15:27*: Tracked known observation for decoupled place: potential avoidance vacuum in `time-1.0~time-0.7`; keep current strategy unchanged and revisit only if trajectory quality regresses.
+	* *2026-03-19 15:56*: Rolled back incorrect decoupled code patch in `rai/src/KOMO/manipTools.cpp` after runtime infeasibility (`place_straightOn` waypoint-stage constraints conflicted in same slice).
+	* *2026-03-19 15:56*: Corrected decoupling specification: for `action_pick`, remove redundant `time-0.3` single-point top lock and remove midpoint height anchor; for `action_place_straightOn`, remove midpoint height anchor.
+	* *2026-03-19 15:56*: Next implementation gate: keep only logically minimal staged constraints (`-1.0~-0.7` lift, `-0.7~-0.3` transit-to-top, `-0.3~time` vertical descend) plus transit-window `OT_sos` avoidance.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
@@ -31,6 +39,9 @@
 
 ## 3. Pending Backlog
 - Replace/optimize soft `OT_sos` objectives that conflict with hard `OT_eq` requirements in the manipulation logics.
+- Implement motion-grasp decoupled `action_pick` and `action_place_straightOn` in `rai/src/KOMO/manipTools.cpp` according to `docs/ops/PICK_PLACE_DECOUPLED_MOTION_CHANGE_REPORT_2026-03-19.md`.
+- Add A/B validation focused on trajectory smoothness for windows `time-1.0~time-0.6` and `time-0.3~time` after decoupling patch.
+- Optional fallback (conditional): if place quality degrades, add lightweight soft avoidance coverage for `time-1.0~time-0.7` without re-introducing hard barrier stacks.
 
 ### [TASK-006] MuJoCo Simulation Debug Loop Integration
 * **Status**: `[Pending]`
