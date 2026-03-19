@@ -660,110 +660,77 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   CHECK(objF, "Object not found");
 
   arr tableSize = targetF->getSize();
-  if (targetF->shape->type() == rai::ST_ssBox)
-    tableSize.resizeCopy(3);
-  else if (targetF->shape->type() == rai::ST_cylinder)
-    tableSize = {tableSize(0), tableSize(0), tableSize(1)};
-  else if (tableSize.N < 3) {
-    // 保护: ST_mesh 等类型 getSize() 可能返回空数组，给一个默认尺寸
-    tableSize = {0.05, 0.05, 0.05};
-  }
-  if (tableSize(0) < 1e-3)
-    tableSize(0) = 0.1;
-  if (tableSize(1) < 1e-3)
-    tableSize(1) = 0.1;
+  if (tableSize.N < 3) tableSize = {0.05, 0.05, 0.05};
+  if (tableSize(0) < 1e-3) tableSize(0) = 0.1;
+  if (tableSize(1) < 1e-3) tableSize(1) = 0.1;
 
   auto get_Z_dim = [](rai::Frame *f) -> double {
-    if (!f || !f->shape)
-      return 0.0;
-    if (f->shape->type() == rai::ST_cylinder ||
-        f->shape->type() == rai::ST_ssCylinder ||
-        f->shape->type() == rai::ST_capsule)
+    if (!f || !f->shape) return 0.0;
+    if (f->shape->type() == rai::ST_cylinder || f->shape->type() == rai::ST_ssCylinder || f->shape->type() == rai::ST_capsule)
       return f->shape->size(0);
-    if (f->shape->size.N > 2)
-      return f->shape->size(2);
+    if (f->shape->size.N > 2) return f->shape->size(2);
     return 0.0;
   };
 
-  // rel_z: 物体放置在桌面上时的理论 Z 轴中心距 (接触高度)
   double rel_z = 0.5 * (get_Z_dim(targetF) + get_Z_dim(objF));
-  bool isCylinder =
-      (objF->shape && (objF->shape->type() == rai::ST_cylinder ||
-                       objF->shape->type() == rai::ST_ssCylinder));
+  bool isCylinder = (objF->shape && (objF->shape->type() == rai::ST_cylinder || objF->shape->type() == rai::ST_ssCylinder));
 
   // ==============================================================================
   // 2. 拓扑: World Anchor + Keep Kinematics
   // ==============================================================================
   str snapFrame;
   snapFrame << "placePose_" << table << '_' << obj << '_' << time;
-
   rai::Frame *f = komo->addFrameDof(snapFrame, "world", rai::JT_free, true);
-
   if (f && f->joint) {
     rai::Transformation targetPose = targetF->ensure_X();
     targetPose.pos.z += rel_z;
     f->joint->setDofs(targetPose.getArr7d());
   }
-
   komo->addRigidSwitch(time, {snapFrame, obj}, true);
 
   // ==============================================================================
-  // 3. 预放置引导 (Pre-Place Guidance / Funnel)
+  // 3. 三段式运动骨架（无起始上抬，直接避障+悬停+下落）
   // ==============================================================================
+  // 仅在全轨迹规划中启用 time-0.2 区间约束，避免 waypoint/motif 阶段时间塌缩冲突
+  if (komo->stepsPerPhase >= 10) {
+    // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
+    const double kLift = 0.06; // 6cm 抬升高度
+    komo->addObjective({time - 0.2}, FS_positionRel, {obj, table}, OT_eq,
+                       arr{1e2, 1e2, 1e2}, {0., 0., rel_z + kLift});
 
-  // t-0.5: Z方向软引导，推高物体（XY自由，飞行阶段不限制横向）
-  komo->addObjective({time - 0.5}, FS_positionRel, {obj, table}, OT_sos,
-                     arr{0, 0, 1e2}, {0., 0., rel_z + 0.1});
+    // 姿态对齐: 从 time-0.2 开始与终点一致，并保持到 time
+    komo->addObjective({time - 0.2, time}, FS_vectorZDiff, {obj, table}, OT_eq,
+                       {1e2});
+    komo->addObjective({time - 0.2, time}, FS_scalarProductXX, {obj, table},
+                       OT_eq, {1e2}, {1.});
 
-  // t-0.2: 硬对齐到目标XY正上方 (OT_eq强制，确保进入垂直下落通道)
-  komo->addObjective({time - 0.2}, FS_positionDiff, {obj, table}, OT_eq,
-                     arr{1e2, 1e2, 0}, {0., 0., 0.});
-  // t-0.2: Z方向悬停软引导 (软约束，高度建议，给求解器留余地)
-  komo->addObjective({time - 0.2}, FS_positionRel, {obj, table}, OT_sos,
-                     arr{0, 0, 1e2}, {0., 0., rel_z + 0.05});
-
-  // [t-0.2, time]: 垂直下落通道 — XY全程锁定，只允许Z变化
-  komo->addObjective({time - 0.2, time}, FS_positionDiff, {obj, table}, OT_eq,
-                     arr{1e2, 1e2, 0}, {0., 0., 0.});
+    // [段2] time-0.2 ~ time: 保持 XY=0 并匀速下落到目标
+    komo->addObjective({time - 0.2, time}, FS_positionRel, {obj, table}, OT_eq,
+                       arr{1e2, 1e2, 0.}, {0., 0., 0.});
+  }
 
   // ==============================================================================
   // 4. 最终几何约束 (Final Geometric Constraints)
   // ==============================================================================
-
   // A. 高度锁定 (接触)
   komo->addObjective({time}, FS_positionDiff, {obj, table}, OT_eq,
                      arr{0, 0, 1} * 1e2, {rel_z});
 
-  // A2. XY 精确居中 (硬约束：物体中心必须对准目标中心)
+  // A2. XY 精确居中 (硬约束)
   komo->addObjective({time}, FS_positionDiff, {obj, table}, OT_eq,
                      arr{1e2, 1e2, 0}, {0., 0., 0.});
 
-  // B. 垂直锁定 (Z轴向上)
-  komo->addObjective({time}, FS_vectorZ, {obj}, OT_eq, {1e2}, {0., 0., 1.});
+  // B. 竖直锁定
+  komo->addObjective({time}, FS_vectorZDiff, {obj, table}, OT_eq, {1e2});
 
-  // C. 旋转对齐 (非圆柱体)
+  // C. 非圆柱体在终点锁定 +90 度朝向 (x_obj 对齐 y_table)
   if (!isCylinder) {
-    komo->addObjective({time}, FS_quaternionDiff, {table, obj}, OT_eq, {1e1});
+    komo->addObjective({time}, FS_scalarProductXX, {obj, table}, OT_eq,
+                       {1e2}, {1.});
   }
 
-  // D. 桌面范围限制 (防止掉下去)
-  // double margin = 0.02;
-  // double x_lim = 0.5*tableSize(0) - margin;
-  // double y_lim = 0.5*tableSize(1) - margin;
-  // double margin = 0.0;
-  double x_lim = 0.0015;
-  double y_lim = 0.0015;
-  komo->addObjective({time}, FS_positionRel, {table, obj}, OT_ineq,
-                     arr{1, 0, 0} * 1e1, {x_lim});
-  komo->addObjective({time}, FS_positionRel, {table, obj}, OT_ineq,
-                     arr{-1, 0, 0} * 1e1, {x_lim});
-  komo->addObjective({time}, FS_positionRel, {table, obj}, OT_ineq,
-                     arr{0, 1, 0} * 1e1, {y_lim});
-  komo->addObjective({time}, FS_positionRel, {table, obj}, OT_ineq,
-                     arr{0, -1, 0} * 1e1, {y_lim});
-
   // ==============================================================================
-  // 5. 定义避障组 (Genealogical Fix Applied)
+  // 5. 定义避障组（识别gripper与carried object）
   // ==============================================================================
   str gripper = "l_gripper";
   for (rai::Frame *fr : komo->world.frames) {
@@ -772,7 +739,6 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
       break;
     }
   }
-
   StringA movingParts;
   str prefix = "";
   if (gripper.endsWith("_gripper"))
@@ -799,7 +765,6 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
         }
       }
       bool isTable = fr->name.contains("table");
-
       if (!isHand && !isPayload && !isTable) {
         obstacles.append(fr);
       }
@@ -807,35 +772,27 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   }
 
   // ==============================================================================
-  // 6. 执行避障约束
+  // 6. 显式碰撞对避障（窗口与安全距离严格参考action_pick）
   // ==============================================================================
   if (komo->stepsPerPhase >= 10) {
-
-    // [阶段 2: 空中巡航] (time-0.7 ~ time-0.2)
-    // 保持 1cm 气囊 (注意：这里我统一修正为 -0.01，避免之前的 -0.05 导致过高)
+    // 避障: -0.7 ~ -0.3 仅对显式碰撞对保持 >=5cm
     for (const str &handPart : movingParts) {
       rai::Frame *handF = komo->world.getFrame(handPart);
-      if (!handF || !handF->shape)
-        continue;
-
+      if (!handF || !handF->shape) continue;
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
+          if (!enableExplicitPairFilter) continue;
           if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
-          komo->addObjective({time - 0.9, time - 0.2}, FS_negDistance,
-                             {handPart, obs->name}, OT_ineq, {1e0}, {-0.02});
+          komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance, {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
         }
       }
     }
+    // 下降段: 允许接触但防止穿模 (从 t-0.3 到 t)
+    komo->addObjective({time - 0.3, time}, FS_accumulatedCollisions, {}, OT_ineq, {1e2}, {-0.01});
   }
 
-  // [阶段 3: 最终放置] (time-1 ~ time)
-  // 允许接触，防止穿模
-  komo->addObjective({time - 1, time}, FS_accumulatedCollisions, {}, OT_ineq,
-                     {1e2}, {0});
-
-  std::cout << "INFO: [action_place] Pre-Place Guidance (Z+5cm) Added."
-            << std::endl;
+  std::cout << "INFO: [action_place_straightOn] Three-Stage Skeleton & Explicit Collision Avoidance Applied." << std::endl;
 }
 
 // In manipTools.cpp
@@ -871,6 +828,8 @@ void ManipulationHelper::action_place_on_multi_support(
   };
 
   double rel_z = 0.5 * (get_Z_dim(first_support) + get_Z_dim(objF));
+  bool isCylinder = (objF->shape && (objF->shape->type() == rai::ST_cylinder ||
+                                     objF->shape->type() == rai::ST_ssCylinder));
   double support_top_z_world =
       first_support->getPosition()(2) + 0.5 * get_Z_dim(first_support);
   double obj_half_z = 0.5 * get_Z_dim(objF);
@@ -908,24 +867,36 @@ void ManipulationHelper::action_place_on_multi_support(
   // A2. XY 中心硬对齐 (确保放在支撑群的正中心)
   komo->addObjective({time}, FS_position, {obj}, OT_eq, arr{1e2, 1e2, 0}, {centroid_world(0), centroid_world(1), 0.});
 
-  // B. 姿态约束
-  // 物体总体上靠近锚点姿态 (极低权重的位姿引导，防止完全不受限产生的旋转自由度漂移)
-  komo->addObjective({time}, FS_poseDiff, {virtualAnchorName, obj}, OT_sos, {1e0});
-  
-  // 严格要求垂直向上 (硬约束)
-  komo->addObjective({time}, FS_vectorZ, {obj}, OT_eq, {1e2}, {0., 0., 1.});
+  // B. 姿态约束 (对齐 straightOn 逻辑)
+  // B1. 竖直锁定 (Z 轴对齐世界 Z)
+  komo->addObjective({time}, FS_vectorZDiff, {obj, supports(0)}, OT_eq, {1e2});
+
+  // B2. 非圆柱体: x_obj 对齐 x_support → b-face forward
+  if (!isCylinder) {
+    komo->addObjective({time}, FS_scalarProductXX, {obj, supports(0)}, OT_eq,
+                       {1e2}, {1.});
+  }
 
   // ==============================================================================
-  // [NEW] 3. 预放置漏斗 (Pre-Place Funnel) — 仅全运动规划时生效
+  // 3. 三段式运动骨架 (对齐 straightOn 逻辑，time-0.2 窗口)
   // ==============================================================================
-
   if (komo->stepsPerPhase >= 10) {
-    komo->addObjective({time - 0.5}, FS_vectorZ, {obj}, OT_sos, {1e1},
-                       {0., 0., 1.});
-    komo->addObjective({time - 0.5}, FS_positionRel, {obj, virtualAnchorName},
-                       OT_sos, arr{0, 0, 1e2}, {0., 0., 0.05});
-    komo->addObjective({time - 0.1}, FS_positionRel, {obj, virtualAnchorName},
-                       OT_sos, arr{1e2, 1e2, 1e2}, {0., 0., 0.02});
+    // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
+    const double kLift = 0.06;
+    komo->addObjective({time - 0.2}, FS_positionRel, {obj, supports(0)}, OT_eq,
+                       arr{1e2, 1e2, 1e2}, {0., 0., rel_z + kLift});
+
+    // 姿态对齐: 从 time-0.2 开始与终点一致，并保持到 time
+    komo->addObjective({time - 0.2, time}, FS_vectorZDiff, {obj, supports(0)}, OT_eq,
+                       {1e2});
+    if (!isCylinder) {
+      komo->addObjective({time - 0.2, time}, FS_scalarProductXX, {obj, supports(0)},
+                         OT_eq, {1e2}, {1.});
+    }
+
+    // [段2] time-0.2 ~ time: 保持 XY=0 并匀速下落到目标
+    komo->addObjective({time - 0.2, time}, FS_positionRel, {obj, supports(0)}, OT_eq,
+                       arr{1e2, 1e2, 0.}, {0., 0., 0.});
   }
 
   // ==============================================================================

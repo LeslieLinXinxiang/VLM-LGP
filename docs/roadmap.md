@@ -24,6 +24,8 @@
 	* *2026-03-19 15:56*: Rolled back incorrect decoupled code patch in `rai/src/KOMO/manipTools.cpp` after runtime infeasibility (`place_straightOn` waypoint-stage constraints conflicted in same slice).
 	* *2026-03-19 15:56*: Corrected decoupling specification: for `action_pick`, remove redundant `time-0.3` single-point top lock and remove midpoint height anchor; for `action_place_straightOn`, remove midpoint height anchor.
 	* *2026-03-19 15:56*: Next implementation gate: keep only logically minimal staged constraints (`-1.0~-0.7` lift, `-0.7~-0.3` transit-to-top, `-0.3~time` vertical descend) plus transit-window `OT_sos` avoidance.
+	* *2026-03-19 18:02*: Updated `action_place_straightOn` target-orientation objective for placement face selection: switched final non-cylinder alignment to `+90deg` convention (`x_obj` aligned to `y_table`, i.e. "b-face forward"), while keeping terminal XY/Z hard placement constraints.
+	* *2026-03-19 18:02*: Added feasibility guard for motif/waypoint stage: gated `time-0.3` pre-place segment objectives behind `stepsPerPhase>=10` to prevent same-slice target conflicts between hover-height and terminal contact-height constraints.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
@@ -39,7 +41,7 @@
 
 ## 3. Pending Backlog
 - Replace/optimize soft `OT_sos` objectives that conflict with hard `OT_eq` requirements in the manipulation logics.
-- Implement motion-grasp decoupled `action_pick` and `action_place_straightOn` in `rai/src/KOMO/manipTools.cpp` according to `docs/ops/PICK_PLACE_DECOUPLED_MOTION_CHANGE_REPORT_2026-03-19.md`.
+- Implement and validate motion-grasp decoupled `action_pick` and `action_place_straightOn` in `rai/src/KOMO/manipTools.cpp`, including the `+90deg` place orientation target (`b-face forward`) and waypoint-stage feasibility gating.
 - Add A/B validation focused on trajectory smoothness for windows `time-1.0~time-0.6` and `time-0.3~time` after decoupling patch.
 - Optional fallback (conditional): if place quality degrades, add lightweight soft avoidance coverage for `time-1.0~time-0.7` without re-introducing hard barrier stacks.
 
