@@ -6,7 +6,7 @@
       "lgp_file": "step_1_batch_1.lgp",
       "action_summary": "pick_touch rect_1 table l_gripper | place_straightOn rect_1 l_gripper Table_Left",
       "pair_count": 20,
-      "full_motion_solver_ms": 41126,
+      "full_motion_solver_ms": 42196,
       "pairs": [
         ["l_finger1", "l_finger2"],
         ["l_finger1", "l_palm"],
@@ -33,8 +33,8 @@
     {
       "lgp_file": "step_1_batch_2.lgp",
       "action_summary": "pick_touch rect_2 table l_gripper | place_straightOn rect_2 l_gripper Table_Right",
-      "pair_count": 23,
-      "full_motion_solver_ms": 14762,
+      "pair_count": 24,
+      "full_motion_solver_ms": 37502,
       "pairs": [
         ["l_finger1", "l_finger2"],
         ["l_finger1", "l_palm"],
@@ -58,7 +58,41 @@
         ["l_panda_coll6", "l_panda_coll7"],
         ["rect_1", "rect_2"],
         ["rect_2", "rect_4"],
+        ["rect_2", "rect_5"],
         ["rect_2", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_2_batch_1.lgp",
+      "action_summary": "pick_touch cube_1 table l_gripper | place_straightOn cube_1 l_gripper Rect_1_Left",
+      "pair_count": 25,
+      "full_motion_solver_ms": 46056,
+      "pairs": [
+        ["cube_1", "cube_3"],
+        ["cube_1", "l_finger1"],
+        ["cube_1", "l_finger2"],
+        ["cube_1", "l_palm"],
+        ["cube_1", "rect_1"],
+        ["cube_1", "rect_2"],
+        ["cube_1", "table"],
+        ["cube_3", "l_finger1"],
+        ["cube_3", "l_finger2"],
+        ["cube_3", "l_palm"],
+        ["cyl_1", "l_finger2"],
+        ["l_finger1", "l_finger2"],
+        ["l_finger1", "l_palm"],
+        ["l_finger1", "rect_1"],
+        ["l_finger1", "rect_2"],
+        ["l_finger1", "table"],
+        ["l_finger2", "l_palm"],
+        ["l_finger2", "rect_1"],
+        ["l_finger2", "rect_2"],
+        ["l_finger2", "table"],
+        ["l_palm", "l_panda_coll6"],
+        ["l_palm", "l_panda_coll7"],
+        ["l_palm", "rect_1"],
+        ["l_palm", "table"],
+        ["l_panda_coll6", "l_panda_coll7"]
       ]
     }
   ]

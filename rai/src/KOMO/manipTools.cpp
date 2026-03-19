@@ -557,35 +557,38 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
     komo->initFrameDof(f, targetF);
 
   // =================================================================
-  // 3. [Phase 2] 预抓取引导 (Pre-Grasp Approach)
+  // 3. [Phase 2] 三段式直上直下骨架 (Lift -> Safety Transit -> Descend)
   // =================================================================
   targetF->ensure_X();
 
-  // ----- 预抓取引导 (仅全运动规划时生效，waypoint阶段不加) -----
-  // 原因: waypoint求解器 stepsPerPhase=1, time-0.3 和 time 映射到同一时间片,
-  //       导致 Z=5cm 的引导和最终 Z≈0 的抓取约束互相矛盾，求解器无法收敛。
   if (komo->stepsPerPhase >= 10) {
-    // Z 高度引导：在 time-0.3 建议 5cm (柔性)
+    const double kLift = 0.06; // 6cm 抬升高度，足够脱离桌面和其他物体的干扰
+    const double kLiftWindow = 0.3; // 0.3秒抬升/下降时间，保证足够平滑且不太慢
+    const double kVzUp = kLift / kLiftWindow;
+    const double kVzDown = -kLift / kLiftWindow;
+
+    // [段1] time-1.0 ~ time-0.7: 直上抬 8cm
+    komo->addObjective({time - 1.0, time - 0.7}, make_shared<F_LinAngVel>(),
+                       {gripper}, OT_sos, {1e2},
+                       {0., 0., kVzUp, 0., 0., 0.});
+
+    // [段3准备] 在 time-0.3 锚定到目标上方 8cm
     komo->addObjective({time - 0.3}, FS_positionRel, {gripper, targetF->name},
-                       OT_sos, arr{0, 0, 1e2}, {0., 0., 0.05});
+                       OT_eq, arr{1e2, 1e2, 1e2}, {0., 0., kLift});
 
-    // XY 高权重柔性居中约束：覆盖整个下降区间 {time-0.3, time}
-    komo->addObjective({time - 0.3, time}, FS_positionRel, {gripper, targetF->name},
-                       OT_sos, arr{1e2, 1e2, 0}, {0., 0., 0.});
-
-    // 姿态分段：先软引导后硬锁定，避免中段姿态突变
-    komo->addObjective({time - 0.3, time - 0.1}, FS_vectorZDiff,
-               {gripper, targetF->name}, OT_sos, {8e1});
-    komo->addObjective({time - 0.3, time - 0.1}, FS_scalarProductXY,
-               {gripper, targetF->name}, OT_sos, {8e1}, {1.});
-    komo->addObjective({time - 0.1, time}, FS_vectorZDiff,
+    // 姿态对齐: 从 time-0.3 开始与终点一致，并保持到 time
+    komo->addObjective({time - 0.3, time}, FS_vectorZDiff,
                {gripper, targetF->name}, OT_eq, {1e2});
-    komo->addObjective({time - 0.1, time}, FS_scalarProductXY,
+    komo->addObjective({time - 0.3, time}, FS_scalarProductXY,
                {gripper, targetF->name}, OT_eq, {1e2}, {1.});
 
-    // Z 高度引导：在 time-0.15 建议 2cm (柔性)
-    komo->addObjective({time - 0.15}, FS_positionRel, {gripper, targetF->name},
-                       OT_sos, arr{0, 0, 1e2}, {0., 0., 0.02});
+    // [段3] time-0.3 ~ time: 保持 XY=0 并匀速下落到目标
+    komo->addObjective({time - 0.3, time}, FS_positionRel,
+                       {gripper, targetF->name}, OT_eq, arr{1e2, 1e2, 0.},
+                       {0., 0., 0.});
+    komo->addObjective({time - 0.3, time}, make_shared<F_LinAngVel>(),
+                       {gripper}, OT_sos, {1e2},
+                       {0., 0., kVzDown, 0., 0., 0.});
   }
 
   // =================================================================
@@ -623,8 +626,7 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
   }
 
   if (komo->stepsPerPhase >= 10) {
-    // 避障: CHOMP 分段势场
-    // 远端采用连续软势场，近端采用硬边界，末段交给接触/走廊约束处理。
+    // 避障: -0.7 ~ -0.3 仅对显式碰撞对保持 >=5cm
     for (const str &handPart : gripperParts) {
       rai::Frame *handF = komo->world.getFrame(handPart);
       if (!handF || !handF->shape)
@@ -633,13 +635,11 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
+          if (!enableExplicitPairFilter)
+            continue;
           if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
-          // 远端连续软势场
-          komo->addObjective({time - 1.0, time - 0.3}, FS_negDistance,
-                             {handPart, obs->name}, OT_sos, {2e-1}, {-0.04});
-          // 近端硬边界
-          komo->addObjective({time - 0.5, time - 0.1}, FS_negDistance,
-                             {handPart, obs->name}, OT_ineq, {1.5e0}, {-0.02});
+          komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance,
+                             {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
         }
       }
     }
