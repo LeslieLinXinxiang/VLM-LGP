@@ -2,14 +2,15 @@
 
 ## 1. Current Active Tasks (Timeline Log)
 
-1. **[TASK-014] Design Planner Experiments (2026-03-20 16:00)**: Design a suite of planner experiments to evaluate planner robustness, scenario coverage, and reproducibility. Deliverables: (1) experiment spec, (2) scenario generator scripts, (3) evaluation metrics and baselines. Acceptance: reproducible runs with summary report and dataset for benchmarking.
+1. **[TASK-015] Update Document & flowchart (2026-03-21 13:23)**: Refresh technical documentation and flowcharts to reflect the current state of the assembly pipeline, including mesh-aware height calculations and active constraint strategies.
 
 
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
 
-1. **[TASK-013] Replace VLM Euclidean distance judgment with backend `.g` scene parser (2026-03-20 15:30)**: Goal: compute object Euclidean distances directly from `.g` geometry in backend to remove VLM geometric estimation noise and improve consistency of proximity decisions. Acceptance: backend distance API returns deterministic pair distances and the current strategy layer consumes parser output as source of truth.
+1. **[TASK-014] Planar Assembly Experiment (2026-03-21 13:10)**: Successfully designed and executed planar assembly tasks using FMB assets. Implemented mesh-aware Z-height calculation and eccentric grasping with handle markers. Verified end-to-end chained planning.
+2. **[TASK-013] Replace VLM Euclidean distance judgment with backend `.g` scene parser (2026-03-20 15:30)**: Goal: compute object Euclidean distances directly from `.g` geometry in backend to remove VLM geometric estimation noise and improve consistency of proximity decisions. Acceptance: backend distance API returns deterministic pair distances and the current strategy layer consumes parser output as source of truth.
 2. **[TASK-012] Multi-Support Hovering Fix (2026-03-20 15:30)**: Updated `action_place_on_multi_support` to use `virtualAnchorName` for hover and placement constraints. Verified through compilation and static checks. Pending runtime validation.
 3. **[TASK-011] Introduce graph clustering to replace VLM strategy generation/decision (2026-03-20 14:05)**: Implemented `BranchAwareClustering` in `core/graph_clustering.py`, integrated into `pipeline/run_phase2.py` for deterministic strategy generation, and added `docs/clustering_algorithm_report.md`. Also fixed inventory binding to eliminate object-naming hallucinations.
 4. **[TASK-010] Active Constraint Set Optimization for TAMP Solver Acceleration (2026-03-19 21:10)**: Closed after stabilizing `action_pick` / `action_place_straightOn` staging, fixing motif same-slice conflicts via `stepsPerPhase>=10` gating, and finalizing place orientation target (`+90deg`, b-face forward). End-to-end `active_coll_test/node_1_run` now runs successfully after final user-side code adjustments.
@@ -30,4 +31,5 @@
 * **Completed**: N/A
 * **Timeline**:
 	* *2026-03-12 22:42*: Task moved from backlog to active execution. Goal is to align MuJoCo scene with `generated/scene_named.g`, validate key manipulation actions (pick/place), and finalize reproducible simulation-side debug scripts.
-	* *2026-03-13 17:03*: Task moved from `In Progress` back to `Pending Backlog`; preserved original execution timeline for future resumption.
+	* *2026-03-13 17:03*: Task moved from `In Progress` back to `Pending Backlog`.
+    * *2026-03-21 13:10*: Briefly restored for planar validation but moved back to pending to prioritize documentation.

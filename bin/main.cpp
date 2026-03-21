@@ -85,6 +85,7 @@ static bool isTaskRelevantCenterForTableFallback(const std::string& name) {
     if(name.rfind("cube_", 0) == 0) return true;
     if(name.rfind("cyl_", 0) == 0) return true;
     if(name.rfind("tri_", 0) == 0) return true;
+    if(name.rfind("fmb_", 0) == 0) return true;
     return false;
 }
 

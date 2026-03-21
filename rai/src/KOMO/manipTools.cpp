@@ -28,15 +28,17 @@ ManipulationHelper::ManipulationHelper(const std::shared_ptr<KOMO> &_komo,
     : komo(_komo), info(_info) {}
 
 namespace {
-std::string normalizedPairKey(const str& a, const str& b) {
+std::string normalizedPairKey(const str &a, const str &b) {
   const std::string sa = a.p;
   const std::string sb = b.p;
-  if (sa <= sb) return sa + "||" + sb;
+  if (sa <= sb)
+    return sa + "||" + sb;
   return sb + "||" + sa;
 }
 } // namespace
 
-void ManipulationHelper::setExplicitCollisionPairsFilter(const StringA& flatPairs) {
+void ManipulationHelper::setExplicitCollisionPairsFilter(
+    const StringA &flatPairs) {
   explicitCollisionPairsFlat = flatPairs;
   explicitPairKeySet.clear();
 
@@ -46,7 +48,8 @@ void ManipulationHelper::setExplicitCollisionPairsFilter(const StringA& flatPair
   }
 
   for (uint i = 0; i < flatPairs.N; i += 2) {
-    explicitPairKeySet.insert(normalizedPairKey(flatPairs.elem(i), flatPairs.elem(i + 1)));
+    explicitPairKeySet.insert(
+        normalizedPairKey(flatPairs.elem(i), flatPairs.elem(i + 1)));
   }
 
   enableExplicitPairFilter = true;
@@ -58,8 +61,10 @@ void ManipulationHelper::clearExplicitCollisionPairsFilter() {
   enableExplicitPairFilter = false;
 }
 
-bool ManipulationHelper::isPairAllowedByExplicitFilter(const str& a, const str& b) const {
-  if (!enableExplicitPairFilter) return true;
+bool ManipulationHelper::isPairAllowedByExplicitFilter(const str &a,
+                                                       const str &b) const {
+  if (!enableExplicitPairFilter)
+    return true;
   return explicitPairKeySet.count(normalizedPairKey(a, b)) > 0;
 }
 
@@ -484,8 +489,7 @@ void ManipulationHelper::action_pick_cylinder(double time, str gripper,
   komo->addObjective({time}, FS_positionRel, {gripper, obj}, OT_ineq,
                      arr{0, 0, 1} * 1e2, arr{0., 0., halfHeight - margin});
   komo->addObjective({time}, FS_positionRel, {gripper, obj}, OT_ineq,
-                     arr{0, 0, 1} * (-1e2),
-                     arr{0., 0., -halfHeight + margin});
+                     arr{0, 0, 1} * (-1e2), arr{0., 0., -halfHeight + margin});
   komo->addObjective({time - 0.2, time}, FS_scalarProductXZ, {gripper, obj},
                      OT_sos, {1e0});
 
@@ -517,7 +521,8 @@ void ManipulationHelper::action_pick_cylinder(double time, str gripper,
         // 排除父子关系（比如 link 连着 link）避免自碰撞误报
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
-          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name))
+            continue;
           komo->addObjective({time - 0.9, time - 0.2}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e1}, {-0.02});
         }
@@ -569,8 +574,7 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
 
     // [段1] time-1.0 ~ time-0.7: 直上抬 8cm
     komo->addObjective({time - 1.0, time - 0.7}, make_shared<F_LinAngVel>(),
-                       {gripper}, OT_sos, {1e2},
-                       {0., 0., kVzUp, 0., 0., 0.});
+                       {gripper}, OT_sos, {1e2}, {0., 0., kVzUp, 0., 0., 0.});
 
     // [段3准备] 在 time-0.3 锚定到目标上方 8cm
     komo->addObjective({time - 0.3}, FS_positionRel, {gripper, targetF->name},
@@ -578,17 +582,16 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
 
     // 姿态对齐: 从 time-0.3 开始与终点一致，并保持到 time
     komo->addObjective({time - 0.3, time}, FS_vectorZDiff,
-               {gripper, targetF->name}, OT_eq, {1e2});
+                       {gripper, targetF->name}, OT_eq, {1e2});
     komo->addObjective({time - 0.3, time}, FS_scalarProductXY,
-               {gripper, targetF->name}, OT_eq, {1e2}, {1.});
+                       {gripper, targetF->name}, OT_eq, {1e2}, {1.});
 
     // [段3] time-0.3 ~ time: 保持 XY=0 并匀速下落到目标
     komo->addObjective({time - 0.3, time}, FS_positionRel,
                        {gripper, targetF->name}, OT_eq, arr{1e2, 1e2, 0.},
                        {0., 0., 0.});
     komo->addObjective({time - 0.3, time}, make_shared<F_LinAngVel>(),
-                       {gripper}, OT_sos, {1e2},
-                       {0., 0., kVzDown, 0., 0., 0.});
+                       {gripper}, OT_sos, {1e2}, {0., 0., kVzDown, 0., 0., 0.});
   }
 
   // =================================================================
@@ -616,11 +619,14 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
   FrameL obstacles;
   for (rai::Frame *fr : komo->world.frames) {
     if (fr->shape && fr->shape->type() != rai::ST_marker) {
-      if (gripperParts.contains(fr->name)) continue;
+      if (gripperParts.contains(fr->name))
+        continue;
       // Do not repel the object currently being grasped (or its grasp handle)
       // during pre-grasp approach, otherwise objectives fight each other.
-      if (fr == bodyF || fr == targetF) continue;
-      if (fr->parent == bodyF || fr->parent == targetF) continue;
+      if (fr == bodyF || fr == targetF)
+        continue;
+      if (fr->parent == bodyF || fr->parent == targetF)
+        continue;
       obstacles.append(fr);
     }
   }
@@ -637,7 +643,8 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
         if (!isParent) {
           if (!enableExplicitPairFilter)
             continue;
-          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name))
+            continue;
           komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
         }
@@ -660,20 +667,33 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   CHECK(objF, "Object not found");
 
   arr tableSize = targetF->getSize();
-  if (tableSize.N < 3) tableSize = {0.05, 0.05, 0.05};
-  if (tableSize(0) < 1e-3) tableSize(0) = 0.1;
-  if (tableSize(1) < 1e-3) tableSize(1) = 0.1;
+  if (tableSize.N < 3)
+    tableSize = {0.05, 0.05, 0.05};
+  if (tableSize(0) < 1e-3)
+    tableSize(0) = 0.1;
+  if (tableSize(1) < 1e-3)
+    tableSize(1) = 0.1;
 
   auto get_Z_dim = [](rai::Frame *f) -> double {
-    if (!f || !f->shape) return 0.0;
-    if (f->shape->type() == rai::ST_cylinder || f->shape->type() == rai::ST_ssCylinder || f->shape->type() == rai::ST_capsule)
+    if (!f || !f->shape)
+      return 0.0;
+    if (f->shape->type() == rai::ST_cylinder ||
+        f->shape->type() == rai::ST_ssCylinder ||
+        f->shape->type() == rai::ST_capsule)
       return f->shape->size(0);
-    if (f->shape->size.N > 2) return f->shape->size(2);
+    if (f->shape->type() == rai::ST_mesh && f->shape->mesh().V.N) {
+      arr bounds = f->shape->mesh().getBounds();
+      return bounds(1, 2) - bounds(0, 2);
+    }
+    if (f->shape->size.N > 2)
+      return f->shape->size(2);
     return 0.0;
   };
 
   double rel_z = 0.5 * (get_Z_dim(targetF) + get_Z_dim(objF));
-  bool isCylinder = (objF->shape && (objF->shape->type() == rai::ST_cylinder || objF->shape->type() == rai::ST_ssCylinder));
+  bool isCylinder =
+      (objF->shape && (objF->shape->type() == rai::ST_cylinder ||
+                       objF->shape->type() == rai::ST_ssCylinder));
 
   // ==============================================================================
   // 2. 拓扑: World Anchor + Keep Kinematics
@@ -691,10 +711,11 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   // ==============================================================================
   // 3. 三段式运动骨架（无起始上抬，直接避障+悬停+下落）
   // ==============================================================================
-  // 仅在全轨迹规划中启用 time-0.2 区间约束，避免 waypoint/motif 阶段时间塌缩冲突
+  // 仅在全轨迹规划中启用 time-0.2 区间约束，避免 waypoint/motif
+  // 阶段时间塌缩冲突
   if (komo->stepsPerPhase >= 10) {
     // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
-    const double kLift = 0.06; // 6cm 抬升高度
+    const double kLift = 0.1; // 6cm 抬升高度
     komo->addObjective({time - 0.2}, FS_positionRel, {obj, table}, OT_eq,
                        arr{1e2, 1e2, 1e2}, {0., 0., rel_z + kLift});
 
@@ -725,8 +746,8 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
 
   // C. 非圆柱体在终点锁定 +90 度朝向 (x_obj 对齐 y_table)
   if (!isCylinder) {
-    komo->addObjective({time}, FS_scalarProductXX, {obj, table}, OT_eq,
-                       {1e2}, {1.});
+    komo->addObjective({time}, FS_scalarProductXX, {obj, table}, OT_eq, {1e2},
+                       {1.});
   }
 
   // ==============================================================================
@@ -778,21 +799,28 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
     // 避障: -0.7 ~ -0.3 仅对显式碰撞对保持 >=5cm
     for (const str &handPart : movingParts) {
       rai::Frame *handF = komo->world.getFrame(handPart);
-      if (!handF || !handF->shape) continue;
+      if (!handF || !handF->shape)
+        continue;
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
-          if (!enableExplicitPairFilter) continue;
-          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
-          komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance, {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
+          if (!enableExplicitPairFilter)
+            continue;
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name))
+            continue;
+          komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance,
+                             {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
         }
       }
     }
     // 下降段: 允许接触但防止穿模 (从 t-0.3 到 t)
-    komo->addObjective({time - 0.3, time}, FS_accumulatedCollisions, {}, OT_ineq, {1e2}, {-0.01});
+    komo->addObjective({time - 0.3, time}, FS_accumulatedCollisions, {},
+                       OT_ineq, {1e2}, {-0.01});
   }
 
-  std::cout << "INFO: [action_place_straightOn] Three-Stage Skeleton & Explicit Collision Avoidance Applied." << std::endl;
+  std::cout << "INFO: [action_place_straightOn] Three-Stage Skeleton & "
+               "Explicit Collision Avoidance Applied."
+            << std::endl;
 }
 
 // In manipTools.cpp
@@ -822,13 +850,18 @@ void ManipulationHelper::action_place_on_multi_support(
         f->shape->type() == rai::ST_ssCylinder ||
         f->shape->type() == rai::ST_capsule)
       return f->shape->size(0);
+    if (f->shape->type() == rai::ST_mesh && f->shape->mesh().V.N) {
+      arr bounds = f->shape->mesh().getBounds();
+      return bounds(1, 2) - bounds(0, 2);
+    }
     if (f->shape->size.N > 2)
       return f->shape->size(2);
     return 0.0;
   };
 
-  bool isCylinder = (objF->shape && (objF->shape->type() == rai::ST_cylinder ||
-                                     objF->shape->type() == rai::ST_ssCylinder));
+  bool isCylinder =
+      (objF->shape && (objF->shape->type() == rai::ST_cylinder ||
+                       objF->shape->type() == rai::ST_ssCylinder));
   double support_top_z_world =
       first_support->getPosition()(2) + 0.5 * get_Z_dim(first_support);
   double obj_half_z = 0.5 * get_Z_dim(objF);
@@ -854,8 +887,8 @@ void ManipulationHelper::action_place_on_multi_support(
   }
 
   // 锚点位置硬锁定: 一旦计算好就不再变动，全时段冻结 (提供预放置漏斗参考)
-  komo->addObjective({}, FS_pose, {virtualAnchorName}, OT_eq,
-                     {1e2}, targetWorldPose.getArr7d());
+  komo->addObjective({}, FS_pose, {virtualAnchorName}, OT_eq, {1e2},
+                     targetWorldPose.getArr7d());
 
   // 切换所有权 (Kinematic Switch)
   komo->addRigidSwitch(time, {virtualAnchorName, obj}, true);
@@ -875,9 +908,8 @@ void ManipulationHelper::action_place_on_multi_support(
 
   // B2. 非圆柱体: x_obj 对齐 x_support → b-face forward
   if (!isCylinder) {
-    komo->addObjective({time}, FS_scalarProductXX,
-               {obj, virtualAnchorName}, OT_eq,
-                       {1e2}, {1.});
+    komo->addObjective({time}, FS_scalarProductXX, {obj, virtualAnchorName},
+                       OT_eq, {1e2}, {1.});
   }
 
   // ==============================================================================
@@ -886,22 +918,21 @@ void ManipulationHelper::action_place_on_multi_support(
   if (komo->stepsPerPhase >= 10) {
     // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
     const double kLift = 0.06;
-    komo->addObjective({time - 0.2}, FS_positionRel,
-               {obj, virtualAnchorName}, OT_eq,
-               arr{1e2, 1e2, 1e2}, {0., 0., kLift});
+    komo->addObjective({time - 0.2}, FS_positionRel, {obj, virtualAnchorName},
+                       OT_eq, arr{1e2, 1e2, 1e2}, {0., 0., kLift});
 
     // 姿态对齐: 从 time-0.2 开始与终点一致，并保持到 time
     komo->addObjective({time - 0.2, time}, FS_vectorZDiff,
-               {obj, virtualAnchorName}, OT_eq, {1e2});
+                       {obj, virtualAnchorName}, OT_eq, {1e2});
     if (!isCylinder) {
       komo->addObjective({time - 0.2, time}, FS_scalarProductXX,
-             {obj, virtualAnchorName}, OT_eq, {1e2}, {1.});
+                         {obj, virtualAnchorName}, OT_eq, {1e2}, {1.});
     }
 
     // [段2] time-0.2 ~ time: 保持 XY=0 并匀速下落到目标
     komo->addObjective({time - 0.2, time}, FS_positionRel,
-               {obj, virtualAnchorName}, OT_eq, arr{1e2, 1e2, 0.},
-               {0., 0., 0.});
+                       {obj, virtualAnchorName}, OT_eq, arr{1e2, 1e2, 0.},
+                       {0., 0., 0.});
   }
 
   // ==============================================================================
@@ -963,7 +994,8 @@ void ManipulationHelper::action_place_on_multi_support(
       for (rai::Frame *obs : obstacles) {
         bool isParent = (obs == handF->parent || handF == obs->parent);
         if (!isParent) {
-          if (!isPairAllowedByExplicitFilter(handPart, obs->name)) continue;
+          if (!isPairAllowedByExplicitFilter(handPart, obs->name))
+            continue;
           komo->addObjective({time - 0.95, time - 0.8}, FS_negDistance,
                              {handPart, obs->name}, OT_ineq, {1e1}, {-0.01});
 
