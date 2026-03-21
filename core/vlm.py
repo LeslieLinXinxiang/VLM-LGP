@@ -59,6 +59,28 @@ class VLMClient:
         _, buffer = cv2.imencode('.jpg', image_bgr)
         return base64.b64encode(buffer).decode('utf-8')
 
+    def _to_jpeg_safe_rgb(self, img: Image.Image) -> Image.Image:
+        """Convert arbitrary PIL modes to JPEG-safe RGB."""
+        if img.mode == "RGB":
+            return img
+
+        # Preserve visual content for images with alpha by compositing on white.
+        if img.mode in ("RGBA", "LA"):
+            alpha = img.getchannel("A")
+            base = Image.new("RGB", img.size, (255, 255, 255))
+            base.paste(img.convert("RGBA"), mask=alpha)
+            return base
+
+        # Paletted PNGs may carry transparency via info dict.
+        if img.mode == "P" and "transparency" in img.info:
+            rgba = img.convert("RGBA")
+            alpha = rgba.getchannel("A")
+            base = Image.new("RGB", rgba.size, (255, 255, 255))
+            base.paste(rgba, mask=alpha)
+            return base
+
+        return img.convert("RGB")
+
     def _prepare_qwen_messages(self, prompt_text, images_list=None):
         content = []
         if prompt_text:
@@ -66,6 +88,7 @@ class VLMClient:
         if images_list:
             for img in images_list:
                 if isinstance(img, Image.Image):
+                    img = self._to_jpeg_safe_rgb(img)
                     buf = BytesIO()
                     img.save(buf, format="JPEG")
                     b64 = base64.b64encode(buf.getvalue()).decode("utf-8")

@@ -1,4 +1,4 @@
 {
-  "selected": "S2",
-  "reason": "S2 ensures symmetric base loading for maximum table stability and avoids the intra-batch dependency violations found in S1."
+  "selected": "strategy_1_branch_aware",
+  "reason": "Graph engine determined this exact deterministic sequence."
 }

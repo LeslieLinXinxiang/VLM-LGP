@@ -12,7 +12,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 try:
     from core.vlm import VLMClient
     from core.utils import load_json
-    from core.utils import load_json, load_incontext_examples 
 except ImportError as e:
     print(f">>> [FATAL ERROR] Import failed: {e}")
     sys.exit(1)
@@ -226,8 +225,6 @@ def execute_phase1():
     test_dir = os.path.join(root_dir, "test")
     output_graph_json = os.path.join(root_dir, "generated/phase1_target_graph.json")
 
-    train_dir = os.path.join(root_dir, "incontext_training", "orientations")
-    
     mapping_list = load_json(layout_json)
     if not mapping_list:
         print("[ERROR] Phase 0 data missing.")
@@ -246,8 +243,7 @@ def execute_phase1():
     shutil.copy(target_img_path, global_target_path)
     print(f"[Phase1] Saved global target reference to: {global_target_path}")
 
-    print(f"[Phase1] Loading In-Context Examples from: {train_dir}")
-    example_data = load_incontext_examples(train_dir)
+    print("[Phase1] Zero-shot mode enabled: in-context examples are disabled.")
     
     vlm = VLMClient()
     max_attempts = 3
@@ -260,7 +256,7 @@ def execute_phase1():
             plan_json = vlm.generate_assembly_plan(
                 target_img_path, 
                 prompt_file, 
-                example_content=example_data, 
+                example_content=None,
                 feedback_context=feedback_buffer
             )
             

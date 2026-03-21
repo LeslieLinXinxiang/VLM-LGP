@@ -1,5 +1,5 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-03-19 20:53:56:69571
+** execution start: 2026-03-20 16:12:13:153788
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
@@ -151,11 +151,3 @@ LGP_TAMP_default.cpp:Default_LGP_TAMP_Abstraction:31(0) using folFile '/home/les
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/integration/active_coll_test/node_1_run' from '/home/leslie/Projects/VLM_LGP'
 util.cpp:getIs:1104(3) opening input file 'step_5_batch_1.fol'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/integration/active_coll_test/node_1_run' from '/home/leslie/Projects/VLM_LGP'
-util.cpp:getIs:1104(3) opening input file 'temp_state.g'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
-** execution stop: 2026-03-19 20:59:20:579024
-** real time: 324.509sec
-** CPU time: 1007.89
-
-** set+queried params:

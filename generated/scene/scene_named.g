@@ -48,22 +48,22 @@ Edit l_panda_finger_joint2 { q: 0.04 }
 # -----------------------------------------------------------
 
 # === RIGHT SIDE: 8 RectPrisms (60x30x30mm), 2 columns × 4 rows ===
-rect_7   (table) { Q:"t(0.30  -0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .9 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_5   (table) { Q:"t(0.30   0.00 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .7 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_8   (table) { Q:"t(0.45  -0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .5 1.0], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_3   (table) { Q:"t(0.30   0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.2 .3 .9], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_6   (table) { Q:"t(0.45   0.00 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.9 0 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_1   (table) { Q:"t(0.30   0.20 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.7 0 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_4   (table) { Q:"t(0.45   0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.5 0 .8] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-rect_2   (table) { Q:"t(0.45   0.20 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.3 0 .7] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_1   (table) { Q:"t(0.30  -0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .9 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_2   (table) { Q:"t(0.30   0.00 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .7 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_3   (table) { Q:"t(0.45  -0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[0 .5 1.0], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_4   (table) { Q:"t(0.30   0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.2 .3 .9], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_5   (table) { Q:"t(0.45   0.00 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.9 0 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_6   (table) { Q:"t(0.30   0.20 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.7 0 .9] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_7   (table) { Q:"t(0.45   0.10 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.5 0 .8] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+rect_8   (table) { Q:"t(0.45   0.20 .065)", joint:rigid, shape:ssBox, size:[.06 .03 .03 .001], color:[.3 0 .7] , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
 
 # === LEFT SIDE: 2 Cylinders, 4 Cubes, 1 TriPrism (symmetric to right) ===
-cyl_2    (table) { Q:"t(-0.30  -0.10 .065)", joint:rigid, shape:cylinder, size:[.03 .015]        , color:[0 .8 0]  , contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place } }
-cyl_1    (table) { Q:"t(-0.30   0.00 .065)", joint:rigid, shape:cylinder, size:[.03 .015]        , color:[.4 1 .2] , contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place } }
-cube_4   (table) { Q:"t(-0.45  -0.10 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[1 .5 0]  , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+cyl_1    (table) { Q:"t(-0.30  -0.10 .065)", joint:rigid, shape:cylinder, size:[.03 .015]        , color:[0 .8 0]  , contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place } }
+cyl_2    (table) { Q:"t(-0.30   0.00 .065)", joint:rigid, shape:cylinder, size:[.03 .015]        , color:[.4 1 .2] , contact:1, mass:.2, logical:{ is_object, is_cylinder, is_place } }
+cube_1   (table) { Q:"t(-0.45  -0.10 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[1 .5 0]  , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
 cube_2   (table) { Q:"t(-0.30   0.10 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[1 .8 0]  , contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
 cube_3   (table) { Q:"t(-0.45   0.00 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[.9 .3 .1], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-cube_1   (table) { Q:"t(-0.30   0.20 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[.8 .1 .1], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+cube_4   (table) { Q:"t(-0.30   0.20 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[.8 .1 .1], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
 tri_1    (table) { Q:"t(-0.45   0.10 .05)",  joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", color:[1 .4 .7], contact:1, mass:.2, logical:{ is_object, is_place } }
 
 # -----------------------------------------------------------
@@ -108,21 +108,21 @@ Table_Right (table) { Q:"t( 0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001
 # Used as terminal targets in LGP step files when position="left"/"right".
 # Naming: Rect_N_Left, Rect_N_Right  (capital R to distinguish from parent)
 # -----------------------------------------------------------
-Rect_1_Left  (rect_7) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_1_Right (rect_7) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_2_Left  (rect_5) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_2_Right (rect_5) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_3_Left  (rect_8) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_3_Right (rect_8) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_4_Left  (rect_3) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_4_Right (rect_3) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_5_Left  (rect_6) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_5_Right (rect_6) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_6_Left  (rect_1) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_6_Right (rect_1) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_7_Left  (rect_4) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_7_Right (rect_4) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_8_Left  (rect_2) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-Rect_8_Right (rect_2) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_1_Left  (rect_1) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_1_Right (rect_1) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_2_Left  (rect_2) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_2_Right (rect_2) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_3_Left  (rect_3) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_3_Right (rect_3) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_4_Left  (rect_4) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_4_Right (rect_4) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_5_Left  (rect_5) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_5_Right (rect_5) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_6_Left  (rect_6) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_6_Right (rect_6) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_7_Left  (rect_7) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_7_Right (rect_7) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_8_Left  (rect_8) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_8_Right (rect_8) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
 
 

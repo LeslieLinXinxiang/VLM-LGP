@@ -1,4 +1,4 @@
 fol: <step_5_batch_1.fol>
-terminal: " (on rect_4 tri_1) "
+terminal: " (on cube_2 cube_3 rect_3) "
 genericCollisions: true
 coll: []

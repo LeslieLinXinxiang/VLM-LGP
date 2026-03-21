@@ -142,12 +142,28 @@ def _norm(obj_str: str) -> str:
     return obj_str.strip().lower()
 
 
-def build_id_to_name(phase1_objects: list) -> dict:
+def build_id_to_name(phase1_objects: list, inventory_data: list = None) -> dict:
     """
-    Map Phase1 integer IDs to scene frame names.
+    Map Phase1 integer IDs to actual scene frame names (logical_id) using inventory.
       id=0 (table) → "table"
-      Others: type-counter per ascending id  e.g. rect_1, rect_2, cyl_1, tri_1
+      Others: pop available IDs from phase0_layout.json dictionary matching shape type.
     """
+    import re
+    def natural_sort_key(s):
+        return [int(text) if text.isdigit() else text.lower() for text in re.split('([0-9]+)', s)]
+
+    inventory_by_prefix = {}
+    if inventory_data:
+        for item in inventory_data:
+            logical_id = item.get("logical_id", "")
+            m = re.match(r'^([a-zA-Z]+)', logical_id)
+            if m:
+                pfx = m.group(1).lower()
+                inventory_by_prefix.setdefault(pfx, []).append(logical_id)
+        
+        for pfx in inventory_by_prefix:
+            inventory_by_prefix[pfx].sort(key=natural_sort_key)
+
     counters: dict = {}
     result:   dict = {}
     for obj in sorted(phase1_objects, key=lambda o: o["id"]):
@@ -155,9 +171,18 @@ def build_id_to_name(phase1_objects: list) -> dict:
         if oid == 0:
             result[0] = "table"
             continue
-        prefix = _TYPE_PREFIX.get(_norm(obj["object"]), _norm(obj["object"]).replace(" ", "_"))
-        counters[prefix] = counters.get(prefix, 0) + 1
-        result[oid] = f"{prefix}_{counters[prefix]}"
+        
+        obj_name_norm = _norm(obj["object"])
+        prefix = _TYPE_PREFIX.get(obj_name_norm, obj_name_norm.replace(" ", "_"))
+        
+        if inventory_data and prefix in inventory_by_prefix and inventory_by_prefix[prefix]:
+            # Exact Match Pop from dictionary
+            result[oid] = inventory_by_prefix[prefix].pop(0)
+        else:
+            # Fallback legacy behavior if dictionary is depleted/missing
+            counters[prefix] = counters.get(prefix, 0) + 1
+            result[oid] = f"{prefix}_{counters[prefix]}"
+            
     return result
 
 
@@ -230,6 +255,7 @@ def generate_step_files(
     prompt1_output: dict,
     prompt2_output: dict,
     out_dir:        str,
+    inventory_data: list = None,
 ) -> list:
     """
     Generate all step_N_batch_M.fol and .lgp files into out_dir.
@@ -237,14 +263,29 @@ def generate_step_files(
     """
     os.makedirs(out_dir, exist_ok=True)
 
-    # Remove stale .fol/.lgp files from previous runs so old files don't
-    # contaminate the current strategy's step sequence.
     for fname in os.listdir(out_dir):
         if fname.endswith(".fol") or fname.endswith(".lgp"):
             os.remove(os.path.join(out_dir, fname))
 
+    # Normalize phase1_json if in G=(V,E) format
+    if "objects" not in phase1_json and "V" in phase1_json:
+        objects = []
+        edges_by_to = {}
+        for e in phase1_json.get("E", []):
+            edge_obj = {"supporter": e["from"]}
+            if "position" in e: edge_obj["position"] = e["position"]
+            edges_by_to.setdefault(e["to"], []).append(edge_obj)
+            
+        for v in phase1_json.get("V", []):
+            objects.append({
+                "id": v["id"],
+                "object": v["object"],
+                "edges": edges_by_to.get(v["id"], [])
+            })
+        phase1_json = {"objects": objects}
+
     objects    = phase1_json["objects"]
-    id_to_name = build_id_to_name(objects)
+    id_to_name = build_id_to_name(objects, inventory_data)
     id_to_obj  = {o["id"]: o for o in objects}
 
     # Resolve selected strategy (tolerate "strategies" or "candidates" key)

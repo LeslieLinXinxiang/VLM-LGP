@@ -21,8 +21,12 @@
 - **Python Viewer (`view_full_assembly.py`)**: Consumes the final `output_state.g` to visualize results.
 
 ## 4. Flow Diagram (Textual)
-`Phase0 Capture + Specs + Prompt` -> `VLMClient.match_objects(...)` -> `phase0_layout.json` -> `LGP Core / Python bridge` -> `Motif & Symbol Plan` -> `KOMO (manipTools)` -> `Optimization Solver` -> `Raw Joint Frames` -> `Main executable` -> `1000Hz Trajectory.txt` & `output_state.g`.
+`Phase0 Capture + Specs + Prompt` -> `VLMClient.match_objects(...)` -> `phase0_layout.json` -> `Branch-Aware Clustering` -> `Deterministic Strategy` -> `LGP Core / Python bridge` -> `Motif & Symbol Plan` -> `KOMO (manipTools)` -> `Optimization Solver` -> `Raw Joint Frames` -> `Main executable` -> `1000Hz Trajectory.txt` & `output_state.g`.
 
 ## 5. Data Ownership Rules
 - `manipTools.cpp` exclusively owns the mathematical definition of physical contacts and manipulation constraints.
 - The Git repository exclusively owns the version history. No code shall bypass version control.
+
+## 6. Dataflow Optimization (Current)
+- Strategy generation/decision has been migrated from VLM-centric outputs to deterministic **Branch-Aware Topological Clustering**, significantly reducing hallucination.
+- Euclidean distance checks and geometric layout consensus are now governed by direct `.g` scene parsing and inventory dictionary binding, removing latent VLM geometric estimation noise.

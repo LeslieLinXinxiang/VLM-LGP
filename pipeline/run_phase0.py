@@ -13,6 +13,10 @@ try:
     # from core.vision import SimCamera 
     from core.utils import parse_and_inject, extract_mapping_from_layout
     from core.scene_spec_builder import build_phase0_assets_from_named_scene
+    from core.phase0_parser import (
+        build_phase0_layout_from_unnamed_g,
+        split_infeasible_objects_from_reachability,
+    )
     print(">>> [DEBUG] Imports successful.")
 except ImportError as e:
     print(f">>> [FATAL ERROR] Import failed: {e}")
@@ -23,6 +27,27 @@ def _save_layout(layout_data, layout_path):
     os.makedirs(os.path.dirname(layout_path), exist_ok=True)
     with open(layout_path, "w") as f:
         json.dump(layout_data, f, indent=2)
+
+
+def _normalize_scene_include(scene_path, root_dir):
+    """Ensure generated scene uses a stable absolute panda include path."""
+    if not os.path.exists(scene_path):
+        return
+    with open(scene_path, "r") as f:
+        content = f.read()
+
+    abs_panda = os.path.join(root_dir, "rai", "test", "newLGP", "rai-robotModels", "panda", "panda.g")
+    content = content.replace(
+        "Include: <../../../rai/test/newLGP/rai-robotModels/panda/panda.g>",
+        f"Include: <{abs_panda}>",
+    )
+    content = content.replace(
+        'mesh:"../generated/triangular_prism.obj"',
+        f'mesh:"{os.path.join(root_dir, "generated", "triangular_prism.obj")}"',
+    )
+
+    with open(scene_path, "w") as f:
+        f.write(content)
 
 
 def _load_specs_index(specs_path):
@@ -63,27 +88,34 @@ def _enrich_layout(layout_list, specs_index):
 def execute_phase0(
     image_path=None,
     scene_named_g_path=None,
-    use_vlm=True,
-    auto_prepare_from_named_scene=True,
+    use_vlm=False,
+    auto_prepare_from_named_scene=False,
     layout_output_path=None,
+    unnamed_g_path=None,
+    infeasible_output_path=None,
 ):
     """
-    Phase0 dual-mode entry.
+    Phase0 deterministic entry.
 
     Args:
-        image_path: Optional scene image path.
+        image_path: Deprecated in Phase0 (kept only for compatibility).
         scene_named_g_path: Named scene file used for reverse-building unnamed/specs.
-        use_vlm: True -> VLM semantic matching; False -> rule-based direct mapping.
+        use_vlm: Deprecated in Phase0 and ignored.
         auto_prepare_from_named_scene: Whether to generate unnamed.g/specs.json from named scene.
         layout_output_path: Optional layout json output path.
     """
     print(">>> STARTING PHASE 0: WORLD BINDING")
+
+    # Phase0 no longer relies on VLM. Keep the flag for backward-compatible callers.
+    if use_vlm:
+        print("[Phase0] use_vlm=True is deprecated and ignored; forcing RULE_DIRECT_G.")
+        use_vlm = False
     
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-    unnamed_g_default = os.path.join(root_dir, "test/scene/unnamed.g")
+    unnamed_g_default = os.path.join(root_dir, "unnamed.g")
     unnamed_g_generated = os.path.join(root_dir, "generated/scene/unnamed.g")
-    unnamed_g = unnamed_g_default
+    unnamed_g = unnamed_g_path or unnamed_g_default
 
     if scene_named_g_path is None:
         scene_named_g_path = os.path.join(root_dir, "generated/scene_named.g")
@@ -93,11 +125,12 @@ def execute_phase0(
     
     capture_png = os.path.join(root_dir, "generated/phase0_capture.png")
     layout_json = layout_output_path or os.path.join(root_dir, "generated/phase0_layout.json")
+    infeasible_json = infeasible_output_path or os.path.join(root_dir, "generated/infeasible_objects.json")
     scene_named_g = os.path.join(root_dir, "generated/scene/scene_named.g")
 
     reverse_mapping = None
 
-    # 0. Reverse preparation: named scene -> unnamed scene + specs
+    # 0. Reverse preparation: named scene -> unnamed scene + specs (optional, legacy flow)
     if auto_prepare_from_named_scene:
         print("[Step 0] Reverse-Build: scene_named.g -> unnamed.g + specs.json")
         result = build_phase0_assets_from_named_scene(
@@ -110,89 +143,48 @@ def execute_phase0(
         print(f"   -> Built specs: {specs_json}")
         print(f"   -> Built unnamed scene: {unnamed_g}")
         print(f"   -> Objects mapped: {len(reverse_mapping)}")
-    
-    # 1. Build layout by mode
-    if use_vlm:
-        print("[Step 1] Mode=VLM")
 
-        # 1A. Image acquisition
-        if image_path:
-            print("   -> Headless image injection")
-            print(f"   -> Source: {image_path}")
-
-            if not os.path.exists(image_path):
-                print(f"[ERROR] Source image not found: {image_path}")
-                return None
-
-            os.makedirs(os.path.dirname(capture_png), exist_ok=True)
-            shutil.copy(image_path, capture_png)
-            import cv2
-            img = cv2.imread(capture_png)
-        else:
-            print("   -> Native render via SimCamera")
-            try:
-                from core.vision import SimCamera
-                sim = SimCamera(unnamed_g)
-                img = sim.capture(save_path=capture_png)
-            except Exception as e:
-                print(f"[ERROR] Vision module failed: {e}")
-                return None
-
-        # 1B. VLM matching
-        print("[Step 2] VLM Semantic Matching...")
-        try:
-            from core.vlm import VLMClient
-            vlm = VLMClient()
-            vlm_results_list = vlm.match_objects(img, specs_json, prompt_file)
-        except Exception as e:
-            print(f"[ERROR] VLM module failed: {e}")
-            import traceback
-
-            traceback.print_exc()
+    # 1. Preferred mode: parse unnamed.g directly (Task-012)
+    if not use_vlm:
+        print("[Step 1] Mode=RULE_DIRECT_G (No VLM)")
+        if not os.path.exists(unnamed_g):
+            print(f"[ERROR] unnamed.g not found: {unnamed_g}")
             return None
-    else:
-        print("[Step 1] Mode=RULE (No VLM)")
-        if not reverse_mapping:
-            if not os.path.exists(scene_named_g_path):
-                print(f"[ERROR] Named scene not found: {scene_named_g_path}")
-                return None
 
-            result = build_phase0_assets_from_named_scene(
-                scene_named_path=scene_named_g_path,
-                specs_output_path=specs_json,
-                unnamed_scene_output_path=unnamed_g_generated,
+        try:
+            layout_list = build_phase0_layout_from_unnamed_g(unnamed_g)
+            _save_layout(layout_list, layout_json)
+
+            mapping_dict = extract_mapping_from_layout(layout_list)
+            print(f"[Step 2] Injecting Names: {len(mapping_dict)} objects")
+            parse_and_inject(unnamed_g, mapping_dict, scene_named_g)
+            _normalize_scene_include(scene_named_g, root_dir)
+
+            print("[Step 3] Reachability split (feasible/infeasible)")
+            infeasible_report = split_infeasible_objects_from_reachability(
+                root_dir=root_dir,
+                scene_named_g_path=scene_named_g,
+                layout_list=layout_list,
             )
-            reverse_mapping = result.get("mapping", [])
-            unnamed_g = unnamed_g_generated
+            _save_layout(infeasible_report, infeasible_json)
 
-        vlm_results_list = reverse_mapping
-
-    _save_layout(vlm_results_list, layout_json)
-    specs_index = _load_specs_index(specs_json)
-    vlm_results_list = _enrich_layout(vlm_results_list, specs_index)
-    _save_layout(vlm_results_list, layout_json)
+            print(f">>> PHASE 0 COMPLETE. Layout: {layout_json}")
+            print(f">>> PHASE 0 COMPLETE. Infeasible: {infeasible_json}")
+            print(f">>> PHASE 0 COMPLETE. Scene Ready: {scene_named_g}")
+            return {
+                "success": True,
+                "layout_path": layout_json,
+                "infeasible_path": infeasible_json,
+                "scene_named_path": scene_named_g,
+                "specs_path": specs_json,
+                "unnamed_scene_path": unnamed_g,
+            }
+        except Exception as e:
+            print(f"[ERROR] Direct unnamed.g pipeline failed: {e}")
+            return None
     
-    # 2. Data Cleaning
-    print(f"[Step 3] Transforming Data...")
-    try:
-        mapping_dict = extract_mapping_from_layout(vlm_results_list)
-        print(f"   -> Extracted {len(mapping_dict)} objects.")
-
-        # 3. Injection
-        print(f"[Step 4] Injecting Names...")
-        parse_and_inject(unnamed_g, mapping_dict, scene_named_g)
-        print(f">>> PHASE 0 COMPLETE. Scene Ready: {scene_named_g}")
-
-        return {
-            "success": True,
-            "layout_path": layout_json,
-            "scene_named_path": scene_named_g,
-            "specs_path": specs_json,
-            "unnamed_scene_path": unnamed_g,
-        }
-    except Exception as e:
-        print(f"[ERROR] Data injection failed: {e}")
-        return None
+    # Legacy VLM path intentionally removed in Phase0.
+    return None
 
 if __name__ == "__main__":
     execute_phase0()

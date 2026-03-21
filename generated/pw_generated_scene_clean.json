@@ -1,8 +1,8 @@
 {
-  "scene_path": "test/scenes/scene_named_with_far_infeasible.g",
+  "scene_path": "generated/scene/scene_named.g",
   "mode": "pick_waypoint_only",
   "gripper": "l_gripper",
-  "trajectory_log_path": "generated/pick_waypoint_trajectory_far.log",
+  "trajectory_log_path": "generated/pw_generated_scene_clean.log",
   "results": {
     "cube_1": {
       "object_type": "box",
@@ -27,12 +27,6 @@
       "pick_action": "pick_touch",
       "status": "feasible",
       "message": "solver feasible"
-    },
-    "cube_far_unreachable": {
-      "object_type": "box",
-      "pick_action": "pick_touch",
-      "status": "infeasible",
-      "message": "solver infeasible"
     },
     "cyl_1": {
       "object_type": "cylinder",
@@ -96,9 +90,9 @@
     }
   },
   "summary": {
-    "total": 15,
+    "total": 14,
     "feasible": 14,
-    "infeasible": 1,
+    "infeasible": 0,
     "error": 0
   }
 }

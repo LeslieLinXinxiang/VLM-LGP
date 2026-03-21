@@ -1,10 +1,10 @@
 {
-  "scene_path": "test/scenes/scene_recovery_stack_min.g",
+  "scene_path": "test/scenes/scene_named.g",
   "mode": "pick_waypoint_only",
   "gripper": "l_gripper",
-  "trajectory_log_path": "generated/pick_waypoint_trajectory_recovery_stack_bottom.log",
+  "trajectory_log_path": "generated/pw_direct_clean.log",
   "results": {
-    "block_bottom": {
+    "rect_1": {
       "object_type": "box",
       "pick_action": "pick_touch",
       "status": "feasible",

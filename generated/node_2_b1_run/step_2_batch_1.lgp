@@ -1,4 +1,0 @@
-fol: <step_2_batch_1.fol>
-terminal: " (on rect1 rect2 rect4) "
-genericCollisions: true
-coll: []

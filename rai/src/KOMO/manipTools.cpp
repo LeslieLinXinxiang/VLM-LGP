@@ -827,7 +827,6 @@ void ManipulationHelper::action_place_on_multi_support(
     return 0.0;
   };
 
-  double rel_z = 0.5 * (get_Z_dim(first_support) + get_Z_dim(objF));
   bool isCylinder = (objF->shape && (objF->shape->type() == rai::ST_cylinder ||
                                      objF->shape->type() == rai::ST_ssCylinder));
   double support_top_z_world =
@@ -861,19 +860,23 @@ void ManipulationHelper::action_place_on_multi_support(
   // 切换所有权 (Kinematic Switch)
   komo->addRigidSwitch(time, {virtualAnchorName, obj}, true);
 
-  // A. 高度接触 (相对约束，防止悬空核心)
-  komo->addObjective({time}, FS_positionDiff, {obj, supports(0)}, OT_eq, arr{0, 0, 1} * 1e2, {rel_z});
+  // A. 终点约束到虚拟锚点（由锚点定义多支撑中心位姿）
+  komo->addObjective({time}, FS_positionRel, {obj, virtualAnchorName}, OT_eq,
+                     arr{0, 0, 1} * 1e2, {0.0});
 
-  // A2. XY 中心硬对齐 (确保放在支撑群的正中心)
-  komo->addObjective({time}, FS_position, {obj}, OT_eq, arr{1e2, 1e2, 0}, {centroid_world(0), centroid_world(1), 0.});
+  // A2. XY 对齐到虚拟锚点中心
+  komo->addObjective({time}, FS_positionRel, {obj, virtualAnchorName}, OT_eq,
+                     arr{1e2, 1e2, 0.}, {0., 0., 0.});
 
   // B. 姿态约束 (对齐 straightOn 逻辑)
   // B1. 竖直锁定 (Z 轴对齐世界 Z)
-  komo->addObjective({time}, FS_vectorZDiff, {obj, supports(0)}, OT_eq, {1e2});
+  komo->addObjective({time}, FS_vectorZDiff, {obj, virtualAnchorName}, OT_eq,
+                     {1e2});
 
   // B2. 非圆柱体: x_obj 对齐 x_support → b-face forward
   if (!isCylinder) {
-    komo->addObjective({time}, FS_scalarProductXX, {obj, supports(0)}, OT_eq,
+    komo->addObjective({time}, FS_scalarProductXX,
+               {obj, virtualAnchorName}, OT_eq,
                        {1e2}, {1.});
   }
 
@@ -883,20 +886,22 @@ void ManipulationHelper::action_place_on_multi_support(
   if (komo->stepsPerPhase >= 10) {
     // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
     const double kLift = 0.06;
-    komo->addObjective({time - 0.2}, FS_positionRel, {obj, supports(0)}, OT_eq,
-                       arr{1e2, 1e2, 1e2}, {0., 0., rel_z + kLift});
+    komo->addObjective({time - 0.2}, FS_positionRel,
+               {obj, virtualAnchorName}, OT_eq,
+               arr{1e2, 1e2, 1e2}, {0., 0., kLift});
 
     // 姿态对齐: 从 time-0.2 开始与终点一致，并保持到 time
-    komo->addObjective({time - 0.2, time}, FS_vectorZDiff, {obj, supports(0)}, OT_eq,
-                       {1e2});
+    komo->addObjective({time - 0.2, time}, FS_vectorZDiff,
+               {obj, virtualAnchorName}, OT_eq, {1e2});
     if (!isCylinder) {
-      komo->addObjective({time - 0.2, time}, FS_scalarProductXX, {obj, supports(0)},
-                         OT_eq, {1e2}, {1.});
+      komo->addObjective({time - 0.2, time}, FS_scalarProductXX,
+             {obj, virtualAnchorName}, OT_eq, {1e2}, {1.});
     }
 
     // [段2] time-0.2 ~ time: 保持 XY=0 并匀速下落到目标
-    komo->addObjective({time - 0.2, time}, FS_positionRel, {obj, supports(0)}, OT_eq,
-                       arr{1e2, 1e2, 0.}, {0., 0., 0.});
+    komo->addObjective({time - 0.2, time}, FS_positionRel,
+               {obj, virtualAnchorName}, OT_eq, arr{1e2, 1e2, 0.},
+               {0., 0., 0.});
   }
 
   // ==============================================================================

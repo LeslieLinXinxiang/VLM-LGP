@@ -1,57 +1,13 @@
 {
   "strategies": [
     {
-      "id": "S1",
-      "order": [
-        1,
-        3,
-        4,
-        2,
-        5,
-        6,
-        7,
-        8,
-        9
-      ],
+      "id": "strategy_1_branch_aware",
+      "description": "Deterministic branch-aware topological clustering that respects physical dependencies and separates parallel construction tasks.",
       "batches": [
         [
-          1,
-          3
+          1
         ],
         [
-          4,
-          2
-        ],
-        [
-          5,
-          6
-        ],
-        [
-          7,
-          8
-        ],
-        [
-          9
-        ]
-      ],
-      "reason": "Completes left stack first; risk of table edge instability during 3/4 placement."
-    },
-    {
-      "id": "S2",
-      "order": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
-      ],
-      "batches": [
-        [
-          1,
           2
         ],
         [
@@ -63,50 +19,15 @@
           6
         ],
         [
-          7,
+          7
+        ],
+        [
           8
         ],
         [
           9
         ]
-      ],
-      "reason": "Symmetric base loading ensures maximum table stability before bridging."
-    },
-    {
-      "id": "S3",
-      "order": [
-        1,
-        2,
-        4,
-        5,
-        3,
-        6,
-        7,
-        8,
-        9
-      ],
-      "batches": [
-        [
-          1,
-          2
-        ],
-        [
-          4,
-          5
-        ],
-        [
-          3,
-          6
-        ],
-        [
-          7,
-          8
-        ],
-        [
-          9
-        ]
-      ],
-      "reason": "Prioritizes bridge supports (4,5) early to unlock mid-level stacking sooner."
+      ]
     }
   ]
 }

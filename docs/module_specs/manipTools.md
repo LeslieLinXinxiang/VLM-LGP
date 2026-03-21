@@ -32,19 +32,25 @@ Translates high-level logical symbols (pick, place, place_straightOn, place_on_m
 ### `action_place_straightOn(str action, double time, str obj, str table)`
 - **Kinematic switch**: Creates `placePose_<table>_<obj>_<time>` as a free-DOF anchor parented to world; initialized at `targetF.pos + rel_z`; `addRigidSwitch` at `time`.
 - **`rel_z` computation**: `0.5 * (get_Z_dim(targetF) + get_Z_dim(objF))` — correct for `ST_ssBox` (size(2) = full height) and `ST_cylinder` (size(0) = full height).
-- **Pre-place funnel**: `FS_positionRel {obj, table}` soft constraints at `time-0.5` (Z only, `rel_z+0.1`) and `time-0.1` (XY+Z, `rel_z+0.02`).
-- **Final constraints at `time`**: Z height `FS_positionDiff OT_eq` (weight 1e2); XY centering `FS_positionDiff OT_eq` (weight 1e2); `FS_vectorZ` upright; `FS_quaternionDiff` rotation alignment (non-cylinder only); XY range ineq (currently using tight `±0.0015m` limits instead of `tableSize-margin`).
-- **Collision avoidance**: `FS_negDistance` per pair (gripper parts only, cruise segment `time-0.9~time-0.2`) when `stepsPerPhase >= 10`; `FS_accumulatedCollisions` whole-motion weight 1e2 value 0.
+- **Three-stage skeleton** (only when `stepsPerPhase >= 10`):
+  - `time-0.2`: hard lock XYZ to `{0, 0, rel_z+6cm}` above target (`OT_eq`).
+  - `{time-0.2, time}`: hard lock `FS_vectorZDiff` + `FS_scalarProductXX` (orientation corridor).
+  - `{time-0.2, time}`: hard lock XY=0 descent channel.
+- **Final constraints at `time`**: Z height `FS_positionDiff OT_eq` (weight 1e2); XY centering (weight 1e2); `FS_vectorZDiff` upright; `FS_scalarProductXX {1.}` b-face forward (non-cylinder only).
+- **Collision avoidance** (only `stepsPerPhase >= 10`): `FS_negDistance` per explicit pair (cruise `time-0.7~time-0.3`); `FS_accumulatedCollisions` for descent `{time-0.3, time}`.
 - **Known issues**:
-  1. `isTable` filter uses `fr->name.contains("table")` — excludes only the main table, NOT `Base_Left`/`Base_Right`/`Base_Center` placement targets (which are used as `table` argument). This causes placement target frames to enter the `obstacles` list and push the gripper away.
-  2. Carried object (`obj`) is not included in cruise-segment collision checking → can clip through other objects during transport.
-  3. Z height constraint weight (1e2) equals global collision weight (1e2) → optimizer can slightly embed object into table surface.
+  1. `isTable` string filter excludes only frames whose name contains `"table"`, not `Base_Left`/`Base_Right`/`Base_Center`. **Partially mitigated** by `isPairAllowedByExplicitFilter` gate — only explicit pairs now trigger `addObjective`.
+  2. Z height constraint weight (1e2) equals global collision weight (1e2) → optimizer can slightly embed object into table surface.
 
 ### `action_place_on_multi_support(double time, str obj, StringA supports)`
 - Places `obj` centered over multiple support frames (calculates centroid).
-- Uses a **virtual anchor** (`virtualAnchor_for_<obj>_<time>`) parented to world as the "ideal resting pose" target.
-- Pre-place funnel via `FS_positionRel {obj, virtualAnchor}` at `time-0.5` and `time-0.1`.
-- Collision avoidance: only exit segment `time-0.95~time-0.8`; final placement segment is UNCONSTRAINED (commented out).
+- Uses a **virtual anchor** (`virtualAnchor_for_<obj>_<time>`) parented to world as the position reference target only (orientation is NOT derived from anchor).
+- **Orientation at `time`**: `FS_vectorZDiff {obj, supports(0)}` upright + `FS_scalarProductXX {obj, supports(0)} {1.}` b-face forward (non-cylinder only).
+- **Three-stage skeleton** (only `stepsPerPhase >= 10`):
+  - `time-0.2`: hard lock XYZ to `{0, 0, rel_z+6cm}` above `supports(0)` (`OT_eq`).
+  - `{time-0.2, time}`: hard lock `FS_vectorZDiff` + `FS_scalarProductXX` (orientation corridor) against `supports(0)`.
+  - `{time-0.2, time}`: hard lock XY=0 descent channel against `supports(0)`.
+- **Collision avoidance**: only exit segment `time-0.95~time-0.8`; final placement segment unconstrained (commented out).
 
 ## 6. Internal Functions
 - `get_Z_dim()` lambda: Extracts the true vertical dimension of objects regardless of `shape->type`. Returns `size(0)` for cylinders, `size(2)` for boxes. Returns 0 for frames without shape.
@@ -76,30 +82,22 @@ Object frame names in `.lgp`/`.fol` files **must exactly match** names in `gener
 - Rect top patches: `Rect_1_Left`, `Rect_1_Right`, … `Rect_8_Left`, `Rect_8_Right`
 - Main table: `table`
 
-## 12. Planned Refactor (2026-03-19): Motion-Grasp Decoupling
+## 12. Motion-Grasp Decoupling (Implemented 2026-03-19)
 
-### 12.1 New Boundary
-- `manipTools` contribution focus shifts to motion planning quality, not integrated grasp-contact shaping.
-- Pick/place contact approach is represented by deterministic vertical micro-actions around the terminal segment.
+### 12.1 Implemented Boundary
+- `manipTools` contribution focuses on motion planning quality via deterministic vertical micro-actions around the terminal segment, not integrated grasp-contact shaping.
 
-### 12.2 Planned Behavior for `action_pick`
-- `time-1.0 ~ time-0.7`: add slow lift to `+5cm` over current grasp frame.
-- `time-0.7 ~ time-0.3`: transit to object-top waypoint (`XY=0`, `Z=+5cm` relative to target).
-- `time-0.3 ~ time`: fixed vertical descend `5cm` (no additional approach funnel competition).
-- Collision policy: transit-only `FS_negDistance` with `OT_sos` and target distance `0.05m` in `time-0.7~time-0.3`.
-- Do not add redundant single-point top lock at `time-0.3`.
-- Do not add midpoint height anchors (for example at `time-0.15`).
+### 12.2 Implemented Behavior for `action_pick`
+- `time-1.0 ~ time-0.7`: velocity guidance to lift `+6cm` over current gripper frame.
+- At `time-0.3`: hard XYZ lock to object-top waypoint (`{0, 0, kLift}` relative to target).
+- `{time-0.3, time}`: orientation corridor (`FS_vectorZDiff + FS_scalarProductXY`) + XY=0 channel + downward velocity guidance.
+- Collision policy: `FS_negDistance` per explicit pair in `time-0.7~time-0.3` (cruise); `FS_accumulatedCollisions` in `{time-0.3, time}` (descent).
 
-### 12.3 Planned Behavior for `action_place_straightOn`
-- No mandatory initial lift phase.
-- `time-0.7 ~ time-0.3`: transit to destination top waypoint (`XY=0`, `Z=rel_z+0.05`).
-- `time-0.3 ~ time`: fixed vertical descend `5cm` to final placement.
-- Collision policy: transit-only `FS_negDistance` with `OT_sos` and target distance `0.05m` in `time-0.7~time-0.3`.
-- Do not add midpoint height anchors (for example at `time-0.15`).
+### 12.3 Implemented Behavior for `action_place_straightOn` and `action_place_on_multi_support`
+- `time-0.2`: hard XYZ lock to destination top waypoint (`{0, 0, rel_z+6cm}`).
+- `{time-0.2, time}`: hard orientation corridor (`FS_vectorZDiff + FS_scalarProductXX`) + XY=0 descent channel.
+- Collision policy: cruise `FS_negDistance` per explicit pair in `time-0.7~time-0.3`; `FS_accumulatedCollisions` in `{time-0.3, time}`.
 
-### 12.4 Expected Benefit
-- Reduce objective interference in problematic windows `time-1.0~time-0.6` and `time-0.3~time`.
-- Improve smoothness by replacing mixed near-contact optimization with deterministic terminal motion.
-
-### 12.5 Related Report
-- See `docs/ops/PICK_PLACE_DECOUPLED_MOTION_CHANGE_REPORT_2026-03-19.md` for function-level code touch points and implementation checklist.
+### 12.4 Improvement
+- Reduced objective interference in problematic windows `time-1.0~time-0.6` and `time-0.2~time`.
+- Improved smoothness by replacing mixed near-contact optimization with deterministic terminal motion.

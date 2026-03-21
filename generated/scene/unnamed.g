@@ -1,6 +1,6 @@
 # full_assembly_scene.g
 # Full initial assembly scene for VLM-LGP
-# Objects: 8 objPrism, 2 Cylinder, 4 Cube, 1 TriPrism
+# Objects: 8 RectPrism, 2 Cylinder, 4 Cube, 1 TriPrism
 # Layout: start zone on table left side (X negative), arm front-center
 
 world {}
@@ -32,7 +32,7 @@ Edit l_panda_finger_joint2 { q: 0.04 }
 #
 # Arm at (0, -0.3), facing +Y. Panda reach ~0.85m.
 #
-# RIGHT SIDE (+X): 8 objPrisms, 2 columns × 4 rows
+# RIGHT SIDE (+X): 8 RectPrisms, 2 columns × 4 rows
 #           X=+0.30   X=+0.45
 # Y=-0.10:  [rect1]   [rect5]
 # Y= 0.00:  [rect2]   [rect6]
@@ -79,11 +79,11 @@ obj_13    (table) { Q:"t(-0.45   0.10 .05)",  joint:rigid, shape:mesh, mesh:"/ho
 # Colored yellow to confirm placement, then set transparent.
 # Size: 25x25mm (matches Cube footprint), thin (2mm)
 # -----------------------------------------------------------
-Base_Center (table) { Q:"t( 0.00  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Left   (table) { Q:"t(-0.08  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Right  (table) { Q:"t( 0.08  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Top    (table) { Q:"t( 0.00 -0.03 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Bottom (table) { Q:"t( 0.00  0.13 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Center (table) { Q:"t( 0.00  0.10 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Left   (table) { Q:"t(-0.08  0.10 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Right  (table) { Q:"t( 0.08  0.10 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Top    (table) { Q:"t( 0.00  0.02 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
+Base_Bottom (table) { Q:"t( 0.00  0.18 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on the Table (for layer-1 objects)
@@ -93,8 +93,8 @@ Base_Bottom (table) { Q:"t( 0.00  0.13 .051)", shape:ssBox, size:[.025 .025 .002
 # Assembly zone centered at (0, 0.05). Left = -X, Right = +X, 8cm apart.
 # Naming: Table_Left, Table_Right  (consistent with Rect_N_Left/Right)
 # -----------------------------------------------------------
-Table_Left  (table) { Q:"t(-0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
-Table_Right (table) { Q:"t( 0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Left  (table) { Q:"t(-0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Right (table) { Q:"t( 0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on each Rect
@@ -108,21 +108,21 @@ Table_Right (table) { Q:"t( 0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001
 # Used as terminal targets in LGP step files when position="left"/"right".
 # Naming: Rect_N_Left, Rect_N_Right  (capital R to distinguish from parent)
 # -----------------------------------------------------------
-obj_02_Left  (obj_02) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_02_Right (obj_02) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_04_Left  (obj_04) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_04_Right (obj_04) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_06_Left  (obj_06) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_06_Right (obj_06) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_08_Left  (obj_08) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_08_Right (obj_08) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_10_Left  (obj_10) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_10_Right (obj_10) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_12_Left  (obj_12) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_12_Right (obj_12) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_14_Left  (obj_14) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_14_Right (obj_14) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_15_Left  (obj_15) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-obj_15_Right (obj_15) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_1_Left  (obj_02) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_1_Right (obj_02) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_2_Left  (obj_04) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_2_Right (obj_04) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_3_Left  (obj_06) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_3_Right (obj_06) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_4_Left  (obj_08) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_4_Right (obj_08) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_5_Left  (obj_10) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_5_Right (obj_10) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_6_Left  (obj_12) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_6_Right (obj_12) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_7_Left  (obj_14) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_7_Right (obj_14) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_8_Left  (obj_15) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
+Rect_8_Right (obj_15) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
 
 
