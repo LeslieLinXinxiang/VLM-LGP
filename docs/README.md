@@ -3,6 +3,7 @@
 This document defines how project documents are organized, maintained, and archived.
 
 ## 1. Purpose
+
 - Keep Layer 0-4 as the single source of truth for engineering decisions.
 - Separate operational and historical materials from core architecture docs.
 - Reduce context pollution in long-running AI sessions.
@@ -10,6 +11,7 @@ This document defines how project documents are organized, maintained, and archi
 ## 2. Structure
 
 ### 2.1 Core DDE Layers (fixed at `docs/` root)
+
 - `docs/project_charter.md` (Layer 0)
 - `docs/architecture.md` (Layer 1)
 - `docs/dataflow.md` (Layer 2)
@@ -20,6 +22,7 @@ This document defines how project documents are organized, maintained, and archi
 These paths are stable and should not be moved to subfolders unless DDE bootstrap rules are explicitly updated.
 
 ### 2.2 Supplementary Docs (subfolders)
+
 - `docs/ops/`: runtime/environment/network troubleshooting SOPs.
 - `docs/decisions/`: decision records and templates (DDR).
 - `docs/archive/`: historical handoff notes and one-time migration snapshots.
@@ -28,17 +31,19 @@ These paths are stable and should not be moved to subfolders unless DDE bootstra
 Each subfolder should include a local `README.md` describing scope and filing rules.
 
 ## 3. Filing Rules
+
 1. Architecture, dataflow, and protocol truth goes to Layer files only.
 2. Environment or platform troubleshooting goes to `docs/ops/`.
 3. Time-bound handoff notes go to `docs/archive/`.
 4. Decision templates and approved decisions go to `docs/decisions/`.
 5. Any new doc must be registered in this file under the correct section.
 6. DDR template uses dual source:
-	- reusable skill template (global skill roots)
-	- project-local instance `docs/decisions/DDR_TEMPLATE.md`
-	Project workflows use the project-local instance first.
+   - reusable skill template (global skill roots)
+   - project-local instance `docs/decisions/DDR_TEMPLATE.md`
+   Project workflows use the project-local instance first.
 
 ## 4. Lifecycle Rules
+
 1. Active operational SOPs stay in `docs/ops/`.
 2. Outdated one-off notes must be moved to `docs/archive/` with date suffixes when useful.
 3. Core Layer documents are updated, not duplicated.
@@ -46,6 +51,7 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 ## 5. Current Inventory
 
 ### Core
+
 - `docs/project_charter.md`
 - `docs/architecture.md`
 - `docs/dataflow.md`
@@ -54,10 +60,13 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 - `docs/roadmap.md`
 
 ### Supplementary
+
 - `docs/ops/README.md`
 - `docs/ops/NETWORK_TROUBLESHOOTING_SOP.md`
 - `docs/ops/CROSS_DEVICE_SYNC_SOP.md`
 - `docs/ops/PLANAR_EXP_FMB_ADAPTATION_REPORT_2026-03-21.md`
+- `docs/ops/TESTING_SOP_2026-03-21.md`
+- `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
 - `docs/archive/ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`
 - `docs/archive/ACTIVE_COLLISION_PAIR_STRATEGY_CHAIN.md`
 - `docs/decisions/README.md`

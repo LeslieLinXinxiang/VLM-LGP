@@ -53,7 +53,7 @@ breaklines=true, frame=lines, backgroundcolor=
   \maketitle
 
   \begin{abstract}
-    The abstract goes here.
+    Long-horizon robotic assembly requires coupling high-level reasoning with low-level geometric constraints. Pure semantic planners lack physical grounding, while native geometric solvers suffer from combinatorial explosion in complex tasks. We propose \textbf{VLM-LGP}, a hierarchical framework that leverages Vision-Language Models to prune the logical search space and guide Logic-Geometric Programming solvers. We introduce a Layered Precedence Graph and shape-aware manipulation primitives to ensure both semantic coherence and kinematic feasibility. Experiments demonstrate its effectiveness in multi-part assembly tasks compared to pure LGP baselines.
   \end{abstract}
 
   \begin{IEEEkeywords}
@@ -79,15 +79,15 @@ breaklines=true, frame=lines, backgroundcolor=
   into symbolic predicate logic, such as the Planning Domain Definition Language
   (PDDL) \cite{cite_pddl_1998}. However, in long-horizon tasks, this framework remains
   strictly dependent on human experts to manually and exhaustively define all preconditions
-  and effects. This zero-tolerance for logical incompleteness makes manual
+  and effects. This strict requirement for logical completeness makes manual
   specification highly susceptible to critical omissions.
 
   To alleviate this manual bottleneck, recent advancements have integrated Vision-Language
-  Models (VLMs) as semantic front-ends to autonomously generate TAMP domain rules
+  Models (VLMs) as semantic front-ends to autonomously synthesize symbolic planning domains
   \cite{cite_arxiv_2410_02193}. While this greatly enhances system usability, such
   pure semantic-driven architectures suffer from inherent logical brittleness.
-  Because Large Language Models (LLMs) operate without underlying physical
-  grounding, they are prone to logical discontinuities during long-horizon reasoning.
+  Since Large Language Models (LLMs) fundamentally lack physical grounding,
+  they are prone to logical discontinuities during long-horizon reasoning.
   For instance, an LLM might generate a high-level command to ``grasp the egg'' while
   omitting the implicit physical prerequisite to ``open the drawer'' first.
   Without a geometric feedback mechanism, such semantic gaps inevitably lead to cascading
@@ -109,7 +109,7 @@ breaklines=true, frame=lines, backgroundcolor=
   cooking a meal involving hundreds of sequential steps) exposes two prohibitive
   bottlenecks:
 
-  \textbf{1) Combinatorial Explosion of the Search Space:} Blindly relying on
+  \textbf{1) Combinatorial Explosion of the Search Space:} Direct application of 
   geometric backtracking to derive long-horizon logic leads to a combinatorial
   explosion of the state space. The computational cost of evaluating deeply nested,
   kinematically invalid branches renders the solver intractable.
@@ -144,9 +144,9 @@ breaklines=true, frame=lines, backgroundcolor=
   \subsection{Phase 0: Scene Initialization and Reachability Pre-check}
   \label{subsec:phase0}
 
-  To bridge the continuous visual observation space with the discrete symbolic
-  domain required by the LGP solver, the pipeline first utilizes Computer Vision
-  (CV) modules to recognize object shapes and confirm their 6-DOF poses, mapping
+  To bridge the continuous visual observation space with the discrete symbolic domain,
+  we initialize the scene representation via a standard Vision module before conducting a rapid kinematic pre-check.
+  The CV module recognizes object shapes and confirms their 6-DOF poses, mapping
   them to physical proxies in the simulation environment (e.g., an anonymous
   \texttt{.g} configuration). Objects are spatially sorted based on their radial
   Euclidean distance from the robot base to establish a preliminary reasoning
@@ -155,8 +155,7 @@ breaklines=true, frame=lines, backgroundcolor=
   To further enhance system robustness and avoid costly downstream failures, we
   introduce a \textit{Reachability Pre-check} that runs \emph{in parallel} with
   the subsequent VLM reasoning phases. For each identified object $o_i$, the system
-  invokes the Layer-1 LGP solver---a highly efficient waypoint generator operating
-  at $\texttt{stepsPerPhase}=1$---to test basic grasp feasibility under global
+  invokes the Layer-1 LGP solver---a sparsely-discretized waypoint generator (constrained to a single time step per phase)---to test basic grasp feasibility under global
   collision constraints:
   \begin{equation}
     \text{Reach}(o_i) =
@@ -224,11 +223,17 @@ breaklines=true, frame=lines, backgroundcolor=
   requests (e.g., ``cylinder'') to uniquely available physical entities in the live
   simulation inventory (e.g., \texttt{cyl1} or \texttt{cyl2}).
 
-  Crucially, instead of blindly outputting a single static plan, the system leverages
-  the VLM's reasoning capabilities to explicitly generate multiple candidate logic
-  sub-graphs (execution sequences) (see Fig.~\ref{fig:layered_graph} for illustration)
+  \begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{Strategy_Genaration.png}
+    \caption{Multiple candidate logic sub-graphs (execution sequences) generated by the VLM for a given assembly structure. Arrows indicate the dynamically proposed temporal order of placement.}
+    \label{fig:strategy_generation}
+  \end{figure}
+
+  Rather than emitting a single deterministic plan, the system prompts the VLM to generate a distribution of valid logic sub-graphs (execution sequences) 
+  (see Fig.~\ref{fig:strategy_generation} for illustration)
   that satisfy the current node's structural requirements. The VLM then acts as an
-  autonomous evaluator, assessing these deterministic routes against spatial
+  autonomous evaluator, assessing these candidate routes against spatial
   heuristics---such as minimizing arm occlusion, avoiding redundant tool switches,
   or favoring top-to-bottom manipulation. It explicitly selects the most physically
   feasible trajectory and outputs the rationale behind its decision.
@@ -256,8 +261,7 @@ breaklines=true, frame=lines, backgroundcolor=
   \subsubsection{Waypoint-Gated Active Constraint Strategy}
   \label{subsubsec:active_constraints}
 
-  A notorious bottleneck in native TAMP and LGP solvers is the combinatorial
-  explosion of collision checking when scenes contain numerous objects. Evaluating
+  A primary limitation of native TAMP solvers is the exponential growth of the collision evaluation space when scenes contain numerous objects. Evaluating
   explicit collision constraints among all $N$ environmental entities imposes an
   $\mathcal{O}(N^2)$ burden on the full-motion optimizer, the majority of which are
   geometrically irrelevant.
@@ -337,9 +341,9 @@ breaklines=true, frame=lines, backgroundcolor=
     \leq \tfrac{L}{2} - m
     \label{eq:pick_cyl_slide}
   \end{equation}
-  where $L$ is the cylinder length and $m$ a safety margin. This formulation grants
+  where $L$ is the cylinder length and $m$ a safety margin. By leaving the Z-axis translation unconstrained, the KOMO solver gains the necessary degrees of freedom to dynamically resolve local collisions, a feature critically absent in rigid top-down grasps. This formulation grants
   the solver maximal freedom to determine the optimal grasp height along the
-  object's axis, which is critical for collision-free manipulation in dense scenes.
+  object's axis, essential for collision-free manipulation in dense scenes.
 
   \subsubsection{Topological Decoupling for Multi-Support (\texttt{action\_place\_multi})}
   Native LGP assumes strict open-chain kinematic trees, which fail in multi-support
@@ -403,15 +407,9 @@ breaklines=true, frame=lines, backgroundcolor=
   against the expected blueprint state established in Phase 1. If an error is detected---such
   as a missing component in a designated slot or an unexpectedly placed object (an
   ``intruder'')---the system immediately halts the standard planning pipeline.
-  While dynamic closed-loop replanning and autonomous physical recovery remain
-  theoretical extensions for future work, this rigorous error detection mechanism
-  effectively prevents minor execution anomalies from cascading into catastrophic
-  structural failures, establishing a critical safety boundary for the system.
-
-  \textit{(Reviewer note: This verification and halting module ensures execution
-  integrity during long-horizon assembly. Depending on the final review focus,
-  this section may be expanded with quantitative recovery metrics or condensed to
-  focus on the planning-level optimizations.)}
+  This rigorous error detection mechanism functions as a critical safety boundary, 
+  effectively preventing minor execution anomalies from cascading into catastrophic
+  structural failures during unmonitored deployments.
 
   \section{Experimental Results}
   \subsection{Performance Evaluation}

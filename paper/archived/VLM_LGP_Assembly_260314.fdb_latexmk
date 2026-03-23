@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1773495264.92517 "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_260314.tex" "VLM_LGP_Assembly_260314.pdf" "VLM_LGP_Assembly_260314" 1773495266.48417 0
-  "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_260314.tex" 1773495264.23246 24119 0473b530969a3990c9bcacce38e5e535 ""
+["pdflatex"] 1773577689.13123 "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_260314.tex" "VLM_LGP_Assembly_260314.pdf" "VLM_LGP_Assembly_260314" 1773577692.32615 0
+  "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/paper/VLM_LGP_Assembly_260314.tex" 1773577683.70178 24910 829f4f29846329a7fc4bd0ff95cb5715 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -138,9 +138,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1773459753 5541377 04880c840ca220163a28f1a3af0ee662 ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1773459667 3636768 f73ff9b9820612f3a8d4146c19606e04 ""
   "/usr/local/texlive/2026/texmf.cnf" 1772409725 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "VLM_LGP_Assembly_260314.aux" 1773495266.37819 6120 5234bd0fbcd07d169189ac26b9e77a45 "pdflatex"
-  "VLM_LGP_Assembly_260314.out" 1773495266.37895 4226 71ed21a8da2529b913178ca2ec3e4d21 "pdflatex"
-  "VLM_LGP_Assembly_260314.tex" 1773495264.23246 24119 0473b530969a3990c9bcacce38e5e535 ""
+  "Strategy_Genaration.png" 1773577515.13337 228074 16585b269dede68de67a0416825dfff5 ""
+  "VLM_LGP_Assembly_260314.aux" 1773577692.18952 6647 7a4cf17d73540b9795fdb7de53f3b23d "pdflatex"
+  "VLM_LGP_Assembly_260314.out" 1773577692.1903 4226 71ed21a8da2529b913178ca2ec3e4d21 "pdflatex"
+  "VLM_LGP_Assembly_260314.tex" 1773577683.70178 24910 829f4f29846329a7fc4bd0ff95cb5715 ""
   "graph (1).png" 1773461829.59875 38929 321d980dd5217d2449cbf4f0cd4b973b ""
   "graph (2).png" 1773461829.59898 40630 b6e008748ad53fb3976d7929e418e95c ""
   "workflow.png" 1773495200.95906 1366732 f93369d4c0404ba7488c15ca89da3c29 ""
