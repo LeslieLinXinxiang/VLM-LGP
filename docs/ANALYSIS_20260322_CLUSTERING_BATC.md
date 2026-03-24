@@ -2,6 +2,162 @@
 
 ---
 
+## 0. 2026-03-23 最小化实验更新：Branch Grouping + Layer-Aware Cutting
+
+### 0.0 当前受控算法的正式说明
+
+这次最小化测试里，仓库中真正实现并执行的算法名称是：
+
+- 代码类名：`BranchAwareLayerCuttingClustering`
+- 文档工作名：`Controlled Branch Grouping + Layer-Aware Batch Cutting`
+
+这里需要特别说明两点：
+
+1. 这是一个**受控原型**，用于验证“两阶段分解”是否能在当前 Phase1 样例图上稳定得到
+   `134 | 256 | 789 -> 1 | 34 | 2 | 56 | 7 | 8 | 9`；
+2. 它**不是**一个已经完整实现的 multilevel graph partitioning 求解器，当前实现也没有
+   执行标准的 coarsen-partition-refine 流程。
+
+当前主线接入状态：
+
+- `pipeline/run_phase2.py` 已默认切换为 `BranchAwareLayerCuttingClustering`；
+- 旧的 `BranchAwareClustering` 调用被保留为注释形式的 fallback；
+- 新旧两套实现当前输出相同 schema，可直接互换，不需要修改下游 codegen 格式。
+
+换句话说，当前代码真正做的是：
+
+- 基于 support graph 的 branch grouping；
+- 基于 branch 内局部层级的 layer-aware cutting；
+- 基于 branch precedence 的稳定全局排序。
+
+它参考了成熟图划分方法中“先聚合结构、再进行执行切割”的思想，但当前仓库里的实现仍然是
+一个面向当前任务的受控、可解释、可复现原型，而不是通用图划分器。
+
+### 0.0.1 当前受控原型用了什么原理
+
+当前原型的核心原理可以拆成 5 步：
+
+1. **Support graph parsing**
+   - 输入是 `generated/phase1_target_graph.json`；
+   - 将对象与支撑关系解析成有向图 `G=(V,E)`。
+
+2. **Global layer computation**
+   - 先在全图上计算拓扑层级；
+   - 根节点或直接落在 table 上的对象先作为较低层；
+   - 其余对象按 supporter 的最大层级递推。
+
+3. **Branch grouping**
+   - 对 layer 1 节点，根据底层支撑位置信息 `left/right` 初始化 branch；
+   - 对更高层节点沿 supporter 向上传播 branch；
+   - 如果一个节点同时依赖多个 branch，则标记为 `bridge`；
+   - 最终在当前样例上得到：
+     - `left -> [1, 3, 4]`
+     - `right -> [2, 5, 6]`
+     - `bridge -> [7, 8, 9]`
+
+4. **Local layer-aware cutting**
+   - 在每个 branch 的诱导子图中重新计算局部 layer；
+   - 同一局部层中，只有 immediate support role 相同的节点才尝试合并；
+   - 同时满足 `max_batch_size = 2` 的当前 solver-facing 约束。
+
+5. **Branch-level precedence ordering**
+   - 先建立 branch 之间的依赖图；
+   - 再按依赖可满足顺序稳定展开 branch 内部 batches；
+   - 由此得到最终全局序列。
+
+### 0.0.2 参考了哪篇 paper
+
+当前文档叙事所参考的成熟算法路线是多层图划分（multilevel graph partitioning），其经典文献为：
+
+- George Karypis and Vipin Kumar, *Multilevel k-way partitioning scheme for irregular graphs*, Journal of Parallel and Distributed Computing, 1998.
+
+这篇论文提供的核心思想是：
+
+- 先对图做 coarsening；
+- 再在粗图上做 partitioning；
+- 最后在细图上做 uncoarsening / refinement。
+
+需要实话实说的是：**当前仓库中的受控原型并没有完整实现这篇论文里的标准图划分流程**。目前
+只是借用了它“先做结构聚合、再做后续切割/优化”的方法学启发，用来组织我们当前的两阶段叙事。
+
+### 0.1 本次更新目标
+
+这次更新不直接替换主 pipeline 中现有的 `BranchAwareClustering`，而是先做一个独立、
+可复现、低侵入的最小化测试，验证下面这条两阶段分解逻辑在当前 Phase1 示例图上是否
+稳定成立：
+
+1. 先识别 branch-level groups；
+2. 再在每个 branch 内做 layer-aware cutting；
+3. 最后输出全局执行序列。
+
+测试脚本路径：
+
+- `test/pipeline/test_phase2_layer_aware_cutting.py`
+
+测试输入路径：
+
+- `generated/phase1_target_graph.json`
+
+### 0.2 当前示例图上的目标结果
+
+对当前 Phase1 支撑图，本次最小测试希望得到下面两个层级的结果：
+
+- branch grouping: `134 | 256 | 789`
+- final execution batches: `1 | 34 | 2 | 56 | 7 | 8 | 9`
+
+### 0.3 最小原型的算法逻辑
+
+本次原型沿用当前 graph format 和 branch 语义，不直接引入完整的 multilevel graph
+partitioning 求解器，而是先验证“branch aggregation + layer cutting”这个两阶段故事
+是否在现有数据结构上讲得通。也就是说，当前验证对象是一个**受控原型**，不是通用图划分器。
+
+第一阶段：branch grouping
+
+- 使用当前 support graph 解析与 layer 计算逻辑；
+- 保留底层 `left / right` 支撑位置信息；
+- 将多支撑汇合节点及其后续链条归入 `bridge` branch；
+- 在当前样例上得到：
+  - `left -> [1, 3, 4]`
+  - `right -> [2, 5, 6]`
+  - `bridge -> [7, 8, 9]`
+
+第二阶段：layer-aware cutting
+
+- 在每个 branch 的诱导子图内重新计算局部 layer；
+- 对同一局部 layer 的节点，按相同 immediate support role 做分组；
+- 保持当前 `max_batch_size = 2` 的 solver-facing 约束；
+- 在当前样例上得到：
+  - `134 -> 1 | 34`
+  - `256 -> 2 | 56`
+  - `789 -> 7 | 8 | 9`
+
+全局排序
+
+- 先在 branch-level graph 上建立 precedence；
+- 再按稳定顺序展开 branch 内部 batches；
+- 当前样例的最终输出为：
+  - `1 | 34 | 2 | 56 | 7 | 8 | 9`
+
+### 0.4 与旧 BATC 输出的直接对照
+
+旧 `BranchAwareClustering` 在当前样例上的输出为：
+
+- `1 | 2 | 34 | 56 | 7 | 8 | 9`
+
+本次两阶段最小原型的输出为：
+
+- `1 | 34 | 2 | 56 | 7 | 8 | 9`
+
+这次变化的重点不是“更换全部主算法”，而是把原先混在一起的两件事拆开：
+
+- branch inference
+- layer-aware execution cutting
+
+这样做之后，中间结构 `134 | 256 | 789` 会先被显式保留下来，最终执行序列的来源也更
+容易解释。
+
+---
+
 ## 1. 论文 Pipeline 与逻辑提炼
 
 ### 1.1 完整的端到端流程
@@ -311,4 +467,3 @@ TO:   "KOMO_wp Solver (Waypoint-level LGP)"
 2. 在上轨中间插入BATC分解的示意图 (展示depth vs branch)
 3. 添加Scene-order Dictionary的数据流箭头
 4. 验证所有Section编号与论文strict对应
-

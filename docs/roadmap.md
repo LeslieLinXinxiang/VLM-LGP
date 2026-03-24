@@ -3,6 +3,7 @@
 ## 1. Current Active Tasks (Timeline Log)
 
 1. **[TASK-015] Update Document & flowchart (2026-03-21 13:23)**: Refresh technical documentation and flowcharts to reflect the current state of the assembly pipeline, including mesh-aware height calculations and active constraint strategies.
+2. **[TASK-016] Validate layer-aware cutting on the Phase1 support graph (2026-03-23 13:40)**: Add an isolated clustering prototype test that keeps the current graph format, groups nodes into branch-level subgraphs, and verifies the expected execution sequence `1 | 34 | 2 | 56 | 7 | 8 | 9` on `generated/phase1_target_graph.json`.
 
 
 

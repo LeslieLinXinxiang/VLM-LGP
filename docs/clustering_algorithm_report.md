@@ -1,148 +1,229 @@
-# Multilevel Graph Partitioning with Hierarchy-Aware Batch Cutting
+# Controlled Branch Grouping and Hierarchy-Aware Batch Cutting
 
-## 1. Overview
+## 1. Document Scope
 
-This document replaces the previous rule-based batching description with a two-stage
-decomposition procedure for the VLM-LGP pipeline.
+This document describes the **algorithm that is currently implemented and tested in
+the repository**, rather than the broader mature algorithm family that may be adopted
+later.
 
-The input is an object-support graph
-$G=(V,E)$, where each node is a target object and each directed edge denotes a direct
-support dependency. The output is an ordered sequence of solver-facing batches that
-respects support precedence while preserving as much branch-level structural coherence
-as possible.
+The current algorithm is:
 
-The key design decision is to separate:
+- code class name: `BranchAwareLayerCuttingClustering`
+- document name: `Controlled Branch Grouping + Layer-Aware Batch Cutting`
 
-1. **branch aggregation**, and
-2. **execution batch cutting**.
+It is important to keep the scope precise:
 
-The previous rule-based approach entangled these two operations. The revised method
-first aggregates coherent structural branches with multilevel graph partitioning and
-only then cuts each branch into dependency-safe batches.
+1. this is a **controlled prototype** for the current assembly task,
+2. it is **not** yet a full implementation of multilevel graph partitioning,
+3. it is designed to validate a clean two-stage decomposition story on the current
+   support graph format.
 
-## 2. Stage One: Branch Aggregation by Multilevel Graph Partitioning
+The current mainline integration status is:
 
-### 2.1 Goal
+1. `pipeline/run_phase2.py` now uses `BranchAwareLayerCuttingClustering` by default,
+2. the legacy `BranchAwareClustering` call is kept in the code as a commented fallback,
+3. both implementations expose the same `generate_optimal_strategy()` JSON schema so
+   downstream consumers can switch between them without changing file formats.
 
-The first stage does **not** emit execution batches. Its goal is to identify which
-nodes should be treated as belonging to the same structural branch.
+## 2. What the Current Algorithm Does
 
-### 2.2 Auxiliary Graph
+The input is the current Phase1 support graph:
 
-The directed support graph is converted into an auxiliary weighted graph
-$\bar{G}=(V,\bar{E},W)$ for partitioning. During this stage, edge direction is not the
-primary concern; instead, the graph weights encode structural affinity:
+- `generated/phase1_target_graph.json`
 
-- edges inside a single-support chain receive higher affinity,
-- edges entering a structural merge can receive lower affinity,
-- refinement favors keeping strongly coupled substructures inside the same partition.
+The output is an ordered sequence of solver-facing batches.
 
-### 2.3 Optimization Objective
+The algorithm explicitly separates two stages:
 
-We solve a multilevel graph partitioning problem of the form
+1. **branch grouping**
+2. **hierarchy-aware batch cutting**
 
-$$
-\min_{\mathcal{P}}
-\sum_{(u,v)\in\bar{E}} w_{uv}\,\mathbb{I}[\pi(u)\neq\pi(v)]
-\;+\;
-\lambda\sum_j \left||P_j|-\bar{s}\right|,
-$$
+On the current running example, the desired decomposition is:
 
-where:
+- branch grouping: `134 | 256 | 789`
+- final execution sequence: `1 | 34 | 2 | 56 | 7 | 8 | 9`
 
-- $\mathcal{P}=\{P_1,\dots,P_m\}$ is the partition set,
-- $\pi(v)$ is the partition index of node $v$,
-- $w_{uv}$ is the edge affinity,
-- $\bar{s}$ is the target partition scale.
+## 3. Formal Name and Control Boundary
 
-The algorithm follows the standard multilevel pattern:
+### 3.1 Name
 
-1. coarsen the graph,
-2. partition the coarse graph,
-3. uncoarsen and refine the partition on finer graphs.
+The current repository implementation should be referred to as:
 
-### 2.4 Running Example
+- **Controlled Branch Grouping + Hierarchy-Aware Batch Cutting**
 
-For the representative support graph in the current draft, the branch aggregation stage
-produces three coherent groups:
+This name is intentionally conservative. It reflects what the current code actually
+does and avoids overstating the implementation as a complete graph partitioning
+solver.
 
-- `134`
-- `256`
-- `789`
+### 3.2 Why It Is Called “Controlled”
 
-These groups are the branch-level subgraphs. They are **not yet** the final execution
-sequence.
+The algorithm is called **controlled** for three reasons:
 
-## 3. Stage Two: Hierarchy-Aware Batch Cutting
+1. the input format is fixed to the current support-graph schema,
+2. the current validation target is a fixed representative example,
+3. the grouping and cutting logic are designed to be interpretable and testable before
+   any larger pipeline replacement.
 
-### 3.1 Goal
+In other words, the goal at this stage is not “generic graph clustering for all
+graphs,” but “a stable and explainable decomposition mechanism for the current task.”
 
-The second stage converts each aggregated branch into actual execution batches.
+## 4. Core Principles of the Current Implementation
 
-### 3.2 Cutting Rules
+The current implementation in `core/graph_clustering.py` follows five principles.
 
-For each branch subgraph:
+### 4.1 Support-Graph Parsing
 
-1. recover the original directed support edges,
-2. compute local depth / hierarchy,
-3. cut from lower layers to higher layers,
-4. ensure each batch satisfies support precedence,
-5. keep the batch within the current solver-facing scale,
-6. group same-layer nodes together only when they share the same immediate structural
-   role.
+The Phase1 JSON is parsed into a directed support graph `G=(V,E)`:
 
-### 3.3 Running Example
+- nodes represent target objects,
+- directed edges represent direct support dependencies.
 
-The branch groups are cut as:
+This preserves the execution-critical fact that if object `u` supports object `v`,
+then `u` must be realized before `v`.
+
+### 4.2 Global Layer Computation
+
+The algorithm first computes a global topological layer for every node:
+
+- nodes without supporters are assigned to the lowest layer,
+- every other node is assigned one layer above the maximum layer of its supporters.
+
+This gives a stable hierarchy over the whole support graph.
+
+### 4.3 Branch Grouping
+
+The current branch grouping mechanism is rule-guided and graph-based:
+
+1. layer-1 nodes initialize branch labels from base support positions such as
+   `left` and `right`,
+2. higher-layer nodes inherit branch labels from their supporters,
+3. nodes whose supporters come from multiple branches are labeled as `bridge`.
+
+On the current example, this produces:
+
+- `left -> [1, 3, 4]`
+- `right -> [2, 5, 6]`
+- `bridge -> [7, 8, 9]`
+
+This branch-level result is the intermediate aggregation:
+
+- `134 | 256 | 789`
+
+### 4.4 Hierarchy-Aware Batch Cutting
+
+After branch grouping, the algorithm cuts each branch into solver-facing batches.
+
+For each branch:
+
+1. the induced subgraph is recovered,
+2. local layers are recomputed inside that branch,
+3. nodes are processed from lower local layers to higher local layers,
+4. same-layer nodes are grouped only when they share the same immediate structural
+   role,
+5. batch size remains bounded by the current solver-facing limit.
+
+This yields:
 
 - `134 -> 1 | 34`
 - `256 -> 2 | 56`
 - `789 -> 7 | 8 | 9`
 
-After precedence-consistent global ordering, the final execution sequence becomes:
+### 4.5 Branch-Level Precedence Ordering
 
-`1 | 34 | 2 | 56 | 7 | 8 | 9`
+The algorithm then builds a dependency graph between branches and expands the branch
+local batches in a dependency-safe order.
 
-## 4. Why This Is Better Than the Previous Rule-Based Scheme
+On the current example, the final global sequence becomes:
 
-The previous rule-based batching scheme mixed branch inference and execution ordering
-inside a single heuristic routine. That made the decomposition difficult to justify
-analytically.
+- `1 | 34 | 2 | 56 | 7 | 8 | 9`
 
-The revised method is better for four reasons:
+## 5. Reference Algorithm Family and Paper
 
-1. **Branch discovery is principled.**
-   Branches are produced by a mature graph partitioning procedure rather than by
-   hand-written label propagation.
+The mature algorithm family that motivates the current decomposition story is
+**multilevel graph partitioning**.
 
-2. **Batch cutting is interpretable.**
-   Each branch is first aggregated structurally and then cut according to hierarchy.
+The classical reference is:
 
-3. **The algorithm story is cleaner.**
-   The method can be described as “aggregate first, cut second,” which is easier to
-   explain in a paper.
+- George Karypis and Vipin Kumar, *Multilevel k-way partitioning scheme for irregular graphs*, Journal of Parallel and Distributed Computing, 48(1):96-129, 1998.
 
-4. **Future extensibility is better.**
-   The branch discovery stage remains meaningful even when the support graph becomes
-   larger or more irregular.
+That line of work is built around three stages:
 
-## 5. Comparison on the Current Example
+1. **coarsening**
+2. **partitioning**
+3. **uncoarsening / refinement**
 
-### Previous Rule-Based Batching
+This is the mature graph-partitioning route we previously discussed as a future
+upgrade path.
 
-Final output:
+## 6. What Is Borrowed from That Literature, and What Is Not
 
-`1 | 2 | 34 | 56 | 7 | 8 | 9`
+This distinction must be explicit.
 
-### Revised Two-Stage Decomposition
+### 6.1 What Is Borrowed
 
-Intermediate branch aggregation:
+The current prototype borrows the following high-level idea from the multilevel graph
+partitioning literature:
 
-`134 | 256 | 789`
+- structure should be **aggregated first**,
+- execution-oriented decomposition should be done **after aggregation**, not mixed into
+  one opaque heuristic.
 
-Final hierarchy-aware cutting:
+That is why the current algorithm is organized as:
 
-`1 | 34 | 2 | 56 | 7 | 8 | 9`
+- branch grouping first,
+- hierarchy-aware cutting second.
 
-The revised result is easier to explain because it explicitly reflects the branch
-structure before batch generation.
+### 6.2 What Is Not Yet Implemented
+
+The current repository implementation does **not** yet include:
+
+- graph coarsening,
+- coarse-graph partition optimization,
+- uncoarsening / refinement,
+- a formal partition objective with cut minimization.
+
+Therefore, the current code should **not** be described as “we implemented multilevel
+graph partitioning.” The truthful wording is:
+
+- the current repository contains a **controlled two-stage prototype**,
+- its decomposition story is **inspired by** the multilevel graph partitioning
+  literature,
+- a full multilevel partitioning implementation remains future work.
+
+## 7. Comparison Against the Legacy BATC Logic
+
+The legacy method in the repository is:
+
+- `BranchAwareClustering`
+
+Its output on the current example is:
+
+- `1 | 2 | 34 | 56 | 7 | 8 | 9`
+
+The controlled two-stage prototype outputs:
+
+- intermediate grouping: `134 | 256 | 789`
+- final sequence: `1 | 34 | 2 | 56 | 7 | 8 | 9`
+
+The practical difference is that the new prototype separates:
+
+1. **which nodes belong to the same structural branch**, and
+2. **how each branch is cut into execution batches**.
+
+That separation makes the current method easier to explain, easier to test, and
+easier to evolve toward a more formal graph-partitioning implementation later.
+
+## 8. Repository Test Coverage
+
+The standalone validation script is:
+
+- `test/pipeline/test_phase2_layer_aware_cutting.py`
+
+It checks three expectations on the fixed current input:
+
+1. legacy batching result,
+2. branch grouping result,
+3. final hierarchy-aware cutting result.
+
+This keeps the current algorithm description grounded in an executable test rather than
+only in narrative documentation.

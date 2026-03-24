@@ -4,7 +4,8 @@
 Graph Clustering Engine
 
 ## 2. Responsibility
-Provide deterministic branch-aware clustering and strategy ordering for object manipulation tasks, replacing VLM-only strategy selection in Phase2 planning.
+Provide deterministic graph decomposition and strategy ordering for object manipulation
+tasks, replacing VLM-only strategy selection in Phase2 planning.
 
 ## 3. Inputs
 - `generated/phase0_layout.json`
@@ -16,11 +17,13 @@ Provide deterministic branch-aware clustering and strategy ordering for object m
 - Intermediate clustering metadata used by Phase2 orchestration
 
 ## 5. Public Functions
-- `BranchAwareClustering` (entry class for clustering and ordering)
+- `BranchAwareLayerCuttingClustering` (current default entry class for clustering and ordering)
+- `BranchAwareClustering` (legacy fallback entry, kept for quick rollback/comparison)
 - Phase2 integration entry in `pipeline/run_phase2.py` for strategy generation
 
 ## 6. Internal Functions
 - Topology-aware grouping utilities
+- Layer-aware branch cutting utilities
 - Inventory binding and object-name normalization helpers
 - Deterministic ordering/scoring helpers
 

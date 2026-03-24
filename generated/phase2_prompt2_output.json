@@ -1,4 +1,4 @@
 {
-  "selected": "strategy_1_branch_aware",
-  "reason": "Graph engine determined this exact deterministic sequence."
+  "selected": "strategy_1_branch_layer_cutting",
+  "reason": "Default Phase2 clustering switched to the controlled two-stage decomposition engine; legacy branch-aware clustering remains available as a fallback."
 }

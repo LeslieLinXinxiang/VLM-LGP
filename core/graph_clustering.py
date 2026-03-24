@@ -134,12 +134,14 @@ class BranchAwareClustering:
     def generate_optimal_strategy(self):
         """Returns p1_out, p2_out matching legacy VLM JSON requirements."""
         batches = self._cluster()
+        order = [node_id for batch in batches for node_id in batch]
         
         p1_out = {
             "strategies": [
                 {
                     "id": "strategy_1_branch_aware",
                     "description": "Deterministic branch-aware topological clustering that respects physical dependencies and separates parallel construction tasks.",
+                    "order": order,
                     "batches": batches
                 }
             ]
@@ -150,4 +152,210 @@ class BranchAwareClustering:
             "reason": "Graph engine determined this exact deterministic sequence."
         }
         
+        return p1_out, p2_out
+
+
+class BranchAwareLayerCuttingClustering(BranchAwareClustering):
+    def __init__(self, phase1_json, max_batch_size=2):
+        self.max_batch_size = max_batch_size
+        super().__init__(phase1_json)
+
+    def _ensure_graph_annotations(self):
+        self._compute_layers()
+        self._compute_branches()
+
+    def _collect_branch_groups(self):
+        self._ensure_graph_annotations()
+
+        groups = {}
+        for node_id, data in self.nodes.items():
+            if node_id == 0:
+                continue
+            branch = data["branch"] or f"singleton_{node_id}"
+            groups.setdefault(branch, []).append(node_id)
+
+        for branch_nodes in groups.values():
+            branch_nodes.sort(key=lambda n_id: (self.nodes[n_id]["layer"], n_id))
+
+        return groups
+
+    def _build_branch_dependency_graph(self, branch_groups):
+        node_to_branch = {}
+        for branch_name, branch_nodes in branch_groups.items():
+            for node_id in branch_nodes:
+                node_to_branch[node_id] = branch_name
+
+        dependency_graph = {branch_name: set() for branch_name in branch_groups}
+        for branch_name, branch_nodes in branch_groups.items():
+            for node_id in branch_nodes:
+                for supporter in self.nodes[node_id]["supporters"]:
+                    supporter_id = supporter["id"]
+                    if supporter_id == 0:
+                        continue
+                    supporter_branch = node_to_branch.get(supporter_id)
+                    if supporter_branch and supporter_branch != branch_name:
+                        dependency_graph[branch_name].add(supporter_branch)
+
+        return dependency_graph
+
+    def _branch_priority(self, branch_name, branch_groups):
+        branch_nodes = branch_groups[branch_name]
+        min_layer = min(self.nodes[node_id]["layer"] for node_id in branch_nodes)
+        min_node_id = min(branch_nodes)
+        is_bridge = 1 if branch_name == "bridge" else 0
+        return (len(self._branch_dependencies[branch_name]), is_bridge, min_layer, min_node_id, str(branch_name))
+
+    def _order_branches(self, branch_groups):
+        self._branch_dependencies = self._build_branch_dependency_graph(branch_groups)
+
+        ordered = []
+        resolved = set()
+        while len(resolved) < len(branch_groups):
+            ready = []
+            for branch_name, dependencies in self._branch_dependencies.items():
+                if branch_name in resolved:
+                    continue
+                if dependencies.issubset(resolved):
+                    ready.append(branch_name)
+
+            if not ready:
+                raise ValueError("Branch dependency graph contains a cycle or unresolved dependency.")
+
+            ready.sort(key=lambda name: self._branch_priority(name, branch_groups))
+            next_branch = ready[0]
+            ordered.append(next_branch)
+            resolved.add(next_branch)
+
+        return ordered
+
+    def _compute_local_layers(self, branch_nodes):
+        branch_node_set = set(branch_nodes)
+        local_layers = {}
+
+        for node_id in branch_nodes:
+            in_branch_supporters = [
+                supporter["id"]
+                for supporter in self.nodes[node_id]["supporters"]
+                if supporter["id"] in branch_node_set
+            ]
+            if not in_branch_supporters:
+                local_layers[node_id] = 0
+
+        changed = True
+        while changed:
+            changed = False
+            for node_id in branch_nodes:
+                if node_id in local_layers:
+                    continue
+
+                in_branch_supporters = [
+                    supporter["id"]
+                    for supporter in self.nodes[node_id]["supporters"]
+                    if supporter["id"] in branch_node_set
+                ]
+                if all(supporter_id in local_layers for supporter_id in in_branch_supporters):
+                    local_layers[node_id] = 1 + max(local_layers[supporter_id] for supporter_id in in_branch_supporters)
+                    changed = True
+
+        if len(local_layers) != len(branch_nodes):
+            missing = sorted(set(branch_nodes) - set(local_layers))
+            raise ValueError(f"Failed to compute local layers for branch nodes: {missing}")
+
+        return local_layers
+
+    def _cut_branch_with_layers(self, branch_nodes):
+        local_layers = self._compute_local_layers(branch_nodes)
+        branch_node_set = set(branch_nodes)
+
+        by_layer = {}
+        for node_id in branch_nodes:
+            by_layer.setdefault(local_layers[node_id], []).append(node_id)
+
+        batches = []
+        for layer in sorted(by_layer.keys()):
+            role_groups = {}
+            for node_id in sorted(by_layer[layer]):
+                in_branch_supporters = tuple(
+                    sorted(
+                        supporter["id"]
+                        for supporter in self.nodes[node_id]["supporters"]
+                        if supporter["id"] in branch_node_set
+                    )
+                )
+                role_groups.setdefault(in_branch_supporters, []).append(node_id)
+
+            for role_key in sorted(role_groups.keys()):
+                items = role_groups[role_key]
+                while items:
+                    batch = items[:self.max_batch_size]
+                    batches.append(batch)
+                    items = items[self.max_batch_size:]
+
+        return batches
+
+    def generate_decomposition_report(self):
+        branch_groups = self._collect_branch_groups()
+        ordered_branches = self._order_branches(branch_groups)
+
+        branch_batches = []
+        global_batches = []
+        for branch_name in ordered_branches:
+            nodes = branch_groups[branch_name]
+            batches = self._cut_branch_with_layers(nodes)
+            branch_batches.append(
+                {
+                    "branch": branch_name,
+                    "nodes": nodes,
+                    "batches": batches,
+                }
+            )
+            global_batches.extend(batches)
+
+        return {
+            "branch_groups": [
+                {"branch": item["branch"], "nodes": item["nodes"]}
+                for item in branch_batches
+            ],
+            "branch_batches": branch_batches,
+            "global_batches": global_batches,
+        }
+
+    def generate_optimal_strategy(self):
+        """
+        Returns p1_out, p2_out with the same schema as the legacy graph clustering
+        entry, so Phase2 downstream code can switch between implementations without
+        changing JSON consumers.
+        """
+        report = self.generate_decomposition_report()
+        batches = report["global_batches"]
+        order = [node_id for batch in batches for node_id in batch]
+
+        p1_out = {
+            "strategies": [
+                {
+                    "id": "strategy_1_branch_layer_cutting",
+                    "description": (
+                        "Controlled branch grouping plus hierarchy-aware batch cutting "
+                        "that preserves support dependencies while exposing a two-stage "
+                        "decomposition interface."
+                    ),
+                    "order": order,
+                    "batches": batches,
+                    "metadata": {
+                        "algorithm": "BranchAwareLayerCuttingClustering",
+                        "branch_groups": report["branch_groups"],
+                    },
+                }
+            ]
+        }
+
+        p2_out = {
+            "selected": "strategy_1_branch_layer_cutting",
+            "reason": (
+                "Default Phase2 clustering switched to the controlled two-stage "
+                "decomposition engine; legacy branch-aware clustering remains "
+                "available as a fallback."
+            ),
+        }
+
         return p1_out, p2_out

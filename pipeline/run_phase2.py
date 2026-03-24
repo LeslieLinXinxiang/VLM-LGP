@@ -44,10 +44,19 @@ def _phase2_graph_gated_loop(
       final_gate_report,
       debug_message
     """
-    from core.graph_clustering import BranchAwareClustering
+    from core.graph_clustering import BranchAwareClustering, BranchAwareLayerCuttingClustering
     
-    print(f"[Phase2][Gate] Executing Deterministic Graph Clustering...")
-    clustering = BranchAwareClustering(phase1_json)
+    print(f"[Phase2][Gate] Executing default two-stage graph decomposition...")
+
+    # Default entry switched to the controlled two-stage implementation:
+    #   branch grouping -> hierarchy-aware batch cutting
+    # The legacy entry is intentionally kept below as a one-line fallback so we can
+    # switch back quickly for side-by-side debugging or regression comparison.
+    clustering = BranchAwareLayerCuttingClustering(phase1_json)
+
+    # Legacy fallback (kept commented on purpose for quick rollback/testing):
+    # clustering = BranchAwareClustering(phase1_json)
+
     p1_out, p2_out = clustering.generate_optimal_strategy()
     
     with open(os.path.join(generated_dir, "phase2_prompt1_output.json"), "w", encoding="utf-8") as f:
@@ -63,7 +72,7 @@ def _phase2_graph_gated_loop(
     with open(os.path.join(generated_dir, "phase2_gate_report.json"), "w", encoding="utf-8") as f:
         json.dump(gate_report, f, indent=2, ensure_ascii=True)
 
-    return True, p1_out, p2_out, gate_report, "graph clustering algorithm active (VLM bypassed)"
+    return True, p1_out, p2_out, gate_report, "default two-stage graph decomposition active (VLM bypassed)"
 
 
 def _legacy_placeholder_failure(node_id: int):
