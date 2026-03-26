@@ -1,4 +1,7 @@
 import json
+from typing import Dict, List, Tuple
+
+import numpy as np
 
 class BranchAwareClustering:
     def __init__(self, phase1_json):
@@ -355,6 +358,391 @@ class BranchAwareLayerCuttingClustering(BranchAwareClustering):
                 "Default Phase2 clustering switched to the controlled two-stage "
                 "decomposition engine; legacy branch-aware clustering remains "
                 "available as a fallback."
+            ),
+        }
+
+        return p1_out, p2_out
+
+
+class KMeansBranchClustering(BranchAwareClustering):
+    """
+    Deterministic k-means clustering on Phase1 target-graph features.
+
+    Design goals for TASK-020 v1:
+    1) Input is only target-graph (Phase1 JSON).
+    2) k-means clustering is deterministic via fixed seed.
+    3) Output strategy must remain dependency-safe for solver execution.
+    4) Output schema must stay compatible with existing Prompt1/Prompt2 consumers.
+    """
+
+    def __init__(self, phase1_json, k: int = 2, seed: int = 7, max_iter: int = 100, max_batch_size: int = 2):
+        self.k = max(1, int(k))
+        self.seed = int(seed)
+        self.max_iter = max(1, int(max_iter))
+        self.max_batch_size = max(1, int(max_batch_size))
+        super().__init__(phase1_json)
+
+    def _node_ids(self) -> List[int]:
+        """Return target object ids (exclude table id 0)."""
+        return sorted([node_id for node_id in self.nodes if node_id != 0])
+
+    def _safe_layer(self, node_id: int) -> int:
+        layer = self.nodes[node_id].get("layer", -1)
+        return 0 if layer == -1 else int(layer)
+
+    def _build_feature_matrix(self) -> Tuple[List[int], np.ndarray, List[str]]:
+        """
+        Build node feature vectors strictly from target-graph topology.
+
+        Feature set (v1):
+        - layer
+        - in_degree
+        - out_degree
+        - supporter_layer_mean
+        - is_multi_support
+        - pos_left_count
+        - pos_right_count
+        - pos_unknown_count
+        """
+        self._compute_layers()
+
+        node_ids = self._node_ids()
+        rows: List[List[float]] = []
+        for node_id in node_ids:
+            data = self.nodes[node_id]
+            supporters = data["supporters"]
+            supported = data["supported"]
+
+            layer = float(self._safe_layer(node_id))
+            in_degree = float(len(supporters))
+            out_degree = float(len(supported))
+
+            supporter_layers = []
+            pos_left_count = 0.0
+            pos_right_count = 0.0
+            pos_unknown_count = 0.0
+
+            for sup in supporters:
+                sup_id = sup["id"]
+                supporter_layers.append(float(self._safe_layer(sup_id)))
+                pos = sup.get("position", None)
+                if pos == "left":
+                    pos_left_count += 1.0
+                elif pos == "right":
+                    pos_right_count += 1.0
+                else:
+                    pos_unknown_count += 1.0
+
+            supporter_layer_mean = float(np.mean(supporter_layers)) if supporter_layers else 0.0
+            is_multi_support = 1.0 if len(supporters) > 1 else 0.0
+
+            rows.append(
+                [
+                    layer,
+                    in_degree,
+                    out_degree,
+                    supporter_layer_mean,
+                    is_multi_support,
+                    pos_left_count,
+                    pos_right_count,
+                    pos_unknown_count,
+                ]
+            )
+
+        feature_names = [
+            "layer",
+            "in_degree",
+            "out_degree",
+            "supporter_layer_mean",
+            "is_multi_support",
+            "pos_left_count",
+            "pos_right_count",
+            "pos_unknown_count",
+        ]
+        return node_ids, np.array(rows, dtype=float), feature_names
+
+    @staticmethod
+    def _zscore(x: np.ndarray) -> np.ndarray:
+        """Column-wise z-score normalization with zero-variance protection."""
+        mean = np.mean(x, axis=0)
+        std = np.std(x, axis=0)
+        std = np.where(std < 1e-12, 1.0, std)
+        return (x - mean) / std
+
+    def _kmeans_plus_plus_init(self, x: np.ndarray, k: int, rng: np.random.Generator) -> np.ndarray:
+        """
+        Deterministic k-means++ initialization.
+
+        Steps:
+        1) pick first center uniformly
+        2) pick next center with probability proportional to squared distance
+        """
+        n = x.shape[0]
+        centers = []
+        first_idx = int(rng.integers(0, n))
+        centers.append(x[first_idx])
+
+        for _ in range(1, k):
+            d2 = np.min(
+                np.stack([np.sum((x - c) ** 2, axis=1) for c in centers], axis=1),
+                axis=1,
+            )
+            total = float(np.sum(d2))
+            if total < 1e-12:
+                centers.append(x[int(rng.integers(0, n))])
+                continue
+            probs = d2 / total
+            idx = int(rng.choice(np.arange(n), p=probs))
+            centers.append(x[idx])
+
+        return np.array(centers, dtype=float)
+
+    def _run_kmeans(self, x: np.ndarray) -> Tuple[np.ndarray, np.ndarray, float]:
+        """
+        Run deterministic k-means and return:
+        - labels: cluster assignment per sample
+        - centroids
+        - inertia (sum of squared distances)
+        """
+        n = x.shape[0]
+        k = min(self.k, n)
+        rng = np.random.default_rng(self.seed)
+        centroids = self._kmeans_plus_plus_init(x, k, rng)
+
+        labels = np.zeros(n, dtype=int)
+        for _ in range(self.max_iter):
+            d2 = np.stack([np.sum((x - c) ** 2, axis=1) for c in centroids], axis=1)
+            new_labels = np.argmin(d2, axis=1)
+
+            if np.array_equal(new_labels, labels):
+                labels = new_labels
+                break
+            labels = new_labels
+
+            new_centroids = []
+            for cluster_id in range(k):
+                members = x[labels == cluster_id]
+                if len(members) == 0:
+                    # Empty-cluster fallback: choose farthest sample from current centroids.
+                    all_d2 = np.min(
+                        np.stack([np.sum((x - c) ** 2, axis=1) for c in centroids], axis=1),
+                        axis=1,
+                    )
+                    farthest_idx = int(np.argmax(all_d2))
+                    new_centroids.append(x[farthest_idx])
+                else:
+                    new_centroids.append(np.mean(members, axis=0))
+
+            new_centroids = np.array(new_centroids, dtype=float)
+            shift = float(np.linalg.norm(new_centroids - centroids))
+            centroids = new_centroids
+            if shift < 1e-9:
+                break
+
+        d2_final = np.stack([np.sum((x - c) ** 2, axis=1) for c in centroids], axis=1)
+        min_d2 = np.min(d2_final, axis=1)
+        inertia = float(np.sum(min_d2))
+        return labels, centroids, inertia
+
+    @staticmethod
+    def _project_2d_pca(x: np.ndarray) -> np.ndarray:
+        """Project features to 2D via PCA (for visualization payload)."""
+        if x.shape[0] == 0:
+            return np.zeros((0, 2), dtype=float)
+        x0 = x - np.mean(x, axis=0, keepdims=True)
+        cov = np.cov(x0, rowvar=False)
+        eigvals, eigvecs = np.linalg.eigh(cov)
+        order = np.argsort(eigvals)[::-1]
+        eigvecs = eigvecs[:, order]
+        if eigvecs.shape[1] == 1:
+            vec2 = np.zeros_like(eigvecs[:, :1])
+            basis = np.concatenate([eigvecs[:, :1], vec2], axis=1)
+        else:
+            basis = eigvecs[:, :2]
+        return np.matmul(x0, basis)
+
+    def _cluster_dependencies(self, node_ids: List[int], labels_map: Dict[int, int]) -> Dict[int, set]:
+        deps = {cluster_id: set() for cluster_id in sorted(set(labels_map.values()))}
+        for node_id in node_ids:
+            dst_cluster = labels_map[node_id]
+            for sup in self.nodes[node_id]["supporters"]:
+                sup_id = sup["id"]
+                if sup_id == 0 or sup_id not in labels_map:
+                    continue
+                src_cluster = labels_map[sup_id]
+                if src_cluster != dst_cluster:
+                    deps[dst_cluster].add(src_cluster)
+        return deps
+
+    def _cluster_priority(self, cluster_id: int, cluster_nodes: Dict[int, List[int]]) -> Tuple[int, int, int]:
+        nodes = cluster_nodes.get(cluster_id, [])
+        if not nodes:
+            return (10**9, 10**9, int(cluster_id))
+        min_layer = min(self._safe_layer(node_id) for node_id in nodes)
+        min_node = min(nodes)
+        return (min_layer, min_node, int(cluster_id))
+
+    def _build_dependency_safe_batches(self, node_ids: List[int], labels_map: Dict[int, int]) -> Tuple[List[List[int]], List[Dict]]:
+        """
+        Build dependency-safe batches while preserving cluster preference.
+
+        Strategy:
+        - always place only "ready" nodes (all supporters already placed)
+        - among ready nodes, prefer lower-priority cluster (earlier layer/min id)
+        - enforce max batch size
+
+        This guarantees DAG safety at node level and provides stable behavior even when
+        cluster-level dependencies are cyclic after assignment.
+        """
+        placed = set([0])
+        pending = set(node_ids)
+        batches: List[List[int]] = []
+        repair_log: List[Dict] = []
+
+        cluster_nodes: Dict[int, List[int]] = {}
+        for node_id in node_ids:
+            cluster_nodes.setdefault(labels_map[node_id], []).append(node_id)
+        cluster_order = sorted(cluster_nodes.keys(), key=lambda cid: self._cluster_priority(cid, cluster_nodes))
+
+        while pending:
+            ready = []
+            for node_id in sorted(pending):
+                supporters = [sup["id"] for sup in self.nodes[node_id]["supporters"]]
+                if all(sup_id in placed for sup_id in supporters):
+                    ready.append(node_id)
+
+            if not ready:
+                raise ValueError("Graph has cyclic dependencies or unreachable nodes.")
+
+            ready_by_cluster: Dict[int, List[int]] = {}
+            for node_id in ready:
+                ready_by_cluster.setdefault(labels_map[node_id], []).append(node_id)
+
+            chosen_cluster = None
+            for cid in cluster_order:
+                if cid in ready_by_cluster and ready_by_cluster[cid]:
+                    chosen_cluster = cid
+                    break
+            if chosen_cluster is None:
+                chosen_cluster = labels_map[ready[0]]
+
+            selected = sorted(ready_by_cluster.get(chosen_cluster, ready))[: self.max_batch_size]
+            for node_id in selected:
+                pending.remove(node_id)
+                placed.add(node_id)
+
+            batches.append(selected)
+
+            # Log if we had to bypass an earlier preferred cluster due to dependency lock.
+            blocked = [cid for cid in cluster_order if cid not in ready_by_cluster]
+            if blocked:
+                repair_log.append(
+                    {
+                        "type": "dependency_gating",
+                        "selected_cluster": int(chosen_cluster),
+                        "blocked_clusters": [int(cid) for cid in blocked],
+                        "batch": selected,
+                    }
+                )
+
+        return batches, repair_log
+
+    def generate_cluster_report(self) -> Dict:
+        """Generate full clustering report for JSON artifact/export and visualization."""
+        node_ids, x_raw, feature_names = self._build_feature_matrix()
+        x = self._zscore(x_raw)
+        labels, centroids, inertia = self._run_kmeans(x)
+
+        labels_map = {node_id: int(labels[idx]) for idx, node_id in enumerate(node_ids)}
+        cluster_dependencies = self._cluster_dependencies(node_ids, labels_map)
+        batches, repair_log = self._build_dependency_safe_batches(node_ids, labels_map)
+
+        points_2d = self._project_2d_pca(x)
+
+        cluster_to_nodes: Dict[int, List[int]] = {}
+        for node_id in node_ids:
+            cluster_to_nodes.setdefault(labels_map[node_id], []).append(node_id)
+
+        nodes_payload = []
+        for idx, node_id in enumerate(node_ids):
+            supporters = [sup["id"] for sup in self.nodes[node_id]["supporters"]]
+            nodes_payload.append(
+                {
+                    "node_id": int(node_id),
+                    "object": self.nodes[node_id]["object"],
+                    "layer": self._safe_layer(node_id),
+                    "supporters": supporters,
+                    "feature_vector": [float(v) for v in x_raw[idx].tolist()],
+                    "cluster_id": int(labels[idx]),
+                    "x_2d": float(points_2d[idx, 0]),
+                    "y_2d": float(points_2d[idx, 1]),
+                }
+            )
+
+        return {
+            "meta": {
+                "algorithm": "KMeansBranchClustering",
+                "k": int(len(cluster_to_nodes)),
+                "requested_k": int(self.k),
+                "seed": int(self.seed),
+                "feature_version": "v1_topology_only",
+                "feature_names": feature_names,
+                "inertia": float(inertia),
+                "max_batch_size": int(self.max_batch_size),
+            },
+            "clusters": [
+                {"cluster_id": int(cluster_id), "nodes": sorted(nodes)}
+                for cluster_id, nodes in sorted(cluster_to_nodes.items(), key=lambda kv: kv[0])
+            ],
+            "cluster_dependencies": {
+                str(cluster_id): sorted([int(dep) for dep in deps])
+                for cluster_id, deps in sorted(cluster_dependencies.items(), key=lambda kv: kv[0])
+            },
+            "dependency_repair_log": repair_log,
+            "nodes": nodes_payload,
+            "global_batches": batches,
+            "global_order": [node_id for batch in batches for node_id in batch],
+            "centroids": [[float(v) for v in c.tolist()] for c in centroids],
+        }
+
+    def generate_optimal_strategy(self):
+        """
+        Return Prompt1/Prompt2 schema-compatible outputs.
+        Downstream Phase2 code can switch to this class without schema changes.
+        """
+        report = self.generate_cluster_report()
+
+        p1_out = {
+            "strategies": [
+                {
+                    "id": "strategy_1_kmeans_branch",
+                    "description": (
+                        "Deterministic k-means clustering on target-graph topology "
+                        "features with dependency-safe batch reconstruction."
+                    ),
+                    "order": report["global_order"],
+                    "batches": report["global_batches"],
+                    "metadata": {
+                        "algorithm": "KMeansBranchClustering",
+                        "k": report["meta"]["k"],
+                        "seed": report["meta"]["seed"],
+                        "feature_version": report["meta"]["feature_version"],
+                        "cluster_assignment": [
+                            {"node_id": item["node_id"], "cluster_id": item["cluster_id"]}
+                            for item in report["nodes"]
+                        ],
+                        "cluster_dependencies": report["cluster_dependencies"],
+                        "dependency_repair_log": report["dependency_repair_log"],
+                    },
+                }
+            ]
+        }
+
+        p2_out = {
+            "selected": "strategy_1_kmeans_branch",
+            "reason": (
+                "Selected deterministic k-means strategy (target-graph only input) "
+                "with DAG-safe batch reconstruction."
             ),
         }
 

@@ -35,6 +35,7 @@ def _phase2_graph_gated_loop(
     root_dir: str,
     generated_dir: str,
     scene_g_path: Optional[str],
+    clustering_algorithm: str = "branch_layer_cutting",
 ) -> Tuple[bool, Optional[Dict], Optional[Dict], Dict, str]:
     """
     Returns:
@@ -44,15 +45,22 @@ def _phase2_graph_gated_loop(
       final_gate_report,
       debug_message
     """
-    from core.graph_clustering import BranchAwareClustering, BranchAwareLayerCuttingClustering
+    from core.graph_clustering import (
+        BranchAwareClustering,
+        BranchAwareLayerCuttingClustering,
+        KMeansBranchClustering,
+    )
     
-    print(f"[Phase2][Gate] Executing default two-stage graph decomposition...")
+    print(f"[Phase2][Gate] Executing graph decomposition algorithm: {clustering_algorithm}")
 
     # Default entry switched to the controlled two-stage implementation:
     #   branch grouping -> hierarchy-aware batch cutting
     # The legacy entry is intentionally kept below as a one-line fallback so we can
     # switch back quickly for side-by-side debugging or regression comparison.
-    clustering = BranchAwareLayerCuttingClustering(phase1_json)
+    if clustering_algorithm == "kmeans":
+        clustering = KMeansBranchClustering(phase1_json, k=2, seed=7, max_batch_size=2)
+    else:
+        clustering = BranchAwareLayerCuttingClustering(phase1_json)
 
     # Legacy fallback (kept commented on purpose for quick rollback/testing):
     # clustering = BranchAwareClustering(phase1_json)
@@ -72,7 +80,7 @@ def _phase2_graph_gated_loop(
     with open(os.path.join(generated_dir, "phase2_gate_report.json"), "w", encoding="utf-8") as f:
         json.dump(gate_report, f, indent=2, ensure_ascii=True)
 
-    return True, p1_out, p2_out, gate_report, "default two-stage graph decomposition active (VLM bypassed)"
+    return True, p1_out, p2_out, gate_report, f"{clustering_algorithm} graph decomposition active (VLM bypassed)"
 
 
 def _legacy_placeholder_failure(node_id: int):
@@ -91,6 +99,7 @@ def run_phase2_pipeline(
     inventory_data,
     history_chain,
     stop_before_solver: bool = False,
+    clustering_algorithm: str = "branch_layer_cutting",
 ):
     """
     New Phase2 graph-gated pipeline.
@@ -123,6 +132,7 @@ def run_phase2_pipeline(
         root_dir=root_dir,
         generated_dir=generated_dir,
         scene_g_path=scene_g_path,
+        clustering_algorithm=clustering_algorithm,
     )
 
     if not ok:

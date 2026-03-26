@@ -215,15 +215,16 @@ def _terminal(obj_name: str, edges: list, id_to_name: dict) -> str:
         sup_name = id_to_name[sup_id]
         pos      = edge.get("position", "").lower()
 
-        if pos in ("left", "right"):
+        if pos in ("left", "right", "center", "middle"):
+            slot_key = "center" if pos == "middle" else pos
             # Table: Table_Left / Table_Right
             if sup_name == "table":
-                slot = f"Table_{pos.capitalize()}"
+                slot = f"Table_{slot_key.capitalize()}"
                 return f"(on {slot} {obj_name})"
-            # Rect_N: Rect_N_Left / Rect_N_Right
+            # Rect_N: Rect_N_Left / Rect_N_Right / Rect_N_Center
             m = re.match(r"^rect_(\d+)$", sup_name)
             if m:
-                slot = f"Rect_{m.group(1)}_{pos.capitalize()}"
+                slot = f"Rect_{m.group(1)}_{slot_key.capitalize()}"
                 return f"(on {slot} {obj_name})"
         # default: place on supporter directly (cyl_N, rect_N no-pos, etc.)
         return f"(on {sup_name} {obj_name})"

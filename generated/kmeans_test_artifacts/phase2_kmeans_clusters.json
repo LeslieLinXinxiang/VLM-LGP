@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "algorithm": "KMeansBranchClustering",
+    "k": 2,
+    "requested_k": 2,
+    "seed": 7,
+    "feature_version": "v1_topology_only",
+    "feature_names": [
+      "layer",
+      "in_degree",
+      "out_degree",
+      "supporter_layer_mean",
+      "is_multi_support",
+      "pos_left_count",
+      "pos_right_count",
+      "pos_unknown_count"
+    ],
+    "inertia": 46.60734711423444,
+    "max_batch_size": 2
+  },
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "nodes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "cluster_id": 1,
+      "nodes": [
+        7
+      ]
+    }
+  ],
+  "cluster_dependencies": {
+    "0": [
+      1
+    ],
+    "1": [
+      0
+    ]
+  },
+  "dependency_repair_log": [
+    {
+      "type": "dependency_gating",
+      "selected_cluster": 0,
+      "blocked_clusters": [
+        1
+      ],
+      "batch": [
+        1,
+        2
+      ]
+    },
+    {
+      "type": "dependency_gating",
+      "selected_cluster": 0,
+      "blocked_clusters": [
+        1
+      ],
+      "batch": [
+        3,
+        4
+      ]
+    },
+    {
+      "type": "dependency_gating",
+      "selected_cluster": 0,
+      "blocked_clusters": [
+        1
+      ],
+      "batch": [
+        5,
+        6
+      ]
+    },
+    {
+      "type": "dependency_gating",
+      "selected_cluster": 1,
+      "blocked_clusters": [
+        0
+      ],
+      "batch": [
+        7
+      ]
+    },
+    {
+      "type": "dependency_gating",
+      "selected_cluster": 0,
+      "blocked_clusters": [
+        1
+      ],
+      "batch": [
+        8
+      ]
+    },
+    {
+      "type": "dependency_gating",
+      "selected_cluster": 0,
+      "blocked_clusters": [
+        1
+      ],
+      "batch": [
+        9
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": 1,
+      "object": "Rectangular Prism",
+      "layer": 1,
+      "supporters": [
+        0
+      ],
+      "feature_vector": [
+        1.0,
+        1.0,
+        2.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "cluster_id": 0,
+      "x_2d": 1.9948747441907342,
+      "y_2d": -1.1289182500579744
+    },
+    {
+      "node_id": 2,
+      "object": "Rectangular Prism",
+      "layer": 1,
+      "supporters": [
+        0
+      ],
+      "feature_vector": [
+        1.0,
+        1.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "cluster_id": 0,
+      "x_2d": 1.9948747441907342,
+      "y_2d": -1.1289182500579746
+    },
+    {
+      "node_id": 3,
+      "object": "Cube",
+      "layer": 2,
+      "supporters": [
+        1
+      ],
+      "feature_vector": [
+        2.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "cluster_id": 0,
+      "x_2d": 0.8078480832609432,
+      "y_2d": 0.6885880593831774
+    },
+    {
+      "node_id": 4,
+      "object": "Cube",
+      "layer": 2,
+      "supporters": [
+        1
+      ],
+      "feature_vector": [
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "cluster_id": 0,
+      "x_2d": 1.0665275164430166,
+      "y_2d": 0.08556364112046681
+    },
+    {
+      "node_id": 5,
+      "object": "Cube",
+      "layer": 2,
+      "supporters": [
+        2
+      ],
+      "feature_vector": [
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "cluster_id": 0,
+      "x_2d": 1.0665275164430166,
+      "y_2d": 0.08556364112046712
+    },
+    {
+      "node_id": 6,
+      "object": "Cube",
+      "layer": 2,
+      "supporters": [
+        2
+      ],
+      "feature_vector": [
+        2.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "cluster_id": 0,
+      "x_2d": 0.807848083260943,
+      "y_2d": 0.688588059383177
+    },
+    {
+      "node_id": 7,
+      "object": "Rectangular Prism",
+      "layer": 3,
+      "supporters": [
+        4,
+        5
+      ],
+      "feature_vector": [
+        3.0,
+        2.0,
+        1.0,
+        2.0,
+        1.0,
+        0.0,
+        0.0,
+        2.0
+      ],
+      "cluster_id": 1,
+      "x_2d": -3.8064553433862356,
+      "y_2d": -2.807887871291936
+    },
+    {
+      "node_id": 8,
+      "object": "Rectangular Prism",
+      "layer": 4,
+      "supporters": [
+        7
+      ],
+      "feature_vector": [
+        4.0,
+        1.0,
+        1.0,
+        3.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "cluster_id": 0,
+      "x_2d": -1.5018490583277173,
+      "y_2d": 1.1514695396110777
+    },
+    {
+      "node_id": 9,
+      "object": "Triangular Prism",
+      "layer": 5,
+      "supporters": [
+        8
+      ],
+      "feature_vector": [
+        5.0,
+        1.0,
+        0.0,
+        4.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "cluster_id": 0,
+      "x_2d": -2.430196286075435,
+      "y_2d": 2.3659514307895186
+    }
+  ],
+  "global_batches": [
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7
+    ],
+    [
+      8
+    ],
+    [
+      9
+    ]
+  ],
+  "global_order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "centroids": [
+    [
+      -0.055242717280199194,
+      -0.3535533905932739,
+      -0.018844459036110123,
+      -0.05524271728019908,
+      -0.35355339059327384,
+      0.08838834764831854,
+      0.08838834764831849,
+      -0.2838874869788344
+    ],
+    [
+      0.44194173824159205,
+      2.82842712474619,
+      0.15075567228888187,
+      0.4419417382415923,
+      2.8284271247461903,
+      -0.7071067811865475,
+      -0.7071067811865475,
+      2.2710998958306754
+    ]
+  ]
+}

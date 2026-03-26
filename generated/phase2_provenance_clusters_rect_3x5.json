@@ -1,0 +1,267 @@
+{
+  "meta": {
+    "algorithm": "ProvenanceSetBranchClustering",
+    "definition": "Cluster by provenance-set cardinality and root identity",
+    "roots": [
+      1,
+      2,
+      3
+    ],
+    "k_selected": 3,
+    "k_selection_mode": "variable (derived from provenance signatures)",
+    "cluster_names": {
+      "0": "sig:1",
+      "1": "sig:2",
+      "2": "sig:3"
+    },
+    "cluster_key_nodes": {
+      "sig:1": [
+        1,
+        4,
+        7,
+        10,
+        13
+      ],
+      "sig:2": [
+        2,
+        5,
+        8,
+        11,
+        14
+      ],
+      "sig:3": [
+        3,
+        6,
+        9,
+        12,
+        15
+      ]
+    },
+    "ground_node_excluded_from_clustering": true
+  },
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "cluster_name": "sig:1",
+      "nodes": [
+        1,
+        4,
+        7,
+        10,
+        13
+      ]
+    },
+    {
+      "cluster_id": 1,
+      "cluster_name": "sig:2",
+      "nodes": [
+        2,
+        5,
+        8,
+        11,
+        14
+      ]
+    },
+    {
+      "cluster_id": 2,
+      "cluster_name": "sig:3",
+      "nodes": [
+        3,
+        6,
+        9,
+        12,
+        15
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": 1,
+      "layer": 1,
+      "cluster_id": 0,
+      "provenance_set": [
+        1
+      ],
+      "x": 0.0,
+      "y": 2.8
+    },
+    {
+      "node_id": 2,
+      "layer": 1,
+      "cluster_id": 1,
+      "provenance_set": [
+        2
+      ],
+      "x": 6.0,
+      "y": 2.8
+    },
+    {
+      "node_id": 3,
+      "layer": 1,
+      "cluster_id": 2,
+      "provenance_set": [
+        3
+      ],
+      "x": 12.0,
+      "y": 2.8
+    },
+    {
+      "node_id": 4,
+      "layer": 2,
+      "cluster_id": 0,
+      "provenance_set": [
+        1
+      ],
+      "x": 0.0,
+      "y": 5.6
+    },
+    {
+      "node_id": 5,
+      "layer": 2,
+      "cluster_id": 1,
+      "provenance_set": [
+        2
+      ],
+      "x": 6.0,
+      "y": 5.6
+    },
+    {
+      "node_id": 6,
+      "layer": 2,
+      "cluster_id": 2,
+      "provenance_set": [
+        3
+      ],
+      "x": 12.0,
+      "y": 5.6
+    },
+    {
+      "node_id": 7,
+      "layer": 3,
+      "cluster_id": 0,
+      "provenance_set": [
+        1
+      ],
+      "x": 0.0,
+      "y": 8.399999999999999
+    },
+    {
+      "node_id": 8,
+      "layer": 3,
+      "cluster_id": 1,
+      "provenance_set": [
+        2
+      ],
+      "x": 6.0,
+      "y": 8.399999999999999
+    },
+    {
+      "node_id": 9,
+      "layer": 3,
+      "cluster_id": 2,
+      "provenance_set": [
+        3
+      ],
+      "x": 12.0,
+      "y": 8.399999999999999
+    },
+    {
+      "node_id": 10,
+      "layer": 4,
+      "cluster_id": 0,
+      "provenance_set": [
+        1
+      ],
+      "x": 0.0,
+      "y": 11.2
+    },
+    {
+      "node_id": 11,
+      "layer": 4,
+      "cluster_id": 1,
+      "provenance_set": [
+        2
+      ],
+      "x": 6.0,
+      "y": 11.2
+    },
+    {
+      "node_id": 12,
+      "layer": 4,
+      "cluster_id": 2,
+      "provenance_set": [
+        3
+      ],
+      "x": 12.0,
+      "y": 11.2
+    },
+    {
+      "node_id": 13,
+      "layer": 5,
+      "cluster_id": 0,
+      "provenance_set": [
+        1
+      ],
+      "x": 0.0,
+      "y": 14.0
+    },
+    {
+      "node_id": 14,
+      "layer": 5,
+      "cluster_id": 1,
+      "provenance_set": [
+        2
+      ],
+      "x": 6.0,
+      "y": 14.0
+    },
+    {
+      "node_id": 15,
+      "layer": 5,
+      "cluster_id": 2,
+      "provenance_set": [
+        3
+      ],
+      "x": 12.0,
+      "y": 14.0
+    }
+  ],
+  "independence_report": {
+    "0": {
+      "frontier": [],
+      "interior": [
+        1,
+        4,
+        7,
+        10,
+        13
+      ],
+      "independent_completion": true,
+      "violations": []
+    },
+    "1": {
+      "frontier": [],
+      "interior": [
+        2,
+        5,
+        8,
+        11,
+        14
+      ],
+      "independent_completion": true,
+      "violations": []
+    },
+    "2": {
+      "frontier": [],
+      "interior": [
+        3,
+        6,
+        9,
+        12,
+        15
+      ],
+      "independent_completion": true,
+      "violations": []
+    }
+  }
+}

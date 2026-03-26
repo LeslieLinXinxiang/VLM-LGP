@@ -1,0 +1,165 @@
+{
+  "prompt1": {
+    "strategies": [
+      {
+        "id": "strategy_1_kmeans_branch",
+        "description": "Deterministic k-means clustering on target-graph topology features with dependency-safe batch reconstruction.",
+        "order": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "batches": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ],
+          [
+            9
+          ]
+        ],
+        "metadata": {
+          "algorithm": "KMeansBranchClustering",
+          "k": 2,
+          "seed": 7,
+          "feature_version": "v1_topology_only",
+          "cluster_assignment": [
+            {
+              "node_id": 1,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 2,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 3,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 4,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 5,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 6,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 7,
+              "cluster_id": 1
+            },
+            {
+              "node_id": 8,
+              "cluster_id": 0
+            },
+            {
+              "node_id": 9,
+              "cluster_id": 0
+            }
+          ],
+          "cluster_dependencies": {
+            "0": [
+              1
+            ],
+            "1": [
+              0
+            ]
+          },
+          "dependency_repair_log": [
+            {
+              "type": "dependency_gating",
+              "selected_cluster": 0,
+              "blocked_clusters": [
+                1
+              ],
+              "batch": [
+                1,
+                2
+              ]
+            },
+            {
+              "type": "dependency_gating",
+              "selected_cluster": 0,
+              "blocked_clusters": [
+                1
+              ],
+              "batch": [
+                3,
+                4
+              ]
+            },
+            {
+              "type": "dependency_gating",
+              "selected_cluster": 0,
+              "blocked_clusters": [
+                1
+              ],
+              "batch": [
+                5,
+                6
+              ]
+            },
+            {
+              "type": "dependency_gating",
+              "selected_cluster": 1,
+              "blocked_clusters": [
+                0
+              ],
+              "batch": [
+                7
+              ]
+            },
+            {
+              "type": "dependency_gating",
+              "selected_cluster": 0,
+              "blocked_clusters": [
+                1
+              ],
+              "batch": [
+                8
+              ]
+            },
+            {
+              "type": "dependency_gating",
+              "selected_cluster": 0,
+              "blocked_clusters": [
+                1
+              ],
+              "batch": [
+                9
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "prompt2": {
+    "selected": "strategy_1_kmeans_branch",
+    "reason": "Selected deterministic k-means strategy (target-graph only input) with DAG-safe batch reconstruction."
+  }
+}

@@ -1,0 +1,325 @@
+[
+  {
+    "phase": "pure",
+    "chosen_node": 1,
+    "chosen_cluster": 0,
+    "cluster_key": "sig:1",
+    "ready_set": [
+      2,
+      3,
+      4
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 4,
+    "chosen_cluster": 0,
+    "cluster_key": "sig:1",
+    "ready_set": [
+      2,
+      3,
+      7
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 1
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 2,
+    "chosen_cluster": 1,
+    "cluster_key": "sig:2",
+    "ready_set": [
+      3,
+      5,
+      7
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 5,
+    "chosen_cluster": 1,
+    "cluster_key": "sig:2",
+    "ready_set": [
+      3,
+      7,
+      8
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 1
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 3,
+    "chosen_cluster": 2,
+    "cluster_key": "sig:3",
+    "ready_set": [
+      6,
+      7,
+      8
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 6,
+    "chosen_cluster": 2,
+    "cluster_key": "sig:3",
+    "ready_set": [
+      7,
+      8,
+      9
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 1
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 7,
+    "chosen_cluster": 0,
+    "cluster_key": "sig:1",
+    "ready_set": [
+      8,
+      9,
+      10
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 10,
+    "chosen_cluster": 0,
+    "cluster_key": "sig:1",
+    "ready_set": [
+      8,
+      9,
+      13
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 1
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 8,
+    "chosen_cluster": 1,
+    "cluster_key": "sig:2",
+    "ready_set": [
+      9,
+      11,
+      13
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 11,
+    "chosen_cluster": 1,
+    "cluster_key": "sig:2",
+    "ready_set": [
+      9,
+      13,
+      14
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 1
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 9,
+    "chosen_cluster": 2,
+    "cluster_key": "sig:3",
+    "ready_set": [
+      12,
+      13,
+      14
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 12,
+    "chosen_cluster": 2,
+    "cluster_key": "sig:3",
+    "ready_set": [
+      13,
+      14,
+      15
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 1
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 13,
+    "chosen_cluster": 0,
+    "cluster_key": "sig:1",
+    "ready_set": [
+      14,
+      15
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 14,
+    "chosen_cluster": 1,
+    "cluster_key": "sig:2",
+    "ready_set": [
+      15
+    ],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  },
+  {
+    "phase": "pure",
+    "chosen_node": 15,
+    "chosen_cluster": 2,
+    "cluster_key": "sig:3",
+    "ready_set": [],
+    "rules": {
+      "precedence_ok": true,
+      "pure_branch_first": true,
+      "root_order": [
+        1,
+        2,
+        3
+      ],
+      "max_pure_branch_rise_streak": 1,
+      "current_rise_streak": 0
+    }
+  }
+]
