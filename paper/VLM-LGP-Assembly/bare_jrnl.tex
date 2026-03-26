@@ -90,15 +90,15 @@ breaklines=true, frame=lines, backgroundcolor=
 
   \label{sec:method}
 
-  Long-horizon robotic assembly requires both structural reasoning over target
-  configurations and geometric reasoning over executable motions. The revised
-  \textbf{VLM-LGP} pipeline therefore uses a support graph as the structural interface
-  between VLM reasoning and solver instantiation. The pipeline proceeds in five steps:
-  scene grounding, support-graph construction, branch-based cutting, layer-based
-  cutting, and selective native LGP solving. The key idea is to transform the target
-  structure into a relational graph first and then decompose this graph into a small
-  number of solver-friendly subtasks rather than exposing the full long-horizon task
-  to native LGP at once.
+  Long-horizon robotic assembly requires coordinated structural and geometric reasoning, 
+  In practice, directly solving the full-horizon task in native LGP leads to high 
+  symbolic branching and poor scalability. To address this issue, we use an object-support 
+  graph as the structural interface between VLM parsing and solver instantiation. Our 
+  method follows five stages: scene grounding, support-graph construction, branch-based cutting, 
+  layer-based cutting, and selective native LGP solving. The core idea is to first represent 
+  the target assembly as a relational graph, and then decompose it into a small set of 
+  solver-facing subtasks rather than exposing the entire horizon at once.
+
 
   \subsection{Scene Grounding and Feasibility Screening}
   \label{subsec:phase0}

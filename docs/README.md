@@ -34,6 +34,7 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 
 1. Architecture, dataflow, and protocol truth goes to Layer files only.
 2. Environment or platform troubleshooting goes to `docs/ops/`.
+2.1. Roadmap mutation SOP and guard docs also go to `docs/ops/`.
 3. Time-bound handoff notes go to `docs/archive/`.
 4. Decision templates and approved decisions go to `docs/decisions/`.
 5. Any new doc must be registered in this file under the correct section.
@@ -67,6 +68,8 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 - `docs/ops/PLANAR_EXP_FMB_ADAPTATION_REPORT_2026-03-21.md`
 - `docs/ops/TESTING_SOP_2026-03-21.md`
 - `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
+- `docs/ops/METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
+- `docs/ops/ROADMAP_GUARD_SOP.md`
 - `docs/archive/ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`
 - `docs/archive/ACTIVE_COLLISION_PAIR_STRATEGY_CHAIN.md`
 - `docs/decisions/README.md`
