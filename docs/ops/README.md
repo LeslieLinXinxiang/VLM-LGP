@@ -11,6 +11,7 @@ This folder contains runtime, environment, network, and troubleshooting SOPs.
 - `FIGMA_MCP_VSCODE_SOP.md`
 - `PAPER_REFINEMENT_MANAGEMENT_SOP.md`
 - `METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
+- `ROADMAP_GUARD_SOP.md`
 
 ## Filing Rules
 

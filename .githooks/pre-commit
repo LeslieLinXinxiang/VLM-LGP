@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+guard_py="$HOME/.copilot/skills/roadmap-guard/scripts/roadmap_guard.py"
+if [[ ! -f "$guard_py" ]]; then
+	echo "[ROADMAP_GUARD][ERROR] Missing guard script: $guard_py"
+	echo "Please sync/install skill: roadmap-guard"
+	exit 1
+fi
+
+python3 "$guard_py" validate docs/roadmap.md

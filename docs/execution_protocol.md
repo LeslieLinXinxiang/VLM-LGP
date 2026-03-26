@@ -122,3 +122,16 @@ To keep `docs/` maintainable and reduce mixed-context drift:
 	- project instance: `docs/decisions/DDR_TEMPLATE.md` (project-local working copy)
 7. Use project instance first; if missing, initialize from skill template and then continue.
 8. New documentation files must be registered in `docs/README.md`.
+
+## 13. Roadmap Deterministic Update Rule (Layer 4 Hard Guard)
+
+To avoid fragile direct edits on `docs/roadmap.md`, roadmap updates must use scripted guards:
+
+1. Run validation before and after any roadmap mutation:
+   - `python3 ~/.copilot/skills/roadmap-guard/scripts/roadmap_guard.py validate docs/roadmap.md`
+2. When closing a task, use scripted transition instead of manual section surgery:
+   - `python3 ~/.copilot/skills/roadmap-guard/scripts/roadmap_guard.py close --task-id TASK-XXX --completed-at "YYYY-MM-DD HH:MM" --summary "..."`
+3. Enable local commit gate once per clone:
+   - `chmod +x .githooks/pre-commit && git config core.hooksPath .githooks`
+4. Pre-commit must block commits if roadmap validation fails.
+5. See operational details in `docs/ops/ROADMAP_GUARD_SOP.md`.
