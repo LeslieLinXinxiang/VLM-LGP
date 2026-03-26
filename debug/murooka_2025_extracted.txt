@@ -1,0 +1,975 @@
+Learning Differentiable Reachability Maps for
+Optimization-based Humanoid Motion Generation
+Masaki Murooka, Iori Kumagai, Mitsuharu Morisawa and Fumio Kanehiro
+Abstract— To reduce the computational cost of humanoid
+motion generation, we introduce a new approach to represent -
+ing robot kinematic reachability: the differentiable reachability
+map. This map is a scalar-valued function deﬁned in the task
+space that takes positive values only in regions reachable b y the
+robot’s end-effector . A key feature of this representation is that
+it is continuous and differentiable with respect to task-sp ace
+coordinates, enabling its direct use as constraints in cont inuous
+optimization for humanoid motion planning. We describe a
+method to learn such differentiable reachability maps from a set
+of end-effector poses generated using a robot’s kinematic m odel,
+using either a neural network or a support vector machine as
+the learning model. By incorporating the learned reachabil ity
+map as a constraint, we formulate humanoid motion generatio n
+as a continuous optimization problem. We demonstrate that t he
+proposed approach efﬁciently solves various motion planni ng
+problems, including footstep planning, multi-contact mot ion
+planning, and loco-manipulation planning for humanoid rob ots.
+I. I NTRODUCTION
+Motion planning for humanoid robots involves solving
+complex inverse kinematics (IK) problems under constraint s
+such as joint limits and self-collision avoidance. However , IK
+is typically formulated as a nonlinear optimization proble m
+that must be solved iteratively, and this computational cos t
+becomes signiﬁcant when it must be evaluated repeatedly
+during trajectory generation or whole-body motion plannin g.
+To address this issue, we propose a data-driven method
+that learns a continuous representation of kinematic reach a-
+bility, referred to as a differentiable reachability map, f rom
+a sample set of end-effector poses. This reachability map
+provides a scalar-valued function deﬁned over the task spac e
+that indicates whether a given pose is reachable, and it
+is differentiable with respect to task-space coordinates. To
+construct the map, we adopt data-driven models such as
+neural networks (NNs) and support vector machines (SVMs),
+which offer continuous and differentiable representation s of
+reachability. By embedding this differentiable function i nto
+the constraints of an optimization problem, we can express
+reachability conditions in a continuous and differentiabl e
+form, avoiding the need for solving IK repeatedly during
+the optimization.
+This paper focuses on the application of the differentiable
+reachability map to optimization-based motion planning fo r
+humanoid robots. We formulate various motion generation
+problems, such as footstep planning, multi-contact motion
+The authors are with CNRS-AIST JRL (Joint Robotics Laborato ry),
+IRL and National Institute of Advanced Industrial Science a nd Tech-
+nology (AIST), 1-1-1 Umezono, Tsukuba, Ibaraki 305-8560, J apan.
+m-murooka@aist.go.jp
+planning, and loco-manipulation planning, using reachabi lity
+constraints expressed by the learned map. The proposed
+framework enables efﬁcient generation of feasible motions
+in the task space, while avoiding computationally expensiv e
+joint-space optimization.
+II. R ELATED WORKS AND CONTRIBUTIONS
+A. Discrete Representations of Kinematic Reachability
+Several studies have been performed to pre-generate kine-
+matically reachable task-space regions (also called reach -
+ability maps) to evaluate reachability without solving IK.
+The most typical method for pre-generating such task-space
+regions is to ﬁrst divide the task space into grids; then,
+solve IK with each point in the grid as the target; ﬁnally,
+save the set of points where IK was successful [1], [2]. A
+library that speeds up the generation process by analytical
+IK [3] has been used for examining the body structure
+in robot design [4]. Other generation methods based on
+the convolution of the movable regions of each joint have
+also been proposed [5], but they are also represented in a
+discretized task space.
+Reachability maps have been used to evaluate the feasibil-
+ity of task-space trajectories and to determine the placeme nt
+of robots. In [6], [7], [8], each point of the discretized tar get
+end-effector trajectory is checked for inclusion in the rea cha-
+bility maps to determine the feasibility of the trajectory. As in
+these examples, discrete reachability maps are fully avail able
+for evaluating a given trajectory in task space. However, th ey
+are not suitable for use in trajectory optimization to gener ate
+a new trajectory because they cannot be expressed as a
+continuous objective function or constraints. Additional ly,
+the task-space dimension increases when considering both
+the position and orientation, and grid division is problema tic
+in terms of computational cost because the number of grids
+increases exponentially.
+B. Reachability Constraints in Humanoid Motion Planning
+Reachability of end-effectors (e.g., hands and feet) is an
+important constraint in motion planning. In graph search-
+based motion planning, discrete reachability maps are ofte n
+utilized. For example, in bipedal footstep planning using A *
+search [9], the search graph is extended based on a ﬁnite
+set of landing positions of the swing foot relative to the
+stance foot. This set of landing positions can be regarded
+as a kind of discrete reachability map. In loco-manipulatio n
+planning [10], [11], which is an extension of bipedal footst ep
+planning, pre-generated discrete reachability maps are us ed
+arXiv:2508.11275v1  [cs.RO]  15 Aug 2025
+to determine the conditions for reaching the manipulated
+object by hand.
+In continuous optimization-based motion planning, the
+admissible region of end-effectors is often approximated b y a
+box [12] or convex polyhedron [13] in the task space, thereby
+avoiding the direct treatment of joint conﬁgurations [14] a nd
+reducing the dimension of the search variables. However,
+these approximate shapes restrict the full use of the reacha ble
+region of end-effectors, and the planning results may be con -
+servative. Additionally, these shapes are used as constrai nts
+on the position of end-effectors, and the constraint expres sion
+regarding the orientation of end-effectors is unclear. Thi s
+usability of the shapes is acceptable when the contact at
+the end-effectors is modeled as a point contact, as in the
+quadruped robot [12], but it is unacceptable when it is
+modeled as a surface contact, as in the humanoid robot [14].
+To overcome these limitations, we propose using reach-
+ability maps that are continuous and differentiable with
+respect to task-space coordinates, and can ﬂexibly represe nt
+arbitrarily-shaped feasible regions. Such representatio ns en-
+able the reachability condition to be directly embedded as
+constraints in continuous optimization-based motion gene ra-
+tion for humanoid robots.
+C. Learning-based Representations of Reachability
+Several previous studies have proposed learning continu-
+ous representations of reachability from sample data, as an
+alternative to discretized maps.
+One common approach is to model reachability using
+Gaussian mixture models (GMMs). In [15] and [16], the
+reachable regions of a manipulator’s end-effector are enco ded
+as probability density functions represented by GMMs in the
+task space. Similarly, in [17], a GMM is used to represent
+the feasibility of the humanoid center of mass (CoM), and
+the resulting scalar ﬁeld is incorporated into the objectiv e
+function of motion optimization.
+Another group of studies employs NNs to learn task-space
+feasibility. In [18], an NN is trained to output a reachabili ty
+score for candidate grasp poses and is used to guide the
+selection of grasps in sampling-based planning. In [19], on e
+NN is trained to learn a reachability classiﬁer and another
+to approximate an inverse reachability map from task space
+to joint space. In [20], an NN is trained to generate multiple
+joint conﬁgurations that achieve a given end-effector pose . In
+[21], forward kinematics and its Jacobian are simultaneous ly
+approximated using an NN, with a focus on ensuring the
+continuity of differential mappings.
+These prior works demonstrate the utility of GMMs and
+NNs in reachability-related tasks such as feasibility esti ma-
+tion and inverse mapping. Some of these methods rely on
+density estimation, which assumes that the density of task-
+space samples correlates with reachability. This assumpti on
+may not hold due to the nonlinear mapping from joint space
+to task space [1], [8] as will be discussed in Section VII.
+To address this, we formulate reachability learning as a
+binary classiﬁcation problem and train differentiable mod els
+using either NNs or SVMs. The resulting scalar ﬁelds are
+continuous with respect to task-space coordinates and are
+directly used as constraints in continuous optimization fo r
+humanoid motion generation.
+D. Contributions of this Paper
+The contributions of this paper are twofold:
+• We propose a data-driven approach to learning differen-
+tiable reachability maps using NNs and SVMs, which
+can represent arbitrarily shaped feasible regions in task
+space.
+• We apply the learned reachability maps as constraints
+in optimization-based humanoid motion generation, en-
+abling efﬁcient planning of various humanoid motions.
+III. D IFFERENTIABLE REACHABILITY MAP
+A. F ormal Deﬁnition of Reachability Maps
+1) Binary Reachability Map: We deﬁne a binary reach-
+ability map of the robot end-effector as a scalar-valued
+function that satisﬁes the following:
+fR(r) =
+{ 1 if r is reachable
+− 1 otherwise (1)
+r is a point in the task space W T (e.g., R2, SE(3)).
+In the case where a ﬁnite set of reachable points in the task
+spaceLr ={r1, r2,···, rL} is maintained as a reachability
+map representation, as proposed in [1], [2], fR(r) in (1) is
+expressed as follows:
+fR(r) =
+{ 1 ∃ ¯r∈L r s.t. r∈ V (¯r)
+− 1 otherwise (2)
+V (r)⊂ W T denotes a neighborhood region around r (e.g.,
+a voxel or a sphere), whose size depends on the sampling
+resolution in the task space.
+2) Differentiable Reachability Map: We deﬁne a scalar-
+valued function in the task space W T as a general reacha-
+bility map if it satisﬁes the following:{ fR(r)≥ 0 if r is reachable
+fR(r) < 0 otherwise (3)
+The binary reachability map deﬁned in (1) is a special
+case of this general reachability map.
+When fR(r) is continuous and differentiable, we refer
+to it as a differentiable reachability map. Since fR(r) in
+(1) is discontinuous at the boundary between reachable and
+unreachable regions, it does not qualify as a differentiabl e
+reachability map.
+In general, a differentiable reachability map cannot be
+derived analytically from the robot’s kinematic model. The re-
+fore, we propose a method to learn it from a task-space
+sample set Lr.
+B. Learning Reachability Maps from Samples
+We formulate the problem of constructing a differentiable
+reachability map as a binary classiﬁcation task in the task
+space. Given a dataset D ={(xi, yi)}L
+i=1 where each input
+xi∈ RMx represents a task-space point and the label yi∈
+{− 1, 1} indicates whether it is reachable, we aim to learn a
+scalar-valued function fR(x) that satisﬁes the conditions in
+(3). This function should be continuous and differentiable so
+that it can be used as a constraint in continuous optimizatio n
+for motion generation.
+To this end, we consider two types of classiﬁers: NNs
+and SVMs, each offering a differentiable formulation of
+the reachability map. The following sections describe thei r
+respective implementations.
+C. Learning with Neural Networks
+We use an NN to represent the differentiable reachability
+map as a binary classiﬁer. The NN takes a point in the task
+space as input and outputs a real-valued scalar, which we
+interpret via its sign as indicating reachability, as deﬁne d
+in (3).
+The NN is implemented as a multilayer perceptron (MLP)
+composed of fully connected layers and nonlinear activatio n
+functions such as ReLU. The ﬁnal output layer remains linear
+to yield an unconstrained scalar output. Let fR(x; θ) denote
+the output of the NN parameterized by θ, given input x. We
+train the network using a smooth classiﬁcation loss functio n,
+given by:
+L(fR(xi; θ), yi) = softplus(− yi fR(xi; θ))
+= log(1 + exp(− yi fR(xi; θ))) (4)
+where (xi, yi) is a labeled sample from the training dataset.
+The resulting scalar ﬁeld is continuous and differentiable
+over the task space, making it suitable for use as a constrain t
+in trajectory optimization. The gradient ∂fR(x; θ)/∂x can
+be automatically computed via backpropagation.
+D. Learning with Support V ector Machines
+1) Kernel-based Expression: We use an SVM with a
+radial basis function (RBF) kernel to represent the differe n-
+tiable reachability map. The decision function of the SVM
+is given by:
+fR(x) =
+L∑
+i=1
+αiyi exp(− γ∥x− xi∥2) + b (5)
+where γ is a kernel bandwidth hyperparameter, and the
+parameters αi and b are determined through standard SVM
+training.
+This expression satisﬁes the condition of the general
+reachability map deﬁned in (3). It is also differentiable wi th
+respect to x, and the gradient can be computed analytically:
+∂fR(x)
+∂x =− 2γ
+L∑
+i=1
+αiyi exp(− γ∥x− xi∥2) (x− xi)T
+(6)
+2) One-Class SVM for Reachable-Only Data: In some
+scenarios, such as when sampling task-space points via for-
+ward kinematics (FK) from joint-space samples, the dataset
+may contain only reachable points. In such cases, a standard
+binary SVM cannot be trained directly due to the absence of
+negative samples.
+To address this, we employ one-class SVM [22], a variant
+designed for unsupervised anomaly detection. It treats the
+origin of the feature space as an implicit negative class
+and learns a boundary that encloses the support of the
+positive samples. Although originally intended for anomal y
+detection, we demonstrate that this method is also effectiv e
+for constructing reachability maps from reachable-only da ta.
+As will be shown in Section IV, reachability maps
+constructed with regular SVM and one-class SVM exhibit
+different characteristics and can be chosen based on task
+requirements.
+E. Sample Set Generation
+We employ two sampling strategies to generate datasets for
+training differentiable reachability maps: a FK-based met hod
+and an IK-based method. The FK-based method samples
+joint conﬁgurations within the motion range of the robot’s
+joints and computes the corresponding end-effector poses v ia
+FK. Samples that result in self-collisions are discarded. T his
+method yields only reachable poses and is used exclusively
+for training one-class SVMs.
+The IK-based method, in contrast, generates both reach-
+able and unreachable samples. It randomly samples end-
+effector poses from the task space and solves IK to determine
+reachability. A pose is labeled as reachable if a valid IK
+solution exists that satisﬁes joint limit and self-collisi on
+constraints [23]; otherwise, it is labeled as unreachable. The
+resulting labeled dataset is used to train both NNs and regul ar
+SVMs.
+To address the curse of dimensionality in high-dimensional
+task spaces, we use random sampling rather than grid
+sampling. Random sampling allows for more scalable data
+generation and ﬂexible early termination. Moreover, when a
+motion planning task involves only a lower-dimensional sub -
+space of the task space, it is more efﬁcient to sample directl y
+in that subspace using the IK-based method. For example,
+in the footstep planning task described in Section VI-B, the
+foot’s reachable space is originally deﬁned over SE(3), but
+sampling is restricted to the SE(2) subspace for efﬁciency.
+IV. N UMERICAL EVALUATION
+A. Comparison with Analytical Reachability
+We evaluated the learned reachability maps using a planar
+2-DoF manipulator whose analytical reachable region is
+known. As illustrated in Fig. 1 (A), we generated 10,000
+samples using both FK-based and IK-based methods. The
+sample generation time was 3.8 ms for the FK-based method
+and 8.0 s for the IK-based method.
+We trained both NNs and SVMs using the generated
+sample sets. The NN and regular SVM were trained with
+the IK-based dataset, which contains both reachable and
+unreachable samples, while the one-class SVM was trained
+with the FK-based dataset consisting only of reachable
+samples. The NN was implemented as an MLP with layer
+sizes 64, 32, and 1. The RBF kernel bandwidth for both
+types of SVMs was set to 30. Training times were 9.9 s for
+the NN, 0.36 s for the regular SVM, and 0.30 s for the one-
+class SVM.
+The learned maps are shown in Fig. 1 (B), (C), and
+(D). Each method produces a reachable region that closely
+(A) Sample set (B) NN map
+(C) Regular SVM map (D) One-class SVM map
+(E) Classiﬁcation IoU as a function of offset
+Fig. 1. Reachability determination for a planar 2-DoF manip ulator.
+(A) Samples in R2 space generated by the IK-based method. The joint angle
+limits are ψ1 ∈ [0, π
+2 ] and ψ2 ∈ [0, π]. (B-D) Heatmaps of reachability
+maps learned by the NN (B), regular SVM (C), and one-class SVM (D). The
+regions where the function values are positive (i.e., predi cted reachable) are
+shown. The red curve indicates the analytically derived rea chable boundary.
+(E) Classiﬁcation IoU as a function of the offset ρ added to the SVM
+decision function. A small positive offset improves the IoU , particularly for
+the one-class SVM.
+matches the analytical ground truth. The intersection over
+union (IoU) on a test dataset was 0.971 for the NN, 0.982
+for the regular SVM, and 0.983 for the one-class SVM. The
+average inference time per sample was approximately 40 µs
+for the NN and 10 µs for both SVMs.
+In these evaluations, a constant offset ρ was added to
+the SVM decision function (5) to improve classiﬁcation
+accuracy, particularly for the one-class SVM. As shown in
+Fig. 1 (E), a small positive offset helps better align the
+decision boundary. We used ρ = 0.1, determined empirically.
+For the NN, no such offset was required, as the classiﬁcation
+result was robust to the decision threshold.
+B. Comparison with Baseline Classiﬁers
+We compared our proposed methods (NN, regular SVM
+(R-SVM), and one-class SVM (OC-SVM)) with baseline
+classiﬁers across task spaces of varying dimensionality: R2,
+SE(2), R3, and SE(3). All datasets were generated using the
+kinematic model of a Universal Robots UR10 manipulator,
+and performance was evaluated on a held-out test set.
+Table I presents the IoU scores [%] for each method,
+along with per-sample inference time [ ms] shown in paren-
+theses. Unlike our methods, baseline approaches such as
+k-NN ( k-nearest neighbors) and OC-NN (one-class nearest
+neighbors [24]) do not yield a scalar-valued function over
+the task space, and therefore cannot be used as constraints
+in continuous trajectory optimization. A convex-hull-bas ed
+classiﬁer is also included as a simple geometric baseline fo r
+low-dimensional spaces.
+Overall, our methods match or outperform the baselines
+in terms of classiﬁcation accuracy and inference efﬁciency .
+Notably, the NN model outperforms SVMs in the SE(3) task
+space in terms of accuracy, inference time, and training cos t.
+Despite being trained solely on positive samples, OC-SVM
+performs comparably to classiﬁers trained with both positi ve
+and negative data across all task spaces.
+TABLE I
+COMPARISON OF REACHABILITY CLASSIFICATION METHODS
+Task space R2 SE(2) R3 SE(3)
+NN 96.9 96.2 (0.044) 96.8 (0.040) 89.3 (0.062)
+R-SVM 98.5 95.1 (0.13) 97.6 (0.080) 77.7 (8.7)
+OC-SVM 98.2 96.7 (0.16) 84.3 (0.091) 81.1 (7.9)
+k-NN 97.4 93.1 (0.19) 95.7 (0.32) 83.4 (2.5)
+OC-NN 87.6 81.3 (0.31) 84.0 (0.31) 73.3 (4.8)
+Convex 82.3 - - -
+N train
+sample 10,000 80,000 80,000 500,000
+T train
+NN [s] 10 s 65 s 66 s 428 s
+T train
+SVM [s] 0.3 s 30 s 20 s 1 .6 × 104 s
+IoU scores [%] on the test sample set. V alues in parentheses i ndicate per-
+sample inference time [ ms]. “NN”, “R-SVM”, and “OC-SVM” denote our
+proposed methods based on neural networks, regular SVM, and one-class
+SVM, respectively. “ k-NN” and “OC-NN” refer to baseline methods based
+on k-nearest neighbors and one-class nearest neighbors [24], r espectively.
+“Convex” classiﬁes based on inclusion in the convex hull of r eachable
+samples. OC-SVM, OC-NN, and Convex use only positive traini ng samples;
+NN, R-SVM, and k-NN use both positive and negative samples. N train
+sample
+is the number of training samples. T train
+NN and T train
+SVM indicate training time
+for NN and SVM, respectively.
+V. M OTION GENERATION WITH REACHABILITY MAPS
+A. Problem F ormulation with Reachability Constraints
+We formulate a motion generation problem that incorpo-
+rates the differentiable reachability map fR(x) as a con-
+straint. A basic example is:
+min
+r∈W T
+1
+2∥r− rtrg∥2 s.t. f R(x(r))≥ 0 (7)
+Here, r is the end-effector pose in the task space W T
+(e.g., R2, SE(3)), and rtrg is a desired target pose. The input
+vector x(r) transforms the pose into the appropriate input
+format for the learned model. For position-only task spaces ,
+x(r) = r. Orientation treatment is discussed in Section V -C.
+Since fR is generally nonlinear, we solve (7) using sequen-
+tial local approximations. At each iteration, a local quadr atic
+program (QP) is constructed:
+min
+∆r∈W T
+1
+2 ∆rT∆r + (¯r− rtrg)T∆r (8)
+s.t. ∂fR(x)
+∂x
+⏐
+⏐
+⏐
+⏐x=x(¯r)
+∂x(r)
+∂r
+⏐
+⏐
+⏐
+⏐r=¯r
+∆r≥− fR(x(¯r))
+Here, ¯r is the current solution estimate. The constraint is
+a linearization of fR(x(r))≥ 0 around ¯r. The solution is
+updated iteratively by ¯r← ¯r + ∆r.
+B. F ormulation for Humanoid Motion Generation
+We formulate two types of optimization problems for
+humanoid motion generation by extending the basic problem
+introduced in (7).
+1) Simultaneous Reachability: We deﬁne the following
+as a simultaneous reachability problem, in which multiple
+end-effector target poses must be reachable from a common
+baselink pose:
+minr0,··· ,rN
+1
+2
+N∑
+i=1
+∥ri− rtrg
+i ∥2 + λ
+2∥r0− rtrg
+0 ∥2 (9)
+s.t. f R(xrel(r0, ri))≥ 0 ( i = 1, . . . , N)
+This type of problem arises in robot placement planning,
+as discussed in Section VI-A. While it is typically used for
+planning the pose of a ﬁxed-base manipulator or a mobile
+manipulator, it can also be applied to determining the foot
+placement of a humanoid robot.
+Here, r0 and ri (i = 1, . . . , N) represent the poses of the
+baselink and end-effector, respectively. rtrg
+i are the target
+poses for the end-effector, and rtrg
+0 is the optional target
+pose for the baselink, used when the baselink is not uniquely
+constrained. The scalar λ weights this regularization term.
+xrel(r0, ri)∈ RMx denotes the input vector to the reachabil-
+ity map model, representing the relative pose from r0 to ri.
+If the task space includes only positional components, then
+xrel(r0, ri) = ri− r0. Orientation treatment is discussed in
+Section V -C.
+The corresponding local QP around a tentative solution
+¯r0, . . . ,¯rN is given by:
+min
+∆ˆr
+1
+2 ∆ˆrTQ∆ˆr + cT∆ˆr s.t. A∆ˆr≥ b (10)
+where:
+∆ˆr =
+[
+∆rT
+0 ∆rT
+1 ··· ∆rT
+N
+]T
+,
+Q = diag(λI Mr , I Mr , . . . ,I Mr ),
+c =
+
+
+
+
+
+
+λ(¯r0− rtrg
+0 )
+¯r1− rtrg
+1
+.
+.
+.
+¯rN− rtrg
+N
+
+
+
+
+
+
+,
+A =
+
+
+
+
+∂fR
+∂x
+∂xrel
+∂r0
+∂fR
+∂x
+∂xrel
+∂r1
+.
+.
+. . . .
+∂fR
+∂x
+∂xrel
+∂r0
+∂fR
+∂x
+∂xrel
+∂rN
+
+
+
+ ,
+b =−
+
+
+
+
+fR(xrel(¯r0, ¯r1))
+.
+.
+.
+fR(xrel(¯r0, ¯rN ))
+
+
+
+ .
+Here, I Mr is the identity matrix of dimension Mr, the size
+of each pose vector ri.
+2) Sequential Reachability: We deﬁne the following as
+a sequential reachability problem, where each end-effecto r
+pose must be reachable from its immediate predecessor:
+minr0,...,rN
+1
+2
+∑
+i∈{0,N }
+∥ri− rtrg
+i ∥2 + λ
+2
+N −1∑
+i=0
+∥ri+1− ri∥2 (11)
+s.t. f R(xrel(ri, ri+1))≥ 0 ( i = 0, . . . , N− 1)
+This problem formulation is used in footstep planning,
+as introduced in Section VI-B, and also extended to multi-
+contact and loco-manipulation motion planning in Sec-
+tions VI-C and VI-D, respectively.
+Here, r0, . . . ,rN represent the sequence of end-effector
+poses over time. The target poses rtrg
+0 and rtrg
+N are imposed
+at the start and end of the sequence, and the intermedi-
+ate poses are regularized to encourage smooth transitions.
+The scalar λ determines the weight of this regularization.
+xrel(ri, ri+1) denotes the input to the reachability map
+model, representing the relative pose from ri to ri+1.
+The corresponding local QP around a tentative solution
+¯r0, . . . ,¯rN shares the same structure as (10), with the
+following coefﬁcient deﬁnitions:
+Q =
+
+
+
+I Mr
+O
+I Mr
+
+
+ + λ Qadj, (12)
+c =
+
+
+
+¯r0− rtrg
+0
+0
+¯rN− rtrg
+N
+
+
+ + λ Qadj
+
+
+
+
+¯r0
+.
+.
+.
+¯rN
+
+
+
+ ,
+Qadj =
+
+
+
+
+
+
+
+
+
+
+I Mr − IMr
+− I Mr 2I Mr
+. . .
+− IMr
+. . . − I Mr
+. . . 2IMr − IMr
+− I Mr I Mr
+
+
+
+
+
+
+
+
+
+
+,
+A =
+
+
+
+
+∂fR
+∂x
+∂xrel
+∂r0
+∂fR
+∂x
+∂xrel
+∂r1
+. . . . . .
+∂fR
+∂x
+∂xrel
+∂rN −1
+∂fR
+∂x
+∂xrel
+∂rN
+
+
+
+ ,
+b =−
+
+
+
+
+fR(xrel(¯r0, ¯r1))
+.
+.
+.
+fR(xrel(¯rN −1, ¯rN ))
+
+
+
+ .
+C. Treatment of Orientation in Reachability Maps
+Orientations in 2D and 3D belong to non-Euclidean spaces
+and must be handled with care when constructing reacha-
+bility maps. Following the approach in [15], we represent
+orientations by ﬂattening the elements of the correspondin g
+rotation matrix into a vector. This representation avoids
+singularities and provides a distance metric that aligns we ll
+with rotational similarity, which is advantageous compare d
+to Euler angles or unit quaternions. For relative poses, the
+input vector xrel(r0, r1) is constructed in the same manner,
+(A) Planning in R2 space (B) Planning in R3 space
+Fig. 2. Robot placement planning using a reachability map.
+Red shading indicates regions where the reachability map ev aluates to a
+positive value (i.e., reachable). The baselink target is gi ven lower priority
+than the end-effector trajectory by assigning a smaller wei ght in the
+optimization.
+using the rotation matrix of the relative orientation betwe en
+r0 and r1.
+VI. A PPLICATIONS TO HUMANOID MOTION PLANNING
+We present four examples of applying the proposed dif-
+ferentiable reachability maps to humanoid motion planning
+problems formulated as continuous optimization. The reach -
+ability maps may be modeled using either NNs or SVMs,
+and both are compatible with the presented formulations. Al l
+planned motions are visualized in the accompanying video.
+A. Robot Placement Planning
+Placement planning based on reachability maps is a gen-
+eral strategy that can also be extended to humanoid robots.
+To illustrate its core formulation, we ﬁrst consider a ﬁxed-
+base manipulator as a simpliﬁed case. This task is modeled
+as a simultaneous reachability problem (9).
+As shown in Fig. 2, we planned the base pose of a Uni-
+versal Robots UR10 manipulator so that the end-effector can
+follow a prescribed trajectory. The optimization consider s
+both the trajectory of the end-effector and the base pose,
+allowing for soft prioritization via the regularization te rm.
+In task spaces such as R2, R3, and SE(2), the planner
+successfully ﬁnds base poses that enable the manipulator to
+reach all waypoints. In contrast, planning in SE(3) was more
+challenging due to the sparsity and complexity of feasible
+conﬁgurations, which is discussed further in Section VII.
+Importantly, the planning cost remains independent of the
+number of joints, since the optimization is performed direc tly
+in task space using the reachability map.
+B. Bipedal F ootstep Planning
+We applied the sequential reachability formulation (11) to
+plan footstep sequences for a humanoid robot. This approach
+allows the planned footsteps to satisfy reachability con-
+straints derived from the robot’s kinematic model. The task
+space is SE(2), where each variable ri represents the pose of
+the left or right foot depending on the time step. The functio n
+fR(xrel(ri, ri+1)) encodes the feasibility of stepping from
+one foot to the next, based on learned reachability.
+As shown in Fig. 3 (A), we used the IK-based method
+to generate sample sets, and trained reachability maps in
+SE(2). Fig. 3 (B) illustrates the resulting maps, showing how
+the swing foot’s reachable region varies with its orientati on
+(A) Foot pose sampling (B) Foot reachability map
+(C) Footstep planning result (D) Whole-body motion
+Fig. 3. Bipedal footstep planning using reachability maps.
+(A) Sampled swing foot poses with respect to stance foot. Rob ots 1, 2, and
+3 illustrate cases where the waist link is located on the stan ce foot, the
+swing foot, and their midpoint, respectively. Green and red points indicate
+reachable and unreachable samples. (B) Heatmaps showing re achability
+values above zero (i.e., classiﬁed as reachable). Only samp les near the
+speciﬁed yaw angle θ [deg] are visualized. The maps reﬂect how reachability
+varies with the orientation of the swing foot relative to the stance foot.
+(C) Footstep planning result. The shaded regions indicate t he swing foot’s
+reachable area relative to each stance foot pose. (D) Whole- body motion
+generated from the planned footstep sequence and executed i n the dynamics
+simulator.
+relative to the stance foot. With these maps, our method plan s
+footstep sequences for HRP humanoid (Fig. 3 (C)) that are
+feasible under kinematic constraints. Furthermore, by add ing
+linear inequality constraints for obstacle avoidance [23] , we
+can generate footstep sequences that avoid collisions whil e
+maintaining feasibility. Fig. 3 (D) shows execution result s in
+the dynamics simulator Choreonoid [25].
+C. Multi-contact Motion Planning
+The same reachability-based formulation can be extended
+to multi-contact scenarios, where the robot uses both feet
+and a hand to make contact. We planned contact sequences
+for HRP humanoid walking in a narrow corridor while main-
+taining balance with a hand on the wall. The optimization
+problem extends the sequential reachability formulation ( 11)
+to include both foot and hand positions as decision variable s.
+We assume a ﬁxed sequence of contact transitions, repeating
+right foot, left foot, and left hand. The CoM, approximated
+by the waist link, is assumed to lie on the stance foot
+during single support, and on the midpoint of both feet
+(A) Hand position sampling (B) Hand reachability map
+(C) Contact planning result (D) Whole-body motion
+Fig. 4. Multi-contact motion planning using reachability m aps.
+(A) Reachable hand poses sampled using FK. Only reachable sa mples are
+shown, as FK-based sampling does not produce unreachable co nﬁgurations.
+(B) Heatmap of hand reachability values above zero (i.e., cl assiﬁed as
+reachable) at a speciﬁed height z [m]. (C) Contact sequence planned based
+on reachability constraints. Shaded areas indicate feasib le contact regions
+for feet and hand. (D) Whole-body motion execution in dynami cs simulation
+using the planned contact sequence.
+during double support. Reachability constraints are impos ed
+between the CoM and each contacting limb at every phase.
+The reachability map for the hand was trained in R3
+assuming point contact, using FK-based samples (Fig. 4 (A)
+and (B)). The planned contact sequence satisﬁes all reacha-
+bility conditions, and the resulting motion is executed usi ng a
+multi-contact controller [26], as shown in Fig. 4 (C) and (D) .
+D. Loco-manipulation Planning
+Loco-manipulation involves walking while simultaneously
+moving the hand along a speciﬁed trajectory. We formulate
+this task as an extension of the sequential reachability
+formulation (11), incorporating hand reachability constr aints
+alongside footstep planning. Unlike in multi-contact plan -
+ning, the hand pose is not directly optimized. Instead, we
+introduce a scalar parameter s that deﬁnes a predeﬁned hand
+trajectory and optimize this parameter within the planning
+framework. As shown in Fig. 5, we plan a motion for
+HRP humanoid to open a door while maintaining grasp on
+the doorknob throughout the walking sequence. The hand
+trajectory is parameterized by the door opening angle s as
+rh(s) = [ lhcos(s) lhsin(s) s]T∈ SE(2), where lh denotes
+the radius of the doorknob’s arc path.
+Using reachability maps for both hands and feet trained
+in SE(2), the method plans a contact sequence that satisﬁes
+the reachability conditions required to follow the traject ory.
+Even without a predeﬁned goal pose for the feet, the planner
+ﬁnds a footstep sequence that enables the hand to stay on
+the trajectory. The resulting whole-body motion is generat ed
+using the method proposed in [11].
+(A) Hand sampling (B) Planning result (C) Whole-body motion
+Fig. 5. Loco-manipulation planning using reachability map s.
+(A) Hand samples for reachability map generation, shown wit h respect to
+the waist link. (B) Planned footstep and hand contact sequen ce enabling
+the hand to follow the speciﬁed door-opening trajectory. (C ) Whole-body
+motion generated from the planned contact sequence.
+VII. D ISCUSSION
+1) Classiﬁcation over Density for Reachability Maps:
+Fig. 6 illustrates scalar-valued functions learned from un i-
+formly sampled joint conﬁgurations of the 2-DoF manip-
+ulator shown in Fig. 1. As seen in Fig. 6 (A) and (B),
+uniform sampling in joint space leads to non-uniform sample
+distributions in task space. As a result, the values obtaine d
+through kernel density estimation or Gaussian mixture mod-
+els (commonly used in previous work [17], [16]) do not
+correspond to the margin from the boundary of the reachable
+region, as shown in Fig. 6 (C) and (D).
+From this observation, we treat reachability estimation as
+a classiﬁcation problem rather than a density estimation ta sk.
+The learned function is thus used as an inequality constrain t
+in optimization, not as an objective function.
+2) Gradient Behavior of the Reachability Map: Fig. 6 (E)
+shows the decision function of the SVM-based reachability
+map proposed in this work. The function remains nearly con-
+stant, that is, with near-zero gradient, outside the reacha ble
+region far from the boundary. In the optimization framework
+described in Section V, which relies on iteratively solving a
+local QP with linearly approximated constraints, such zero
+gradients make it difﬁcult to return to feasible regions onc e
+a tentative solution becomes infeasible.
+To mitigate this issue, we impose upper and lower bounds
+on the update step ∆r in the local QP (8), preventing
+the optimizer from stepping too far outside the reachable
+region. This corresponds to a trust region, within which loc al
+approximations remain valid [27].
+For comparison, Fig. 6 (F) shows a signed distance func-
+tion of the reachable region. It satisﬁes the property (3)
+and provides a useful gradient that always points toward the
+closest point on the boundary. While this behavior is more
+optimization-friendly, constructing such functions efﬁc iently
+in high-dimensional spaces such as SE(3) remains an open
+challenge.
+3) Computation in SE(3) Space: As shown in Table I,
+classiﬁcation accuracy in SE(3) space is lower than in lower-
+dimensional task spaces. This drop in performance is most
+noticeable near the boundary of the reachable region, and
+directly affects the feasibility of the planned motion. To
+Fig. 6. Comparison of scalar-valued functions trained from uniform joint-
+space samples for a 2-DoF manipulator.
+(A) Uniformly sampled conﬁgurations in joint space. (B) Cor responding
+distribution in task space, showing non-uniform density. ( C) Kernel density
+estimate. (D) Gaussian mixture model. (E) SVM decision func tion used as
+a reachability map. (F) Signed distance function to the reac hable region.
+improve performance, promising directions include strict er
+handling of 3D orientation representations [16] and adapti ve
+sampling focused near reachability boundaries [28].
+VIII. C ONCLUSION
+We proposed a method for learning robot kinematic
+reachability as a differentiable scalar-valued function, im-
+plemented using either NNs or SVMs. We also presented a
+formulation for incorporating the learned reachability ma p
+into continuous optimization and demonstrated its applica -
+tion to a range of humanoid motion planning problems. This
+approach provides a data-driven representation of kinemat ics
+that facilitates efﬁcient optimization-based planning fo r high-
+degree-of-freedom robots.
+REFERENCES
+[1] F. Zacharias, C. Borst, and G. Hirzinger, “Capturing rob ot workspace
+structure: representing robot capabilities,” in IEEE/RSJ International
+Conference on Intelligent Robots and Systems , 2007, pp. 3229–3236.
+[2] N. V ahrenkamp, T. Asfour, and R. Dillmann, “Robot placem ent
+based on reachability inversion,” in IEEE International Conference
+on Robotics and Automation , 2013, pp. 1970–1975.
+[3] R. Diankov and J. Kuffner, “OpenRA VE: A planning archite cture for
+autonomous robotics,” Robotics Institute, Pittsburgh, PA, Tech. Rep.
+CMU-RI-TR-08-34, vol. 79, 2008.
+[4] K. Kaneko, H. Kaminaga, T. Sakaguchi, S. Kajita, M. Moris awa,
+I. Kumagai, and F. Kanehiro, “Humanoid Robot HRP-5P: An elec tri-
+cally actuated humanoid robot with high-power and wide-ran ge joints,”
+IEEE Robotics and Automation Letters , vol. 4, no. 2, pp. 1431–1438,
+2019.
+[5] Y . Han, J. Pan, M. Xia, L. Zeng, and Y .-J. Liu, “Efﬁcient SE (3)
+reachability map generation via interplanar integration o f intra-planar
+convolutions,” in IEEE International Conference on Robotics and
+Automation, 2021, pp. 1854–1860.
+[6] F. Zacharias, W. Sepp, C. Borst, and G. Hirzinger, “Using a model
+of the reachable workspace to position mobile manipulators for 3-
+D trajectories,” in IEEE-RAS International Conference on Humanoid
+Robots, 2009, pp. 55–61.
+[7] J. Dong and J. C. Trinkle, “Orientation-based reachabil ity map for
+robot base placement,” in IEEE/RSJ International Conference on
+Intelligent Robots and Systems , 2015, pp. 1488–1493.
+[8] A. Makhal and A. K. Goins, “Reuleaux: Robot base placemen t by
+reachability analysis,” in IEEE International Conference on Robotic
+Computing, 2018, pp. 137–142.
+[9] A. Hornung, A. Dornbush, M. Likhachev, and M. Bennewitz, “Any-
+time search-based footstep planning with suboptimality bo unds,” in
+IEEE-RAS International Conference on Humanoid Robots , 2012, pp.
+674–679.
+[10] S. J. Jorgensen, M. V edantam, R. Gupta, H. Cappel, and L. Sentis,
+“Finding locomanipulation plans quickly in the locomotion con-
+strained manifold,” in IEEE International Conference on Robotics and
+Automation, 2020, pp. 6611–6617.
+[11] M. Murooka, I. Kumagai, M. Morisawa, F. Kanehiro, and A. Kheddar,
+“Humanoid loco-manipulation planning based on graph searc h and
+reachability maps,” IEEE Robotics and Automation Letters , vol. 6,
+no. 2, pp. 1840–1847, 2021.
+[12] A. W. Winkler, C. D. Bellicoso, M. Hutter, and J. Buchli, “Gait and
+trajectory optimization for legged systems through phase- based end-
+effector parameterization,” IEEE Robotics and Automation Letters ,
+vol. 3, no. 3, pp. 1560–1567, 2018.
+[13] S. Tonneau, A. Del Prete, J. Pettr´ e, C. Park, D. Manocha , and
+N. Mansard, “An efﬁcient acyclic contact planner for multip ed robots,”
+IEEE Transactions on Robotics , vol. 34, no. 3, pp. 586–601, 2018.
+[14] H. Dai, A. V alenzuela, and R. Tedrake, “Whole-body moti on planning
+with centroidal dynamics and full kinematics,” in IEEE-RAS Interna-
+tional Conference on Humanoid Robots , 2014, pp. 295–302.
+[15] S. Kim, A. Shukla, and A. Billard, “Catching objects in ﬂ ight,” IEEE
+Transactions on Robotics , vol. 30, no. 5, pp. 1049–1065, 2014.
+[16] S. Kim, R. Haschke, and H. Ritter, “Gaussian mixture mod el for 3-DoF
+orientations,” Robotics and Autonomous Systems , vol. 87, pp. 28–37,
+2017.
+[17] J. Carpentier, R. Budhiraja, and N. Mansard, “Learning feasibility con-
+straints for multi-contact locomotion of legged robots,” i n Robotics:
+Science and Systems , 2017.
+[18] X. Lou, Y . Y ang, and C. Choi, “Learning to generate 6-DoF grasp
+poses with reachability awareness,” in IEEE International Conference
+on Robotics and Automation , 2020, pp. 1532–1538.
+[19] S. Kim and J. Perez, “Learning reachable manifold and in verse
+mapping for a redundant robot manipulator,” in IEEE International
+Conference on Robotics and Automation , 2021, pp. 4731–4737.
+[20] B. Ames, J. Morgan, and G. Konidaris, “IKFlow: Generati ng diverse
+inverse kinematics solutions,” IEEE Robotics and Automation Letters ,
+vol. 7, no. 3, pp. 7177–7184, 2022.
+[21] F. Cursi, W. Bai, W. Li, E. M. Y eatman, and P . Kormushev, “ Aug-
+mented neural network for full robot kinematic modelling in SE(3),”
+IEEE Robotics and Automation Letters , vol. 7, no. 3, pp. 7140–7147,
+2022.
+[22] B. Sch¨ olkopf, R. Williamson, A. Smola, J. Shawe-Taylo r, and J. Platt,
+“Support vector method for novelty detection,” in International Con-
+ference on Neural Information Processing Systems, 1999, pp. 582–588.
+[23] B. Faverjon and P . Tournassoud, “A local based approach for path
+planning of manipulators with a high number of degrees of fre edom,”
+in IEEE International Conference on Robotics and Automation , vol. 4,
+1987, pp. 1152–1159.
+[24] S. S. Khan and A. Ahmad, “Relationship between variants of one-
+class nearest neighbors and creating their accurate ensemb les,” IEEE
+Transactions on Knowledge and Data Engineering , vol. 30, no. 9, pp.
+1796–1809, 2018.
+[25] S. Nakaoka, “Choreonoid: Extensible virtual robot env ironment built
+on an integrated gui framework,” in IEEE/SICE International Sympo-
+sium on System Integration , 2012, pp. 79–85.
+[26] M. Murooka, M. Morisawa, and F. Kanehiro, “Centroidal t rajectory
+generation and stabilization based on preview control for h umanoid
+multi-contact motion,” IEEE Robotics and Automation Letters , vol. 7,
+no. 3, pp. 8225–8232, 2022.
+[27] J. Nocedal and S. J. Wright, Numerical optimization. Springer, 2006.
+[28] J. Pan, X. Zhang, and D. Manocha, “Efﬁcient penetration depth
+approximation using active learning,” ACM Transactions on Graphics ,
+vol. 32, no. 6, 2013.

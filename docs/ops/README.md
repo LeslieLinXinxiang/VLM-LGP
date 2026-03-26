@@ -9,6 +9,8 @@ This folder contains runtime, environment, network, and troubleshooting SOPs.
 - `PLANAR_EXP_FMB_ADAPTATION_REPORT_2026-03-21.md`
 - `TESTING_SOP_2026-03-21.md`
 - `FIGMA_MCP_VSCODE_SOP.md`
+- `PAPER_REFINEMENT_MANAGEMENT_SOP.md`
+- `METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
 
 ## Filing Rules
 

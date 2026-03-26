@@ -67,6 +67,7 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 - `docs/ops/PLANAR_EXP_FMB_ADAPTATION_REPORT_2026-03-21.md`
 - `docs/ops/TESTING_SOP_2026-03-21.md`
 - `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
+- `docs/ops/METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
 - `docs/archive/ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`
 - `docs/archive/ACTIVE_COLLISION_PAIR_STRATEGY_CHAIN.md`
 - `docs/decisions/README.md`
