@@ -12,6 +12,7 @@ This folder contains runtime, environment, network, and troubleshooting SOPs.
 - `PAPER_REFINEMENT_MANAGEMENT_SOP.md`
 - `METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
 - `ROADMAP_GUARD_SOP.md`
+- `LGP_WAYPOINT_MANIPULABILITY_COUPLING_EXECUTION_2026-03-30.md`
 
 ## Filing Rules
 

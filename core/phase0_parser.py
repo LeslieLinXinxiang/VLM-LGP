@@ -6,6 +6,8 @@ import subprocess
 import sys
 from typing import Dict, List, Tuple
 
+from core.reachability_field import compute_reachability_scores_from_unnamed_g
+
 
 _BASE_PATTERN = re.compile(
     r"Edit\s+l_panda_base\b[^\n]*\{\s*Q:\s*\"[^\"]*t\(([^)]+)\)",
@@ -271,3 +273,86 @@ def split_infeasible_objects_from_reachability(
         "infeasible_objects": infeasible,
         "errors": errors,
     }
+
+
+def split_infeasible_objects_from_reachability_field(
+    root_dir: str,
+    unnamed_g_path: str,
+    scene_named_g_path: str,
+    layout_list: List[Dict],
+    alpha: float = 0.6,
+    beta: float = 0.4,
+    tau_r: float = 0.45,
+    seed: int = 42,
+    use_komo_policy_gate: bool = True,
+) -> Tuple[Dict, Dict]:
+    """
+    TASK-019 MVP reachability split.
+
+    Returns:
+      (infeasible_report_compatible, reachability_score_report)
+    """
+    score_report = compute_reachability_scores_from_unnamed_g(
+        scene_path=unnamed_g_path,
+        layout_list=layout_list,
+        alpha=alpha,
+        beta=beta,
+        tau_r=tau_r,
+        seed=seed,
+    )
+
+    policy_gate_report: Dict = {
+        "status": "skipped",
+        "reason": "disabled",
+        "infeasible_objects": {},
+        "errors": {},
+    }
+    if use_komo_policy_gate:
+        policy_gate_report = split_infeasible_objects_from_reachability(
+            root_dir=root_dir,
+            scene_named_g_path=scene_named_g_path,
+            layout_list=layout_list,
+        )
+
+    policy_infeasible = (policy_gate_report.get("infeasible_objects") or {}) if isinstance(policy_gate_report, dict) else {}
+    policy_errors = (policy_gate_report.get("errors") or {}) if isinstance(policy_gate_report, dict) else {}
+
+    infeasible: Dict[str, Dict] = {}
+    objects = score_report.get("objects", []) if isinstance(score_report, dict) else []
+    for row in objects:
+        logical_id = row.get("logical_id")
+        if not logical_id:
+            continue
+
+        if logical_id in policy_infeasible:
+            row["decision"] = "infeasible"
+            row["reason"] = "komo_policy_gate_infeasible"
+
+        decision = row.get("decision", "infeasible")
+        if decision != "feasible":
+            infeasible[logical_id] = {
+                "status": "infeasible",
+                "message": row.get("reason", "score<tau_r"),
+                "pick_action": "pick_touch",
+                "object_type": row.get("object_type", ""),
+                "reachability_score": row.get("reachability_score", None),
+                "gmm_score": row.get("gmm_score", None),
+                "esdf_score": row.get("esdf_score", None),
+            }
+
+    status = "ok" if not policy_errors else "partial"
+    compatible_report = {
+        "status": status,
+        "scene_path": scene_named_g_path,
+        "infeasible_objects": infeasible,
+        "errors": policy_errors,
+    }
+
+    score_report["policy_gate"] = {
+        "enabled": bool(use_komo_policy_gate),
+        "status": policy_gate_report.get("status", "skipped") if isinstance(policy_gate_report, dict) else "skipped",
+        "infeasible_count": len(policy_infeasible),
+        "error_count": len(policy_errors),
+        "reference": "action_pick/action_pick_cylinder constraints in manipTools.cpp",
+    }
+    return compatible_report, score_report

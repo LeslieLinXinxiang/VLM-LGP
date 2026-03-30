@@ -67,6 +67,12 @@ cube_4   (table) { Q:"t(-0.30   0.20 .065)", joint:rigid, shape:ssBox, size:[.03
 tri_1    (table) { Q:"t(-0.45   0.10 .05)",  joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", color:[1 .4 .7], contact:1, mass:.2, logical:{ is_object, is_place } }
 
 # -----------------------------------------------------------
+# Overhead obstacle above right-half object region for ESDF test
+# Name intentionally follows obstacle_x convention.
+# -----------------------------------------------------------
+obstacle_1 (world) { Q:"t(0.38 0.05 0.80)", joint:rigid, shape:ssBox, size:[.50 .34 .02 .001], color:[.2 .2 .2], contact:1, logical:{ is_place } }
+
+# -----------------------------------------------------------
 # 5 Placement Bases — Cross Pattern (top-down view)
 # Arm at (0, -0.3), bases centered in front work zone
 #
@@ -87,26 +93,12 @@ Base_Bottom (table) { Q:"t( 0.00  0.18 .051)", shape:ssBox, size:[.025 .025 .002
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on the Table (for layer-1 objects)
-#
-# Table surface at Z=0.65 (table Q:t(0 0 .6) + half-height 0.05).
-# Ghost slots at Z=0.651 (1mm above table surface), contact:0.
-# Assembly zone centered at (0, 0.05). Left = -X, Right = +X, 8cm apart.
-# Naming: Table_Left, Table_Right  (consistent with Rect_N_Left/Right)
 # -----------------------------------------------------------
 Table_Left  (table) { Q:"t(-0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 Table_Right (table) { Q:"t( 0.05  0.10 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on each Rect
-#
-# Each rect (60x30x30mm) gets two ghost patches on its top surface:
-#   Left  patch: x = -0.015 (toward −X, i.e. robot-left)
-#   Right patch: x = +0.015 (toward +X, i.e. robot-right)
-#   z offset: rect half-height (0.015) + patch half-height (0.0005) = 0.0155
-#
-# Patch size: 25x25x1mm — non-contact kinematic frames only (is_place).
-# Used as terminal targets in LGP step files when position="left"/"right".
-# Naming: Rect_N_Left, Rect_N_Right  (capital R to distinguish from parent)
 # -----------------------------------------------------------
 Rect_1_Left  (rect_1) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
 Rect_1_Right (rect_1) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
@@ -124,5 +116,3 @@ Rect_7_Left  (rect_7) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .00
 Rect_7_Right (rect_7) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
 Rect_8_Left  (rect_8) { Q:"t(-0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
 Rect_8_Right (rect_8) { Q:"t( 0.015 0 0.0155)", shape:ssBox, size:[.025 .025 .001 .0005], color:[1 .8 0 0], contact:0, logical:{ is_place } }
-
-

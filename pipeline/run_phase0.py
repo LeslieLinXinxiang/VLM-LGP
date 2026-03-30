@@ -16,6 +16,7 @@ try:
     from core.phase0_parser import (
         build_phase0_layout_from_unnamed_g,
         split_infeasible_objects_from_reachability,
+        split_infeasible_objects_from_reachability_field,
     )
     print(">>> [DEBUG] Imports successful.")
 except ImportError as e:
@@ -93,6 +94,13 @@ def execute_phase0(
     layout_output_path=None,
     unnamed_g_path=None,
     infeasible_output_path=None,
+    reachability_mode="legacy_checker",
+    reachability_score_output_path=None,
+    reachability_alpha=0.6,
+    reachability_beta=0.4,
+    reachability_tau_r=0.45,
+    reachability_seed=42,
+    use_komo_policy_gate=True,
 ):
     """
     Phase0 deterministic entry.
@@ -126,6 +134,7 @@ def execute_phase0(
     capture_png = os.path.join(root_dir, "generated/phase0_capture.png")
     layout_json = layout_output_path or os.path.join(root_dir, "generated/phase0_layout.json")
     infeasible_json = infeasible_output_path or os.path.join(root_dir, "generated/infeasible_objects.json")
+    reachability_score_json = reachability_score_output_path or os.path.join(root_dir, "generated/reachability_score_report.json")
     scene_named_g = os.path.join(root_dir, "generated/scene/scene_named.g")
 
     reverse_mapping = None
@@ -160,12 +169,27 @@ def execute_phase0(
             parse_and_inject(unnamed_g, mapping_dict, scene_named_g)
             _normalize_scene_include(scene_named_g, root_dir)
 
-            print("[Step 3] Reachability split (feasible/infeasible)")
-            infeasible_report = split_infeasible_objects_from_reachability(
-                root_dir=root_dir,
-                scene_named_g_path=scene_named_g,
-                layout_list=layout_list,
-            )
+            print(f"[Step 3] Reachability split mode={reachability_mode}")
+            if reachability_mode == "gmm_esdf_mvp":
+                infeasible_report, score_report = split_infeasible_objects_from_reachability_field(
+                    root_dir=root_dir,
+                    unnamed_g_path=unnamed_g,
+                    scene_named_g_path=scene_named_g,
+                    layout_list=layout_list,
+                    alpha=reachability_alpha,
+                    beta=reachability_beta,
+                    tau_r=reachability_tau_r,
+                    seed=reachability_seed,
+                    use_komo_policy_gate=use_komo_policy_gate,
+                )
+                _save_layout(score_report, reachability_score_json)
+                print(f">>> PHASE 0 COMPLETE. Reachability Score: {reachability_score_json}")
+            else:
+                infeasible_report = split_infeasible_objects_from_reachability(
+                    root_dir=root_dir,
+                    scene_named_g_path=scene_named_g,
+                    layout_list=layout_list,
+                )
             _save_layout(infeasible_report, infeasible_json)
 
             print(f">>> PHASE 0 COMPLETE. Layout: {layout_json}")
@@ -178,6 +202,8 @@ def execute_phase0(
                 "scene_named_path": scene_named_g,
                 "specs_path": specs_json,
                 "unnamed_scene_path": unnamed_g,
+                "reachability_mode": reachability_mode,
+                "reachability_score_path": reachability_score_json if reachability_mode == "gmm_esdf_mvp" else None,
             }
         except Exception as e:
             print(f"[ERROR] Direct unnamed.g pipeline failed: {e}")
