@@ -12,28 +12,22 @@
   * *2026-03-25 11:20*: Added process governance doc `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md` to make style and logic checks reproducible across chat sessions/agents.
   * *2026-03-25 11:55*: Completed the first Method opening paragraph refinement in `paper/VLM-LGP-Assembly/bare_jrnl.tex` using Scheme A (conservative RA-L tone). Locked this paragraph as the style anchor for subsequent Method paragraph-by-paragraph updates.
 
-1. ### [TASK-019] Differentiable Reachability Heatmap (GMM + ESDF)
+1. ### [TASK-021] Native LGP Waypoint Reachability + Manipulability Coupling
 
 * **Status**: `[In Progress]`
-* **Created**: 2026-03-25 16:40
+* **Created**: 2026-03-30 15:00
 * **Completed**: N/A
 * **Timeline**:
-  * *2026-03-25 16:40*: Task activated to replace object-by-object engineering reachability checks with a generalized differentiable field model.
-  * *2026-03-25 16:40*: Baseline gap identified: current implementation loops over objects and calls waypoint checker one object at a time in `core/phase0_parser.py`, producing binary feasibility labels only.
-  * *2026-03-25 16:40*: Planned target interface defined: continuous reachability score map + thresholded feasibility decision + report schema extension.
-  * *2026-03-25 18:10*: Implementation boundary locked with TASK-018 separation: TASK-019 owns feasibility decision (continuous score + threshold), TASK-018 consumes feasible set for ranking only.
-  * *2026-03-25 18:10*: Scope clarified: TASK-019 uses GMM + ESDF scoring/thresholding (clearance semantics carried by ESDF term).
-  * *2026-03-25 18:10*: Runtime policy locked: offline/local computation is allowed (no mandatory real-time simulator loop), while legacy `generated/infeasible_objects.json` compatibility must remain intact.
-  * *2026-03-29 20:49*: Implemented MVP scoring path in `core/reachability_field.py`, integrated via `core/phase0_parser.py` and `pipeline/run_phase0.py`, added minimal smoke runner and obstacle stress scene under `test/reachability/`, and delivered visualization utility/report docs for handoff.
-  * *2026-03-29 21:06*: Task reopened for Phase-B upgrade: introduce robot-conditioned reachability training (joint limits/self-collision/IK labels) and demote current GMM+ESDF path to pre-filter/ranking only.
-  * *2026-03-29 22:16*: Consensus locked: pose/joint candidate acquisition (IK or equivalent) is mandatory for meaningful ESDF volume checks; execution priority policy will use layered decision: hard reachability/collision gate first, then manipulability-based ordering within feasible candidates (optional weighted fusion with reachability margin).
+  * *2026-03-30 15:00*: 新需求确认：使用原声 LGP waypoint 可达性（单帧碰撞）做 hard gate，结合 manipulability 排序。
+  * *2026-03-30 15:10*: 编写动作文档 `docs/ops/LGP_WAYPOINT_MANIPULABILITY_COUPLING_EXECUTION_2026-03-30.md` 并登记。
+  * *2026-03-30 15:30*: 设定验收标准：`infeasible_objects.json` -> `feasible_objects_static_test.json` -> `ordering_score_report_static_test.json`。
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
 
 1. **[TASK-018] Manipulability-First Execution Ordering (2026-03-26 12:43)**: Completed URDF-only static manipulability implementation, reporting, and visualization verification on `dev/manipulability`. Follow-up note kept: future priority policy may fuse TASK-019 reachability parameters with TASK-018 manipulability parameters.
-2. **[TASK-019] Differentiable Reachability Heatmap (GMM + ESDF) (2026-03-29 20:49)**: MVP closure recorded, but superseded by reopened Phase-B work to add robot-conditioned training and strict feasibility gating before final mainline closure.
+2. **[TASK-019] Differentiable Reachability Heatmap (GMM + ESDF) (2026-03-29 20:49)**: close the req, turn to solve IK using the original LGP first layer(FCL+libccb)
 3. **[TASK-020] Academic Graph Clustering Upgrade (2026-03-26 16:05)**: Finalized provenance-driven clustering and unified scheduling by removing no-merge fallback splitting; validated consistent behavior across three-branch, pyramid, and 3x5 benchmarks with solver-facing `step_*.fol/.lgp` generation.
 4. **[TASK-014] Planar Assembly Experiment (2026-03-21 13:10)**: Successfully designed and executed planar assembly tasks using FMB assets. Implemented mesh-aware Z-height calculation and eccentric grasping with handle markers. Verified end-to-end chained planning.
 5. **[TASK-016] Validate layer-aware cutting on the Phase1 support graph (2026-03-25 12:05)**: Closed without further execution; this validation track is superseded by the upcoming k-means clustering direction.
