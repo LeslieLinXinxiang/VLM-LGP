@@ -1,0 +1,4 @@
+fol: <test_grasp_fol.g>
+terminal: " (on cube TriPrism) "
+genericCollisions: true
+coll: []

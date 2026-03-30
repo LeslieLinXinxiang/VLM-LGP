@@ -72,14 +72,14 @@ struct Default_LGP_TAMP_Abstraction : LGP_TAMP_Abstraction {
 
   virtual std::shared_ptr<KOMO> setup_sequence(Configuration& C, uint K){
     ManipulationHelper manip;
-    manip.setup_sequence(C, K, -1e-2, 1e-2, false, false, true);
+    manip.setup_sequence(C, K, -1e-2, 1e-2, useBroadCollisions, false, true);
     // manip.setup_sequence(C, K,);
     return manip.komo;
   }
 
   virtual std::shared_ptr<KOMO> setup_motion(Configuration& C, uint K){
     ManipulationHelper manip;
-    manip.setup_motion(C, K, 30, -1.);
+    manip.setup_motion(C, K, 30, -1., 1e-1, useBroadCollisions);
     return manip.komo;
   }
 
@@ -93,6 +93,7 @@ struct Default_LGP_TAMP_Abstraction : LGP_TAMP_Abstraction {
   
   
   ManipulationHelper manip(komo);
+  manip.setExplicitCollisionPairsFilter(this->explicitCollisions);
 
   if(action(0)=="pick_box" || action(0)=="handover" || action(0)=="pick_touch"){
     str& obj = action(1);
@@ -142,6 +143,13 @@ struct Default_LGP_TAMP_Abstraction : LGP_TAMP_Abstraction {
       str& obj = action(4);
       
       StringA supports = action.sub({1, 4});
+      
+      manip.action_place_on_multi_support(time, obj, supports);
+
+    } else if(action(0) == "place_on_2_supports"){
+      str& obj = action(3);
+      
+      StringA supports = action.sub({1, 3});
       
       manip.action_place_on_multi_support(time, obj, supports);
     

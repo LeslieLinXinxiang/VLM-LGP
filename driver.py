@@ -5,14 +5,15 @@ import json
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from pipelines.run_phase0 import execute_phase0
-from pipelines.run_phase1 import execute_phase1
-from pipelines.run_phase2 import run_phase2_pipeline
+from pipeline.run_phase0 import execute_phase0
+from pipeline.run_phase1 import execute_phase1
+from pipeline.run_phase2 import run_phase2_pipeline
 
 # [NEW] 引入重构后的 ExecutionManager
 from core.ros2_bridge import ExecutionManager
 from core.solver_bridge import SolverBridge
 from core.utils import load_json
+from core.graph_adapter import build_graph_from_phase1
 
 def print_banner(text):
     print("\n" + "#" * 60)
@@ -28,6 +29,7 @@ class SystemDriver:
         self.current_g_file = os.path.join(self.generated_dir, "scene", "scene_named.g")
         
         self.target_graph = None
+        self.target_graph_math = None
         self.inventory_data = [] 
         
         # 物理执行管理器
@@ -69,7 +71,23 @@ class SystemDriver:
         success, graph_path = execute_phase1()
         if not success: return False
         self.target_graph = load_json(graph_path)
-        print(f"[Driver] Nodes to execute: {len(self.target_graph.get('assembly_nodes', []))}")
+
+        if isinstance(self.target_graph, dict) and "objects" in self.target_graph:
+            self.target_graph_math = build_graph_from_phase1(self.target_graph)
+            print(
+                "[Driver] Phase1 JSON received (objects+edges). "
+                f"Built G=(V,E): |V|={self.target_graph_math['meta']['vertex_count']}, "
+                f"|E|={self.target_graph_math['meta']['edge_count']}"
+            )
+        else:
+            self.target_graph_math = None
+
+        # New schema uses 'objects'; legacy uses 'assembly_nodes'
+        if "objects" in self.target_graph:
+            node_count = len([o for o in self.target_graph["objects"] if o.get("id", -1) != 0])
+        else:
+            node_count = len(self.target_graph.get('assembly_nodes', []))
+        print(f"[Driver] Nodes to execute: {node_count}")
         return True
 
     def init_inventory_status(self):
@@ -83,12 +101,16 @@ class SystemDriver:
         print_banner("ENTERING PLAN-EXECUTE LOOP")
         if not self.init_inventory_status(): return False
         
-        # 1. 初始化 Log 和 机器人
+        # 1. 初始化 Log
         self.init_master_log()
-        self.exec_manager.home_robot()
         
         self.history_chain = []
-        nodes = self.target_graph.get('assembly_nodes', [])
+
+        # New objects+edges schema: entire graph is a single Phase 2 job
+        if isinstance(self.target_graph, dict) and "objects" in self.target_graph:
+            nodes = [{"node_id": 1}]
+        else:
+            nodes = self.target_graph.get('assembly_nodes', [])
         
         # =========================================================
         # MAIN LOOP: Plan -> Execute -> Update State -> Next
@@ -146,6 +168,7 @@ class SystemDriver:
             self.append_to_log(node_id, stdout)
 
             # --- STEP 3: EXECUTE (Physical Action) ---
+            self.exec_manager.home_robot()
             exec_success = self.exec_manager.execute_trajectory_string(stdout, node_id)
             if not exec_success:
                 print(f"[Driver] ⚠️ Warning: Physical execution flagged issues.")

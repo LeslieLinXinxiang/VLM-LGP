@@ -1,0 +1,20 @@
+{
+  "scene_path": "test/scenes/scene_named.g",
+  "mode": "pick_waypoint_only",
+  "gripper": "l_gripper",
+  "trajectory_log_path": "generated/pw_direct_clean.log",
+  "results": {
+    "rect_1": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    }
+  },
+  "summary": {
+    "total": 1,
+    "feasible": 1,
+    "infeasible": 0,
+    "error": 0
+  }
+}

@@ -24,6 +24,17 @@ def clean_vlm_json_output(raw_text):
             raw_text = str(raw_text)
 
     content = raw_text.strip()
+
+    # 1) Preferred protocol: extract payload between explicit final JSON markers.
+    start_marker = "## FINAL_JSON_START"
+    end_marker = "## FINAL_JSON_END"
+    if start_marker in content and end_marker in content:
+        start_idx = content.find(start_marker)
+        end_idx = content.find(end_marker, start_idx + len(start_marker))
+        if start_idx != -1 and end_idx != -1:
+            marked = content[start_idx + len(start_marker):end_idx].strip()
+            if marked:
+                return marked
     
     # 2. 尝试提取 ```json ... ```
     # split() 返回 list，必须取下标 [1] 才能拿到中间的内容

@@ -1,0 +1,4 @@
+fol: <step_4.fol>
+terminal: " (on fmb_slot5 fmb_part5) "
+genericCollisions: false
+coll: []

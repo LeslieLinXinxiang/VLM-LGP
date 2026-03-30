@@ -6,7 +6,6 @@ __pycache__/
 *.exe
 *.log
 *.so
-*.drawio
 .DS_Store
 .vscode/
 .idea/
@@ -15,7 +14,6 @@ __pycache__/
 # 忽略编译目录和临时数据
 build/
 obj/
-generated/*
 !generated/.gitkeep
 
 # === 核心豁免 (白名单 - 强制保留) ===
@@ -31,3 +29,7 @@ generated/*
 
 # 排除 bin 里的可执行文件但保留源码
 bin/*.exe
+
+# === 环境变量配置 (机密) ===
+.env
+.env.*

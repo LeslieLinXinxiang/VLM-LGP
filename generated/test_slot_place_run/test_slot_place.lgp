@@ -1,0 +1,4 @@
+fol: <test_slot_place_fol.g>
+terminal: " (on Left_slot cube1) (on Right_slot cube2) "
+genericCollisions: true
+coll: []

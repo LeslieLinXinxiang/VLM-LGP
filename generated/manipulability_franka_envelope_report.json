@@ -1,0 +1,74 @@
+{
+  "urdf": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/rai/test/newLGP/rai-robotModels/panda/panda_arm_hand.urdf",
+  "joint_limits": [
+    {
+      "joint": "panda_joint1",
+      "lower_rad": -2.8973,
+      "upper_rad": 2.8973,
+      "lower_deg": -166.00306198325342,
+      "upper_deg": 166.00306198325342
+    },
+    {
+      "joint": "panda_joint2",
+      "lower_rad": -1.7628,
+      "upper_rad": 1.7628,
+      "lower_deg": -101.00100012566152,
+      "upper_deg": 101.00100012566152
+    },
+    {
+      "joint": "panda_joint3",
+      "lower_rad": -2.8973,
+      "upper_rad": 2.8973,
+      "lower_deg": -166.00306198325342,
+      "upper_deg": 166.00306198325342
+    },
+    {
+      "joint": "panda_joint4",
+      "lower_rad": -3.0718,
+      "upper_rad": -0.0698,
+      "lower_deg": -176.00117550828628,
+      "upper_deg": -3.9992454100131463
+    },
+    {
+      "joint": "panda_joint5",
+      "lower_rad": -2.8973,
+      "upper_rad": 2.8973,
+      "lower_deg": -166.00306198325342,
+      "upper_deg": 166.00306198325342
+    },
+    {
+      "joint": "panda_joint6",
+      "lower_rad": -0.0175,
+      "upper_rad": 3.7525,
+      "lower_deg": -1.0026761414789407,
+      "upper_deg": 215.0024126228414
+    },
+    {
+      "joint": "panda_joint7",
+      "lower_rad": -2.8973,
+      "upper_rad": 2.8973,
+      "lower_deg": -166.00306198325342,
+      "upper_deg": 166.00306198325342
+    }
+  ],
+  "base_origin_world": [
+    0.0,
+    -0.3,
+    0.65
+  ],
+  "workspace_mc": {
+    "samples": 120000,
+    "r_max_m": 1.1885172026678403,
+    "r_p999_m": 1.1830121162919673,
+    "xyz_min_world_m": [
+      -0.8523993350642345,
+      -1.1540050549344965,
+      0.32755990616396163
+    ],
+    "xyz_max_world_m": [
+      0.8542977498286224,
+      0.555543644831111,
+      1.8377415291457904
+    ]
+  }
+}

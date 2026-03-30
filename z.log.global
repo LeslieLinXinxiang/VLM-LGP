@@ -1,12 +1,12 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-01-26 11:08:12:75676
+** execution start: 2026-03-30 20:16:40:799122
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
 graph.cpp:initParameters:1608(3)  - failed
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/generated/scene' from '/home/leslie/Projects/VLM_LGP'
 util.cpp:getIs:1104(3) opening input file 'scene_named.g'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/generated/scene/../../rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/generated/scene'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/generated/scene'
 util.cpp:getIs:1104(3) opening input file 'panda.g'
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda'
 util.cpp:getIs:1104(3) opening input file 'panda_arm_hand_conv.yml'
@@ -42,5 +42,21 @@ util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated/
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes' from '/home/leslie/Projects/VLM_LGP/generated/scene'
 util.cpp:getIs:1104(3) opening input file 'finger.h5'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated/scene'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/generated' from '/home/leslie/Projects/VLM_LGP/generated/scene'
+util.cpp:getIs:1104(3) opening input file 'triangular_prism.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated/scene'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
-kin.cpp:getFrame:521(-1) cannot find frame named 'manual_camera_frame'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/generated/scene' from '/home/leslie/Projects/VLM_LGP'
+util.cpp:getIs:1104(3) opening input file 'scene_named.g'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/generated/scene'
+util.cpp:getIs:1104(3) opening input file 'panda.g'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda' from '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda'
+util.cpp:getIs:1104(3) opening input file 'panda_arm_hand_conv.yml'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/generated/scene'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
+** execution stop: 2026-03-30 20:16:41:75087
+** real time: 0.27598sec
+** CPU time: 3.61954
+
+** set+queried params:
