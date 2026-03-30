@@ -6,6 +6,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 
 ## 2. Module List
 
+- `Native LGP Reachability Gate`: Hard gate pre-filter for kinematic feasibility.
 - `KOMO ManipTools`: Low-level physical manipulation constraints.
 - `LGP TAMP Core`: Tree search and logical node expansion for Task and Motion Planning.
 - `Python Scripting Layer`: Environment execution, batch running, and visual verification.
@@ -36,6 +37,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 
 - All hard placement constraints must use relative coordinates (`FS_positionDiff` or `FS_positionRel`) rather than absolute World Coordinates to avoid dependency on global geometrical origin offsets.
 - Fast solver convergence requires purging redundant soft constraints (`OT_sos`) that clash with exact equality constraints (`OT_eq`).
+- **Active Collision Whitelisting**: Internal fixed/constrained robot joint pairs MUST be excluded from active constraint injection to prevent redundant penetration depth evaluations (avoids EPA bottlenecks yielding ~15x speedup).
 
 ## 7. Two-Mode Solver Architecture
 

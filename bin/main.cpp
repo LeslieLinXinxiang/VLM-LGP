@@ -19,6 +19,7 @@
 #include <sstream>
 #include <chrono>
 #include <cmath>
+#include <ctime>
 #include <Kin/F_qFeatures.h>
 
 namespace fs = std::filesystem;
@@ -77,6 +78,16 @@ static bool shouldUseForActiveCollision(const rai::Frame* fr) {
     if(name.rfind("l_", 0) == 0 && !isRobotWhitelistFrame(name)) return false;
 
     return true;
+}
+
+static bool isWhitelistPair(const std::string& a, const std::string& b) {
+    if ((a == "l_finger1" && b == "l_finger2") || (b == "l_finger1" && a == "l_finger2")) return true;
+    if ((a == "l_finger1" && b == "l_palm") || (b == "l_finger1" && a == "l_palm")) return true;
+    if ((a == "l_finger2" && b == "l_palm") || (b == "l_finger2" && a == "l_palm")) return true;
+    if ((a == "l_panda_coll6" && b == "l_panda_coll7") || (b == "l_panda_coll6" && a == "l_panda_coll7")) return true;
+    if ((a == "l_palm" && b == "l_panda_coll6") || (b == "l_palm" && a == "l_panda_coll6")) return true;
+    if ((a == "l_palm" && b == "l_panda_coll7") || (b == "l_palm" && a == "l_panda_coll7")) return true;
+    return false;
 }
 
 static bool isTaskRelevantCenterForTableFallback(const std::string& name) {
@@ -157,7 +168,9 @@ static std::vector<std::pair<std::string, std::string>> extractActivePairsFromWa
 
                 std::pair<std::string, std::string> pair =
                     (center < obs) ? std::make_pair(center, obs) : std::make_pair(obs, center);
-                uniqPairs.insert(pair);
+                if (!isWhitelistPair(pair.first, pair.second)) {
+                    uniqPairs.insert(pair);
+                }
             }
         }
     }
@@ -368,7 +381,14 @@ int main(int argc, char** argv) {
     std::string& current_state_file = temp_state_file;
     const double active_radius_m = 0.15;
     std::vector<ActiveCollisionSummary> active_summaries;
-    const std::string report_file = (fs::path(task_directory) / "active_collision_report.json").string();
+    
+    fs::path history_dir = fs::path(task_directory) / "active_collision_history";
+    fs::create_directories(history_dir);
+    auto now_time = std::chrono::system_clock::now();
+    std::time_t now_c = std::chrono::system_clock::to_time_t(now_time);
+    std::stringstream ss_ts;
+    ss_ts << std::put_time(std::localtime(&now_c), "%Y%m%d_%H%M%S");
+    const std::string report_file = (history_dir / ("report_" + ss_ts.str() + ".json")).string();
 
     // --- PHASE A: EXECUTE LGP TASKS ---
     if (!lgp_files.empty()) {

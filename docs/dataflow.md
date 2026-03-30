@@ -2,6 +2,7 @@
 
 ## 1. Data Entities
 - **Scene Configurations**: `.g` files defining shapes, positions, joints.
+- **Phase0 Reachability Map**: `generated/infeasible_objects.json` dictating which objects are unreachable due to single-frame bounds.
 - **Phase0 VLM Inputs**: `generated/phase0_capture.png`, `generated/phase0_specs.json`, and the selected Phase0 prompt markdown file passed into `VLMClient.match_objects(...)`.
 - **Phase0 Semantic Layout**: `generated/phase0_layout.json` containing the VLM semantic matching results before later graph/strategy stages consume them.
 - **Task Logic**: `.fol` and `.lgp` files dictating symbol steps (e.g., `pick_touch`, `place_on_multi_support`).
@@ -21,7 +22,7 @@
 - **Python Viewer (`view_full_assembly.py`)**: Consumes the final `output_state.g` to visualize results.
 
 ## 4. Flow Diagram (Textual)
-`Phase0 Capture + Specs + Prompt` -> `VLMClient.match_objects(...)` -> `phase0_layout.json` -> `Branch-Aware Clustering` -> `Deterministic Strategy` -> `LGP Core / Python bridge` -> `Motif & Symbol Plan` -> `KOMO (manipTools)` -> `Optimization Solver` -> `Raw Joint Frames` -> `Main executable` -> `1000Hz Trajectory.txt` & `output_state.g`.
+`Phase0 Reachability Check` -> `phase0_layout.json` & `infeasible_objects.json` -> `Manipulability Ranking` -> `VLMClient.match_objects(...)` -> `Branch-Aware Clustering` -> `Deterministic Strategy` -> `LGP Core / Python bridge` -> `Motif & Symbol Plan` -> `KOMO (manipTools)` -> `Optimization Solver` -> `Raw Joint Frames` -> `Main executable` -> `1000Hz Trajectory.txt` & `output_state.g` & `active_collision_history/report_xxx.json`.
 
 ## 5. Data Ownership Rules
 - `manipTools.cpp` exclusively owns the mathematical definition of physical contacts and manipulation constraints.

@@ -12,21 +12,13 @@
   * *2026-03-25 11:20*: Added process governance doc `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md` to make style and logic checks reproducible across chat sessions/agents.
   * *2026-03-25 11:55*: Completed the first Method opening paragraph refinement in `paper/VLM-LGP-Assembly/bare_jrnl.tex` using Scheme A (conservative RA-L tone). Locked this paragraph as the style anchor for subsequent Method paragraph-by-paragraph updates.
 
-1. ### [TASK-021] Native LGP Waypoint Reachability + Manipulability Coupling
-
-* **Status**: `[In Progress]`
-* **Created**: 2026-03-30 15:00
-* **Completed**: N/A
-* **Timeline**:
-  * *2026-03-30 15:00*: 新需求确认：使用原声 LGP waypoint 可达性（单帧碰撞）做 hard gate，结合 manipulability 排序。
-  * *2026-03-30 15:10*: 编写动作文档 `docs/ops/LGP_WAYPOINT_MANIPULABILITY_COUPLING_EXECUTION_2026-03-30.md` 并登记。
-  * *2026-03-30 15:30*: 设定验收标准：`infeasible_objects.json` -> `feasible_objects_static_test.json` -> `ordering_score_report_static_test.json`。
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
 
-1. **[TASK-018] Manipulability-First Execution Ordering (2026-03-26 12:43)**: Completed URDF-only static manipulability implementation, reporting, and visualization verification on `dev/manipulability`. Follow-up note kept: future priority policy may fuse TASK-019 reachability parameters with TASK-018 manipulability parameters.
+1. **[TASK-021] Native LGP Waypoint Reachability + Manipulability Coupling (2026-03-30 21:30)**: Completed pipeline integration of LGP kinematic waypoint hard gate with Jacobian manipulability screening, isolated explicit collision reduction (~15x solver speedup), and fully verified script execution logic up to LGP TAMP solver.
+2. **[TASK-018] Manipulability-First Execution Ordering (2026-03-26 12:43)**: Completed URDF-only static manipulability implementation, reporting, and visualization verification on `dev/manipulability`. Follow-up note kept: future priority policy may fuse TASK-019 reachability parameters with TASK-018 manipulability parameters.
 2. **[TASK-019] Differentiable Reachability Heatmap (GMM + ESDF) (2026-03-29 20:49)**: close the req, turn to solve IK using the original LGP first layer(FCL+libccb)
 3. **[TASK-020] Academic Graph Clustering Upgrade (2026-03-26 16:05)**: Finalized provenance-driven clustering and unified scheduling by removing no-merge fallback splitting; validated consistent behavior across three-branch, pyramid, and 3x5 benchmarks with solver-facing `step_*.fol/.lgp` generation.
 4. **[TASK-014] Planar Assembly Experiment (2026-03-21 13:10)**: Successfully designed and executed planar assembly tasks using FMB assets. Implemented mesh-aware Z-height calculation and eccentric grasping with handle markers. Verified end-to-end chained planning.

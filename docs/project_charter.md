@@ -7,7 +7,7 @@ Develop and refine the VLM-LGP (Vision-Language Model - Logic Geometric Programm
 The robotic path planning and constraint satisfaction solver (KOMO) struggles with complex contacts, floating objects, and inefficient trajectory planning due to conflicting, redundant, or hard-coded constraints. AI oversight over the codebase risks hallucination and configuration drift without a strict documentation protocol.
 
 ## 3. Expected Outputs
-- A robust C++ robotic solver core (`manipTools.cpp`, `LGP_TAMP`, etc.).
+- A robust C++ robotic solver core (`manipTools.cpp`, `LGP_TAMP`, etc.) featuring real-time collision monitoring and active constraint logic.
 - Python verification scripts for batch generation and visualization (`run_pyramid_assembly.py`, `view_full_assembly.py`).
 - 100% successful physical simulation placements without hovering, clipping, or violent oscillations.
 - Strict DDE-Bootstrap document management.

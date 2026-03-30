@@ -62,21 +62,16 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 
 ### Supplementary
 
-- `docs/ops/README.md`
-- `docs/ops/NETWORK_TROUBLESHOOTING_SOP.md`
-- `docs/ops/CROSS_DEVICE_SYNC_SOP.md`
-- `docs/ops/PLANAR_EXP_FMB_ADAPTATION_REPORT_2026-03-21.md`
-- `docs/ops/TESTING_SOP_2026-03-21.md`
-- `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
-- `docs/ops/METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
-- `docs/ops/ROADMAP_GUARD_SOP.md`
+- `docs/ops/PIPELINE_EXECUTION_GUIDE.md`
 - `docs/ops/LGP_WAYPOINT_MANIPULABILITY_COUPLING_EXECUTION_2026-03-30.md`
-- `docs/archive/ACTIVE_COLLISION_LAYER_CONFLICT_REPORT_2026-03-18.md`
-- `docs/archive/ACTIVE_COLLISION_PAIR_STRATEGY_CHAIN.md`
-- `docs/decisions/README.md`
-- `docs/decisions/DDR_TEMPLATE.md`
-- `docs/decisions/DDR-20260313-waypoint-gated-constraint-reachability.md`
-- `docs/archive/README.md`
-- `docs/archive/AI_HANDOFF_PHASE1_GRAPH_20260310.md`
-- `docs/governance/README.md`
-- `docs/module_specs/README.md`
+- `docs/ops/NOTION_DAILY_REPORT_2026-03-30.md`
+- `docs/ops/ROADMAP_GUARD_SOP.md`
+- `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md`
+- `docs/ops/CROSS_DEVICE_SYNC_SOP.md`
+- `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
+- `docs/ops/NETWORK_TROUBLESHOOTING_SOP.md`
+- `docs/ops/TESTING_SOP_2026-03-21.md`
+- `docs/archive/` (Contains retired process reports, old execution logs, and closed task notes starting from TASK-010 to TASK-021)
+- `docs/decisions/` (Contains system decision records and DDR templates)
+- `docs/governance/`
+

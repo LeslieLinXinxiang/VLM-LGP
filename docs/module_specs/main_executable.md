@@ -32,11 +32,12 @@ The primary C++ entry point that loads task configurations, invokes the LGP solv
 	- Converts deduplicated pair list to flat `StringA`.
 	- Removes invalid frame-name pairs against current configuration.
 - Runtime override before full-motion solve:
+	- Filters pairs against a hardcoded whitelist (`isWhitelistPair`) to discard internal structural pairs (e.g., `l_finger1`-`l_finger2`).
 	- `tamp->explicitCollisions = ...`
 	- `tamp->useBroadCollisions = false`
 - Reporting:
 	- Per-subtask terminal summary (`[ACTIVE_COLL] ...`).
-	- Incremental + final JSON report at `<task_dir>/active_collision_report.json`.
+	- Incremental + final JSON report timestamped at `<task_dir>/active_collision_history/report_%Y%m%d_%H%M%S.json`.
 
 ### Current Known Blind Spot (Tracked)
 - The moving-center strategy can bias pair coverage toward the task object and gripper family.

@@ -6,7 +6,7 @@
       "lgp_file": "step_1.lgp",
       "action_summary": "pick_touch fmb_part2 table l_gripper | place_straightOn fmb_part2 l_gripper fmb_slot2",
       "pair_count": 16,
-      "full_motion_solver_ms": 9708,
+      "full_motion_solver_ms": 9691,
       "pairs": [
         ["fmb_board", "fmb_part2"],
         ["fmb_board", "l_finger1"],
@@ -30,7 +30,7 @@
       "lgp_file": "step_2.lgp",
       "action_summary": "pick_touch fmb_part5 table l_gripper | place_straightOn fmb_part5 l_gripper fmb_slot5",
       "pair_count": 19,
-      "full_motion_solver_ms": 24616,
+      "full_motion_solver_ms": 24609,
       "pairs": [
         ["fmb_board", "fmb_part5"],
         ["fmb_board", "l_finger1"],
@@ -57,7 +57,7 @@
       "lgp_file": "step_3.lgp",
       "action_summary": "pick_touch fmb_part3 table l_gripper | place_straightOn fmb_part3 l_gripper fmb_slot3",
       "pair_count": 25,
-      "full_motion_solver_ms": 47483,
+      "full_motion_solver_ms": 47694,
       "pairs": [
         ["fmb_board", "fmb_part3"],
         ["fmb_board", "l_finger1"],
@@ -90,7 +90,7 @@
       "lgp_file": "step_4.lgp",
       "action_summary": "pick_touch fmb_part4 table l_gripper | place_straightOn fmb_part4 l_gripper fmb_slot4",
       "pair_count": 26,
-      "full_motion_solver_ms": 4235,
+      "full_motion_solver_ms": 4342,
       "pairs": [
         ["fmb_board", "fmb_part4"],
         ["fmb_board", "l_finger1"],

@@ -5,10 +5,10 @@
   "base_link": "panda_link0",
   "ee_link": "panda_hand",
   "inputs": {
-    "layout_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/generated/phase0_layout.json",
-    "infeasible_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/generated/infeasible_objects.json",
-    "g_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/unnamed.g",
-    "urdf_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/rai/test/newLGP/rai-robotModels/panda/panda_arm_hand.urdf",
+    "layout_path": "generated/phase0_layout.json",
+    "infeasible_path": "generated/infeasible_objects.json",
+    "g_path": "unnamed.g",
+    "urdf_path": "rai/test/newLGP/rai-robotModels/panda/panda_arm_hand.urdf",
     "approach_offset_z": 0.08,
     "counts": {
       "layout_total": 15,
@@ -26,9 +26,9 @@
         0.0,
         0.745
       ],
-      "ik_error": 2.764191954394289e-05,
-      "raw_score": 0.07486973335247239,
-      "manipulability_score": 0.2779517796866789,
+      "ik_error": 2.764191954382025e-05,
+      "raw_score": 0.07486973335247227,
+      "manipulability_score": 0.27795177968667684,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 1
@@ -42,9 +42,9 @@
         -0.1,
         0.745
       ],
-      "ik_error": 4.6147352168972915e-05,
-      "raw_score": 0.055786383146713754,
-      "manipulability_score": 1.8302446561055624e-11,
+      "ik_error": 4.614735216907273e-05,
+      "raw_score": 0.055786383146713726,
+      "manipulability_score": 1.8301334835033964e-11,
       "status": "unknown",
       "reason": "score<tau_m",
       "rank": null
@@ -58,9 +58,9 @@
         0.2,
         0.745
       ],
-      "ik_error": 4.864665988529419e-05,
-      "raw_score": 0.11828900771510717,
-      "manipulability_score": 0.9103598448786092,
+      "ik_error": 4.864665988534771e-05,
+      "raw_score": 0.11828900771510739,
+      "manipulability_score": 0.9103598448786133,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 1
@@ -74,9 +74,9 @@
         0.0,
         0.745
       ],
-      "ik_error": 3.798758017525392e-05,
-      "raw_score": 0.11718418818630572,
-      "manipulability_score": 0.8942679872680901,
+      "ik_error": 3.7987580175504536e-05,
+      "raw_score": 0.11718418818630562,
+      "manipulability_score": 0.8942679872680894,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 2
@@ -90,9 +90,9 @@
         0.1,
         0.745
       ],
-      "ik_error": 2.9630557606539185e-05,
-      "raw_score": 0.09505546750482596,
-      "manipulability_score": 0.5719599423554285,
+      "ik_error": 2.96305576065195e-05,
+      "raw_score": 0.09505546750482613,
+      "manipulability_score": 0.5719599423554311,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 3
@@ -106,9 +106,9 @@
         -0.1,
         0.745
       ],
-      "ik_error": 7.573687169488408e-05,
-      "raw_score": 0.09211184618754538,
-      "manipulability_score": 0.5290856684472228,
+      "ik_error": 7.57368716950281e-05,
+      "raw_score": 0.09211184618754542,
+      "manipulability_score": 0.5290856684472236,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 4
@@ -122,8 +122,8 @@
         0.2,
         0.745
       ],
-      "ik_error": 3.982444569838952e-05,
-      "raw_score": 0.12444343664058835,
+      "ik_error": 3.982444569822538e-05,
+      "raw_score": 0.12444343664058828,
       "manipulability_score": 1.0,
       "status": "ranked",
       "reason": "score>=tau_m",
@@ -138,9 +138,9 @@
         0.1,
         0.745
       ],
-      "ik_error": 7.476315429836502e-05,
-      "raw_score": 0.12422467313442223,
-      "manipulability_score": 0.9968136776189844,
+      "ik_error": 7.476315429849511e-05,
+      "raw_score": 0.12422467313442212,
+      "manipulability_score": 0.9968136776189839,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 2
@@ -154,9 +154,9 @@
         0.2,
         0.745
       ],
-      "ik_error": 4.864665988075993e-05,
+      "ik_error": 4.864665988085744e-05,
       "raw_score": 0.11828900771392192,
-      "manipulability_score": 0.910359844861346,
+      "manipulability_score": 0.9103598448613468,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 3
@@ -170,9 +170,9 @@
         0.0,
         0.745
       ],
-      "ik_error": 3.798758018303563e-05,
+      "ik_error": 3.798758018297816e-05,
       "raw_score": 0.11718418818463679,
-      "manipulability_score": 0.8942679872437819,
+      "manipulability_score": 0.8942679872437826,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 4
@@ -186,9 +186,9 @@
         0.1,
         0.745
       ],
-      "ik_error": 2.9630557600673607e-05,
+      "ik_error": 2.963055760056583e-05,
       "raw_score": 0.09505546750385667,
-      "manipulability_score": 0.5719599423413105,
+      "manipulability_score": 0.5719599423413108,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 5
@@ -202,9 +202,9 @@
         -0.1,
         0.745
       ],
-      "ik_error": 7.573687169461373e-05,
-      "raw_score": 0.0921118461862917,
-      "manipulability_score": 0.5290856684289629,
+      "ik_error": 7.57368716947095e-05,
+      "raw_score": 0.09211184618629173,
+      "manipulability_score": 0.5290856684289634,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 6
@@ -218,9 +218,9 @@
         0.0,
         0.745
       ],
-      "ik_error": 2.764191954292487e-05,
-      "raw_score": 0.07486973334810387,
-      "manipulability_score": 0.2779517796230508,
+      "ik_error": 2.7641919542900515e-05,
+      "raw_score": 0.07486973334810376,
+      "manipulability_score": 0.2779517796230489,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 7
@@ -234,8 +234,8 @@
         -0.1,
         0.745
       ],
-      "ik_error": 4.614735216694222e-05,
-      "raw_score": 0.05578638314545716,
+      "ik_error": 4.614735216683604e-05,
+      "raw_score": 0.05578638314545721,
       "manipulability_score": 0.0,
       "status": "unknown",
       "reason": "score<tau_m",
@@ -250,9 +250,9 @@
         0.1,
         0.73
       ],
-      "ik_error": 2.0201654511849438e-05,
+      "ik_error": 2.0201654512022934e-05,
       "raw_score": 0.12442889063408127,
-      "manipulability_score": 0.9997881352932207,
+      "manipulability_score": 0.9997881352932217,
       "status": "ranked",
       "reason": "score>=tau_m",
       "rank": 1
