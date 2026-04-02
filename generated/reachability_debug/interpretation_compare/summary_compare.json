@@ -1,0 +1,34 @@
+{
+  "cube1": {
+    "case": "cube1",
+    "obj": "cube_1",
+    "grid_min": -2.9,
+    "grid_max": 2.9,
+    "grid_num": 241,
+    "feasible_count": 20,
+    "intervals": [
+      [
+        -2.6341666666666668,
+        -2.175
+      ]
+    ],
+    "residuals": {
+      "pos_mm_mean": 0.010641096336413256,
+      "pos_mm_max": 0.11665183307869943,
+      "ori_deg_mean": 0.21546129750727724,
+      "ori_deg_max": 1.8329427918915184
+    },
+    "motion_span": {
+      "gripper_max_deviation_mm": 0.1085610332930344,
+      "elbow_max_deviation_cm": 5.380782424664086,
+      "wrist_max_deviation_cm": 0.010916992837886138
+    },
+    "psi_feasible_min": -2.6341666666666668,
+    "psi_feasible_max": -2.175
+  },
+  "center": {
+    "case": "center",
+    "obj": "probe_center",
+    "feasible_count": 0
+  }
+}

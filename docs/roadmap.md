@@ -2,6 +2,15 @@
 
 ## 1. Current Active Tasks (Timeline Log)
 
+1. ### [TASK-022] Reachability 1D Self-Motion Adaptation Study for Franka
+
+* **Status**: `[In Progress]`
+* **Created**: 2026-04-02 15:50
+* **Completed**: N/A
+* **Timeline**:
+  * *2026-04-02 15:50*: Task created to investigate whether the 7-DOF analytical arm-angle/self-motion manifold method (Shimizu et al., 2008) can be adapted to Franka for fast obstacle-induced pick infeasibility screening.
+  * *2026-04-02 15:50*: Defined core objective: reduce LGP/libccd+FCL dependency in reachability prefilter by introducing a geometry-aware 1D proxy search space with collision-aware feasibility intervals.
+
 1. ### [TASK-017] RA-L Method Section Refinement Governance Setup
 
 * **Status**: `[In Progress]`
@@ -12,24 +21,11 @@
   * *2026-03-25 11:20*: Added process governance doc `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md` to make style and logic checks reproducible across chat sessions/agents.
   * *2026-03-25 11:55*: Completed the first Method opening paragraph refinement in `paper/VLM-LGP-Assembly/bare_jrnl.tex` using Scheme A (conservative RA-L tone). Locked this paragraph as the style anchor for subsequent Method paragraph-by-paragraph updates.
 
-1. ### [TASK-006] MuJoCo Simulation Debug Loop Integration
-
-* **Status**: `[In Progress]`
-* **Created**: 2026-03-12 22:42
-* **Completed**: N/A
-* **Timeline**:
-  * *2026-03-12 22:42*: Task moved from backlog to active execution. Goal is to align MuJoCo scene with `generated/scene_named.g`, validate key manipulation actions (pick/place), and finalize reproducible simulation-side debug scripts.
-  * *2026-03-13 17:03*: Task moved from `In Progress` back to `Pending Backlog`.
-  * *2026-03-21 13:10*: Briefly restored for planar validation but moved back to pending to prioritize documentation.
-  * *2026-04-01 14:32*: Implemented and validated `scripts/sample_tcp_error.py` for RAI-vs-MuJoCo end-effector consistency sampling. Current observed baseline: link7 error approximately 0, TCP error approximately 0.1 mm.
-  * *2026-04-01 14:32*: Implemented and validated `scripts/export_lgp_scene_xyz.py` to export object xyz from `.g` scene files without modifying runtime pipeline behavior.
-  * *2026-04-01 14:32*: Confirmed export on `generated/scene/scene_named.g` with successful JSON/CSV output generation for downstream MuJoCo-vs-LGP scene alignment checks.
-
-
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
 > **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
 
+1. **[TASK-006] MuJoCo Simulation Debug Loop Integration (2026-04-02 15:50)**: Closed with root-cause confirmation that TCP residual error mainly comes from steady-state PD servo bias under gravity in MuJoCo general actuators, plus delivered gain scan automation in `Mujoco_Simulation/auto_gainprm_tune.py`. Keywords: steady-state error, `gainprm/biasprm` coupling, `kp-kd` sweep, Jacobian-level TCP error attribution, gravity feedforward recommendation.
 1. **[TASK-021] Native LGP Waypoint Reachability + Manipulability Coupling (2026-03-30 21:30)**: Completed pipeline integration of LGP kinematic waypoint hard gate with Jacobian manipulability screening, isolated explicit collision reduction (~15x solver speedup), and fully verified script execution logic up to LGP TAMP solver.
 2. **[TASK-018] Manipulability-First Execution Ordering (2026-03-26 12:43)**: Completed URDF-only static manipulability implementation, reporting, and visualization verification on `dev/manipulability`. Follow-up note kept: future priority policy may fuse TASK-019 reachability parameters with TASK-018 manipulability parameters.
 2. **[TASK-019] Differentiable Reachability Heatmap (GMM + ESDF) (2026-03-29 20:49)**: close the req, turn to solve IK using the original LGP first layer(FCL+libccb)

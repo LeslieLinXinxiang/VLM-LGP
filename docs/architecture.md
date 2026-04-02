@@ -13,6 +13,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 - `Main Executable`: Reads `.lgp` configurations and executes the solver loop.
 - `Graph Clustering Engine`: Deterministic branch-aware task sequencer that replaces VLM-based strategy selection.
 - `Simulation Consistency Toolkit`: Offline diagnostics and export utilities for RAI-vs-MuJoCo pose consistency checks.
+- `MuJoCo Control Tuning Sandbox`: Pure-MuJoCo actuator steady-state error diagnosis and gain sweep utilities for position-servo accuracy tuning.
 - `Design & Visualization (Figma MCP)`: Automated generation and synchronization of academic figures via VS Code MCP, Figma Desktop Bridge, and `figma-console` write tools.
 - `Paper Documentation`: VLM-LGP framework manuscript, figures, and publication materials.
 
@@ -22,6 +23,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 - **Python Scripting Layer**: Builds Phase0 assets, dispatches semantic matching, and implements the **Branch-Aware Topological Clustering** algorithm for deterministic task sequencing.
 - **Main Executable**: Load trajectories, resample them (e.g., to 1000Hz for Pos/Vel/Acc), and interact with external interfaces.
 - **Simulation Consistency Toolkit**: Provides non-intrusive scripts (`scripts/sample_tcp_error.py`, `scripts/export_lgp_scene_xyz.py`) to quantify TCP/link consistency and export object coordinates from `.g` scenes for cross-simulator comparison.
+- **MuJoCo Control Tuning Sandbox**: Provides isolated MuJoCo validation scripts (for example, `Mujoco_Simulation/pure_mujoco_trajectory_point_test.py` and `Mujoco_Simulation/auto_gainprm_tune.py`) to quantify joint steady-state bias, map TCP error attribution, and batch-search `kp/kd` settings.
 - `Design & Visualization`: Manages the programmatic creation/editing of system architecture diagrams (Fig 1) and workflow graphs through write-enabled Figma MCP workflows.
 - **Paper Documentation**: Holds the academic documentation (`paper/`) that formalizes the Vision-Language Geometric Programming approach for publication.
 
