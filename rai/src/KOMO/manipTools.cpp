@@ -700,12 +700,15 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   // ==============================================================================
   str snapFrame;
   snapFrame << "placePose_" << table << '_' << obj << '_' << time;
+  rai::Transformation targetPose = targetF->ensure_X();
+  targetPose.pos.z += rel_z;
   rai::Frame *f = komo->addFrameDof(snapFrame, "world", rai::JT_free, true);
   if (f && f->joint) {
-    rai::Transformation targetPose = targetF->ensure_X();
-    targetPose.pos.z += rel_z;
     f->joint->setDofs(targetPose.getArr7d());
   }
+  // Freeze the virtual placement anchor to avoid optimizer-induced orientation drift.
+  komo->addObjective({}, FS_pose, {snapFrame}, OT_eq, {1e3},
+                     targetPose.getArr7d());
   komo->addRigidSwitch(time, {snapFrame, obj}, true);
 
   // ==============================================================================
@@ -809,7 +812,7 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
           if (!isPairAllowedByExplicitFilter(handPart, obs->name))
             continue;
           komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance,
-                             {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
+                             {handPart, obs->name}, OT_ineq, {1e1}, {-0.07});
         }
       }
     }
@@ -841,6 +844,8 @@ void ManipulationHelper::action_place_on_multi_support(
 
   rai::Frame *first_support = komo->world.getFrame(supports(0));
   rai::Frame *objF = komo->world.getFrame(obj);
+  CHECK(first_support,
+        "Support frame '" << supports(0) << "' not found for multi-place");
   CHECK(objF, "Object frame '" << obj << "' not found");
 
   auto get_Z_dim = [](rai::Frame *f) -> double {
@@ -866,10 +871,11 @@ void ManipulationHelper::action_place_on_multi_support(
       first_support->getPosition()(2) + 0.5 * get_Z_dim(first_support);
   double obj_half_z = 0.5 * get_Z_dim(objF);
 
-  rai::Transformation targetWorldPose;
+  // Keep orientation convention consistent with action_place_straightOn:
+  // inherit support frame orientation (instead of world identity).
+  rai::Transformation targetWorldPose = first_support->ensure_X();
   targetWorldPose.pos.set(centroid_world(0), centroid_world(1),
                           support_top_z_world + obj_half_z);
-  targetWorldPose.rot.setDeg(0, 1, 0, 0);
 
   // ==============================================================================
   // 2. 拓扑: 虚拟锚点 (Virtual Anchor) — 保留作为漏斗和切换参考

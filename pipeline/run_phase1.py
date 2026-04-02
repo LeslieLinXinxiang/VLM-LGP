@@ -213,7 +213,7 @@ def validate_plan(plan_json, valid_inventory_list):
         return False, "\n".join(errors)
     return True, "Valid (legacy schema)"
 
-def execute_phase1():
+def execute_phase1(target_img_path=None):
     """
     Returns: (bool success, str output_path)
     """
@@ -232,10 +232,14 @@ def execute_phase1():
         
     if not os.path.exists(test_dir): os.makedirs(test_dir)
     
-    # 1. UI Selection
-    target_img_path = select_file_gui(test_dir)
-    if not target_img_path: 
-        print("[Info] No file selected. Aborting.")
+    # 1. UI Selection (Bypass if target_img_path is provided)
+    if not target_img_path:
+        target_img_path = select_file_gui(test_dir)
+    else:
+        print(f"[Phase1] Headless Mode: Using provided image: {target_img_path}")
+        
+    if not target_img_path or not os.path.exists(target_img_path): 
+        print(f"[Error] Target image missing or not selected.")
         return False, None
     
     # 2. [CRITICAL FIX] Save as "phase1_target.png" so Driver/Slicer can find it

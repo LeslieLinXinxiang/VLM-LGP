@@ -12,7 +12,7 @@ controller_manager:
     # [新增] 注册夹爪控制器
     # ==========================================
     panda_hand_controller:
-      type: position_controllers/GripperActionController
+      type: joint_trajectory_controller/JointTrajectoryController
 
 panda_arm_controller:
   ros__parameters:
@@ -38,9 +38,13 @@ panda_arm_controller:
 # ==========================================
 panda_hand_controller:
   ros__parameters:
+    joints:
+      - panda_finger_joint1
+      - panda_finger_joint2
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    state_publish_rate: 100.0
     action_monitor_rate: 20.0
-    joint: panda_finger_joint1
-    goal_tolerance: 0.01
-    stalled_velocity_threshold: 0.01
-    stall_timeout: 0.2
-    allow_stalling: true
+    allow_partial_joints_goal: true

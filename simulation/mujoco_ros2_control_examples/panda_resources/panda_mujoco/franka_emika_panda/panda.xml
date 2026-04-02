@@ -26,12 +26,11 @@
       <!-- pos:  微调位置，确保它覆盖指腹区域 -->
       <!-- condim=4: 开启扭转摩擦 (Torsional Friction)，防止圆柱体被夹住后像轮子一样自转 -->
         <geom type="box" size="0.009 0.004 0.009" pos="0 0.004 0.045"
-        friction="0.8 0.5 0.01" 
-        solimp="0.999 0.999 0.001" 
-        solref="0.004 1" 
+        friction="3.0 1.0 0.01" 
+        solimp="0.99 0.999 0.001" 
+        solref="0.002 1.0" 
         condim="4" 
-        margin="0.00"
-        gap="0.0002"/> 
+        margin="0.00" /> 
       </default>
     </default>
   </default>
@@ -276,7 +275,7 @@
     <!-- 2. dyntype="filter": 开启低通滤波器模式 -->
     <!-- 3. dynprm="0.3": 时间常数设为 0.3秒。意味着指令突变后，力矩会花 0.3s 慢慢加上去 -->
     <general class="panda" name="actuator8" tendon="split" forcerange="-50 50" ctrlrange="0 255"
-      gainprm="1500 0 0" biasprm="0 -100 -10"
-      dyntype="filter" dynprm="0.3"/>
+      gainprm="2000 0 0" biasprm="0 -100 -10"
+      dyntype="none"/>
   </actuator>
 </mujoco>

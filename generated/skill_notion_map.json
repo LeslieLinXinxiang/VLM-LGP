@@ -1,7 +1,0 @@
-{
-  "skill-sync-guard": {"page_id": "320e2551-adae-8137-a8ef-cc75677ec813", "tags": ["FOL"]},
-  "dde-code-guard": {"page_id": "320e2551-adae-8146-aa54-f6361bfe122e", "tags": ["FOL"]},
-  "dde-bootstrap": {"page_id": "320e2551-adae-81da-aeac-dc8c1c6751f4", "tags": ["CAN", "FOL", "Performance", "SOP", "TAMP"]},
-  "dde-task-closer": {"page_id": "320e2551-adae-8154-ab53-e3b1245ca923", "tags": ["CAN", "Git", "Prompt", "SOP", "TAMP"]},
-  "notion-rdos": {"page_id": "320e2551-adae-8178-9688-fafc829d251f", "tags": ["Agent-Skill", "Assignment", "CAN", "Control", "Course", "Docker"]}
-}

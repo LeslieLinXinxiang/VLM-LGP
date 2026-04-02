@@ -266,6 +266,10 @@ static void writeActiveCollisionReport(
 }
 
 static void printActiveCollisionTable(const std::vector<ActiveCollisionSummary>& summaries) {
+    // Preserve stream formatting so later trajectory timestamps keep full precision.
+    std::ios::fmtflags old_flags = std::cout.flags();
+    std::streamsize old_precision = std::cout.precision();
+
     std::cout << "\n================ ACTIVE COLLISION PAIRS (PER SUBTASK) ================\n";
     std::cout << std::left
               << std::setw(26) << "subtask"
@@ -290,6 +294,57 @@ static void printActiveCollisionTable(const std::vector<ActiveCollisionSummary>&
                   << sample.str() << std::endl;
     }
     std::cout << std::string(96, '=') << "\n";
+
+    std::cout.flags(old_flags);
+    std::cout.precision(old_precision);
+}
+
+static void printLinearFallbackTrajectory(
+    const arr& q_start,
+    const arr& q_goal,
+    double duration_sec = 2.0,
+    double freq = 1000.0
+) {
+    if(q_start.N == 0 || q_goal.N == 0 || q_start.N != q_goal.N) return;
+
+    const uint num_steps = std::max<uint>(2, (uint)std::round(duration_sec * freq));
+
+    std::ios::fmtflags old_flags = std::cout.flags();
+    std::streamsize old_precision = std::cout.precision();
+    std::cout << std::fixed << std::setprecision(6);
+
+    std::cout << "\n>>> V-LGP TRAJECTORY START <<<" << std::endl;
+    std::cout << "DIM: " << num_steps << " 21" << std::endl;
+
+    for(uint i = 0; i < num_steps; ++i) {
+        const double alpha = (num_steps > 1) ? ((double)i / (double)(num_steps - 1)) : 1.0;
+        const double t_real = alpha * duration_sec;
+
+        std::cout << t_real;
+
+        // Position
+        for(uint j = 0; j < q_start.N; ++j) {
+            const double q = (1.0 - alpha) * q_start(j) + alpha * q_goal(j);
+            std::cout << " " << q;
+        }
+
+        // Constant velocity (linear interpolation), zero acceleration.
+        for(uint j = 0; j < q_start.N; ++j) {
+            const double v = (q_goal(j) - q_start(j)) / duration_sec;
+            std::cout << " " << v;
+        }
+        for(uint j = 0; j < q_start.N; ++j) {
+            std::cout << " 0";
+        }
+
+        std::cout << std::endl;
+    }
+
+    std::cout << ">>> V-LGP TRAJECTORY END <<<" << std::endl;
+    std::cout << std::flush;
+
+    std::cout.flags(old_flags);
+    std::cout.precision(old_precision);
 }
 
 // [HELPER] 轨迹重采样与打印
@@ -307,6 +362,10 @@ void resampleAndPrintTrajectory(KOMO* komo, double speed_scale, double freq) {
     double logical_duration = times.last(); 
     double real_duration = logical_duration * speed_scale;
     uint num_steps = (uint)(real_duration * freq); 
+
+    std::ios::fmtflags old_flags = std::cout.flags();
+    std::streamsize old_precision = std::cout.precision();
+    std::cout << std::fixed << std::setprecision(6);
 
     std::cout << "\n>>> V-LGP TRAJECTORY START <<<" << std::endl;
     // 21维：7*Pos, 7*Vel, 7*Acc
@@ -335,6 +394,9 @@ void resampleAndPrintTrajectory(KOMO* komo, double speed_scale, double freq) {
     }
     std::cout << ">>> V-LGP TRAJECTORY END <<<" << std::endl;
     std::cout << std::flush; 
+
+    std::cout.flags(old_flags);
+    std::cout.precision(old_precision);
 }
 
 void writeCleanKinematicState(const rai::Configuration&, const rai::Configuration&, const char*);
@@ -538,7 +600,14 @@ int main(int argc, char** argv) {
              komo.getConfiguration_full(C_final_homed, komo.T - 1, 0);
              writeCleanKinematicState(C_end, C_final_homed, current_state_file.c_str());
         } else {
-            std::cout << ">>> WARNING: Homing failed to converge smoothly." << std::endl;
+            std::cout << ">>> WARNING: Homing failed to converge smoothly. Emitting linear fallback trajectory to global home." << std::endl;
+            printLinearFallbackTrajectory(q_current, q_target, 2.0, 1000.0);
+
+            // Keep state-chain deterministic: mark final state at global home when fallback is used.
+            rai::Configuration C_fallback_homed;
+            C_fallback_homed.copy(C_end, false);
+            C_fallback_homed.setJointState(q_target);
+            writeCleanKinematicState(C_end, C_fallback_homed, current_state_file.c_str());
         }
 
     } catch (const std::exception& e) {

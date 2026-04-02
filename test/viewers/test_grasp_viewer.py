@@ -6,7 +6,7 @@ import time
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 def run_viewer():
-    g_file = os.path.join(root_path, "test", "scenes", "test_grasp_scene.g")
+    g_file = os.path.join(root_path, "test", "planar_exp", "planar_scene.g")
     
     C = ry.Config()
     C.addFile(g_file)

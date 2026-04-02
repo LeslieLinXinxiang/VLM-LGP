@@ -12,6 +12,19 @@
   * *2026-03-25 11:20*: Added process governance doc `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md` to make style and logic checks reproducible across chat sessions/agents.
   * *2026-03-25 11:55*: Completed the first Method opening paragraph refinement in `paper/VLM-LGP-Assembly/bare_jrnl.tex` using Scheme A (conservative RA-L tone). Locked this paragraph as the style anchor for subsequent Method paragraph-by-paragraph updates.
 
+1. ### [TASK-006] MuJoCo Simulation Debug Loop Integration
+
+* **Status**: `[In Progress]`
+* **Created**: 2026-03-12 22:42
+* **Completed**: N/A
+* **Timeline**:
+  * *2026-03-12 22:42*: Task moved from backlog to active execution. Goal is to align MuJoCo scene with `generated/scene_named.g`, validate key manipulation actions (pick/place), and finalize reproducible simulation-side debug scripts.
+  * *2026-03-13 17:03*: Task moved from `In Progress` back to `Pending Backlog`.
+  * *2026-03-21 13:10*: Briefly restored for planar validation but moved back to pending to prioritize documentation.
+  * *2026-04-01 14:32*: Implemented and validated `scripts/sample_tcp_error.py` for RAI-vs-MuJoCo end-effector consistency sampling. Current observed baseline: link7 error approximately 0, TCP error approximately 0.1 mm.
+  * *2026-04-01 14:32*: Implemented and validated `scripts/export_lgp_scene_xyz.py` to export object xyz from `.g` scene files without modifying runtime pipeline behavior.
+  * *2026-04-01 14:32*: Confirmed export on `generated/scene/scene_named.g` with successful JSON/CSV output generation for downstream MuJoCo-vs-LGP scene alignment checks.
+
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
@@ -42,12 +55,4 @@
 
 ## 3. Pending Backlog
 
-### [TASK-006] MuJoCo Simulation Debug Loop Integration
-
-* **Status**: `[Pending]`
-* **Created**: 2026-03-12 22:42
-* **Completed**: N/A
-* **Timeline**:
-  * *2026-03-12 22:42*: Task moved from backlog to active execution. Goal is to align MuJoCo scene with `generated/scene_named.g`, validate key manipulation actions (pick/place), and finalize reproducible simulation-side debug scripts.
-  * *2026-03-13 17:03*: Task moved from `In Progress` back to `Pending Backlog`.
-  * *2026-03-21 13:10*: Briefly restored for planar validation but moved back to pending to prioritize documentation.
+Pending backlog entries are currently tracked in issue discussions and will be re-listed here when reprioritized into executable task IDs.

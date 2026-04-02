@@ -1,4 +1,0 @@
-{
-  "selected": "S2",
-  "reason": "S2 ensures symmetric base loading for maximum table stability and avoids the intra-batch dependency violations found in S1."
-}

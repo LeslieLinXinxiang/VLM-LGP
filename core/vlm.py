@@ -8,9 +8,15 @@ from io import BytesIO
 from core.utils import clean_vlm_json_output, load_json
 
 import httpx
-import google.genai as genai
-from google.genai import types as genai_types
+import httpx
 from dotenv import load_dotenv
+
+try:
+    import google.genai as genai
+    from google.genai import types as genai_types
+    HAS_GEMINI = True
+except ImportError:
+    HAS_GEMINI = False
 
 # Load .env from project root
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -46,6 +52,8 @@ class VLMClient:
     def __init__(self):
         self.backend = VLM_BACKEND
         if self.backend == "gemini":
+            if not HAS_GEMINI:
+                raise ImportError("VLM_BACKEND='gemini' requested, but 'google-genai' is not installed.")
             _http = httpx.Client(proxy=PROXY_URL)
             self.client = genai.Client(api_key=API_KEY, http_options={"httpx_client": _http})
             self.model = MODEL_NAME
@@ -166,6 +174,8 @@ class VLMClient:
 
     def _call_gemini_with_retry(self, prompt_content, is_json_output=True):
         """Call Gemini API with retry logic"""
+        if not HAS_GEMINI:
+            raise ImportError("'google-genai' is not installed, cannot call Gemini API.")
         for attempt in range(3):
             try:
                 config = genai_types.GenerateContentConfig(

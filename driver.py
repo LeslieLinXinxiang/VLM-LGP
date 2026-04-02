@@ -66,9 +66,9 @@ class SystemDriver:
             return False
         return True
 
-    def run_phase1_plan(self):
+    def run_phase1_plan(self, target_img_path=None):
         print_banner("PHASE 1: TARGET PLANNING")
-        success, graph_path = execute_phase1()
+        success, graph_path = execute_phase1(target_img_path=target_img_path)
         if not success: return False
         self.target_graph = load_json(graph_path)
 
@@ -191,7 +191,15 @@ class SystemDriver:
         return True
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--image", type=str, help="Path to target image for Phase 1")
+    args = parser.parse_args()
+
+    # If image is None, the GUI picker will be triggered in Phase 1
+    target_image = args.image
+
     driver = SystemDriver()
     if driver.run_phase0_init():
-        if driver.run_phase1_plan():
+        if driver.run_phase1_plan(target_img_path=target_image):
             driver.run_main_loop()

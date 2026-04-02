@@ -12,6 +12,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 - `Python Scripting Layer`: Environment execution, batch running, and visual verification.
 - `Main Executable`: Reads `.lgp` configurations and executes the solver loop.
 - `Graph Clustering Engine`: Deterministic branch-aware task sequencer that replaces VLM-based strategy selection.
+- `Simulation Consistency Toolkit`: Offline diagnostics and export utilities for RAI-vs-MuJoCo pose consistency checks.
 - `Design & Visualization (Figma MCP)`: Automated generation and synchronization of academic figures via VS Code MCP, Figma Desktop Bridge, and `figma-console` write tools.
 - `Paper Documentation`: VLM-LGP framework manuscript, figures, and publication materials.
 
@@ -20,6 +21,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 - **KOMO ManipTools**: Define exact mathematical objectives (e.g., `FS_positionDiff`, `FS_vectorZ`) to guide the robotic arm for picking, placing, and navigating without collisions.
 - **Python Scripting Layer**: Builds Phase0 assets, dispatches semantic matching, and implements the **Branch-Aware Topological Clustering** algorithm for deterministic task sequencing.
 - **Main Executable**: Load trajectories, resample them (e.g., to 1000Hz for Pos/Vel/Acc), and interact with external interfaces.
+- **Simulation Consistency Toolkit**: Provides non-intrusive scripts (`scripts/sample_tcp_error.py`, `scripts/export_lgp_scene_xyz.py`) to quantify TCP/link consistency and export object coordinates from `.g` scenes for cross-simulator comparison.
 - `Design & Visualization`: Manages the programmatic creation/editing of system architecture diagrams (Fig 1) and workflow graphs through write-enabled Figma MCP workflows.
 - **Paper Documentation**: Holds the academic documentation (`paper/`) that formalizes the Vision-Language Geometric Programming approach for publication.
 
@@ -31,7 +33,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 ## 5. External Interfaces
 
 - **Input**: `.fol` (Logic), `.lgp` (Parameters), `.g` (Scene geometry and initial states), plus Phase0 VLM inputs (`generated/phase0_capture.png`, `generated/phase0_specs.json`, selected prompt markdown).
-- **Output**: Trajectory text files, updated `.g` scenes (`output_state.g`), and Phase0 semantic layout artifacts such as `generated/phase0_layout.json`.
+- **Output**: Trajectory text files, updated `.g` scenes (`output_state.g`), Phase0 semantic layout artifacts such as `generated/phase0_layout.json`, and optional diagnostics artifacts (scene xyz JSON/CSV exports) for simulator alignment analysis.
 
 ## 6. Architectural Constraints
 
