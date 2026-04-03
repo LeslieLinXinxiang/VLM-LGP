@@ -9,7 +9,12 @@ This SOP governs paragraph-by-paragraph refinement for the paper draft, with emp
 - terminology consistency between method text and flowchart labels,
 - bilingual CN/EN output for each refined paragraph.
 
-Scope (current cycle): `paper/VLM-LGP-Assembly/bare_jrnl.tex` Method section.
+Scope (current cycle): `paper/VLM-LGP-Assembly/bare_jrnl.tex`, with current emphasis on `Preliminaries and Problem Statement` and `Method`.
+
+Authority note:
+
+- `docs/governance/PAPER_REFINEMENT_CONTENT_LOCK.md` locks the paper-level story backbone and canonical terminology.
+- This SOP governs the execution workflow after that content lock has been loaded.
 
 ---
 
@@ -29,6 +34,7 @@ Scope (current cycle): `paper/VLM-LGP-Assembly/bare_jrnl.tex` Method section.
 3. **Terminology lock**
    - Keep core terms stable unless explicit approval is given.
    - Do not introduce new algorithm names that are not implemented or already accepted.
+   - Use the canonical stage labels from `docs/governance/PAPER_REFINEMENT_CONTENT_LOCK.md`.
 
 4. **Bilingual delivery rule**
    - Every paragraph refinement round outputs:
@@ -43,8 +49,9 @@ Scope (current cycle): `paper/VLM-LGP-Assembly/bare_jrnl.tex` Method section.
 Use the following canonical mapping for editing and review tracking.
 
 - Phase 0: **Scene Grounding and Feasibility Screening**
-- Phase 1: **Support Graph Construction**
-- Phase 2a: **Branch-Based Cutting**
+- Phase 1: **VLM-Based Support Graph Generation**
+- Phase 2: **Two-Level Graph Decomposition**
+- Phase 2a: **Branch Clustering**
 - Phase 2b: **Layer-Based Cutting**
 - Phase 3: **Selective Native LGP Instantiation and Solving**
 - Phase 4: **Robot Execution**
@@ -56,6 +63,13 @@ Notes:
   - Phase 1 -> `pipeline/run_phase1.py`
   - Phase 2a/2b + codegen/solve orchestration -> `pipeline/run_phase2.py`
   - Driver loop -> `driver.py`
+
+Additional paper-level module view:
+
+- `Scene Initialization`
+- `Task Decomposition`
+
+These two directions merge at Phase 3.
 
 ---
 
@@ -77,7 +91,7 @@ Target writing profile:
 
 ## 5) Paragraph Refinement Workflow (Required)
 
-For each paragraph in Method:
+For each target paragraph in the current draft:
 
 1. **Literal pass**: produce CN literal translation/understanding.
 2. **Issue pass**: identify structure, tone, redundancy, and logic risks.
@@ -92,6 +106,23 @@ For each paragraph in Method:
 5. **Selection and lock**:
    - user picks one scheme (or mixed edit),
    - chosen scheme becomes local style anchor for subsequent paragraphs.
+
+Before this workflow begins for a new session:
+
+1. reload `docs/governance/PAPER_REFINEMENT_CONTENT_LOCK.md`,
+2. verify the current target paragraph still matches the locked story backbone,
+3. only then enter the literal/issue/rewrite passes.
+
+## 5.1) First-Paragraph Global-Awareness Rule
+
+For the opening paragraph in `Preliminaries and Problem Statement`, the paragraph should not jump directly into graph formalization.
+
+The default rhetorical order is:
+
+1. native LGP advantage,
+2. long-horizon assembly bottleneck,
+3. VLM-LGP core idea,
+4. high-level system decomposition.
 
 ---
 
@@ -127,8 +158,8 @@ Escalation template:
 
 ## 8) Immediate Task Checklist (Current Sprint)
 
-- [ ] Refine Method opening paragraph with bilingual A/B/C versions.
-- [ ] Freeze a preferred style template from selected version.
-- [ ] Apply same template to next Method subsection opening paragraphs.
-- [ ] Run a terminology sweep against phase headers and flowchart labels.
+- [ ] Lock the global story backbone for `Preliminaries and Problem Statement`.
+- [ ] Freeze canonical stage names and high-level module names.
+- [ ] Synchronize flowchart labels and manuscript terminology.
+- [ ] Refine the first paragraph under the global-awareness rule.
 - [ ] Record decisions in `docs/roadmap.md` task timeline.

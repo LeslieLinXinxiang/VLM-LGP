@@ -56,34 +56,49 @@ breaklines=true, frame=lines, backgroundcolor=
   \section{Preliminaries and Problem Statement}
   \label{sec:preliminaries}
 
-  We represent a target assembly as an object-support graph
-  $\mathcal{G}=(\mathcal{V},\mathcal{E})$, where each node $v \in \mathcal{V}$
-  denotes one target object instance and each directed edge $(u,v) \in \mathcal{E}$
-  means that object $u$ must support object $v$ in the final assembly. The graph is
-  directed because support precedence is asymmetric: if $(u,v)\in\mathcal{E}$, then
-  object $u$ must be realized before object $v$ can be stably placed. Optional edge
-  attributes, such as left/right placement labels at the support interface, are kept
-  as local geometric hints but do not by themselves define the batch sequence.
+  Native LGP offers an attractive interface for robotic assembly because it couples
+  symbolic task structure and motion reasoning within a single formalism, avoiding the
+  strict separation between high-level symbolic planning and low-level motion synthesis
+  that is common in PDDL-style pipelines. This advantage, however, becomes difficult to
+  maintain in long-horizon assembly. When the target structure contains many stacked
+  support dependencies, the solver may expand a large number of symbolic alternatives
+  before geometric infeasibility can effectively prune the search, leading to high
+  front-end search cost and limited practical scalability. We address this issue with
+  VLM-LGP, which uses a VLM to convert a target assembly image into a structural
+  object-support graph and then decomposes the resulting long-horizon task into smaller
+  solver-facing subproblems. At the system level, this design combines scene
+  initialization, which screens reachability and prioritizes objects by manipulability,
+  with task decomposition, which organizes graph generation, graph decomposition, and
+  execution sequencing before native LGP solving.
 
-  The planning goal is to convert $\mathcal{G}$ into an ordered sequence of
-  solver-facing batches $\mathcal{B}=(B_1,\ldots,B_T)$ such that every object appears
-  exactly once, every batch remains within the current solver scale, and every support
-  predecessor of a node in $B_t$ has already appeared in an earlier batch. In other
-  words, the system must produce a decomposition that is both structurally valid and
-  suitable for downstream geometric solving.
+  Concretely, we represent the target assembly as an object-support graph
+  $\mathcal{G}=(\mathcal{V},\mathcal{E})$, where each node $v \in \mathcal{V}$ denotes
+  one target object instance and each directed edge $(u,v) \in \mathcal{E}$ means that
+  object $u$ must support object $v$ in the final assembly. The graph is directed
+  because support precedence is asymmetric: if $(u,v)\in\mathcal{E}$, then object $u$
+  must be realized before object $v$ can be stably placed. Optional edge attributes,
+  such as left/right placement labels at the support interface, are kept as local
+  geometric hints but do not by themselves define the execution order. The planning
+  goal is to convert $\mathcal{G}$ into an ordered sequence of solver-facing batches
+  $\mathcal{B}=(B_1,\ldots,B_T)$ such that every object appears exactly once, every
+  batch remains within the current solver scale, and every support predecessor of a
+  node in $B_t$ has already appeared in an earlier batch. In other words, the system
+  must produce a decomposition that is both structurally valid and suitable for
+  downstream geometric solving.
 
-  Directly exposing native LGP to the full graph introduces two practical bottlenecks.
-  First, long-horizon assemblies create excessive symbolic branching, because the
-  solver must consider many candidate symbolic configurations before geometric
-  infeasibility can prune them. Second, mixed support patterns such as bridge-like
-  substructures complicate the symbolic-geometric search because local support changes
-  can affect distant parts of the same full-horizon problem. These issues motivate a
-  decomposition stage between graph extraction and native LGP instantiation.
+  This formulation makes explicit that the central challenge is not whether native LGP
+  can express the task, but how to expose only a solver-manageable portion of the
+  long-horizon structure at each step. Mixed support patterns, such as bridge-like
+  substructures, further complicate the symbolic-geometric search because local support
+  changes can affect distant parts of the same full-horizon problem. These observations
+  motivate a decomposition stage between support-graph generation and native LGP
+  instantiation, so that structural grouping and precedence-respecting execution order
+  can be resolved before downstream geometric solving.
 
   \section{Method}
   \begin{figure*}[!t]
     \centering
-    \includegraphics[width=\textwidth]{Flowchart.png}
+    \includegraphics[width=\textwidth]{Flowchart.pdf}
     \caption{The overall workflow of the proposed VLM-LGP framework.}
     \label{fig:workflow}
   \end{figure*}
@@ -97,8 +112,7 @@ breaklines=true, frame=lines, backgroundcolor=
   method follows five stages: scene grounding, support-graph construction, branch-based cutting, 
   layer-based cutting, and selective native LGP solving. The core idea is to first represent 
   the target assembly as a relational graph, and then decompose it into a small set of 
-  solver-facing subtasks rather than exposing the entire horizon at once.
-
+  solver-facing sub-tasks rather than exposing the entire horizon at once.
 
   \subsection{Scene Grounding and Feasibility Screening}
   \label{subsec:phase0}

@@ -20,6 +20,8 @@
   * *2026-03-25 11:20*: Task created to support RA-L submission-oriented drafting. Scope includes: (i) per-paragraph bilingual rewrite workflow, (ii) strict terminology mapping between flowchart labels and Method headers, (iii) fixed conservative claim style profile, and (iv) mandatory logic-alignment checks against `docs/architecture.md`, `docs/dataflow.md`, and `docs/execution_protocol.md` before accepting each paragraph revision.
   * *2026-03-25 11:20*: Added process governance doc `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md` to make style and logic checks reproducible across chat sessions/agents.
   * *2026-03-25 11:55*: Completed the first Method opening paragraph refinement in `paper/VLM-LGP-Assembly/bare_jrnl.tex` using Scheme A (conservative RA-L tone). Locked this paragraph as the style anchor for subsequent Method paragraph-by-paragraph updates.
+  * *2026-04-03 11:34*: Added `docs/governance/PAPER_REFINEMENT_CONTENT_LOCK.md` to lock the paper-level story backbone, terminology, figure-to-text alignment, and first-paragraph global-awareness rule for the current RA-L drafting cycle.
+  * *2026-04-03 11:34*: Updated `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md` to reference the new content lock, expanded scope to `Preliminaries and Problem Statement`, and synchronized phase naming to `VLM-Based Support Graph Generation` -> `Two-Level Graph Decomposition` -> `Branch Clustering` / `Layer-Based Cutting`.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
