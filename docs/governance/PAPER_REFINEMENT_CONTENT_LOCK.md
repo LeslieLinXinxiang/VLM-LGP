@@ -30,10 +30,10 @@ The paper should follow the backbone below unless explicitly revised and re-lock
    VLM-LGP first converts the target assembly image into an object-support graph, then decomposes the graph into solver-facing subproblems, and finally instantiates native LGP selectively for execution.
 5. **Two-module system view**:
    The full pipeline should be explained through two coordinated directions:
-   - `Scene Initialization`
+   - `Scene Grounding`
    - `Task Decomposition`
 6. **Merge point**:
-   These two directions merge at native LGP instantiation and solving, followed by robot execution.
+   These two directions merge at `Execution-Order Embedding` and are then passed to selective LGP solving, followed by real robot execution.
 
 ## 4. First-Paragraph Role Lock
 
@@ -60,12 +60,13 @@ Use the following terms consistently across the paper.
 
 ### 5.2 High-Level Modules
 
-- **Scene Initialization**
+- **Scene Grounding**
 - **Task Decomposition**
-- **Native LGP Instantiation and Solving**
-- **Robot Execution**
+- **Execution-Order Embedding**
+- **Selective LGP Solving with Active Constraints**
+- **Real Robot Execution**
 
-### 5.3 Scene Initialization Sub-terms
+### 5.3 Scene Grounding Sub-terms
 
 - **Reachability screening**
 - **Unreachable object pruning**
@@ -76,15 +77,15 @@ Use the following terms consistently across the paper.
 
 Use this exact high-level chain when describing the planning-side pipeline:
 
-1. **VLM-Based Support Graph Generation**
-2. **Two-Level Graph Decomposition**
+1. **VLM Graph Generation**
+2. **Two-Level Clustering**
 3. **Branch Clustering**
 4. **Layer-Based Cutting**
-5. **Global Execution Sequencing**
+5. **Global Execution Sequence**
 
 ### 5.5 Naming Rule for `generation` vs `construction`
 
-Lock the stage name as **VLM-Based Support Graph Generation**.
+Lock the stage name as **VLM Graph Generation**.
 
 Rationale:
 
@@ -101,18 +102,18 @@ Allowed usage:
 
 The planning-side figure and manuscript text should stay aligned to the same three-part logic:
 
-1. **VLM-Based Support Graph Generation**
-2. **Two-Level Graph Decomposition**
+1. **VLM Graph Generation**
+2. **Two-Level Clustering**
    - **Branch Clustering**
    - **Layer-Based Cutting**
-3. **Global Execution Sequencing**
+3. **Global Execution Sequence**
 
 At the system level, the manuscript should also preserve the broader two-direction view:
 
-- `Scene Initialization`
+- `Scene Grounding`
 - `Task Decomposition`
 
-These two directions then merge into `Native LGP Instantiation and Solving`, followed by `Robot Execution`.
+These two directions then merge into `Execution-Order Embedding`, followed by `Selective LGP Solving with Active Constraints` and `Real Robot Execution`.
 
 ## 7. Claim-Style Lock
 
@@ -151,6 +152,6 @@ Before accepting a revised paragraph, verify:
 
 1. Does it match the locked story backbone?
 2. Does it use the canonical stage names exactly?
-3. Does it distinguish `Scene Initialization` from `Task Decomposition`?
+3. Does it distinguish `Scene Grounding` from `Task Decomposition`?
 4. Does it distinguish graph representation, graph decomposition, and final execution order?
 5. Are the claims conservative enough for current evidence?

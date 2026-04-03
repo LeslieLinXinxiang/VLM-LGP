@@ -48,13 +48,17 @@ Authority note:
 
 Use the following canonical mapping for editing and review tracking.
 
-- Phase 0: **Scene Grounding and Feasibility Screening**
-- Phase 1: **VLM-Based Support Graph Generation**
-- Phase 2: **Two-Level Graph Decomposition**
+- Phase 0: **Scene Grounding**
+- Phase 0a: **Reachability Screening**
+- Phase 0b: **Manipulability-Aware Ordering**
+- Phase 1: **VLM Graph Generation**
+- Phase 2: **Two-Level Clustering**
 - Phase 2a: **Branch Clustering**
 - Phase 2b: **Layer-Based Cutting**
-- Phase 3: **Selective Native LGP Instantiation and Solving**
-- Phase 4: **Robot Execution**
+- Phase 2c: **Global Execution Sequence**
+- Phase 3: **Execution-Order Embedding**
+- Phase 4: **Selective LGP Solving with Active Constraints**
+- Phase 5: **Real Robot Execution**
 
 Notes:
 
@@ -66,10 +70,10 @@ Notes:
 
 Additional paper-level module view:
 
-- `Scene Initialization`
+- `Scene Grounding`
 - `Task Decomposition`
 
-These two directions merge at Phase 3.
+These two directions merge at Phase 3 and are solved/executed through Phase 4-5.
 
 ---
 

@@ -56,35 +56,20 @@ breaklines=true, frame=lines, backgroundcolor=
   \section{Preliminaries and Problem Statement}
   \label{sec:preliminaries}
 
-  Native LGP offers an attractive interface for robotic assembly because it couples
-  symbolic task structure and motion reasoning within a single formalism, avoiding the
-  strict separation between high-level symbolic planning and low-level motion synthesis
-  that is common in PDDL-style pipelines. This advantage, however, becomes difficult to
-  maintain in long-horizon assembly. When the target structure contains many stacked
-  support dependencies, the solver may expand a large number of symbolic alternatives
-  before geometric infeasibility can effectively prune the search, leading to high
-  front-end search cost and limited practical scalability. We address this issue with
-  VLM-LGP, which uses a VLM to convert a target assembly image into a structural
-  object-support graph and then decomposes the resulting long-horizon task into smaller
-  solver-facing subproblems. At the system level, this design combines scene
-  initialization, which screens reachability and prioritizes objects by manipulability,
-  with task decomposition, which organizes graph generation, graph decomposition, and
-  execution sequencing before native LGP solving.
+  Native LGP provides a more integrated formulation of task and motion than
+  traditional symbolic planning pipelines, making it attractive for robotic assembly.
+  However, prior long-horizon formulations remain difficult to scale in complex
+  stacking settings, where the solver may explore many symbolic alternatives before
+  geometric infeasibility can effectively prune the search. As a result, directly
+  solving long-horizon assemblies in native LGP often incurs high front-end search
+  cost and limited practical scalability. To address this limitation, we introduce
+  VLM-LGP, which inserts a visual-structural interface before native LGP so that the
+  long-horizon task can be reorganized into a form that is more suitable for
+  downstream solving.
 
-  Concretely, we represent the target assembly as an object-support graph
-  $\mathcal{G}=(\mathcal{V},\mathcal{E})$, where each node $v \in \mathcal{V}$ denotes
-  one target object instance and each directed edge $(u,v) \in \mathcal{E}$ means that
-  object $u$ must support object $v$ in the final assembly. The graph is directed
-  because support precedence is asymmetric: if $(u,v)\in\mathcal{E}$, then object $u$
-  must be realized before object $v$ can be stably placed. Optional edge attributes,
-  such as left/right placement labels at the support interface, are kept as local
-  geometric hints but do not by themselves define the execution order. The planning
-  goal is to convert $\mathcal{G}$ into an ordered sequence of solver-facing batches
-  $\mathcal{B}=(B_1,\ldots,B_T)$ such that every object appears exactly once, every
-  batch remains within the current solver scale, and every support predecessor of a
-  node in $B_t$ has already appeared in an earlier batch. In other words, the system
-  must produce a decomposition that is both structurally valid and suitable for
-  downstream geometric solving.
+  We formulate the target structure as an object-support graph and seek a
+  precedence-consistent decomposition into solver-facing batches whose scale remains
+  manageable for downstream native LGP solving.
 
   This formulation makes explicit that the central challenge is not whether native LGP
   can express the task, but how to expose only a solver-manageable portion of the
@@ -105,68 +90,48 @@ breaklines=true, frame=lines, backgroundcolor=
 
   \label{sec:method}
 
-  Long-horizon robotic assembly requires coordinated structural and geometric reasoning, 
-  In practice, directly solving the full-horizon task in native LGP leads to high 
-  symbolic branching and poor scalability. To address this issue, we use an object-support 
-  graph as the structural interface between VLM parsing and solver instantiation. Our 
-  method follows five stages: scene grounding, support-graph construction, branch-based cutting, 
-  layer-based cutting, and selective native LGP solving. The core idea is to first represent 
-  the target assembly as a relational graph, and then decompose it into a small set of 
-  solver-facing sub-tasks rather than exposing the entire horizon at once.
+  VLM-LGP addresses long-horizon assembly through a staged pipeline that bridges visual
+  task understanding and native LGP solving. At a high level, the framework is organized
+  around two parallel streams. Task Decomposition, consisting of VLM Graph Generation,
+  Two-Level Clustering, and Global Execution Sequence, converts the target assembly image
+  into a solver-facing execution structure. In parallel, Scene Grounding, consisting of
+  Reachability Screening and
+  Manipulability-Aware Ordering, prepares scene-side feasibility information for the
+  available object instances. The two streams are merged at Execution-Order Embedding and
+  then passed to Selective LGP Solving with Active Constraints. This organization
+  preserves the expressive benefits of native LGP while avoiding a monolithic
+  full-horizon formulation. Figure~\ref{fig:workflow} summarizes the overall workflow,
+  and the remainder of this section details each stage.
 
-  \subsection{Scene Grounding and Feasibility Screening}
-  \label{subsec:phase0}
-
-  Before structural planning, the system converts the initial scene into a
-  grounded object inventory that records object category, geometric signature,
-  and robot-centered identity. In the same grounding stage, it also constructs a
-  deterministic scene-order dictionary by sorting objects of the same category
-  according to their Euclidean distance to the robot base. This dictionary is
-  computed once from the initial scene and later reused during solver-side
-  instantiation to bind generic object requests to concrete scene instances; it
-  is therefore independent of the target support graph and does not define the
-  assembly strategy itself.
-
-  To remove infeasible candidates before long-horizon planning, the system
-  queries the waypoint-level LGP subproblem~\cite{cite_lgp_2015} as a low-cost
-  feasibility test. For each candidate object $o_i$, a sparse pick-waypoint
-  problem is solved under collision constraints within a fixed time budget
-  $T_{max}$:
-  \begin{equation}
-    \mathrm{Reach}(o_i) =
-    \mathbb{I}\!\left[
-      \exists\, q^* \ \text{s.t.}\ \mathrm{KOMO}_{\mathrm{wp}}(o_i, q^*)
-      \ \text{is feasible}
-    \right]
-    \label{eq:reachability}
-  \end{equation}
-  Objects that admit a feasible waypoint are retained in the grounded inventory,
-  whereas failed or timed-out candidates are excluded from subsequent planning.
-  In this way, the pipeline enters long-horizon planning with a
-  solver-consistent feasibility prior obtained directly from the waypoint-level
-  LGP subproblem, while avoiding the cost of full symbolic-geometric
-  optimization at this stage.
-
-  \subsection{Support Graph Construction}
+  \subsection{VLM Graph Generation}
   \label{subsec:phase1}
 
-  Instead of asking the VLM to directly output precise object coordinates or a long
-  executable code sequence, we use it to parse the target specification into the
-  object-support graph $\mathcal{G}=(\mathcal{V},\mathcal{E})$. This design is
-  motivated by the capability boundary of current VLMs: they are relatively reliable
-  at reasoning about relative spatial structure, support relations, and coarse
-  left-right or above-below organization, but they are much less stable when required
-  to produce exact numerical layouts, long structured programs, or mathematically
-  precise symbolic outputs. We therefore convert the target specification into a
-  relational graph that keeps the part VLMs are better at providing.
+  We use the VLM to generate an object-support graph from the target assembly image,
+  rather than asking it to predict precise object coordinates or a long executable
+  program directly. This choice follows the capability boundary of current VLMs: they
+  are comparatively reliable at inferring relational structure, support dependencies,
+  and coarse left-right or above-below organization, but less stable when required to
+  output exact geometry, long symbolic code, or mathematically precise layouts. We
+  therefore let the VLM produce the structural representation that it is best suited to
+  provide. Formally, the generated graph is $\mathcal{G}=(\mathcal{V},\mathcal{E})$,
+  where each node $v \in \mathcal{V}$ denotes one target object instance and each
+  directed edge $(u,v) \in \mathcal{E}$ indicates that object $u$ must support object
+  $v$ in the final assembly. The graph is directed because support precedence is
+  asymmetric, and optional local labels such as left/right placement hints are retained
+  only as geometric side information rather than as the execution order itself.
 
-  In this graph, each node denotes one target object instance, and each directed edge
-  denotes one direct support relation that must hold in the assembled structure. The
-  support graph is the central interface of the pipeline. Upstream, it converts the
-  VLM's relational understanding into an explicit structural representation. Downstream,
-  it provides the input to the decomposition module that prepares solver-consistent
-  subproblems for native LGP. Figure~\ref{fig:layered_graph} shows representative
-  support graphs parsed from target specifications.
+  Given this structural representation, we follow the general logic of graph
+  clustering and partitioning to decompose the long-horizon task into solver-facing
+  subproblems~\cite{cite_graph_partition_1998}. In our setting, however, the goal is
+  not generic graph partition quality alone. The decomposition must also preserve
+  support precedence, respect solver scale, and yield an executable global order for
+  downstream native LGP solving. We therefore instantiate this idea as a two-level
+  procedure: Branch Clustering first groups structurally related support chains into
+  coarse branches, and Layer-Based Cutting then refines each branch into small
+  executable batches. The resulting support graph serves as the central interface of
+  the pipeline, connecting VLM-based structural parsing to decomposition and selective
+  native LGP instantiation. Figure~\ref{fig:layered_graph} shows representative
+  support graphs parsed from target assembly images.
 
   \begin{figure}[!ht]
     \centering
@@ -178,59 +143,121 @@ breaklines=true, frame=lines, backgroundcolor=
       \centering
       \includegraphics[width=\linewidth]{graph (2).png}
     \end{minipage}
-    \caption{Examples of object-support graphs parsed by the VLM from target
-    assembly specifications. Directed edges encode relative support relations that are
-    later used for branch-based and layer-based task decomposition.}
+    \caption{Examples of object-support graphs generated by the VLM from target
+    assembly images. Directed edges encode support relations that are later used for
+    Branch Clustering and Layer-Based Cutting.}
     \label{fig:layered_graph}
   \end{figure}
 
-  \subsection{Branch-Based Cutting}
-  \label{subsec:phase2a}
+  \subsection{Two-Level Clustering}
+  \label{subsec:phase2}
 
-  Once the task graph has been obtained, directly exposing the full graph to native
-  LGP is undesirable from the perspective of solve speed, overall efficiency, and
-  practical hardware limits. We therefore introduce a two-level clustering strategy to
-  decompose the full task into smaller executable subtasks. The first level is
-  \emph{branch-based cutting}, whose goal is to identify several large structural
-  branches before detailed execution batches are generated.
+  Directly exposing the full support graph to native LGP remains undesirable in long-horizon
+  assembly because the resulting symbolic-geometric search is still too coarse and too
+  expensive to solve efficiently. We therefore introduce a graph-clustering stage that
+  first aggregates the support graph into branch-level structures before any execution
+  batches are generated. Among standard graph-clustering paradigms, the closest match to
+  our setting is label propagation~\cite{cite_label_propagation_2007}: branch labels are
+  seeded at root-supported nodes and then propagated upward along support edges so that
+  nodes with the same support provenance fall into the same structural branch, while
+  nodes that merge support from multiple roots become bridge branches. In our setting,
+  the goal is not generic cluster compactness alone. The branch
+  decomposition must also remain consistent with support precedence and preserve the
+  coarse structural organization of the target assembly. On the representative example
+  used in this paper, this first-stage branch clustering yields the three coarse groups
+  $134$, $256$, and $789$.
 
-  At this stage, nodes that belong to the same main support chain are grouped into the
-  same branch, while nodes that connect multiple branches mark the transition to an
-  upper bridge-like structure. The purpose of this step is to preserve the major
-  structural organization of the assembly and recover a human-like construction logic
-  by progressing from point-like supports to larger supporting surfaces while
-  distinguishing primary versus secondary supports, instead of immediately flattening the whole
-  graph into a single topological sequence. On the representative support graph used in
-  this draft, the branch-based step identifies three coarse groups: the left branch
-  $134$, the right branch $256$, and the upper chain $789$. This result is still an
-  intermediate structural decomposition rather than the final execution order.
+  Branch-level grouping alone is still insufficient for downstream solving, because even
+  after branch decomposition a branch may remain too coarse for the practical solve-time
+  budget and hardware limits of the current system. We therefore apply a second
+  layer-based cutting stage that follows a simple execution logic inspired by human
+  common sense: lower supporting layers are realized before upper ones, left and right
+  side structures are expanded in a stable order, and objects on the same effective
+  support level are grouped when they can be executed together. This second stage
+  converts the coarse branches into solver-facing batches, for example
+  $134 \mapsto 1 \mid 34$, $256 \mapsto 2 \mid 56$, and $789 \mapsto 7 \mid 8 \mid 9$.
 
-  \subsection{Layer-Based Cutting}
-  \label{subsec:phase2b}
+  \subsubsection{Global Execution Sequence}
+  \label{subsec:phase2_global}
 
-  After branch-based cutting, each branch is further decomposed by a second mechanism,
-  namely \emph{layer-based cutting}. This stage is responsible for converting each
-  large branch into a sequence of solver-facing subtasks. Inside every branch, nodes
-  are scanned from lower support layers to higher support layers, and each local group
-  is cut into executable batches while preserving predecessor constraints.
+  A final precedence-consistent merge over these local batch results produces the global
+  execution sequence $1 \mid 34 \mid 2 \mid 56 \mid 7 \mid 8 \mid 9$.
 
-  This second level of cutting is necessary because a branch is still too large to be
-  sent to the solver as a single monolithic task. In the current system, and under the
-  combined consideration of LGP solve speed and practical hardware limits, each
-  executable batch is constrained to contain at most two placement subtasks. As a
-  result, the decomposition not only preserves the branch structure of the target graph
-  but also matches the scale that the downstream solver can handle efficiently.
+  \subsection{Scene Grounding}
+  \label{subsec:scene_grounding}
 
-  In the running example, layer-based cutting transforms the coarse branches into the
-  local sequences $134 \mapsto 1 \mid 34$, $256 \mapsto 2 \mid 56$, and
-  $789 \mapsto 7 \mid 8 \mid 9$. A precedence-consistent ordering over these local
-  results then produces the final global execution sequence
-  $1 \mid 34 \mid 2 \mid 56 \mid 7 \mid 8 \mid 9$. This two-level decomposition is
-  easier to explain than the previous single-stage rule set because the system first
-  identifies large structural branches and then refines them into small executable
-  batches.
+  Scene Grounding prepares the initial scene for downstream solving by identifying which
+  object instances remain executable and how they should be preferred when multiple
+  feasible candidates are available. It contains two complementary stages:
+  Reachability Screening removes infeasible objects, and Manipulability-Aware Ordering
+  ranks the reachable remainder.
 
-  \subsection{Selective Native LGP Instantiation and Solving}
+  \subsubsection{Reachability Screening}
+  \label{subsec:phase0}
+
+  As the first component of Scene Grounding, reachability screening provides the
+  scene-side feasibility counterpart to task decomposition. It does not determine the
+  structural assembly order; instead, it prunes obviously infeasible objects before
+  execution, so that later solver calls are not spent on targets that cannot be safely
+  approached under the current scene geometry.
+
+  We implement this stage as a lightweight pick-waypoint feasibility test backed by
+  FCL and libccd, allowing each candidate object to be screened through a shallow and
+  inexpensive geometric search before full planning. FCL performs broad-phase collision
+  pairing, and libccd provides the fine collision and distance evaluation for the
+  resulting candidate contacts. For each candidate object $o_i$, we instantiate a
+  pick-waypoint subproblem $\Pi_i^{\mathrm{pick}}$ and declare the object reachable
+  iff the solver returns a feasible solution:
+  \begin{equation}
+    \mathrm{Reach}(o_i) =
+    \mathbb{I}\!\left[
+      \mathrm{Feasible}\!\left(\Pi_i^{\mathrm{pick}}(o_i)\right)
+    \right]
+    \label{eq:reachability}
+  \end{equation}
+  Objects that admit a feasible pick waypoint are retained for subsequent execution,
+  whereas the remaining candidates are excluded as unreachable. This provides a shallow
+  but geometry-consistent feasibility prior at low cost. Although the screening itself
+  is lightweight, the same collision-evaluation logic is also compatible with the native
+  LGP stack used later in the full pipeline.
+
+  \subsubsection{Manipulability-Aware Ordering}
+  \label{subsec:phase0_manip}
+
+  Manipulability-Aware Ordering is applied only to the reachable object set returned by
+  reachability screening. Its role is not to alter the structural precedence already
+  produced by Task Decomposition, but to provide a scene-side preference over candidate
+  instances when multiple reachable objects can satisfy the same structural request.
+
+  In the current implementation, this stage performs a static URDF-based kinematic
+  analysis on each reachable candidate. For each object $o_i$, we define an approach
+  target slightly above the object, solve a damped least-squares inverse-kinematics
+  problem for that target, and evaluate the positional Yoshikawa manipulability
+  score~\cite{cite_manipulability_1985}
+  \begin{equation}
+    m(o_i) = \sqrt{\det\!\left(J_p(q_i)J_p(q_i)^\top\right)},
+    \label{eq:manipulability}
+  \end{equation}
+  where $J_p(q_i)$ denotes the position Jacobian at the corresponding solution
+  configuration. The resulting scores are normalized to produce a manipulability-ranked
+  candidate list, while low-confidence or IK-invalid cases are deferred to the tail of
+  the corresponding object-type group. This stage therefore yields the
+  manipulability-ranked candidates used later for scene-side binding.
+
+  \subsection{Execution-Order Embedding}
+  \label{subsec:phase_embed}
+
+  Execution-Order Embedding is the stage where the outputs of Task Decomposition and
+  Scene Grounding are merged. Task Decomposition provides the global execution sequence
+  together with solver-facing support batches, whereas Scene Grounding provides the
+  reachable object set and manipulability-ranked candidates for each object category.
+  For each batch, the system embeds the structural order into the current scene by
+  binding the batch-level object requests to concrete scene instances that survive
+  reachability screening and are preferred by manipulability. The output of this stage
+  is a grounded batch specification that can be directly consumed by the downstream LGP
+  solver.
+
+  \subsection{Selective LGP Solving with Active Constraints}
   \label{subsec:phase3}
 
   Native LGP couples symbolic task structure with continuous trajectory
@@ -241,14 +268,11 @@ breaklines=true, frame=lines, backgroundcolor=
   excessive symbolic branching and unnecessary geometric backtracking.
 
   Our solver therefore instantiates the native LGP abstraction selectively for
-  each execution batch. Once a batch has been determined by the two-level
-  decomposition process,
-  the system reads the scene-order dictionary generated during scene grounding,
-  binds generic object categories to concrete scene instances, and compiles only
-  the symbolic relations, object bindings, and decision rules required by the
-  current support pattern. The solver thus receives a grounded
-  symbolic-geometric subproblem tailored to the current batch rather than a
-  monolithic domain covering all possible assembly alternatives.
+  each grounded execution batch. For the current batch, it compiles only the
+  symbolic relations, object bindings, and decision rules required by the active
+  support pattern. The solver thus receives a grounded symbolic-geometric
+  subproblem tailored to the current batch rather than a monolithic domain
+  covering all possible assembly alternatives.
 
   The same waypoint-level solve also provides geometric cues for downstream
   motion optimization. Let $x$ denote the full-motion trajectory optimized in
@@ -287,14 +311,14 @@ breaklines=true, frame=lines, backgroundcolor=
   realized next, and native LGP resolves whether and how those relations can be
   executed under the current scene geometry.
 
-  \subsection{Robot Execution}
+  \subsection{Real Robot Execution}
   \label{subsec:phase4}
 
   After each subproblem is solved, the resulting trajectory is parsed and
-  dispatched to the robot controller for execution. The execution layer remains
-  intentionally thin: it reads the planned motion and gripper commands, executes
-  them on the real platform, and updates the scene state for the next
-  planning-solving cycle.
+  dispatched to the robot controller for execution on the physical platform.
+  The execution layer remains intentionally thin: it reads the planned motion
+  and gripper commands, executes them on the real robot, and updates the scene
+  state for the next planning-solving cycle.
 
 
   \begin{thebibliography}{1}
@@ -310,6 +334,15 @@ breaklines=true, frame=lines, backgroundcolor=
     \bibitem{cite_graph_partition_1998} G.~Karypis and V.~Kumar, ``Multilevel
       k-way partitioning scheme for irregular graphs,'' \emph{Journal of Parallel
       and Distributed Computing}, vol.~48, no.~1, pp.~96--129, 1998.
+
+    \bibitem{cite_label_propagation_2007} U.~N.~Raghavan, R.~Albert, and
+      S.~Kumara, ``Near linear time algorithm to detect community structures in
+      large-scale networks,'' \emph{Physical Review E}, vol.~76, no.~3,
+      p.~036106, 2007.
+
+    \bibitem{cite_manipulability_1985} T.~Yoshikawa, ``Manipulability of robotic
+      mechanisms,'' \emph{The International Journal of Robotics Research},
+      vol.~4, no.~2, pp.~3--9, 1985.
 
     % --- 改进版 LGP 相关文献 (已收录供后续引用) ---
 
