@@ -10,6 +10,7 @@
 * **Timeline**:
   * *2026-04-03 18:02*: Task created to introduce the FMB-oriented VLM recognition/cognition component into the current pipeline and paper-facing story.
   * *2026-04-03 18:02*: Initial scope locked: define how FMB-specific visual recognition should be represented in the system narrative, determine where it enters the VLM front-end, and assess required updates to flowchart, manuscript, and pipeline documentation.
+  * *2026-04-04 19:20*: Input protocol converged to folder-only ordered task images for the real task; few-shot remains fixed as external reusable teaching blocks; task-side manifest removed from the runtime path.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 

@@ -67,6 +67,9 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 - `docs/ops/NOTION_DAILY_REPORT_2026-03-30.md`
 - `docs/ops/ROADMAP_GUARD_SOP.md`
 - `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md`
+- `docs/ops/FMB_VLM_INPUT_PROTOCOL_ANALYSIS_2026-04-04.md`
+- `docs/ops/FMB_TEST_PLAN_WEB_MANUAL_2026-04-04.md`
+- `docs/ops/FMB_TEST_PLAN_API_MINIMAL_2026-04-04.md`
 - `docs/ops/CROSS_DEVICE_SYNC_SOP.md`
 - `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
 - `docs/ops/NETWORK_TROUBLESHOOTING_SOP.md`

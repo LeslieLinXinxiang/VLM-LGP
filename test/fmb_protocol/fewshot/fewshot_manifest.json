@@ -1,0 +1,23 @@
+{
+  "schema_version": "phase0_style_v1",
+  "fewshots": [
+    {
+      "id": "fs_01_single_object_visibility",
+      "path": "fs_01_single_object_visibility",
+      "focus": "single_visible",
+      "enabled": true
+    },
+    {
+      "id": "fs_02_u_shape_partial_occlusion",
+      "path": "fs_02_u_shape_partial_occlusion",
+      "focus": "u_partial_occluded",
+      "enabled": true
+    },
+    {
+      "id": "fs_03_bridge_or_overlap_relation",
+      "path": "fs_03_bridge_or_overlap_relation",
+      "focus": "bridge_relation",
+      "enabled": true
+    }
+  ]
+}
