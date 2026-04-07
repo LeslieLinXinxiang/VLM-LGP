@@ -1,30 +1,30 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-04-05 14:23:10:802259
+** execution start: 2026-04-07 11:13:51:870128
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
 graph.cpp:initParameters:1608(3)  - failed
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1' from '/home/leslie/Projects/VLM_LGP'
-util.cpp:getIs:1104(3) opening input file '003.g'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly1_parts' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:getIs:1104(3) opening input file 'assembly1_part_1.obj'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly1_parts' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:getIs:1104(3) opening input file 'assembly1_part_2.obj'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly1_parts' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:getIs:1104(3) opening input file 'assembly1_part_3.obj'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly1_parts' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:getIs:1104(3) opening input file 'assembly1_part_4.obj'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly1_parts' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
-util.cpp:getIs:1104(3) opening input file 'assembly1_part_5.obj'
-util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_1'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3' from '/home/leslie/Projects/VLM_LGP'
+util.cpp:getIs:1104(3) opening input file '002.g'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly3obj' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:getIs:1104(3) opening input file 'assembly3_part_1.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly3obj' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:getIs:1104(3) opening input file 'assembly3_part_2.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly3obj' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:getIs:1104(3) opening input file 'assembly3_part_3.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly3obj' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:getIs:1104(3) opening input file 'assembly3_part_4.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/assembly3obj' from '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
+util.cpp:getIs:1104(3) opening input file 'assembly3_part_5.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_guiding_input/scene file/fmb_3'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
 kin.cpp:getFrame:521(-1) cannot find frame named 'manual_camera_frame'
-** execution stop: 2026-04-05 14:23:16:458295
-** real time: 5.65609sec
-** CPU time: 6.56353
+** execution stop: 2026-04-07 11:13:57:308726
+** real time: 5.43866sec
+** CPU time: 6.50531
 
 ** set+queried params:

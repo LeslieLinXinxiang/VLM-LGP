@@ -11,6 +11,9 @@
   * *2026-04-03 18:02*: Task created to introduce the FMB-oriented VLM recognition/cognition component into the current pipeline and paper-facing story.
   * *2026-04-03 18:02*: Initial scope locked: define how FMB-specific visual recognition should be represented in the system narrative, determine where it enters the VLM front-end, and assess required updates to flowchart, manuscript, and pipeline documentation.
   * *2026-04-04 19:20*: Input protocol converged to folder-only ordered task images for the real task; few-shot remains fixed as external reusable teaching blocks; task-side manifest removed from the runtime path.
+  * *2026-04-06 10:35*: Prompt logic upgraded to strict temporal-topological policy (`Object List` for incremental object declaration + `Top-Down View` as the absolute dependency source + `Isometric View` for consistency-only checks). Internal test accuracy improved significantly versus the previous isometric-dominant prompt.
+  * *2026-04-06 10:35*: Output contract stabilized to `REASONING_DRAFT + FINAL_JSON` block format for robust regex extraction and downstream schema repair/testing.
+  * *2026-04-06 10:35*: Next expansion target locked to FMB2 with four concrete actions: (1) complete assembly2 mesh->`.g` mapping, (2) build target stacked sequence images, (3) benchmark VLM success rate under unified prompt protocol, (4) run one LGP solve after symbol rules are finalized.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
