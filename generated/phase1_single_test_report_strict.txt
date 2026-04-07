@@ -1,0 +1,9 @@
+input_image_original: assets/structure.png
+input_image_used: generated/phase1_single_test_input_rgb.jpg
+prompt: prompts/phase1_graph_planner.md
+output: generated/phase1_single_test_output_strict.json
+attempts_used: 2
+
+RESULT: PASS
+errors: 0
+warnings: 0

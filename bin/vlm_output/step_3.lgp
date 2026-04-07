@@ -1,0 +1,4 @@
+fol: <step_3.fol>
+terminal: " (on backright_base1 cyl2) "
+genericCollisions: false
+coll: []

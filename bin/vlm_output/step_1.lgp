@@ -1,0 +1,4 @@
+fol: <step_1.fol>
+terminal: " (on place_base1 base1) "
+genericCollisions: true
+coll: []

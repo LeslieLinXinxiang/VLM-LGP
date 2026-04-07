@@ -1,0 +1,833 @@
+Here is the compiled logic sequence for the **Atomic Strategy**, translated into `.fol` and `.lgp` pairs.
+
+### Step 1: Place Foundation
+*Action: Place `base1` on `table center slot`*
+
+```fol
+# step_1.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_touch {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj)! (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_1.lgp
+fol: <step_1.fol>
+terminal: " (on place_base1 base1) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 2: Place Cyl1
+*Action: Place `cyl1` on `frontleft slot of base1`*
+
+```fol
+# step_2.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_2.lgp
+fol: <step_2.fol>
+terminal: " (on frontleft_base1 cyl1) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 3: Place Cyl2
+*Action: Place `cyl2` on `frontright slot of base1`*
+
+```fol
+# step_3.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_3.lgp
+fol: <step_3.fol>
+terminal: " (on frontright_base1 cyl2) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 4: Place Cyl3
+*Action: Place `cyl3` on `backleft slot of base1`*
+
+```fol
+# step_4.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_4.lgp
+fol: <step_4.fol>
+terminal: " (on backleft_base1 cyl3) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 5: Place Cyl4
+*Action: Place `cyl4` on `backright slot of base1`*
+
+```fol
+# step_5.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_5.lgp
+fol: <step_5.fol>
+terminal: " (on backright_base1 cyl4) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 6: Place Base2
+*Action: Place `base2` on supports `[cyl1, cyl2, cyl3, cyl4]`*
+
+```fol
+# step_6.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_touch {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj)! (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_on_4_supports { S1, S2, S3, S4, Obj, Hand,
+  { (is_object S1), (is_object S2), (is_object S3), (is_object S4), (is_object Obj), (is_gripper Hand), (on Hand Obj) }
+  { (on Hand Obj)!, (busy Hand)!, (movable Obj)!,
+    (on S1 S2 S3 S4 Obj),             
+    (stableOnMulti S1 S2 S3 S4 Obj)   
+  }
+}
+```
+
+```lgp
+# step_6.lgp
+fol: <step_6.fol>
+terminal: " (on cyl1 cyl2 cyl3 cyl4 base2) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 7: Place Cyl5
+*Action: Place `cyl5` on `frontleft slot of base2`*
+
+```fol
+# step_7.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_7.lgp
+fol: <step_7.fol>
+terminal: " (on frontleft_base2 cyl5) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 8: Place Cyl6
+*Action: Place `cyl6` on `frontright slot of base2`*
+
+```fol
+# step_8.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_8.lgp
+fol: <step_8.fol>
+terminal: " (on frontright_base2 cyl6) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 9: Place Cyl7
+*Action: Place `cyl7` on `backleft slot of base2`*
+
+```fol
+# step_9.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_9.lgp
+fol: <step_9.fol>
+terminal: " (on backleft_base2 cyl7) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 10: Place Cyl8
+*Action: Place `cyl8` on `backright slot of base2`*
+
+```fol
+# step_10.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_cylinder {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj) (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_straightOn {
+  Obj, Hand, To,
+  { (is_gripper Hand) (is_object Obj) (on Hand Obj) (is_place To) (busy Obj)! }
+  { (busy Hand)! (on Hand Obj)! (stable Hand Obj)! (touch Hand Obj)! (movable Obj)! 
+    (on To Obj) 
+    (stableOn To Obj) 
+    }
+}
+```
+
+```lgp
+# step_10.lgp
+fol: <step_10.fol>
+terminal: " (on backright_base2 cyl8) "
+genericCollisions: true
+coll: []
+```
+
+---
+
+### Step 11: Place Base3
+*Action: Place `base3` on supports `[cyl5, cyl6, cyl7, cyl8]`*
+
+```fol
+# step_11.fol
+FOL_World{
+  hasWait=false
+  gamma = 1.
+  stepCost = 1.
+  timeCost = 0.
+}
+## basic predicates
+is_gripper
+is_object
+is_place
+is_pose
+is_box
+is_sphere
+is_capsule
+is_cylinder
+## predicates to help formulating rules
+on
+busy
+movable
+stableOnMulti
+## predicates to help prune tree
+INFEASIBLE
+INFEASIBLE_pick
+## skeleton symbols
+above
+touch
+impulse
+restingOn
+poseEq
+push_
+stable
+stableOn
+quasiStaticOn
+dynamic
+dynamicOn
+liftDownUp
+## initial state
+START_STATE {}
+### RULES
+### Reward
+REWARD {}
+
+DecisionRule pick_touch {
+  Obj, From, Hand, 
+  { (is_gripper Hand) (is_object Obj) (is_cylinder Obj)! (on From Obj) (is_place From) (busy Hand)! }
+  { (on From Obj)! (above Obj From)! (touch Obj From)! (stable From Obj)! (stableOn From Obj)! 
+    (on Hand Obj) (busy Hand) (movable Obj) 
+    (touch Hand Obj) (stable Hand Obj) 
+    }
+}
+
+DecisionRule place_on_4_supports { S1, S2, S3, S4, Obj, Hand,
+  { (is_object S1), (is_object S2), (is_object S3), (is_object S4), (is_object Obj), (is_gripper Hand), (on Hand Obj) }
+  { (on Hand Obj)!, (busy Hand)!, (movable Obj)!,
+    (on S1 S2 S3 S4 Obj),             
+    (stableOnMulti S1 S2 S3 S4 Obj)   
+  }
+}
+```
+
+```lgp
+# step_11.lgp
+fol: <step_11.fol>
+terminal: " (on cyl5 cyl6 cyl7 cyl8 base3) "
+genericCollisions: true
+coll: []
+```

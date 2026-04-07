@@ -1,0 +1,4 @@
+fol: <step_5_batch_1.fol>
+terminal: " (on top_slot_cube2 TriPrism) "
+genericCollisions: true
+coll: []
