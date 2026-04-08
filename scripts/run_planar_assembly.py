@@ -7,7 +7,7 @@ import os, sys, subprocess, glob
 
 ROOT    = os.path.abspath(os.path.dirname(__file__) + "/..")
 SOLVER  = os.path.join(ROOT, "bin/x.exe")
-RUN_DIR = os.path.join(ROOT, "test/planar_exp/run_01")
+RUN_DIR = os.path.join(ROOT, "test/planar_exp/phase2_codegen")
 SCENE   = os.path.join(ROOT, "test/planar_exp/planar_scene.g")
 
 lgp_files = sorted(glob.glob(os.path.join(RUN_DIR, "*.lgp")))

@@ -1,0 +1,54 @@
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}

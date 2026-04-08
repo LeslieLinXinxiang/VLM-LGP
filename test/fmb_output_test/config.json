@@ -1,0 +1,8 @@
+{
+  "prompt_path": "prompts/phase1_fmb_graph_planner.md",
+  "default_images_root": "test/fmb_guiding_input/images",
+  "output_root": "test/fmb_output_test/outputs",
+  "force_qwen_backend": true,
+  "qwen_model_name": "qwen3.5-flash",
+  "min_required_images": 3
+}

@@ -718,7 +718,7 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
   // 阶段时间塌缩冲突
   if (komo->stepsPerPhase >= 10) {
     // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
-    const double kLift = 0.1; // 6cm 抬升高度
+    const double kLift = 0.15; // 6cm 抬升高度
     komo->addObjective({time - 0.2}, FS_positionRel, {obj, table}, OT_eq,
                        arr{1e2, 1e2, 1e2}, {0., 0., rel_z + kLift});
 
@@ -811,14 +811,11 @@ void ManipulationHelper::action_place_straightOn(str action, double time,
             continue;
           if (!isPairAllowedByExplicitFilter(handPart, obs->name))
             continue;
-          komo->addObjective({time - 0.7, time - 0.3}, FS_negDistance,
-                             {handPart, obs->name}, OT_ineq, {1e1}, {-0.07});
+          komo->addObjective({time - 0.95, time - 0.2}, FS_negDistance,
+                             {handPart, obs->name}, OT_ineq, {1e1}, {-0.05});
         }
       }
     }
-    // 下降段: 允许接触但防止穿模 (从 t-0.3 到 t)
-    komo->addObjective({time - 0.3, time}, FS_accumulatedCollisions, {},
-                       OT_ineq, {1e2}, {-0.01});
   }
 
   std::cout << "INFO: [action_place_straightOn] Three-Stage Skeleton & "
@@ -923,7 +920,7 @@ void ManipulationHelper::action_place_on_multi_support(
   // ==============================================================================
   if (komo->stepsPerPhase >= 10) {
     // [段1] time-0.2: 锚定到目标上方（XY=0，Z=rel_z+6cm）
-    const double kLift = 0.06;
+    const double kLift = 0.1; // 10cm 抬升高度，确保脱离支撑物干扰
     komo->addObjective({time - 0.2}, FS_positionRel, {obj, virtualAnchorName},
                        OT_eq, arr{1e2, 1e2, 1e2}, {0., 0., kLift});
 

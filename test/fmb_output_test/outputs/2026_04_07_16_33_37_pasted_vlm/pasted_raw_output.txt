@@ -1,0 +1,68 @@
+## REASONING_DRAFT
+
+- **Step 001 (Image 1):**
+    - **Red Shape 1:** In the Top-Down view, this object is located on the left side of the base. It does not overlap any other objects. Therefore, it rests on the base (ID 0). The position relative to the center is "left".
+    - **Yellow Shape 1:** In the Top-Down view, this object is located on the right side of the base. It does not overlap any other objects. Therefore, it rests on the base (ID 0). The position relative to the center is "right".
+
+- **Step 002 (Image 2):**
+    - **Green Shape 2:** This object is a horizontal bar. In the Top-Down view, it spans across the middle, overlapping both the Red Shape 1 (ID 1) and the Yellow Shape 1 (ID 2). Since it has real supporters (IDs 1 and 2), we do not list ID 0. Regarding position: the object is centered horizontally and vertically within the bounds of the existing assembly, effectively bridging the gap. Following the omission rule for centrally placed/symmetrical objects, the `position` key must be omitted.
+
+- **Step 003 (Image 3):**
+    - **Blue Shape 3:** This object is a vertical T-shape. In the Top-Down view, it overlaps the Green Shape 2 (ID 3) in the center. It does not touch the Red or Yellow shapes directly in the projection, nor does it touch the empty base. Its supporter is ID 3. Regarding position: The object is placed in the vertical center column of the top-down view. As it is centrally aligned, the `position` key must be omitted.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
