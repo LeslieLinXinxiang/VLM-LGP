@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="100%" height="100%" fill="#f7f4ea"/>
+<text x="90" y="42" font-size="28" font-family="Helvetica, Arial, sans-serif" fill="#1f2937">FMB VLM Accuracy</text>
+<text x="90" y="68" font-size="14" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">Accuracy is computed from extracted FINAL_JSON blocks only.</text>
+<line x1="90" y1="560.00" x2="1160" y2="560.00" stroke="#d6d3d1" stroke-width="1"/>
+<text x="76" y="565.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">0%</text>
+<line x1="90" y1="464.00" x2="1160" y2="464.00" stroke="#d6d3d1" stroke-width="1"/>
+<text x="76" y="469.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">20%</text>
+<line x1="90" y1="368.00" x2="1160" y2="368.00" stroke="#d6d3d1" stroke-width="1"/>
+<text x="76" y="373.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">40%</text>
+<line x1="90" y1="272.00" x2="1160" y2="272.00" stroke="#d6d3d1" stroke-width="1"/>
+<text x="76" y="277.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">60%</text>
+<line x1="90" y1="176.00" x2="1160" y2="176.00" stroke="#d6d3d1" stroke-width="1"/>
+<text x="76" y="181.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">80%</text>
+<line x1="90" y1="80.00" x2="1160" y2="80.00" stroke="#d6d3d1" stroke-width="1"/>
+<text x="76" y="85.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">100%</text>
+<line x1="90" y1="560" x2="1160" y2="560" stroke="#44403c" stroke-width="2"/>
+<line x1="90" y1="80" x2="90" y2="560" stroke="#44403c" stroke-width="2"/>
+<rect x="118.09" y="80.00" width="77.57" height="480.00" rx="8" fill="#0f766e"/>
+<text x="156.88" y="72.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">100.0%</text>
+<text x="156.88" y="56.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">10/10</text>
+<text x="156.88" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 156.88 586.00)">Gemini-3-Flash_Test-1</text>
+<rect x="251.84" y="80.00" width="77.57" height="480.00" rx="8" fill="#2563eb"/>
+<text x="290.62" y="72.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">100.0%</text>
+<text x="290.62" y="56.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">10/10</text>
+<text x="290.62" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 290.62 586.00)">Qwen3.6-Plus_Test-1</text>
+<rect x="385.59" y="80.00" width="77.57" height="480.00" rx="8" fill="#d97706"/>
+<text x="424.38" y="72.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">100.0%</text>
+<text x="424.38" y="56.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">10/10</text>
+<text x="424.38" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 424.38 586.00)">Qwen3.6-Plus_Test-3</text>
+<rect x="519.34" y="224.00" width="77.57" height="336.00" rx="8" fill="#dc2626"/>
+<text x="558.12" y="212.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">70.0%</text>
+<text x="558.12" y="196.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">7/10</text>
+<text x="558.12" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 558.12 586.00)">Qwen3.5-Plus_Test-1</text>
+<rect x="653.09" y="320.00" width="77.57" height="240.00" rx="8" fill="#7c3aed"/>
+<text x="691.88" y="308.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">50.0%</text>
+<text x="691.88" y="292.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">5/10</text>
+<text x="691.88" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 691.88 586.00)">Qwen3.5-Plus_Test-3</text>
+<rect x="786.84" y="416.00" width="77.57" height="144.00" rx="8" fill="#0891b2"/>
+<text x="825.62" y="404.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">30.0%</text>
+<text x="825.62" y="388.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">3/10</text>
+<text x="825.62" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 825.62 586.00)">Gemini-3-Flash_Test-3</text>
+<rect x="920.59" y="560.00" width="77.57" height="0.00" rx="8" fill="#0f766e"/>
+<text x="959.38" y="548.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">0.0%</text>
+<text x="959.38" y="532.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">0/10</text>
+<text x="959.38" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 959.38 586.00)">Qwen3.5-Flash_Test-1</text>
+<rect x="1054.34" y="560.00" width="77.57" height="0.00" rx="8" fill="#2563eb"/>
+<text x="1093.12" y="548.00" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#111827">0.0%</text>
+<text x="1093.12" y="532.00" text-anchor="middle" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#6b7280">0/10</text>
+<text x="1093.12" y="586.00" text-anchor="end" font-size="12" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-30 1093.12 586.00)">Qwen3.5-Flash_Test-3</text>
+<text x="34" y="66" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#374151" transform="rotate(-90 34 66)">Accuracy</text>
+<text x="625.00" y="686" text-anchor="middle" font-size="13" font-family="Helvetica, Arial, sans-serif" fill="#374151">Models</text>
+</svg>

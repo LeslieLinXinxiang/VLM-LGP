@@ -1,0 +1,843 @@
+---
+## REASONING_DRAFT
+
+**Step 1: Analyze Image 1 (Green and Red Bars)**
+- **Object 1 ("Shape 2", Green):** In the Top-Down View, this bar is located at the bottom of the grey base. It overlaps nothing but the base.
+    - *Supporter Check:* Overlaps ID 0.
+    - *Position Selection:* Bottom of the image corresponds to **"front"**.
+- **Object 2 ("Shape 2", Red):** In the Top-Down View, this bar is located at the top of the grey base. It overlaps nothing but the base.
+    - *Supporter Check:* Overlaps ID 0.
+    - *Position Selection:* Top of the image corresponds to **"back"**.
+
+**Step 2: Analyze Image 2 (Blue and Yellow H-Shapes)**
+*Note: The Object List resets for this step. We assign new sequential IDs based on the current list order.*
+- **Object 3 ("Shape 4", Blue):** In the Top-Down View, this vertical shape is positioned on the left side of the assembly area.
+    - *Supporter Check:* Looking at the Top-Down view, the blue shape overlaps the Green bar (ID 1) and the Red bar (ID 2). Since it overlaps real blocks (IDs >= 1), we do NOT include the base (ID 0).
+    - *Position Selection:* It is clearly on the left side of the base. Value: **"left"**.
+- **Object 4 ("Shape 4", Yellow):** In the Top-Down View, this vertical shape is positioned on the right side of the assembly area.
+    - *Supporter Check:* Looking at the Top-Down view, the yellow shape overlaps the Green bar (ID 1) and the Red bar (ID 2). Since it overlaps real blocks, we ignore the base.
+    - *Position Selection:* It is clearly on the right side of the base. Value: **"right"**.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Analyze Image 1 (Base Layer)**
+*   **Object 1 (Green Shape 2):**
+    *   **Supporter Check:** In the Top-Down View, the green rectangle is placed on the empty grey base. It does not overlap any other objects. Supporter: `0` (base).
+    *   **Position Selection:** The object is located in the bottom half of the square base area. According to the rules, "Bottom area" corresponds to `"front"`.
+    *   **Constraint Check:** "front" is a single atomic word. Valid.
+*   **Object 2 (Red Shape 2):**
+    *   **Supporter Check:** In the Top-Down View, the red rectangle is placed on the empty grey base. It does not overlap Object 1. Supporter: `0` (base).
+    *   **Position Selection:** The object is located in the top half of the square base area. According to the rules, "Top area" corresponds to `"back"`.
+    *   **Constraint Check:** "back" is a single atomic word. Valid.
+
+**Step 2: Analyze Image 2 (Upper Layer)**
+*   **Object 3 (Blue Shape 4):**
+    *   **Supporter Check:** In the Top-Down View, the vertical blue bar overlaps the horizontal Red bar (ID 2) and the horizontal Green bar (ID 1). Since it overlaps real blocks (IDs >= 1), we ignore the base. Supporters: `1, 2`.
+    *   **Position Selection:** The blue bar is positioned on the left side of the assembly relative to the center of the base. Dominant position: `"left"`.
+    *   **Constraint Check:** "left" is a single atomic word. Valid.
+*   **Object 4 (Yellow Shape 4):**
+    *   **Supporter Check:** In the Top-Down View, the vertical yellow bar overlaps the horizontal Red bar (ID 2) and the horizontal Green bar (ID 1). Supporters: `1, 2`.
+    *   **Position Selection:** The yellow bar is positioned on the right side of the assembly relative to the center of the base. Dominant position: `"right"`.
+    *   **Constraint Check:** "right" is a single atomic word. Valid.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Image 1 Analysis (Green & Red Bars)**
+*   **Object 1 (Shape 2, Green):**
+    *   **Supporter Check:** In the Top-Down View, the green bar is at the bottom. It does not overlap any other objects (IDs >= 1). Therefore, it rests on the base (ID 0).
+    *   **Position Selection:** Relative to the grey base square, the green bar is located in the bottom area. According to the policy, "Bottom area" maps to `"front"`.
+    *   **Constraint Check:** Single atomic word? Yes ("front").
+*   **Object 2 (Shape 2, Red):**
+    *   **Supporter Check:** In the Top-Down View, the red bar is at the top. It does not overlap Object 1. Therefore, it rests on the base (ID 0).
+    *   **Position Selection:** Relative to the grey base square, the red bar is located in the top area. According to the policy, "Top area" maps to `"back"`.
+    *   **Constraint Check:** Single atomic word? Yes ("back").
+
+**Step 2: Image 2 Analysis (Blue & Yellow H-Shapes)**
+*   **Object 3 (Shape 4, Blue):**
+    *   **Supporter Check:** In the Top-Down View, the vertical blue bar overlaps the horizontal red bar (ID 2) and the horizontal green bar (ID 1). Since it has real supporters, we exclude ID 0.
+    *   **Position Selection:** The blue shape is a vertical bar positioned on the left side of the assembly relative to the center line of the base.
+    *   **Constraint Check:** Single atomic word? Yes ("left").
+*   **Object 4 (Shape 4, Yellow):**
+    *   **Supporter Check:** In the Top-Down View, the vertical yellow bar overlaps the horizontal red bar (ID 2) and the horizontal green bar (ID 1). Since it has real supporters, we exclude ID 0.
+    *   **Position Selection:** The yellow shape is a vertical bar positioned on the right side of the assembly relative to the center line of the base.
+    *   **Constraint Check:** Single atomic word? Yes ("right").
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 1,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 1,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 001: Shape 2 (Green)**
+- **Supporter Check:** In the Top-Down View, this green bar is located at the bottom of the grey base. It does not overlap any other objects yet. Therefore, it rests on the base (ID 0).
+- **Position Selection:** The object is clearly in the bottom half of the Top-Down view. According to the policy, "front" corresponds to the bottom area.
+- **Selection:** `"front"`
+
+**Step 002: Shape 2 (Red)**
+- **Supporter Check:** In the Top-Down View, this red bar is located at the top of the grey base. It does not overlap the green bar or any other objects. It rests on the base (ID 0).
+- **Position Selection:** The object is clearly in the top half of the Top-Down view. According to the policy, "back" corresponds to the top area.
+- **Selection:** `"back"`
+
+**Step 003: Shape 4 (Blue)**
+- **Supporter Check:** In the Top-Down View, the blue H-shape is oriented vertically. It crosses over both the Red bar (ID 2) and the Green bar (ID 1). Since it overlaps real blocks (IDs >= 1), we do not list the base (ID 0) as a supporter.
+- **Position Selection:** The blue shape is positioned on the left side of the assembly relative to the center line of the base. While it spans front-to-back, its dominant placement characteristic relative to the whole is "left".
+- **Selection:** `"left"`
+
+**Step 004: Shape 4 (Yellow)**
+- **Supporter Check:** In the Top-Down View, the yellow H-shape is oriented vertically. It crosses over both the Red bar (ID 2) and the Green bar (ID 1). It rests on these real blocks.
+- **Position Selection:** The yellow shape is positioned on the right side of the assembly relative to the center line of the base.
+- **Selection:** `"right"`
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Analyze Image 1 (First Assembly)**
+- **Object 1 (Green "Shape 2"):**
+    - **Supporter Check:** In the Top-Down view, it is a distinct rectangle. It does not overlap any other placed objects (since it's the first). Therefore, it rests on the base (`id: 0`).
+    - **Position Selection:** In the Top-Down view, this green bar is located in the bottom half of the grey square area. The bottom corresponds to **"front"**.
+- **Object 2 (Red "Shape 2"):**
+    - **Supporter Check:** In the Top-Down view, it is a distinct rectangle above the green one. It does not overlap Object 1. It rests on the base (`id: 0`).
+    - **Position Selection:** In the Top-Down view, this red bar is located in the top half of the grey square area. The top corresponds to **"back"**.
+
+**Step 2: Analyze Image 2 (Second Assembly)**
+*Note: The prompt implies a sequence. Usually, these tasks treat each image as a separate state or a cumulative build. However, looking at the Object Lists, Image 1 has "Shape 2" items, and Image 2 has "Shape 4" items. The Isometric view in Image 2 shows ALL objects from Image 1 PLUS the new ones. This indicates a cumulative assembly.*
+
+- **Object 3 (Blue "Shape 4"):**
+    - **Supporter Check:** Looking at the Top-Down view in Image 2, the blue vertical bar overlaps the Red bar (Object 2) and the Green bar (Object 1). Since it overlaps real objects (IDs 1 and 2), we do NOT list the base (0).
+    - **Position Selection:** The blue shape is a vertical bar spanning from top to bottom but positioned distinctly on the left side of the central axis of the base. Relative to the whole base, its dominant placement is **"left"**.
+- **Object 4 (Yellow "Shape 4"):**
+    - **Supporter Check:** In the Top-Down view, the yellow vertical bar overlaps the Red bar (Object 2) and the Green bar (Object 1). It rests on IDs 1 and 2.
+    - **Position Selection:** The yellow shape is a vertical bar positioned distinctly on the right side of the central axis of the base. Relative to the whole base, its dominant placement is **"right"**.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Image 1 Analysis (Base Layer)**
+*   **Object 1 (Green Shape 2):**
+    *   **Supporter Check:** In the Top-Down View, this object sits on the empty grey base. It does not overlap any other objects. Supporter is ID 0.
+    *   **Position Selection:** The object is located in the bottom half of the Top-Down square. This corresponds to the **"front"** direction.
+*   **Object 2 (Red Shape 2):**
+    *   **Supporter Check:** Sits on the empty grey base. Supporter is ID 0.
+    *   **Position Selection:** The object is located in the top half of the Top-Down square. This corresponds to the **"back"** direction.
+
+**Step 2: Image 2 Analysis (Top Layer)**
+*   **Object 3 (Blue Shape 4):**
+    *   **Supporter Check:** Looking at the Top-Down View, the vertical blue bar crosses over both the Red bar (ID 2) and the Green bar (ID 1). Therefore, it rests on IDs 1 and 2. Since it has real supporters, we exclude ID 0.
+    *   **Position Selection:** The object is a vertical bar positioned on the left side of the assembly relative to the center. Dominant position is **"left"**.
+*   **Object 4 (Yellow Shape 4):**
+    *   **Supporter Check:** The vertical yellow bar crosses over both the Red bar (ID 2) and the Green bar (ID 1). Supporter IDs are 1 and 2. Exclude ID 0.
+    *   **Position Selection:** The object is a vertical bar positioned on the right side of the assembly relative to the center. Dominant position is **"right"**.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Analyze Image 1 (Base Layer)**
+*   **Object 1 ("Shape 2", Green):**
+    *   **Supporter Check:** In the Top-Down view, this object is placed directly on the grey background. It does not overlap any other colored objects. -> Supporter: `0` (base).
+    *   **Position Selection:** The object is located in the bottom half of the Top-Down square. Relative to the center/base, this corresponds to the "front". -> Position: `"front"`.
+*   **Object 2 ("Shape 2", Red):**
+    *   **Supporter Check:** Placed directly on the grey background. Does not overlap Object 1. -> Supporter: `0` (base).
+    *   **Position Selection:** The object is located in the top half of the Top-Down square. Relative to the center/base, this corresponds to the "back". -> Position: `"back"`.
+
+**Step 2: Analyze Image 2 (Top Layer)**
+*   **Object 3 ("Shape 4", Blue):**
+    *   **Supporter Check:** In the Top-Down view, the vertical blue bar crosses over both the Red bar (Object 2) and the Green bar (Object 1). Since it overlaps real blocks, we ignore the base. -> Supporters: `1`, `2`.
+    *   **Position Selection:** The object is a vertical bar positioned on the left side of the assembly grid. -> Position: `"left"`.
+*   **Object 4 ("Shape 4", Yellow):**
+    *   **Supporter Check:** The vertical yellow bar crosses over both the Red bar (Object 2) and the Green bar (Object 1). -> Supporters: `1`, `2`.
+    *   **Position Selection:** The object is a vertical bar positioned on the right side of the assembly grid. -> Position: `"right"`.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 001:** Object "Shape 2" (Green).
+- **Supporter Check:** In the Top-Down View, the green bar is at the bottom. It does not overlap any other placed objects yet. It rests on the base. Overlaps IDs: `[0]`.
+- **Position Selection:** The object is located in the bottom half of the Top-Down view grid. This corresponds to `"front"`.
+- **Constraint Check:** Is "front" a single atomic word? Yes.
+
+**Step 002:** Object "Shape 2" (Red).
+- **Supporter Check:** In the Top-Down View, the red bar is at the top. It does not overlap the green bar (ID 1). It rests on the base. Overlaps IDs: `[0]`.
+- **Position Selection:** The object is located in the top half of the Top-Down view grid. This corresponds to `"back"`.
+- **Constraint Check:** Is "back" a single atomic word? Yes.
+
+**Step 003:** Object "Shape 4" (Blue).
+- **Supporter Check:** In the Top-Down View, the blue vertical bar overlaps both the Red bar (ID 2) and the Green bar (ID 1). Since it covers real blocks, we ignore the base. Overlaps IDs: `[1, 2]`.
+- **Position Selection:** The blue bar is positioned on the left side of the assembly relative to the center vertical axis of the base. Dominant position: `"left"`.
+- **Constraint Check:** Is "left" a single atomic word? Yes.
+
+**Step 004:** Object "Shape 4" (Yellow).
+- **Supporter Check:** In the Top-Down View, the yellow vertical bar overlaps both the Red bar (ID 2) and the Green bar (ID 1). Overlaps IDs: `[1, 2]`.
+- **Position Selection:** The yellow bar is positioned on the right side of the assembly relative to the center vertical axis of the base. Dominant position: `"right"`.
+- **Constraint Check:** Is "right" a single atomic word? Yes.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Analyze Image 1 (Red and Green Bars)**
+*   **Object 1 ("Shape 2", Green):** In the Top-Down view, this is the bottom horizontal bar. It rests on the base (ID 0). Relative to the center of the grey base square, it is located in the bottom half. According to the rules, the bottom area corresponds to `"front"`.
+    *   Supporter: 0
+    *   Position: "front"
+*   **Object 2 ("Shape 2", Red):** In the Top-Down view, this is the top horizontal bar. It rests on the base (ID 0). Relative to the center of the grey base square, it is located in the top half. According to the rules, the top area corresponds to `"back"`.
+    *   Supporter: 0
+    *   Position: "back"
+
+**Step 2: Analyze Image 2 (Blue and Yellow H-Shapes)**
+*   **Object 3 ("Shape 4", Blue):** This is a vertical H-shape placed on the left side of the assembly.
+    *   *Supporter Check:* Looking at the Top-Down view, the blue shape overlaps the red bar (Object 2) at the top and the green bar (Object 1) at the bottom. Therefore, its supporters are IDs 1 and 2. Since it has real supporters, we ignore the base (ID 0).
+    *   *Position Selection:* The blue shape is clearly positioned in the left half of the grey base.
+    *   Dominant Position: "left"
+*   **Object 4 ("Shape 4", Yellow):** This is a vertical H-shape placed on the right side of the assembly.
+    *   *Supporter Check:* Looking at the Top-Down view, the yellow shape overlaps the red bar (Object 2) at the top and the green bar (Object 1) at the bottom. Therefore, its supporters are IDs 1 and 2. We ignore the base.
+    *   *Position Selection:* The yellow shape is clearly positioned in the right half of the grey base.
+    *   Dominant Position: "right"
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+---
+## REASONING_DRAFT
+
+**Step 1: Image 1 Analysis (Green & Red Bars)**
+- **Object 1 ("Shape 2", Green):**
+    - *Supporter Check:* In the Top-Down View, this object sits on the grey base. It does not overlap any other colored objects. -> Supporter: `0`.
+    - *Position Selection:* The green bar is located in the bottom half of the Top-Down square. Bottom corresponds to "front". -> Position: `"front"`.
+- **Object 2 ("Shape 2", Red):**
+    - *Supporter Check:* Sits on the grey base. Does not overlap Object 1. -> Supporter: `0`.
+    - *Position Selection:* The red bar is located in the top half of the Top-Down square. Top corresponds to "back". -> Position: `"back"`.
+
+**Step 2: Image 2 Analysis (Blue & Yellow H-Shapes)**
+*Note: The Object List only introduces two new items: Blue Shape 4 and Yellow Shape 4. The Green and Red bars from Image 1 are present in the scene but are not listed as new inputs. We assign IDs sequentially to the new list items.*
+
+- **Object 3 ("Shape 4", Blue):**
+    - *Supporter Check:* Looking at the Top-Down View for Image 2, the vertical blue bar overlaps the horizontal Red bar (ID 2) and the horizontal Green bar (ID 1). Since it covers real blocks (IDs >= 1), we ignore the base. -> Supporters: `1, 2`.
+    - *Position Selection:* The blue shape is positioned on the left side of the central axis of the base. -> Position: `"left"`.
+- **Object 4 ("Shape 4", Yellow):**
+    - *Supporter Check:* The vertical yellow bar overlaps the horizontal Red bar (ID 2) and the horizontal Green bar (ID 1). -> Supporters: `1, 2`.
+    - *Position Selection:* The yellow shape is positioned on the right side of the central axis of the base. -> Position: `"right"`.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END

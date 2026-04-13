@@ -1,0 +1,391 @@
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: []. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: []. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges":[]
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges":[]
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges":[]
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    }
+  ]
+}
+
+---
+
+## REASONING_DRAFT
+- Step 001: Shape 2 (Green). Overlaps IDs: []. Dominant Position relative to base: front.
+- Step 002: Shape 2 (Red). Overlaps IDs: []. Dominant Position relative to base: back.
+
+## FINAL_JSON_START
+{
+  "objects":[
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges":[
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+---

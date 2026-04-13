@@ -149,6 +149,26 @@ breaklines=true, frame=lines, backgroundcolor=
     \label{fig:layered_graph}
   \end{figure}
 
+  \begin{figure*}[!t]
+    \centering
+    \setlength{\tabcolsep}{2pt}
+    \begin{tabular}{ccc}
+      \includegraphics[width=0.32\textwidth]{fmb_1/001.png} &
+      \includegraphics[width=0.32\textwidth]{fmb_1/002.png} &
+      \includegraphics[width=0.32\textwidth]{fmb_1/003.png} \\
+      \multicolumn{3}{c}{\small FMB-1 (left-to-right continuous sequence)}
+    \end{tabular}
+    \vspace{2mm}
+
+    \begin{tabular}{cc}
+      \includegraphics[width=0.48\textwidth]{fmb_3/001.png} &
+      \includegraphics[width=0.48\textwidth]{fmb_3/002.png} \\
+      \multicolumn{2}{c}{\small FMB-3 (left-to-right continuous sequence)}
+    \end{tabular}
+    \caption{FMB visual examples arranged as left-to-right continuous strips for each folder.}
+    \label{fig:fmb_strips}
+  \end{figure*}
+
   \subsection{Two-Level Clustering}
   \label{subsec:phase2}
 
@@ -274,6 +294,38 @@ breaklines=true, frame=lines, backgroundcolor=
   subproblem tailored to the current batch rather than a monolithic domain
   covering all possible assembly alternatives.
 
+  We first keep the native LGP formulation in its original joint form~\cite{cite_lgp_2015}
+  \begin{align}
+    \min_{\substack{x,\,a_{1:K},\\ s_{1:K},\,t_{1:K}}}\quad
+    &\int_0^T c\!\left(x(t),\dot{x}(t),\ddot{x}(t)\right)\,dt + \psi\!\left(x(T)\right)
+    \label{eq:lgp_joint_objective}\\
+    \text{s.t.}\quad
+    &\forall k=1{:}K\ \ s_k = \mathrm{succ}(a_k, s_{k-1}),
+    \label{eq:lgp_logic_transition}\\
+    &s_K\models g,
+    \label{eq:lgp_goal_constraint}\\
+    &\forall_{k=1}^{K}\ h_{\mathrm{switch}}\!\left(x(t_k)\mid a_k,s_{k-1}\right)=0,
+    \label{eq:lgp_switch_constraints_eq}\\
+    &\forall_{k=1}^{K}\ g_{\mathrm{switch}}\!\left(x(t_k)\mid a_k,s_{k-1}\right)\le 0,
+    \label{eq:lgp_switch_constraints_ineq}\\
+    &\forall t\in[0,T]\ h_{\mathrm{path}}\!\left(x(t),\dot{x}(t)\mid s_{k(t)}\right)=0,
+    \label{eq:lgp_path_constraints_eq}\\
+    &\forall t\in[0,T]\ g_{\mathrm{path}}\!\left(x(t),\dot{x}(t)\mid s_{k(t)}\right)\le 0.
+    \label{eq:lgp_path_constraints_ineq}
+  \end{align}
+
+  For each grounded batch, we then solve the corresponding KOMO subproblem in
+  its original constrained sum-of-squares form~\cite{cite_komo_2014}
+  \begin{align}
+    \min_{x_{0:T}}\quad
+    &\sum_{t=0}^{T} f_t\!\left(x_{t-k:t}\right)^\top f_t\!\left(x_{t-k:t}\right)
+    +\sum_{t,t'} k(t,t')\,x_t^\top x_{t'}
+    \label{eq:komo_batch}\\
+    \text{s.t.}\quad
+    &\forall t:\ g_t\!\left(x_{t-k:t}\right)\le 0,\ h_t\!\left(x_{t-k:t}\right)=0.
+    \label{eq:komo_batch_constraints}
+  \end{align}
+
   The same waypoint-level solve also provides geometric cues for downstream
   motion optimization. Let $x$ denote the full-motion trajectory optimized in
   the downstream stage, let $d_{ij}(x)$ denote the minimum pairwise distance
@@ -319,6 +371,13 @@ breaklines=true, frame=lines, backgroundcolor=
   The execution layer remains intentionally thin: it reads the planned motion
   and gripper commands, executes them on the real robot, and updates the scene
   state for the next planning-solving cycle.
+
+  \begin{figure}[!t]
+    \centering
+    \includesvg[width=\linewidth]{accuracy_bar_chart}
+    \caption{FMB VLM accuracy summary (from extracted FINAL\_JSON blocks).}
+    \label{fig:fmb_accuracy}
+  \end{figure}
 
 
   \begin{thebibliography}{1}

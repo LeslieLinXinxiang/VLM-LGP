@@ -1,0 +1,210 @@
+{
+  "gold_answers": [
+    {
+      "index": 1,
+      "name": "task_bridge_left_right",
+      "data": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "base",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Shape 1",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "left"
+              }
+            ],
+            "color": "red"
+          },
+          {
+            "id": 2,
+            "object": "Shape 1",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "right"
+              }
+            ],
+            "color": "yellow"
+          },
+          {
+            "id": 3,
+            "object": "Shape 2",
+            "edges": [
+              {
+                "supporter": 1
+              },
+              {
+                "supporter": 2
+              }
+            ],
+            "color": "green"
+          },
+          {
+            "id": 4,
+            "object": "Shape 3",
+            "edges": [
+              {
+                "supporter": 3
+              }
+            ],
+            "color": "blue"
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "name": "task_hpair_front_back",
+      "data": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "base",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Shape 2",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "front"
+              }
+            ],
+            "color": "green"
+          },
+          {
+            "id": 2,
+            "object": "Shape 2",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "back"
+              }
+            ],
+            "color": "red"
+          },
+          {
+            "id": 3,
+            "object": "Shape 4",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "left"
+              },
+              {
+                "supporter": 2,
+                "position": "left"
+              }
+            ],
+            "color": "blue"
+          },
+          {
+            "id": 4,
+            "object": "Shape 4",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "right"
+              },
+              {
+                "supporter": 2,
+                "position": "right"
+              }
+            ],
+            "color": "yellow"
+          }
+        ]
+      }
+    }
+  ],
+  "models": [
+    {
+      "model_name": "Gemini-3-Flash_Test-1",
+      "source_file": "Gemini-3-Flash_Test-1.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 10,
+      "wrong_samples": 0,
+      "format_error_samples": 0,
+      "accuracy": 1.0
+    },
+    {
+      "model_name": "Qwen3.6-Plus_Test-1",
+      "source_file": "Qwen3.6-Plus_Test-1.txt",
+      "sample_split_mode": "legacy_final_json_block",
+      "total_samples": 10,
+      "correct_samples": 10,
+      "wrong_samples": 0,
+      "format_error_samples": 0,
+      "accuracy": 1.0
+    },
+    {
+      "model_name": "Qwen3.6-Plus_Test-3",
+      "source_file": "Qwen3.6-Plus_Test-3.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 10,
+      "wrong_samples": 0,
+      "format_error_samples": 0,
+      "accuracy": 1.0
+    },
+    {
+      "model_name": "Qwen3.5-Plus_Test-1",
+      "source_file": "Qwen3.5-Plus_Test-1.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 7,
+      "wrong_samples": 3,
+      "format_error_samples": 0,
+      "accuracy": 0.7
+    },
+    {
+      "model_name": "Qwen3.5-Plus_Test-3",
+      "source_file": "Qwen3.5-Plus_Test-3.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 5,
+      "wrong_samples": 4,
+      "format_error_samples": 1,
+      "accuracy": 0.5
+    },
+    {
+      "model_name": "Gemini-3-Flash_Test-3",
+      "source_file": "Gemini-3-Flash_Test-3.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 3,
+      "wrong_samples": 7,
+      "format_error_samples": 0,
+      "accuracy": 0.3
+    },
+    {
+      "model_name": "Qwen3.5-Flash_Test-1",
+      "source_file": "Qwen3.5-Flash_Test-1.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 0,
+      "wrong_samples": 7,
+      "format_error_samples": 3,
+      "accuracy": 0.0
+    },
+    {
+      "model_name": "Qwen3.5-Flash_Test-3",
+      "source_file": "Qwen3.5-Flash_Test-3.txt",
+      "sample_split_mode": "explicit_separator",
+      "total_samples": 10,
+      "correct_samples": 0,
+      "wrong_samples": 9,
+      "format_error_samples": 1,
+      "accuracy": 0.0
+    }
+  ],
+  "model_count": 8
+}
