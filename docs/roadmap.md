@@ -21,6 +21,7 @@
   * *2026-04-13 11:24*: New FMB experiment orientation baseline was finalized for current meshes; downstream pose definitions and relative Z-height tuning are now locked to this orientation reference. Next execution focus is `general_base` work-area partitioning via patch placement, driven by axis-wise key dimensions extracted from `assets/fmb/new_fmb/base_board.obj`.
   * *2026-04-13 21:40*: Completed grasp/place frame calibration and single-object pick tests in `test/fmb_new_experiment/`. Root cause of the recent pick-frame skew was isolated to an extra yaw on the center patch (`Table_Center`): removing `d(90 0 0 1)` restored consistent frame alignment during `pick_touch` runs.
   * *2026-04-13 21:40*: New planning-model dilemma identified for next phase: VLM output currently mixes slot-based placement semantics with support-based stacking semantics. This becomes under-specified for suspended multi-support placements (for example `shape_2_1` resting on `shape_1_1` + `shape_1_2`) where no direct base slot exists; a unified representation strategy is now required.
+  * *2026-04-14 09:15*: New FMB input revision completed and asset coverage confirmed. Sufficient material is now available for both `new_fmb_1` and `new_fmb_3` branches, and Figma-guided cleanup has been applied to the images in `test/fmb_guiding_input/images/new_fmb_1/` and `test/fmb_guiding_input/images/new_fmb_3/`.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
 
