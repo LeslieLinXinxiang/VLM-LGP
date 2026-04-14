@@ -73,3 +73,25 @@ The file `generated/scene_named.g` is the canonical scene description. Frame nam
 - In `action_place_straightOn`, the terminal placement target is defined by hard relative constraints: XY center alignment and Z contact height (`rel_z`) against the support frame.
 - For non-cylindrical objects, the final face orientation follows the `+90deg` convention (`x_obj` aligned to `x_table`, i.e., `b-face forward`).
 - Stage objectives around `time-0.2` are only active in full-motion mode (`stepsPerPhase >= 10`) to avoid waypoint-stage same-slice infeasibility.
+
+## 11. Frame Alignment Traceability (Table/Patch -> Pick/Place)
+
+This section records where table/patch frame orientation enters solver constraints and why patch rotation can affect the observed pick posture in a full motif solve.
+
+### 11.1 Source of place frame orientation
+- Scene files define placement frames explicitly in `.g` as `is_place` frames (for example `Table_Left`, `Table_Center`).
+- Example current FMB experiment scene: `test/fmb_new_experiment/scene_new_fmb_preview.g`.
+
+### 11.2 Where this is consumed in solver code
+- Rule gate: `.fol` uses `DecisionRule place_straightOn` with `(is_place To)` and `(on To Obj)` pre/post conditions.
+- Geometric enforcement is implemented in `rai/src/KOMO/manipTools.cpp`:
+	- `ManipulationHelper::action_place_straightOn(...)`
+	- `rai::Frame* targetF = komo->world.getFrame(table)` selects the support frame by name.
+	- `rai::Transformation targetPose = targetF->ensure_X()` imports support-frame pose/orientation.
+	- Terminal/approach orientation constraints are enforced via `FS_vectorZDiff` and `FS_scalarProductXX` against `{obj, table}`.
+- Multi-support variant uses the same convention in `ManipulationHelper::action_place_on_multi_support(...)` by inheriting the first support orientation (`targetWorldPose = first_support->ensure_X()`).
+
+### 11.3 Why a patch yaw can influence pick appearance
+- In a motif solve, pick and place are optimized on one continuous trajectory with shared smoothness/control objectives.
+- If the target place frame carries an extra yaw, place orientation constraints can pull earlier trajectory segments, which may appear as pre-grasp/pick frame misalignment.
+- Practical example observed in FMB experiment: removing extra `d(90 0 0 1)` from `Table_Center` in `test/fmb_new_experiment/scene_new_fmb_preview.g` restored expected pick alignment consistency.

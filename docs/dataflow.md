@@ -38,3 +38,28 @@
 ## 6. Dataflow Optimization (Current)
 - Strategy generation/decision has been migrated from VLM-centric outputs to deterministic **Branch-Aware Topological Clustering**, significantly reducing hallucination.
 - Euclidean distance checks and geometric layout consensus are now governed by direct `.g` scene parsing and inventory dictionary binding, removing latent VLM geometric estimation noise.
+
+## 7. Unified Spatial Semantics Contract for VLM (Slot vs Support)
+
+To avoid ambiguous interpretation of image inputs, VLM outputs should use one normalized placement contract per object relation:
+
+- `placement_mode = slot_anchor`
+	- Meaning: object is anchored to a base/patch slot frame.
+	- Required field: `anchor_slot` (must map to an `is_place` frame in scene).
+	- Typical examples: `Table_Left`, `Table_Center`, object-local top slots.
+
+- `placement_mode = support_bridge`
+	- Meaning: object is supported by one or more objects instead of a base slot.
+	- Required field: `supports` (array of support object IDs, length >= 1; length >= 2 for bridge cases).
+	- Typical example: `shape_2_1` resting across `shape_1_1` and `shape_1_2` without base contact.
+
+Normalization rules before codegen:
+- Exactly one mode per placement relation.
+- `slot_anchor` and `support_bridge` must not be emitted simultaneously for the same object/time step.
+- If visual evidence is insufficient, output `placement_mode = uncertain` and trigger fallback policy (human review or deterministic geometric checker), instead of guessing.
+
+Execution mapping guidance:
+- `slot_anchor` -> `place_straightOn` path against the resolved `is_place` frame.
+- `support_bridge` -> `place_on_multi_support` path against resolved support set.
+
+This contract is the control boundary for prompt design, VLM JSON schema, and Phase2 codegen. It ensures image understanding and solver action selection remain consistent.
