@@ -1,9 +1,5 @@
 model_name,source_file,correct_samples,total_samples,accuracy_percent
-Gemini-3-Flash_Test-1,Gemini-3-Flash_Test-1.txt,10,10,100.00
-Qwen3.6-Plus_Test-1,Qwen3.6-Plus_Test-1.txt,10,10,100.00
-Qwen3.6-Plus_Test-3,Qwen3.6-Plus_Test-3.txt,10,10,100.00
-Qwen3.5-Plus_Test-1,Qwen3.5-Plus_Test-1.txt,7,10,70.00
-Qwen3.5-Plus_Test-3,Qwen3.5-Plus_Test-3.txt,5,10,50.00
-Gemini-3-Flash_Test-3,Gemini-3-Flash_Test-3.txt,3,10,30.00
-Qwen3.5-Flash_Test-1,Qwen3.5-Flash_Test-1.txt,0,10,0.00
-Qwen3.5-Flash_Test-3,Qwen3.5-Flash_Test-3.txt,0,10,0.00
+Gemini-3-Flash_test6_Sequential_Input,Gemini-3-Flash_test6_Sequential_Input.txt,10,10,100.00
+Gemini-3-Flash_test7_Sequential_Input,Gemini-3-Flash_test7_Sequential_Input.txt,10,10,100.00
+Gemini-3-Flash_test7_Single_Input copy,Gemini-3-Flash_test7_Single_Input copy.txt,9,10,90.00
+Gemini-3-Flash_test6_Single_Input,Gemini-3-Flash_test6_Single_Input.txt,8,10,80.00

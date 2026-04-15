@@ -64,7 +64,7 @@ The file `generated/scene_named.g` is the canonical scene description. Frame nam
 
 - Movable objects: `rect_1`…`rect_8`, `cube_1`…`cube_4`, `cyl_1`, `cyl_2`, `tri_1`
 - Placement bases (thin, non-contact, kinematic targets): `Base_Left`, `Base_Right`, `Base_Center`, `Base_Top`, `Base_Bottom`
-- Table-level slots: `Table_Left`, `Table_Right`
+- Table-level slots: `Table_Left`, `Table_Right`, `Table_Front`, `Table_Back`, `Table_Center`
 - Rect top patches: `Rect_1_Left`, `Rect_1_Right`, …, `Rect_8_Left`, `Rect_8_Right`
 - Main table surface: `table`
 

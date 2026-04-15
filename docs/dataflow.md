@@ -63,3 +63,9 @@ Execution mapping guidance:
 - `support_bridge` -> `place_on_multi_support` path against resolved support set.
 
 This contract is the control boundary for prompt design, VLM JSON schema, and Phase2 codegen. It ensures image understanding and solver action selection remain consistent.
+
+### Current FMB Phase1 Prompt Test Mode (2026-04)
+
+- For `prompts/phase1_fmb_graph_planner.md`, the active test mode is **position-only** assignment based on object geometric center in Top-Down View.
+- Allowed direction labels are fixed to: `Left`, `Right`, `Front`, `Back`, `Center`.
+- In this test mode, prompt output does not emit support-based fields (`supporter` / `supports` / `dependencies` / `edges`).

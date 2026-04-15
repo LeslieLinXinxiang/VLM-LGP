@@ -89,6 +89,88 @@ GOLD_ANSWERS = [
             ]
         },
     },
+    {
+        "name": "task_hpair_threebars_front_center_back",
+        "data": {
+            "objects": [
+                {"id": 0, "object": "base", "edges": []},
+                {
+                    "id": 1,
+                    "object": "Shape 2",
+                    "color": "green",
+                    "edges": [{"supporter": 0, "position": "front"}],
+                },
+                {
+                    "id": 2,
+                    "object": "Shape 2",
+                    "color": "red",
+                    "edges": [{"supporter": 0}],
+                },
+                {
+                    "id": 3,
+                    "object": "Shape 2",
+                    "color": "yellow",
+                    "edges": [{"supporter": 0, "position": "back"}],
+                },
+                {
+                    "id": 4,
+                    "object": "Shape 4",
+                    "color": "blue",
+                    "edges": [
+                        {"supporter": 1, "position": "left"},
+                        {"supporter": 2, "position": "left"},
+                        {"supporter": 3, "position": "left"},
+                    ],
+                },
+                {
+                    "id": 5,
+                    "object": "Shape 4",
+                    "color": "orange",
+                    "edges": [
+                        {"supporter": 1, "position": "right"},
+                        {"supporter": 2, "position": "right"},
+                        {"supporter": 3, "position": "right"},
+                    ],
+                },
+            ]
+        },
+    },
+    {
+        "name": "task_single_input_yellow_red_green_blue",
+        "data": {
+            "objects": [
+                {"id": 0, "object": "base", "edges": []},
+                {
+                    "id": 1,
+                    "object": "Shape 2",
+                    "color": "yellow",
+                    "edges": [{"supporter": 0, "position": "back"}],
+                },
+                {
+                    "id": 2,
+                    "object": "Shape 2",
+                    "color": "red",
+                    "edges": [{"supporter": 0}],
+                },
+                {
+                    "id": 3,
+                    "object": "Shape 2",
+                    "color": "green",
+                    "edges": [{"supporter": 0, "position": "front"}],
+                },
+                {
+                    "id": 4,
+                    "object": "Shape 4",
+                    "color": "blue",
+                    "edges": [
+                        {"supporter": 1},
+                        {"supporter": 2},
+                        {"supporter": 3},
+                    ],
+                },
+            ]
+        },
+    },
 ]
 
 
@@ -171,6 +253,73 @@ def normalize_phase1_json(data: dict) -> dict:
     return {"objects": canonical_objects}
 
 
+def object_label(obj: dict) -> str:
+    return f'{obj.get("object", "")}|{obj.get("color", "")}'
+
+
+def graph_signature(data: dict) -> str:
+    if not isinstance(data, dict):
+        raise ValueError("JSON root must be an object.")
+    if "objects" not in data:
+        raise ValueError("JSON root missing 'objects'.")
+    if not isinstance(data["objects"], list):
+        raise ValueError("'objects' must be a list.")
+
+    by_id = {}
+    for obj in data["objects"]:
+        if not isinstance(obj, dict):
+            raise ValueError(f"Object is not a JSON object: {obj!r}")
+        if "id" not in obj:
+            raise ValueError(f"Object missing 'id': {obj!r}")
+        by_id[obj["id"]] = obj
+
+    memo: dict[int, str] = {}
+    visiting: set[int] = set()
+
+    def signature_for_object(object_id: int) -> str:
+        if object_id in memo:
+            return memo[object_id]
+        if object_id in visiting:
+            raise ValueError("Cycle detected in object graph.")
+        visiting.add(object_id)
+
+        obj = by_id.get(object_id)
+        if obj is None:
+            raise ValueError(f"Missing object id referenced in graph: {object_id}")
+
+        if object_id == 0:
+            signature = "base"
+        else:
+            raw_edges = obj.get("edges", [])
+            if not isinstance(raw_edges, list):
+                raise ValueError(f"'edges' must be a list: {obj!r}")
+
+            edge_signatures = []
+            for edge in raw_edges:
+                canonical = canonical_edge(edge)
+                supporter_signature = signature_for_object(canonical["supporter"])
+                if "position" in canonical:
+                    edge_signatures.append(f'{supporter_signature}@{canonical["position"]}')
+                else:
+                    edge_signatures.append(supporter_signature)
+
+            edge_signatures.sort()
+            position_value = ""
+            for edge in raw_edges:
+                if isinstance(edge, dict) and "position" in edge:
+                    position_value = f'|pos={edge["position"]}'
+                    break
+            signature = f'{object_label(obj)}{position_value}|edges=[{";".join(edge_signatures)}]'
+
+        visiting.remove(object_id)
+        memo[object_id] = signature
+        return signature
+
+    signatures = [signature_for_object(obj["id"]) for obj in data["objects"]]
+    signatures.sort()
+    return json.dumps(signatures, ensure_ascii=False)
+
+
 def parse_candidate_block(block_text: str) -> dict:
     try:
         data = json.loads(block_text)
@@ -179,9 +328,17 @@ def parse_candidate_block(block_text: str) -> dict:
     return normalize_phase1_json(data)
 
 
-def match_gold_answer(candidate: dict, normalized_golds: list[dict]) -> dict | None:
+def parse_candidate_signature(block_text: str) -> str:
+    try:
+        data = json.loads(block_text)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON: {exc}") from exc
+    return graph_signature(data)
+
+
+def match_gold_answer(candidate_signature: str, normalized_golds: list[dict]) -> dict | None:
     for gold in normalized_golds:
-        if candidate == gold["normalized"]:
+        if candidate_signature == gold["signature"]:
             return {
                 "matched_gold_name": gold["name"],
                 "matched_gold_index": gold["index"],
@@ -212,10 +369,12 @@ def evaluate_model_file(txt_path: Path, normalized_golds: list[dict]) -> tuple[d
                 raise ValueError(f"Sample contains {len(blocks)} FINAL_JSON blocks; expected exactly 1.")
 
             normalized_candidate = parse_candidate_block(blocks[0])
-            matched_gold = match_gold_answer(normalized_candidate, normalized_golds)
+            candidate_signature = parse_candidate_signature(blocks[0])
+            matched_gold = match_gold_answer(candidate_signature, normalized_golds)
             row["status"] = "correct" if matched_gold else "wrong"
             row["reason"] = ""
             row["normalized_candidate"] = normalized_candidate
+            row["signature"] = candidate_signature
             row["extraction_type"] = "final_json_marker"
             row["matched_gold_name"] = matched_gold["matched_gold_name"] if matched_gold else None
             row["matched_gold_index"] = matched_gold["matched_gold_index"] if matched_gold else None
@@ -227,6 +386,7 @@ def evaluate_model_file(txt_path: Path, normalized_golds: list[dict]) -> tuple[d
             row["status"] = "format_error"
             row["reason"] = str(exc)
             row["normalized_candidate"] = None
+            row["signature"] = None
             row["extraction_type"] = None
             row["matched_gold_name"] = None
             row["matched_gold_index"] = None
@@ -243,6 +403,7 @@ def evaluate_model_file(txt_path: Path, normalized_golds: list[dict]) -> tuple[d
                 "status": "format_error",
                 "reason": "No sample content found.",
                 "normalized_candidate": None,
+                "signature": None,
                 "extraction_type": None,
                 "matched_gold_name": None,
                 "matched_gold_index": None,
@@ -403,6 +564,7 @@ def main() -> None:
             "index": index,
             "name": item["name"],
             "normalized": normalize_phase1_json(item["data"]),
+            "signature": graph_signature(item["data"]),
         }
         for index, item in enumerate(GOLD_ANSWERS, start=1)
     ]

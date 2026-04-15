@@ -1,0 +1,956 @@
+## REASONING_DRAFT
+
+- **Instance 1 (Green):** Shape 2. In the Top-Down view, it appears as a continuous bar. It is positioned at the **front** of the base. It is on the bottom layer, supported by the base.
+- **Instance 2 (Red):** Shape 2. Continuous bar. Positioned centrally (omit position). It is on the bottom layer, supported by the base.
+- **Instance 3 (Yellow):** Shape 2. Continuous bar. Positioned at the **back** of the base. It is on the bottom layer, supported by the base.
+- **Instance 4 (Blue):** Shape 4. In the Top-Down view, it is fragmented into two segments by the yellow, red, and green bars. However, looking at the isometric view and the shape definition, Shape 4 (the bridge-like piece) is actually the *straddling* object. In the Top-Down view, the Blue Shape 4 covers segments of Green, Red, and Yellow. Thus, Green, Red, and Yellow are supporters. Position: **left**.
+- **Instance 5 (Orange):** Shape 4. Similar to Blue, it covers segments of Green, Red, and Yellow. Thus, Green, Red, and Yellow are supporters. Position: **right**.
+
+**Topological Order Check:**
+- Layer 0: Base (ID 0)
+- Layer 1: Green (ID 1), Red (ID 2), Yellow (ID 3)
+- Layer 2: Blue (ID 4), Orange (ID 5)
+- All edges satisfy `supporter < current_object_id`.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Instance 0 (Base)**: Grey rectangular platform. Supported by floor (implied).
+- **Instance 1 (Shape 2 - Green)**: Continuous bar. Visible at the bottom of the Top-Down View. Supports: Blue Shape 4. Supported by: Base. Position: **front**.
+- **Instance 2 (Shape 2 - Red)**: Continuous bar. Centrally located. Supports: Blue Shape 4 and Orange Shape 4. Supported by: Base. Position: **(omit)**.
+- **Instance 3 (Shape 2 - Yellow)**: Continuous bar. Visible at the top of the Top-Down View. Supports: Blue Shape 4 and Orange Shape 4. Supported by: Base. Position: **back**.
+- **Instance 4 (Shape 4 - Blue)**: Fragmented appearance in Top-Down View (broken by yellow, red, and green bars). Actually, looking at the Isometric View for consistency, Shape 4 (Blue) is sitting **on top** of the bars. In Top-Down view, the blue segments overlap the green, red, and yellow bars. Dependency: Supported by Green, Red, and Yellow. Position: **left**.
+- **Instance 5 (Shape 4 - Orange)**: Fragmented appearance in Top-Down View. Overlaps red and yellow bars. Dependency: Supported by Red and Yellow. Position: **right**.
+
+*Topological Order Verification*:
+1. Base (0)
+2. Shape 2 Green (1) - Support: 0
+3. Shape 2 Red (2) - Support: 0
+4. Shape 2 Yellow (3) - Support: 0
+5. Shape 4 Blue (4) - Supports: 1, 2, 3 (All IDs < 4)
+6. Shape 4 Orange (5) - Supports: 2, 3 (All IDs < 5)
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Base**: ID 0.
+- **Instance 001 (Shape 2, Green)**: Visible pattern: fragmented (broken into two segments by Blue). Position: front. Supports: Blue. Supported by: Base.
+- **Instance 002 (Shape 2, Red)**: Visible pattern: fragmented (broken into two segments by Blue and Orange). Position: omitted (center). Supports: Blue, Orange. Supported by: Base.
+- **Instance 003 (Shape 2, Yellow)**: Visible pattern: fragmented (broken into two segments by Orange). Position: back. Supports: Orange. Supported by: Base.
+- **Instance 004 (Shape 4, Blue)**: Visible pattern: continuous (covers Green and Red). Position: left. Supported by: Green (ID 1), Red (ID 2).
+- **Instance 005 (Shape 4, Orange)**: Visible pattern: continuous (covers Red and Yellow). Position: right. Supported by: Red (ID 2), Yellow (ID 3).
+
+**Topological Check**: 
+1. Green (1), Red (2), Yellow (3) are all supported by Base (0).
+2. Blue (4) is supported by Green (1) and Red (2). (1 < 4, 2 < 4).
+3. Orange (5) is supported by Red (2) and Yellow (3). (2 < 5, 3 < 5).
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- Instance 001: Shape 2 + Green. Visible pattern: fragmented (covered by blue and orange). Support: Directly on base. Position: front.
+- Instance 002: Shape 2 + Red. Visible pattern: fragmented (covered by blue and orange). Support: Directly on base. Position: [omit - center].
+- Instance 003: Shape 2 + Yellow. Visible pattern: fragmented (covered by blue and orange). Support: Directly on base. Position: back.
+- Instance 004: Shape 4 + Blue. Visible pattern: continuous. Overlaps IDs: 001, 002, 003. Position: left.
+- Instance 005: Shape 4 + Orange. Visible pattern: continuous. Overlaps IDs: 001, 002, 003. Position: right.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Instance 0 (Base)**: Grey rectangular platform. Always ID 0.
+- **Instance 1 (Shape 2 - Green)**: Continuous bar. Bottom layer. Position: front. Supported by base (0).
+- **Instance 2 (Shape 2 - Red)**: Continuous bar. Bottom layer. Position: central (omit). Supported by base (0).
+- **Instance 3 (Shape 2 - Yellow)**: Continuous bar. Bottom layer. Position: back. Supported by base (0).
+- **Instance 4 (Shape 4 - Blue)**: Fragmented appearance in top-down view (three blue segments separated by yellow, red, green bars). This indicates blue is *on top* of the Shape 2 bars. Position: left. Supported by IDs 1, 2, and 3.
+- **Instance 5 (Shape 4 - Orange)**: Fragmented appearance in top-down view (three orange segments separated by yellow, red, green bars). This indicates orange is *on top* of the Shape 2 bars. Position: right. Supported by IDs 1, 2, and 3.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- Instance 001: Shape 2 (Green). Visible pattern: fragmented (interrupted by blue and orange). Support: Base. Position: front.
+- Instance 002: Shape 2 (Red). Visible pattern: fragmented (interrupted by blue and orange). Support: Base. Position: omit (central).
+- Instance 003: Shape 2 (Yellow). Visible pattern: fragmented (interrupted by blue and orange). Support: Base. Position: back.
+- Instance 004: Shape 4 (Blue). Visible pattern: continuous. Covers: Green, Red, Yellow. Position: left.
+- Instance 005: Shape 4 (Orange). Visible pattern: continuous. Covers: Green, Red, Yellow. Position: right.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Instance 0 (Base)**: The grey foundation.
+- **Instance 1 (Green)**: Shape 2. Fragmented appearance in Top-Down view (split by blue and orange). Indicates it is on a lower layer. Position: front.
+- **Instance 2 (Red)**: Shape 2. Fragmented appearance in Top-Down view (split by blue and orange). Indicates it is on a lower layer. Position: center/omit.
+- **Instance 3 (Yellow)**: Shape 2. Fragmented appearance in Top-Down view (split by blue and orange). Indicates it is on a lower layer. Position: back.
+- **Instance 4 (Blue)**: Shape 4. Continuous appearance. Covers Green (ID 1), Red (ID 2), and Yellow (ID 3). Position: left.
+- **Instance 5 (Orange)**: Shape 4. Continuous appearance. Covers Green (ID 1), Red (ID 2), and Yellow (ID 3). Position: right.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Instance 001 (Shape 2 - Green)**: Visible pattern: fragmented (interrupted by blue and orange). Support: Directly on base. Position: `front`.
+- **Instance 002 (Shape 2 - Red)**: Visible pattern: fragmented (interrupted by blue and orange). Support: Directly on base. Position: omit (central).
+- **Instance 003 (Shape 2 - Yellow)**: Visible pattern: fragmented (interrupted by blue and orange). Support: Directly on base. Position: `back`.
+- **Instance 004 (Shape 4 - Blue)**: Visible pattern: continuous. Overlaps Green, Red, and Yellow Shape 2s. Support: IDs 1, 2, 3. Position: `left`.
+- **Instance 005 (Shape 4 - Orange)**: Visible pattern: continuous. Overlaps Green, Red, and Yellow Shape 2s. Support: IDs 1, 2, 3. Position: `right`.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Instance 0 (Base)**: Grey rectangular platform. Supported by floor (implicit).
+- **Instance 1: Shape 2 (Green)**. Visible pattern: Continuous bar. Supported by base. Position: Front.
+- **Instance 2: Shape 2 (Red)**. Visible pattern: Continuous bar. Supported by base. Position: [Omit - Central].
+- **Instance 3: Shape 2 (Yellow)**. Visible pattern: Continuous bar. Supported by base. Position: Back.
+- **Instance 4: Shape 4 (Blue)**. Visible pattern: Fragmented (interrupted by Red/Yellow Shape 2 in isometric, but top-down shows it covering Green/Red/Yellow). Dependency check: Top-Down view shows Blue bar crossing over Green, Red, and Yellow. Position: Left.
+- **Instance 5: Shape 4 (Orange)**. Visible pattern: Fragmented. Top-Down view shows Orange bar crossing over Green, Red, and Yellow. Position: Right.
+
+**Topological Verification**:
+- Layer 1: Green (1), Red (2), Yellow (3) sit on Base (0).
+- Layer 2: Blue (4) and Orange (5) sit on Green (1), Red (2), and Yellow (3).
+- All edges satisfy `supporter < id`.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
+
+## REASONING_DRAFT
+
+- **Instance 1 (Shape 2, Green)**: Visible pattern: continuous. Supported by base. Position: front.
+- **Instance 2 (Shape 2, Red)**: Visible pattern: continuous. Supported by base. No position (centered horizontally/vertically relative to base).
+- **Instance 3 (Shape 2, Yellow)**: Visible pattern: continuous. Supported by base. Position: back.
+- **Instance 4 (Shape 4, Blue)**: Visible pattern: fragmented (crosses over green, red, yellow). Overlaps IDs: 1, 2, 3. Position: left.
+- **Instance 5 (Shape 4, Orange)**: Visible pattern: fragmented (crosses over green, red, yellow). Overlaps IDs: 1, 2, 3. Position: right.
+
+## FINAL_JSON_START
+
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "left"
+        },
+        {
+          "supporter": 2,
+          "position": "left"
+        },
+        {
+          "supporter": 3,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Shape 4",
+      "color": "orange",
+      "edges": [
+        {
+          "supporter": 1,
+          "position": "right"
+        },
+        {
+          "supporter": 2,
+          "position": "right"
+        },
+        {
+          "supporter": 3,
+          "position": "right"
+        }
+      ]
+    }
+  ]
+}
+
+## FINAL_JSON_END
+
+---
