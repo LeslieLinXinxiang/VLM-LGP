@@ -16,6 +16,8 @@ This folder contains runtime, environment, network, and troubleshooting SOPs.
 - `METHOD_UPGRADE_TASKBOOK_2026-03-25.md`
 - `ROADMAP_GUARD_SOP.md`
 - `LGP_WAYPOINT_MANIPULABILITY_COUPLING_EXECUTION_2026-03-30.md`
+- `EXPERIMENT_EXECUTION_PROTOCOL_FMB_CUBE.md`
+- `EXPERIMENT_LOGGING_PROTOCOL.md`
 
 ## Filing Rules
 

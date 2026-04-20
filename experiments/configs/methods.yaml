@@ -1,0 +1,32 @@
+# Method registry for experiment runner
+# command_template supports placeholders defined in manifest_schema.md
+
+pure_llm:
+  timeout_sec: 300
+  command_template: >-
+    python3 driver.py --mode pure_llm --scene {input_scene_g_path} --task-graph {input_task_graph_path} --seed {random_seed}
+
+proposed:
+  timeout_sec: 300
+  command_template: >-
+    python3 driver.py --mode proposed --scene {input_scene_g_path} --task-graph {input_task_graph_path} --seed {random_seed}
+
+lgp_monolithic:
+  timeout_sec: 300
+  command_template: >-
+    python3 driver.py --mode lgp_monolithic --scene {input_scene_g_path} --task-graph {input_task_graph_path} --seed {random_seed}
+
+lgp_split_manual:
+  timeout_sec: 300
+  command_template: >-
+    python3 driver.py --mode lgp_split_manual --scene {input_scene_g_path} --task-graph {input_task_graph_path} --seed {random_seed}
+
+lgp_split_manual_smart_collision:
+  timeout_sec: 300
+  command_template: >-
+    python3 driver.py --mode lgp_split_manual_smart_collision --scene {input_scene_g_path} --task-graph {input_task_graph_path} --seed {random_seed}
+
+proposed_auto:
+  timeout_sec: 300
+  command_template: >-
+    python3 driver.py --mode proposed_auto --scene {input_scene_g_path} --task-graph {input_task_graph_path} --seed {random_seed}

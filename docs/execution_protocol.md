@@ -135,3 +135,24 @@ To avoid fragile direct edits on `docs/roadmap.md`, roadmap updates must use scr
    - `chmod +x .githooks/pre-commit && git config core.hooksPath .githooks`
 4. Pre-commit must block commits if roadmap validation fails.
 5. See operational details in `docs/ops/ROADMAP_GUARD_SOP.md`.
+
+## 14. Experiment Governance and Logging Rule (FMB + Cube)
+
+For comparative experiments, use a manifest-driven workflow and structured run logs to avoid rerunning completed cases.
+
+Required references:
+- `docs/ops/EXPERIMENT_EXECUTION_PROTOCOL_FMB_CUBE.md`
+- `docs/ops/EXPERIMENT_LOGGING_PROTOCOL.md`
+
+Required execution assets:
+- `experiments/configs/manifest_schema.md`
+- `experiments/configs/methods.yaml`
+- `experiments/scripts/run_experiment_batch.py`
+- `experiments/scripts/validate_experiment_logs.py`
+- `experiments/scripts/aggregate_experiment_results.py`
+
+Hard requirements:
+1. Every run must produce one structured record in `run_records.jsonl`.
+2. Failure attribution must use standardized failure codes only.
+3. Reuse policy must be hash-based (`case_hash`) unless force rerun is explicitly requested.
+4. Aggregation outputs used for reports must come from validated logs.
