@@ -21,6 +21,9 @@ Each line in manifest is one JSON object representing one experiment case.
 - `timeout_sec`: integer
 - `overrides`: object for method-specific override variables
 - `notes`: string
+- `input_image_path`: frozen target image path
+- `input_bundle_id`: bundle id for frozen mapping (image + scene + task graph)
+- `input_freeze_version`: freeze version tag
 
 ## Minimal Example
 

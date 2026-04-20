@@ -26,6 +26,19 @@ Out of scope:
 - Perception correctness is treated as given in this experiment phase.
 - Syntax/format hallucination from LLM/VLM is counted as experiment failure.
 
+## 3.1 Input Freeze Gate (First Priority)
+
+Before running any comparative matrix, input assets must be frozen.
+
+Mandatory freeze checklist:
+- Freeze target images per scenario id.
+- Freeze scene files (`.g`) per scenario id.
+- Freeze expected task graph reference per scenario id.
+- Freeze one-to-one mapping: `scenario_id -> image + scene + task_graph`.
+- Record one bundle version string (for example `input_bundle_v1`) in logs.
+
+No large-scale run is allowed before this gate is complete.
+
 ## 4. Experiment Matrix
 
 Dimensions:
@@ -62,6 +75,11 @@ Always run with project runtime shell:
 Each experiment case is one JSON object line in manifest (`.jsonl`).
 Minimum required fields are defined in:
 - `experiments/configs/manifest_schema.md`
+
+Recommended for frozen-input traceability:
+- include `input_image_path`
+- include `input_bundle_id`
+- include `input_freeze_version`
 
 Runner entry:
 - `python3 experiments/scripts/run_experiment_batch.py --manifest <path> --methods experiments/configs/methods.yaml --output-root experiments/outputs`

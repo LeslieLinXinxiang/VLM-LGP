@@ -48,6 +48,9 @@ Optional fields:
 - `timeout_sec`: timeout threshold
 - `command`: resolved command
 - `notes`: free-form note
+- `input_image_path`: frozen target image path for this scenario
+- `input_bundle_id`: bundle id that binds image/scene/task graph (for example `cube_set_v1`)
+- `input_freeze_version`: input freeze version tag (for example `input_bundle_v1`)
 
 ## 4. Failure Code Rules
 
@@ -83,6 +86,7 @@ At minimum, keep:
 - command snapshot
 - solver stdout/stderr
 - generated symbolic files used for solving
+- frozen input mapping table (`scenario_id -> image/scene/task_graph`)
 
 ## 7. Validation
 
