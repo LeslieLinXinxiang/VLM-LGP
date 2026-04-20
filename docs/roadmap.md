@@ -2,6 +2,7 @@
 
 ## 1. Current Active Tasks (Timeline Log)
 
+
 1. ### [TASK-024] Layer-Based Graph Clustering Refinement
 
 * **Status**: `[In Progress]`
@@ -11,11 +12,16 @@
   * *2026-04-14 16:25*: Task created to refine graph clustering into layer-based execution groups with branch-priority semantics and deterministic split/execution order.
   * *2026-04-14 16:25*: Scope locked: same-layer objects are merged as jointly executable set; branch assignment prioritizes shared source ancestor over destination convergence.
   * *2026-04-14 16:25*: Efficiency/stability constraints locked: if one branch has more than two objects, split by left-to-right order in chunks of two; execution inside one branch also follows left-to-right order.
+  * *2026-04-16 17:05*: Added test-only batch-level codegen harness under `test/layer_based_clustering/` and verified one `.fol/.lgp` pair per planned batch.
+  * *2026-04-16 17:05*: Next step: connect the test harness to mainline Phase0 reachability, static manipulability, and Phase2 solver execution without touching production code yet.
+  * *2026-04-16 17:20*: Mainline-connected smoke test was attempted in the mac runtime, but the solver/LGP execution path requires Linux-only runtime support (`bin/x.exe` and related LGP behavior). The test is now parked in `test/layer_based_clustering/test_mainline_reachability_manipulability_lgp.py` and will be resumed later for final fusion validation on Linux.
+  * *2026-04-16 17:40*: Corrected layer-based grouping logic so same-layer siblings under the same direct supporter are merged naturally; verified batch-level output now produces `[[1, 2], [3, 4], [5, 6], [7], [8], [9]]` with one `.fol/.lgp` pair per batch.
 
 ## 2. Completed Tasks Rolling Archive (Max 50)
-> **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
-1. **[TASK-023] FMB VLM Recognition and Cognition Integration (2026-04-14 16:10)**: Closed after FMB prompt/image-batch validation; established single-image protocol and accuracy evaluation workflow.
 
+> **Rule**: When adding the 51st item, delete the oldest item to prevent context poisoning. Summarize tasks in 1-2 lines. All timestamps MUST use `YYYY-MM-DD HH:MM` format.
+
+1. **[TASK-023] FMB VLM Recognition and Cognition Integration (2026-04-14 16:10)**: Closed after FMB prompt/image-batch validation; established single-image protocol and accuracy evaluation workflow.
 
 2. **[TASK-022] Reachability 1D Self-Motion Adaptation Study for Franka (2026-04-03 18:02)**: Closed per advisor decision: the Franka self-motion reachability adaptation line will not be included in the current paper, because over-emphasizing this direction may attract unnecessary reviewer attention and distract from the main manuscript contribution.
 3. **[TASK-017] RA-L Method Section Refinement Governance Setup (2026-04-03 17:47)**: Closed the RA-L method-section refinement cycle by locking final terminology to the flowchart, restructuring Method into Task Decomposition + Scene Grounding + Execution-Order Embedding, adding standalone reachability/manipulability paragraphs, and aligning governance docs with the finalized manuscript story.

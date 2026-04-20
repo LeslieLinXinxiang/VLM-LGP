@@ -1,0 +1,101 @@
+{
+  "input": "generated/phase1_target_graph.json",
+  "algorithm": "LayerBasedClusteringBatchCodegen",
+  "planned_batches": [
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7
+    ],
+    [
+      8
+    ],
+    [
+      9
+    ]
+  ],
+  "batch_manifest": [
+    {
+      "step": 1,
+      "batch": [
+        1,
+        2
+      ],
+      "terminals": [
+        "(on Table_Left rect_1)",
+        "(on Table_Right rect_2)"
+      ],
+      "fol": "step_1_batch_1.fol",
+      "lgp": "step_1_batch_1.lgp"
+    },
+    {
+      "step": 2,
+      "batch": [
+        3,
+        4
+      ],
+      "terminals": [
+        "(on Rect_1_Left cube_1)",
+        "(on Rect_1_Right cube_2)"
+      ],
+      "fol": "step_2_batch_1.fol",
+      "lgp": "step_2_batch_1.lgp"
+    },
+    {
+      "step": 3,
+      "batch": [
+        5,
+        6
+      ],
+      "terminals": [
+        "(on Rect_2_Left cube_3)",
+        "(on Rect_2_Right cube_4)"
+      ],
+      "fol": "step_3_batch_1.fol",
+      "lgp": "step_3_batch_1.lgp"
+    },
+    {
+      "step": 4,
+      "batch": [
+        7
+      ],
+      "terminals": [
+        "(on cube_2 cube_3 rect_3)"
+      ],
+      "fol": "step_4_batch_1.fol",
+      "lgp": "step_4_batch_1.lgp"
+    },
+    {
+      "step": 5,
+      "batch": [
+        8
+      ],
+      "terminals": [
+        "(on rect_3 rect_4)"
+      ],
+      "fol": "step_5_batch_1.fol",
+      "lgp": "step_5_batch_1.lgp"
+    },
+    {
+      "step": 6,
+      "batch": [
+        9
+      ],
+      "terminals": [
+        "(on rect_4 tri_1)"
+      ],
+      "fol": "step_6_batch_1.fol",
+      "lgp": "step_6_batch_1.lgp"
+    }
+  ]
+}
