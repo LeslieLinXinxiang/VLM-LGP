@@ -12,6 +12,28 @@
   * *2026-04-20 14:23*: Task created to make experiment input freezing the top priority before large-scale benchmark execution.
   * *2026-04-20 14:23*: Scope locked: freeze one-to-one mapping among target image, scene `.g`, and expected task graph per scenario id.
   * *2026-04-20 14:23*: Execution guard locked: no mass rerun until input bundle version is fixed and recorded in experiment logs.
+  * *2026-04-20 21:05*: Cube stacking input image design marked complete (`n=4..8`, 5 samples per `n`, single-image protocol).
+  * *2026-04-20 21:05*: FMB input image design + slot naming/position standardization split into dedicated follow-up tasks (TASK-026 / TASK-027).
+
+1. ### [TASK-026] FMB Input Image Freeze Pack
+
+* **Status**: `[In Progress]`
+* **Created**: 2026-04-20 21:05
+* **Completed**: N/A
+* **Timeline**:
+  * *2026-04-20 21:05*: Task created to produce FMB input image freeze pack aligned with single-image-per-scenario protocol.
+  * *2026-04-20 21:05*: Scope defined: finalize visual style, variant count, and scenario mapping to `.g` + graph artifacts.
+  * *2026-04-20 21:05*: Deliverables defined: frozen image bundle + manifest fields (`input_bundle_id`, `input_freeze_version`) + reproducibility notes.
+
+1. ### [TASK-027] Slot Canonicalization and Placement Validation
+
+* **Status**: `[In Progress]`
+* **Created**: 2026-04-20 21:05
+* **Completed**: N/A
+* **Timeline**:
+  * *2026-04-20 21:05*: Task created to unify slot names/coordinates between Cube and FMB scene families.
+  * *2026-04-20 21:05*: Baseline assessment required from existing `.g` files with explicit numeric parameters and compatibility risks.
+  * *2026-04-20 21:05*: Validation scope locked: prompt schema, Phase1 validator, Phase2 gatekeeper/codegen, and scene place-frame coverage.
 
 
 ## 2. Completed Tasks Rolling Archive (Max 50)

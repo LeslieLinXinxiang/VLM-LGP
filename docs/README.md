@@ -76,6 +76,8 @@ Each subfolder should include a local `README.md` describing scope and filing ru
 - `docs/ops/TESTING_SOP_2026-03-21.md`
 - `docs/ops/EXPERIMENT_EXECUTION_PROTOCOL_FMB_CUBE.md`
 - `docs/ops/EXPERIMENT_LOGGING_PROTOCOL.md`
+- `docs/ops/CUBE_INPUTS_FIGMA_EXECUTION_SOP_2026-04-20.md`
+- `docs/ops/FMB_SLOT_LAYOUT_ASSESSMENT_2026-04-20.md`
 - `docs/governance/PAPER_REFINEMENT_CONTENT_LOCK.md`
 - `docs/archive/PRELIM_OPENING_TRIM_BACKUP_2026-04-03.md`
 - `docs/archive/` (Contains retired process reports, old execution logs, and closed task notes starting from TASK-010 to TASK-021)
