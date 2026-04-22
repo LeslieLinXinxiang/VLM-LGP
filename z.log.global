@@ -1,0 +1,33 @@
+** compiled at:     Jan 26 2026 10:17:56
+** execution start: 2026-04-22 13:21:41:578344
+graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
+graph.cpp:initParameters:1596(3)  - failed
+graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
+graph.cpp:initParameters:1608(3)  - failed
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005' from '/home/leslie/Projects/VLM_LGP'
+util.cpp:getIs:1104(3) opening input file '002.g'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb' from '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:getIs:1104(3) opening input file 'base_board.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb' from '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:getIs:1104(3) opening input file 'shape_2_1.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb' from '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:getIs:1104(3) opening input file 'shape_2_2.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb' from '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:getIs:1104(3) opening input file 'shape_2_3.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb' from '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:getIs:1104(3) opening input file 'shape_4_1.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb' from '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:getIs:1104(3) opening input file 'shape_4_2.obj'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/test/fmb_formal_exp/scene_file/5objs/005'
+util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP'
+kin.cpp:getFrame:521(-1) cannot find frame named 'manual_camera_frame'
+** execution stop: 2026-04-22 13:21:46:844162
+** real time: 5.26586sec
+** CPU time: 4.92932
+
+** set+queried params:
