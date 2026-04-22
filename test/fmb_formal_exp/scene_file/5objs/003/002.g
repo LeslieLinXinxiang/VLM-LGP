@@ -99,7 +99,7 @@ shape_4_2_mesh (shape_4_2) {
   joint:rigid,
   shape:mesh,
   mesh:"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_2.obj",
-  color:[1.0 1.0 0.2 1],
+  color:[1.0 0 0.2 1],
   contact:1,
   mass:0.1,
   logical:{ is_object, is_box }
