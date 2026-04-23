@@ -1,0 +1,63 @@
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "Rectangular Prism",
+      "on": [
+        "table"
+      ]
+    },
+    {
+      "id": 1,
+      "object": "Rectangular Prism",
+      "on": [
+        "table"
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Rectangular Prism",
+      "on": [
+        "table"
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Rectangular Prism",
+      "on": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Rectangular Prism",
+      "on": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Rectangular Prism",
+      "on": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": 6,
+      "object": "Cube",
+      "on": [
+        5
+      ]
+    },
+    {
+      "id": 7,
+      "object": "Triangular Prism",
+      "on": [
+        6
+      ]
+    }
+  ]
+}

@@ -2,6 +2,17 @@
 
 VLM-LGP is a closed-loop robotic manipulation framework that integrates Vision-Language Models (VLM) with Logic-Geometric Programming (LGP). The system utilizes high-level semantic reasoning to drive low-level geometric motion planning.
 
+## Runtime Lock (Mandatory)
+For this repository, all local operations must run inside the project runtime shell.
+
+```bash
+source /home/leslie/anaconda3/etc/profile.d/conda.sh
+conda activate vlm_jazzy
+source scripts/env.sh
+```
+
+Apply this before any testing, code edit validation, or script execution.
+
 ## 🧠 System Architecture
 ![System Architecture](./assets/pipeline.png)
 

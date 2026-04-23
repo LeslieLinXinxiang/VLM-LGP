@@ -1,0 +1,3189 @@
+[
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 1,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 2,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 3,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 4,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 5,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 6,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 7,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 8,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 9,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test6_Sequential_Input.txt",
+    "sample_index": 10,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 1,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 2,
+    "sample_split_mode": "explicit_separator",
+    "status": "wrong",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": null,
+    "matched_gold_index": null
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 3,
+    "sample_split_mode": "explicit_separator",
+    "status": "wrong",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": null,
+    "matched_gold_index": null
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 4,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 5,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 6,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 7,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 8,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 9,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test6_Single_Input",
+    "source_file": "Gemini-3-Flash_test6_Single_Input.txt",
+    "sample_index": 10,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "left"
+            },
+            {
+              "supporter": 2,
+              "position": "left"
+            },
+            {
+              "supporter": 3,
+              "position": "left"
+            }
+          ],
+          "color": "blue"
+        },
+        {
+          "id": 5,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1,
+              "position": "right"
+            },
+            {
+              "supporter": 2,
+              "position": "right"
+            },
+            {
+              "supporter": 3,
+              "position": "right"
+            }
+          ],
+          "color": "orange"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=left|edges=[Shape 2|green|pos=front|edges=[base@front]@left;Shape 2|red|edges=[base]@left;Shape 2|yellow|pos=back|edges=[base@back]@left]\", \"Shape 4|orange|pos=right|edges=[Shape 2|green|pos=front|edges=[base@front]@right;Shape 2|red|edges=[base]@right;Shape 2|yellow|pos=back|edges=[base@back]@right]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_hpair_threebars_front_center_back",
+    "matched_gold_index": 3
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 1,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 2,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 3,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 4,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 5,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 6,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 7,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 8,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 9,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Sequential_Input",
+    "source_file": "Gemini-3-Flash_test7_Sequential_Input.txt",
+    "sample_index": 10,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 1,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 2,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 3,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 4,
+    "sample_split_mode": "explicit_separator",
+    "status": "wrong",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 2,
+              "position": "back"
+            },
+            {
+              "supporter": 3,
+              "position": "back"
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|pos=back|edges=[Shape 2|red|edges=[base]@back;Shape 2|yellow|pos=back|edges=[base@back]@back]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": null,
+    "matched_gold_index": null
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 5,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 6,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 7,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 8,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 9,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  },
+  {
+    "model_name": "Gemini-3-Flash_test7_Single_Input copy",
+    "source_file": "Gemini-3-Flash_test7_Single_Input copy.txt",
+    "sample_index": 10,
+    "sample_split_mode": "explicit_separator",
+    "status": "correct",
+    "reason": "",
+    "normalized_candidate": {
+      "objects": [
+        {
+          "id": 0,
+          "object": "base",
+          "edges": []
+        },
+        {
+          "id": 1,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "front"
+            }
+          ],
+          "color": "green"
+        },
+        {
+          "id": 2,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0
+            }
+          ],
+          "color": "red"
+        },
+        {
+          "id": 3,
+          "object": "Shape 2",
+          "edges": [
+            {
+              "supporter": 0,
+              "position": "back"
+            }
+          ],
+          "color": "yellow"
+        },
+        {
+          "id": 4,
+          "object": "Shape 4",
+          "edges": [
+            {
+              "supporter": 1
+            },
+            {
+              "supporter": 2
+            },
+            {
+              "supporter": 3
+            }
+          ],
+          "color": "blue"
+        }
+      ]
+    },
+    "signature": "[\"Shape 2|green|pos=front|edges=[base@front]\", \"Shape 2|red|edges=[base]\", \"Shape 2|yellow|pos=back|edges=[base@back]\", \"Shape 4|blue|edges=[Shape 2|green|pos=front|edges=[base@front];Shape 2|red|edges=[base];Shape 2|yellow|pos=back|edges=[base@back]]\", \"base\"]",
+    "extraction_type": "final_json_marker",
+    "matched_gold_name": "task_single_input_yellow_red_green_blue",
+    "matched_gold_index": 4
+  }
+]

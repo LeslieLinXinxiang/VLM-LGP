@@ -1,0 +1,260 @@
+{
+  "prompt1": {
+    "strategies": [
+      {
+        "id": "strategy_1_layer_based",
+        "description": "Layer-based clustering with source-priority branching and left-to-right chunking.",
+        "order": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "batches": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ],
+          [
+            9
+          ]
+        ],
+        "metadata": {
+          "algorithm": "LayerBasedClustering",
+          "max_batch_size": 2,
+          "roots": [
+            1,
+            2
+          ],
+          "layer_blocks": [
+            {
+              "layer": 1,
+              "same_layer_ready": [
+                1,
+                2
+              ],
+              "branches": [
+                {
+                  "branch_key": "supporters:0",
+                  "ordered_nodes_left_to_right": [
+                    1,
+                    2
+                  ],
+                  "chunks": [
+                    [
+                      1,
+                      2
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "layer": 2,
+              "same_layer_ready": [
+                3,
+                4,
+                5,
+                6
+              ],
+              "branches": [
+                {
+                  "branch_key": "supporters:1",
+                  "ordered_nodes_left_to_right": [
+                    3,
+                    4
+                  ],
+                  "chunks": [
+                    [
+                      3,
+                      4
+                    ]
+                  ]
+                },
+                {
+                  "branch_key": "supporters:2",
+                  "ordered_nodes_left_to_right": [
+                    5,
+                    6
+                  ],
+                  "chunks": [
+                    [
+                      5,
+                      6
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "layer": 3,
+              "same_layer_ready": [
+                7
+              ],
+              "branches": [
+                {
+                  "branch_key": "supporters:4,5",
+                  "ordered_nodes_left_to_right": [
+                    7
+                  ],
+                  "chunks": [
+                    [
+                      7
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "layer": 4,
+              "same_layer_ready": [
+                8
+              ],
+              "branches": [
+                {
+                  "branch_key": "supporters:7",
+                  "ordered_nodes_left_to_right": [
+                    8
+                  ],
+                  "chunks": [
+                    [
+                      8
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "layer": 5,
+              "same_layer_ready": [
+                9
+              ],
+              "branches": [
+                {
+                  "branch_key": "supporters:8",
+                  "ordered_nodes_left_to_right": [
+                    9
+                  ],
+                  "chunks": [
+                    [
+                      9
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "branch_assignment": [
+            {
+              "node_id": 1,
+              "layer": 1,
+              "branch_key": "supporters:0",
+              "provenance_roots": [
+                1
+              ],
+              "x_priority": 0.0
+            },
+            {
+              "node_id": 2,
+              "layer": 1,
+              "branch_key": "supporters:0",
+              "provenance_roots": [
+                2
+              ],
+              "x_priority": 2.0
+            },
+            {
+              "node_id": 3,
+              "layer": 2,
+              "branch_key": "supporters:1",
+              "provenance_roots": [
+                1
+              ],
+              "x_priority": 0.0
+            },
+            {
+              "node_id": 4,
+              "layer": 2,
+              "branch_key": "supporters:1",
+              "provenance_roots": [
+                1
+              ],
+              "x_priority": 2.0
+            },
+            {
+              "node_id": 5,
+              "layer": 2,
+              "branch_key": "supporters:2",
+              "provenance_roots": [
+                2
+              ],
+              "x_priority": 0.0
+            },
+            {
+              "node_id": 6,
+              "layer": 2,
+              "branch_key": "supporters:2",
+              "provenance_roots": [
+                2
+              ],
+              "x_priority": 2.0
+            },
+            {
+              "node_id": 7,
+              "layer": 3,
+              "branch_key": "supporters:4,5",
+              "provenance_roots": [
+                1,
+                2
+              ],
+              "x_priority": 0.5
+            },
+            {
+              "node_id": 8,
+              "layer": 4,
+              "branch_key": "supporters:7",
+              "provenance_roots": [
+                1,
+                2
+              ],
+              "x_priority": 0.5
+            },
+            {
+              "node_id": 9,
+              "layer": 5,
+              "branch_key": "supporters:8",
+              "provenance_roots": [
+                1,
+                2
+              ],
+              "x_priority": 0.5
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "prompt2": {
+    "selected": "strategy_1_layer_based",
+    "reason": "Deterministic layer-based policy with source-priority semantics."
+  }
+}

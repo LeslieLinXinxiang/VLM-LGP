@@ -1,0 +1,44 @@
+{
+  "task_dir": "test/planar_exp/run_01/",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1.lgp",
+      "action_summary": "pick_touch fmb_part2 table l_gripper | place_straightOn fmb_part2 l_gripper fmb_slot2",
+      "pair_count": 10,
+      "full_motion_solver_ms": 4071,
+      "pairs": [
+        ["fmb_board", "fmb_part2"],
+        ["fmb_board", "l_finger1"],
+        ["fmb_board", "l_finger2"],
+        ["fmb_part2", "l_finger1"],
+        ["fmb_part2", "l_finger2"],
+        ["fmb_part2", "l_palm"],
+        ["fmb_part2", "table"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_2.lgp",
+      "action_summary": "pick_touch fmb_part5 table l_gripper | place_straightOn fmb_part5 l_gripper fmb_slot5",
+      "pair_count": 12,
+      "full_motion_solver_ms": 1274,
+      "pairs": [
+        ["fmb_board", "fmb_part5"],
+        ["fmb_board", "l_finger1"],
+        ["fmb_board", "l_finger2"],
+        ["fmb_part2", "fmb_part5"],
+        ["fmb_part2", "l_finger1"],
+        ["fmb_part5", "l_finger1"],
+        ["fmb_part5", "l_finger2"],
+        ["fmb_part5", "l_palm"],
+        ["fmb_part5", "table"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "graph": {
+    "vertices": [
+      {
+        "id": 0,
+        "object": "Rectangular Prism"
+      },
+      {
+        "id": 1,
+        "object": "Rectangular Prism"
+      },
+      {
+        "id": 2,
+        "object": "Rectangular Prism"
+      },
+      {
+        "id": 3,
+        "object": "Rectangular Prism"
+      },
+      {
+        "id": 4,
+        "object": "Rectangular Prism"
+      },
+      {
+        "id": 5,
+        "object": "Rectangular Prism"
+      },
+      {
+        "id": 6,
+        "object": "Cube"
+      },
+      {
+        "id": 7,
+        "object": "Triangular Prism"
+      }
+    ],
+    "edges": [
+      {
+        "source": 0,
+        "target": "table",
+        "placement": "left"
+      },
+      {
+        "source": 1,
+        "target": "table",
+        "placement": "center"
+      },
+      {
+        "source": 2,
+        "target": "table",
+        "placement": "right"
+      },
+      {
+        "source": 3,
+        "target": 0
+      },
+      {
+        "source": 4,
+        "target": 1
+      },
+      {
+        "source": 5,
+        "target": 2
+      },
+      {
+        "source": 6,
+        "target": 3
+      },
+      {
+        "source": 6,
+        "target": 4
+      },
+      {
+        "source": 7,
+        "target": 6
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+fol: <step_9_batch_1.fol>
+terminal: " (on rect_5 rect_8) "
+genericCollisions: true
+coll: []

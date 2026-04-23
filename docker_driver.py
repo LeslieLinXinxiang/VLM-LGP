@@ -15,6 +15,7 @@ from pipelines.run_phase2 import run_phase2_pipeline
 # Docker (Brain) -> ZMQ -> Host (Body)
 from core.zmq_bridge import ExecutionManager
 from core.utils import load_json
+from core.graph_adapter import build_graph_from_phase1
 
 def print_banner(text):
     print("\n" + "#" * 60)
@@ -32,6 +33,7 @@ class SystemDriverDocker:
         self.exec_manager = ExecutionManager()
         
         self.target_graph = None
+        self.target_graph_math = None
         self.inventory_data = [] 
         self.history_chain = []
 
@@ -70,6 +72,17 @@ class SystemDriverDocker:
             return False
             
         self.target_graph = load_json(graph_path)
+
+        if isinstance(self.target_graph, dict) and "objects" in self.target_graph:
+            self.target_graph_math = build_graph_from_phase1(self.target_graph)
+            print(
+                "[Driver] Phase1 JSON received (objects+edges). "
+                f"Built G=(V,E): |V|={self.target_graph_math['meta']['vertex_count']}, "
+                f"|E|={self.target_graph_math['meta']['edge_count']}"
+            )
+        else:
+            self.target_graph_math = None
+
         print(f"[Driver] Nodes to execute: {len(self.target_graph.get('assembly_nodes', []))}")
         return True
 

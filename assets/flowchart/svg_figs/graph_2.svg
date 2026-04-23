@@ -1,0 +1,41 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .edge { stroke: black; stroke-width: 2; }
+      .node { fill: white; stroke: black; stroke-width: 5; }
+      .lbl { font-family: serif; font-size: 14px; text-anchor: middle; alignment-baseline: central; font-weight: bold; }
+      .edgelbl { font-family: serif; font-size: 12px; }
+    </style>
+  </defs>
+  <!-- Edges -->
+  <line x1="250" y1="420" x2="160" y2="350" class="edge"/>
+  <line x1="250" y1="420" x2="340" y2="350" class="edge"/>
+  <line x1="160" y1="350" x2="80" y2="260" class="edge"/>
+  <line x1="160" y1="350" x2="210" y2="260" class="edge"/>
+  <line x1="340" y1="350" x2="290" y2="260" class="edge"/>
+  <line x1="340" y1="350" x2="420" y2="260" class="edge"/>
+  <line x1="210" y1="260" x2="250" y2="180" class="edge"/>
+  <line x1="290" y1="260" x2="250" y2="180" class="edge"/>
+  <line x1="250" y1="180" x2="250" y2="110" class="edge"/>
+  <line x1="250" y1="110" x2="250" y2="40" class="edge"/>
+  
+  <!-- Edge Labels -->
+  <text x="205" y="385" class="edgelbl" transform="translate(-10,-10)">Left</text>
+  <text x="295" y="385" class="edgelbl" transform="translate(10,-10)">Right</text>
+  <text x="120" y="305" class="edgelbl" transform="translate(-15,-10)">Left</text>
+  <text x="185" y="305" class="edgelbl" transform="translate(15,-10)">Right</text>
+  <text x="315" y="305" class="edgelbl" transform="translate(-15,-10)">Left</text>
+  <text x="380" y="305" class="edgelbl" transform="translate(15,-10)">Right</text>
+
+  <!-- Nodes -->
+  <circle cx="250" cy="420" r="18" class="node"/><text x="250" y="420" class="lbl">0</text>
+  <circle cx="160" cy="350" r="18" class="node"/><text x="160" y="350" class="lbl">1</text>
+  <circle cx="340" cy="350" r="18" class="node"/><text x="340" y="350" class="lbl">2</text>
+  <circle cx="80" cy="260" r="18" class="node"/><text x="80" y="260" class="lbl">3</text>
+  <circle cx="210" cy="260" r="18" class="node"/><text x="210" y="260" class="lbl">4</text>
+  <circle cx="290" cy="260" r="18" class="node"/><text x="290" y="260" class="lbl">5</text>
+  <circle cx="420" cy="260" r="18" class="node"/><text x="420" y="260" class="lbl">6</text>
+  <circle cx="250" cy="180" r="18" class="node"/><text x="250" y="180" class="lbl">7</text>
+  <circle cx="250" cy="110" r="18" class="node"/><text x="250" y="110" class="lbl">8</text>
+  <circle cx="250" cy="40" r="18" class="node"/><text x="250" y="40" class="lbl">9</text>
+</svg>

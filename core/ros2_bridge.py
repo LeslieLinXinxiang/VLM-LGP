@@ -12,9 +12,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.trajectory_parser import TrajectoryParser
 
 # [MIT-S2] PHYSICS PARAMETERS (From test_bridge.py)
-SLOW_MOTION_FACTOR = 5.0    # 物理执行慢放倍率
-GRIPPER_OPEN = 0.04
-GRIPPER_CLOSE = 0.0
+SLOW_MOTION_FACTOR = 10.0    # 物理执行慢放倍率
+GRIPPER_OPEN = 0.04         # 单侧手指张开距离 (4cm, 总间距8cm)
+GRIPPER_CLOSE = 0.00        # 闭合
+GRIPPER_MAX_EFFORT = 20.0   # 夹爪力 (N)
+GRIPPER_DURATION = 0.8      # 夹爪开合时间 (s)
+GRIPPER_SETTLE_TIME = 0.2   # 夹爪动作后等待稳定时间 (s)
 
 # ==============================================================================
 # CLASS 1: LOW-LEVEL COMMUNICATION (原 RobotController)
@@ -30,11 +33,11 @@ class RobotController(Node):
             '/panda_arm_controller/follow_joint_trajectory'
         )
 
-        # 2. 夹爪控制客户端
+        # 2. 夹爪控制客户端 (已切换为 JointTrajectoryController)
         self.hand_client = ActionClient(
             self, 
-            GripperCommand, 
-            '/panda_hand_controller/gripper_cmd'
+            FollowJointTrajectory, 
+            '/panda_hand_controller/follow_joint_trajectory'
         )
 
     def move_arm(self, points):
@@ -68,19 +71,30 @@ class RobotController(Node):
             rclpy.spin_until_future_complete(self, res_future)
 
     def set_gripper(self, position):
-        """控制夹爪"""
-        # print(f"   🗜️ [ROS2] Gripper -> {position}")
+        """夹爪控制: 发送 2 自由度轨迹, 实现匀速开合"""
         if not self.hand_client.wait_for_server(timeout_sec=2.0):
             print("   ❌ [ROS2] Hand Action Server not available!")
             return
 
-        goal = GripperCommand.Goal()
-        goal.command.position = position
-        goal.command.max_effort = 10.0
-        
+        goal = FollowJointTrajectory.Goal()
+        goal.trajectory.joint_names = ['panda_finger_joint1', 'panda_finger_joint2']
+
+        # 创建一个单点的轨迹，给定持续时间实现匀速运动
+        pt = JointTrajectoryPoint()
+        pt.positions = [position, position]
+        pt.time_from_start.sec = 0
+        pt.time_from_start.nanosec = int(GRIPPER_DURATION * 1e9)
+        goal.trajectory.points.append(pt)
+
         future = self.hand_client.send_goal_async(goal)
         rclpy.spin_until_future_complete(self, future)
-        time.sleep(0.5) # 物理稳定缓冲
+        
+        goal_handle = future.result()
+        if goal_handle and goal_handle.accepted:
+            res_future = goal_handle.get_result_async()
+            rclpy.spin_until_future_complete(self, res_future)
+
+        time.sleep(GRIPPER_SETTLE_TIME)  # 物理稳定缓冲
 
 # 单例模式获取 Robot
 _global_robot = None

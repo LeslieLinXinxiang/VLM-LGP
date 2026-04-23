@@ -1,0 +1,168 @@
+{
+  "input": "generated/phase1_target_graph.json",
+  "node_id": 301,
+  "algorithm": "LayerBasedClustering",
+  "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "batches": [
+    [
+      1
+    ],
+    [
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7
+    ],
+    [
+      8
+    ],
+    [
+      9
+    ]
+  ],
+  "layer_blocks": [
+    {
+      "layer": 1,
+      "same_layer_ready": [
+        1,
+        2
+      ],
+      "branches": [
+        {
+          "branch_key": "branch:source:1",
+          "ordered_nodes_left_to_right": [
+            1
+          ],
+          "chunks": [
+            [
+              1
+            ]
+          ]
+        },
+        {
+          "branch_key": "branch:source:2",
+          "ordered_nodes_left_to_right": [
+            2
+          ],
+          "chunks": [
+            [
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "layer": 2,
+      "same_layer_ready": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "branches": [
+        {
+          "branch_key": "branch:source:1",
+          "ordered_nodes_left_to_right": [
+            3,
+            4
+          ],
+          "chunks": [
+            [
+              3,
+              4
+            ]
+          ]
+        },
+        {
+          "branch_key": "branch:source:2",
+          "ordered_nodes_left_to_right": [
+            5,
+            6
+          ],
+          "chunks": [
+            [
+              5,
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "layer": 3,
+      "same_layer_ready": [
+        7
+      ],
+      "branches": [
+        {
+          "branch_key": "branch:merge:1,2",
+          "ordered_nodes_left_to_right": [
+            7
+          ],
+          "chunks": [
+            [
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "layer": 4,
+      "same_layer_ready": [
+        8
+      ],
+      "branches": [
+        {
+          "branch_key": "branch:merge:1,2",
+          "ordered_nodes_left_to_right": [
+            8
+          ],
+          "chunks": [
+            [
+              8
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "layer": 5,
+      "same_layer_ready": [
+        9
+      ],
+      "branches": [
+        {
+          "branch_key": "branch:merge:1,2",
+          "ordered_nodes_left_to_right": [
+            9
+          ],
+          "chunks": [
+            [
+              9
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

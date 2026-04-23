@@ -12,7 +12,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 try:
     from core.vlm import VLMClient
     from core.utils import load_json
-    from core.utils import load_json, load_incontext_examples 
 except ImportError as e:
     print(f">>> [FATAL ERROR] Import failed: {e}")
     sys.exit(1)
@@ -31,27 +30,160 @@ def select_file_gui(initial_dir):
 
 def validate_plan(plan_json, valid_inventory_list):
     """
-    Validates the VLM output.
-    [V60.0 UPDATE]: Now uses the 2D-Native coordinate system.
+    Validates VLM output with dual-schema compatibility:
+    - New schema: {"objects": [{"id", "object", "on"}, ...]}
+    - Legacy schema: {"assembly_nodes": [...]} (kept for compatibility)
     """
     errors = []
-    
-    # Get specific IDs from inventory
-    valid_ids = set(item['logical_id'] for item in valid_inventory_list if 'logical_id' in item)
-    
-    # Define Allowed Generic Types
-    VALID_GENERICS = {"base", "cylinder", "table"} 
-    
-    # [CRITICAL FIX] Update the whitelist to the new 2D terms
-    VALID_SLOTS = {
+
+    # Prefer object-list schema if present.
+    if isinstance(plan_json, dict) and "objects" in plan_json:
+        objects = plan_json.get("objects")
+        if not isinstance(objects, list) or not objects:
+            return False, "CRITICAL: 'objects' must be a non-empty array."
+
+        allowed_objects = {"Triangular Prism", "Cube", "Rectangular Prism", "Cylinder"}
+        allowed_positions = {"left", "center", "right"}
+
+        ids = []
+        for obj in objects:
+            if not isinstance(obj, dict):
+                errors.append("- object entry must be JSON object.")
+                continue
+            ids.append(obj.get("id"))
+
+        if any(not isinstance(i, int) for i in ids):
+            errors.append("- all object ids must be integers.")
+        if len(ids) != len(set(ids)):
+            errors.append("- object ids must be unique.")
+
+        valid_id_set = set(i for i in ids if isinstance(i, int))
+        expected_id_set = set(range(len(objects)))
+        if valid_id_set != expected_id_set:
+            errors.append("- object ids must be consecutive and exactly 0..N-1.")
+
+        # New format: objects + edges[{supporter, position?}]
+        has_edges_schema = any(isinstance(obj, dict) and "edges" in obj for obj in objects)
+        if has_edges_schema:
+            obj_by_id = {obj.get("id"): obj for obj in objects if isinstance(obj, dict) and isinstance(obj.get("id"), int)}
+
+            table_obj = obj_by_id.get(0)
+            if not isinstance(table_obj, dict):
+                errors.append("- id 0 table object is required in edges schema.")
+            else:
+                if str(table_obj.get("object", "")).lower() != "table":
+                    errors.append("- id 0 object must be 'table' in edges schema.")
+                table_edges = table_obj.get("edges")
+                if not isinstance(table_edges, list) or table_edges:
+                    errors.append("- id 0 table must have empty 'edges': [].")
+
+            has_table_support = False
+            for obj in objects:
+                if not isinstance(obj, dict):
+                    continue
+
+                obj_id = obj.get("id")
+                obj_name = obj.get("object")
+                edges = obj.get("edges")
+
+                if obj_id == 0:
+                    continue
+
+                if obj_name not in allowed_objects:
+                    errors.append(f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
+
+                if not isinstance(edges, list) or not edges:
+                    errors.append(f"- [Object {obj_id}] 'edges' must be a non-empty array.")
+                    continue
+
+                supporter_set = set()
+                for edge in edges:
+                    if not isinstance(edge, dict):
+                        errors.append(f"- [Object {obj_id}] edge entry must be JSON object.")
+                        continue
+
+                    supporter = edge.get("supporter")
+                    if not isinstance(supporter, int):
+                        errors.append(f"- [Object {obj_id}] edge.supporter must be integer.")
+                        continue
+
+                    if supporter not in valid_id_set:
+                        errors.append(f"- [Object {obj_id}] supporter id {supporter} not found.")
+                    if isinstance(obj_id, int) and supporter >= obj_id:
+                        errors.append(f"- [Object {obj_id}] supporter id {supporter} must satisfy supporter < id.")
+
+                    if supporter in supporter_set:
+                        errors.append(f"- [Object {obj_id}] duplicate supporter id {supporter} in edges.")
+                    supporter_set.add(supporter)
+
+                    if supporter == 0:
+                        has_table_support = True
+
+                    if "position" in edge:
+                        pos = edge.get("position")
+                        if not isinstance(pos, str) or pos.lower() not in allowed_positions:
+                            errors.append(
+                                f"- [Object {obj_id}] invalid position {pos!r}. Must be one of {sorted(allowed_positions)}."
+                            )
+
+            if not has_table_support:
+                errors.append("- at least one object must be supported by table (supporter=0).")
+
+            if errors:
+                return False, "\n".join(errors)
+            return True, "Valid (edges schema)"
+
+        has_table_support = False
+        for obj in objects:
+            if not isinstance(obj, dict):
+                continue
+
+            obj_id = obj.get("id")
+            obj_name = obj.get("object")
+            on_list = obj.get("on")
+
+            if obj_name not in allowed_objects:
+                errors.append(f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
+
+            if not isinstance(on_list, list) or not on_list:
+                errors.append(f"- [Object {obj_id}] 'on' must be a non-empty array.")
+                continue
+
+            for supporter in on_list:
+                if supporter == "table":
+                    has_table_support = True
+                    continue
+
+                if not isinstance(supporter, int):
+                    errors.append(f"- [Object {obj_id}] supporter {supporter!r} must be int or 'table'.")
+                    continue
+
+                if supporter not in valid_id_set:
+                    errors.append(f"- [Object {obj_id}] supporter id {supporter} not found.")
+                    continue
+
+                if isinstance(obj_id, int) and supporter >= obj_id:
+                    errors.append(f"- [Object {obj_id}] supporter id {supporter} must satisfy supporter < id.")
+
+        if not has_table_support:
+            errors.append("- at least one object must be supported by 'table'.")
+
+        if errors:
+            return False, "\n".join(errors)
+        return True, "Valid (on-list schema)"
+
+    # Legacy schema fallback.
+    valid_ids = set(item["logical_id"] for item in valid_inventory_list if "logical_id" in item)
+    valid_generics = {"base", "cylinder", "table"}
+    valid_slots = {
         "top_left", "top_center", "top_right",
         "mid_left", "center", "mid_right",
         "bottom_left", "bottom_center", "bottom_right",
-        "place_base1", None
+        "place_base1", None,
     }
 
     if "assembly_nodes" not in plan_json:
-        return False, "CRITICAL: JSON output must contain root key 'assembly_nodes'."
+        return False, "CRITICAL: JSON output must contain root key 'objects' (new) or 'assembly_nodes' (legacy)."
 
     for node in plan_json.get("assembly_nodes", []):
         node_id = node.get("node_id", "?")
@@ -60,26 +192,26 @@ def validate_plan(plan_json, valid_inventory_list):
             supports = action.get("placed_on")
             slot = action.get("at_slot")
 
-            # --- CHECK A: OBJECT ---
-            if obj not in valid_ids and obj not in VALID_GENERICS:
-                errors.append(f"- [Node {node_id}] Object '{obj}' is invalid. Must be in inventory or generic {VALID_GENERICS}.")
-            
-            # --- CHECK B: SUPPORTS ---
-            if isinstance(supports, str): 
+            if obj not in valid_ids and obj not in valid_generics:
+                errors.append(
+                    f"- [Node {node_id}] Object '{obj}' is invalid. Must be in inventory or generic {valid_generics}."
+                )
+
+            if isinstance(supports, str):
                 supports = [supports]
-            elif supports is None: 
+            elif supports is None:
                 supports = []
-                
-            for s in supports:
-                if s not in valid_ids and s not in VALID_GENERICS:
-                    errors.append(f"- [Node {node_id}] Support '{s}' is invalid.")
 
-            # --- CHECK C: SLOT ---
-            if slot not in VALID_SLOTS:
-                errors.append(f"- [Node {node_id}] Slot '{slot}' is invalid. Must be one of {VALID_SLOTS}.")
+            for supporter in supports:
+                if supporter not in valid_ids and supporter not in valid_generics:
+                    errors.append(f"- [Node {node_id}] Support '{supporter}' is invalid.")
 
-    if errors: return False, "\n".join(errors)
-    return True, "Valid"
+            if slot not in valid_slots:
+                errors.append(f"- [Node {node_id}] Slot '{slot}' is invalid. Must be one of {valid_slots}.")
+
+    if errors:
+        return False, "\n".join(errors)
+    return True, "Valid (legacy schema)"
 
 def execute_phase1():
     """
@@ -93,8 +225,6 @@ def execute_phase1():
     test_dir = os.path.join(root_dir, "test")
     output_graph_json = os.path.join(root_dir, "generated/phase1_target_graph.json")
 
-    train_dir = os.path.join(root_dir, "incontext_training", "orientations")
-    
     mapping_list = load_json(layout_json)
     if not mapping_list:
         print("[ERROR] Phase 0 data missing.")
@@ -113,8 +243,7 @@ def execute_phase1():
     shutil.copy(target_img_path, global_target_path)
     print(f"[Phase1] Saved global target reference to: {global_target_path}")
 
-    print(f"[Phase1] Loading In-Context Examples from: {train_dir}")
-    example_data = load_incontext_examples(train_dir)
+    print("[Phase1] Zero-shot mode enabled: in-context examples are disabled.")
     
     vlm = VLMClient()
     max_attempts = 3
@@ -127,7 +256,7 @@ def execute_phase1():
             plan_json = vlm.generate_assembly_plan(
                 target_img_path, 
                 prompt_file, 
-                example_content=example_data, 
+                example_content=None,
                 feedback_context=feedback_buffer
             )
             

@@ -1,0 +1,4 @@
+fol: <step_3_batch_1.fol>
+terminal: " (on shape_1_1 shape_1_2 shape_2_1) "
+genericCollisions: false
+coll: []

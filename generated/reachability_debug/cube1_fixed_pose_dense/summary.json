@@ -1,0 +1,24 @@
+{
+  "scene": "generated/scene/scene_named.g",
+  "object": "cube_1",
+  "gripper": "l_gripper",
+  "psi_scan": {
+    "min": -2.62,
+    "max": -2.2,
+    "num": 121,
+    "feasible_count": 121,
+    "feasible_min": -2.62,
+    "feasible_max": -2.2
+  },
+  "residual_stats": {
+    "pos_err_mm_max": 0.1880711661867094,
+    "pos_err_mm_mean": 0.003787446142446908,
+    "ori_err_deg_max": 0.5402140479126859,
+    "ori_err_deg_mean": 0.05110182676338399
+  },
+  "outputs": {
+    "joint_manifold": "generated/reachability_debug/cube1_fixed_pose_dense/fig1_joint_manifold.png",
+    "residuals": "generated/reachability_debug/cube1_fixed_pose_dense/fig2_residuals.png",
+    "workspace_trace": "generated/reachability_debug/cube1_fixed_pose_dense/fig3_workspace_trace.png"
+  }
+}

@@ -1,0 +1,85 @@
+# Documentation System (Main Index)
+
+This document defines how project documents are organized, maintained, and archived.
+
+## 1. Purpose
+
+- Keep Layer 0-4 as the single source of truth for engineering decisions.
+- Separate operational and historical materials from core architecture docs.
+- Reduce context pollution in long-running AI sessions.
+
+## 2. Structure
+
+### 2.1 Core DDE Layers (fixed at `docs/` root)
+
+- `docs/project_charter.md` (Layer 0)
+- `docs/architecture.md` (Layer 1)
+- `docs/dataflow.md` (Layer 2)
+- `docs/module_specs/*.md` (Layer 2 module details)
+- `docs/execution_protocol.md` (Layer 3)
+- `docs/roadmap.md` (Layer 4)
+
+These paths are stable and should not be moved to subfolders unless DDE bootstrap rules are explicitly updated.
+
+### 2.2 Supplementary Docs (subfolders)
+
+- `docs/ops/`: runtime/environment/network troubleshooting SOPs.
+- `docs/decisions/`: decision records and templates (DDR).
+- `docs/archive/`: historical handoff notes and one-time migration snapshots.
+- `docs/governance/`: optional framework-level governance notes when needed.
+
+Each subfolder should include a local `README.md` describing scope and filing rules.
+
+## 3. Filing Rules
+
+1. Architecture, dataflow, and protocol truth goes to Layer files only.
+2. Environment or platform troubleshooting goes to `docs/ops/`.
+2.1. Roadmap mutation SOP and guard docs also go to `docs/ops/`.
+3. Time-bound handoff notes go to `docs/archive/`.
+4. Decision templates and approved decisions go to `docs/decisions/`.
+5. Any new doc must be registered in this file under the correct section.
+6. DDR template uses dual source:
+   - reusable skill template (global skill roots)
+   - project-local instance `docs/decisions/DDR_TEMPLATE.md`
+   Project workflows use the project-local instance first.
+
+## 4. Lifecycle Rules
+
+1. Active operational SOPs stay in `docs/ops/`.
+2. Outdated one-off notes must be moved to `docs/archive/` with date suffixes when useful.
+3. Core Layer documents are updated, not duplicated.
+
+## 5. Current Inventory
+
+### Core
+
+- `docs/project_charter.md`
+- `docs/architecture.md`
+- `docs/dataflow.md`
+- `docs/module_specs/`
+- `docs/execution_protocol.md`
+- `docs/roadmap.md`
+
+### Supplementary
+
+- `docs/ops/PIPELINE_EXECUTION_GUIDE.md`
+- `docs/ops/LGP_WAYPOINT_MANIPULABILITY_COUPLING_EXECUTION_2026-03-30.md`
+- `docs/ops/NOTION_DAILY_REPORT_2026-03-30.md`
+- `docs/ops/ROADMAP_GUARD_SOP.md`
+- `docs/ops/PAPER_REFINEMENT_MANAGEMENT_SOP.md`
+- `docs/ops/FMB_VLM_INPUT_PROTOCOL_ANALYSIS_2026-04-04.md`
+- `docs/ops/FMB_TEST_PLAN_WEB_MANUAL_2026-04-04.md`
+- `docs/ops/FMB_TEST_PLAN_API_MINIMAL_2026-04-04.md`
+- `docs/ops/CROSS_DEVICE_SYNC_SOP.md`
+- `docs/ops/FIGMA_MCP_VSCODE_SOP.md`
+- `docs/ops/NETWORK_TROUBLESHOOTING_SOP.md`
+- `docs/ops/TESTING_SOP_2026-03-21.md`
+- `docs/ops/EXPERIMENT_EXECUTION_PROTOCOL_FMB_CUBE.md`
+- `docs/ops/EXPERIMENT_LOGGING_PROTOCOL.md`
+- `docs/ops/CUBE_INPUTS_FIGMA_EXECUTION_SOP_2026-04-20.md`
+- `docs/ops/FMB_SLOT_LAYOUT_ASSESSMENT_2026-04-20.md`
+- `docs/governance/PAPER_REFINEMENT_CONTENT_LOCK.md`
+- `docs/archive/PRELIM_OPENING_TRIM_BACKUP_2026-04-03.md`
+- `docs/archive/` (Contains retired process reports, old execution logs, and closed task notes starting from TASK-010 to TASK-021)
+- `docs/decisions/` (Contains system decision records and DDR templates)
+- `docs/governance/`

@@ -1,0 +1,739 @@
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front (Bottom channel in top-down view). Constraint Check: Is this a single atomic word? Yes.
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit (Centrally placed horizontal bar).
+
+Step 003: Shape 2 (Yellow). Overlaps IDs: [0]. Dominant Position relative to base: back (T
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (Centrally placed cross shape spanning the middle).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (green). Overlaps IDs: [0]. Dominant Position relative to base: front. Constraint Check: Is this a single atomic word? Yes.
+
+Step 002: Shape 2 (red). Overlaps IDs: [0]. Dominant Position relative to base: omit (centrally placed).
+
+Step 003: Shape 2 (yellow). Overlaps IDs: [0]. Dominant Position relative to base: back
+
+Step 004: Shape 4 (blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (spans symmetrically across the center).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front. Constraint Check: Is this a single atomic word? (Yes).
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit.
+
+Step 003: Shape 2 (Yellow). Overlaps IDs:
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit.
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (green). Overlaps IDs: [0]. Dominant Position relative to base: front. Constraint Check: Is this a single atomic word? (Yes).
+
+Step 002: Shape 2 (red). Overlaps IDs: [0]. Dominant Position relative to base: omit (centrally placed middle bar). Constraint Check: Is this a single atomic word? (N/A).
+
+Step 003: Shape 2 (yellow). Overlaps IDs: [0]. Dominant Position rela
+
+Step 004: Shape 4 (blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (centrally placed crossing the middle). Constraint Check: Is this a single atomic word? (N/A).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Green Shape 2. Overlaps IDs: [0]. Dominant Position relative to base: front. Constraint Check: Is this a single atomic word? (Yes).
+
+Step 002: Red Shape 2. Overlaps IDs: [0]. Dominant Position relative to base: [Omit] (centrally placed in the middle channel).
+
+Step 003: Yellow Shape 2. Overlaps IDs: [0]. Dominant Pos
+
+Step 004: Blue Shape 4. Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: [Omit] (centrally placed and spans symmetrically across the center).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front (placed in the bottom horizontal slot of the base). Constraint Check: Is this a single atomic word? (Yes).
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit (placed centrally in the mi
+
+Step 003: Shape 2 (Yellow). Overlaps IDs: [0]. Dominant Position relative to base: back (placed in the top horizontal slot of the base). Constraint Check: Is this a single atomic word? (Yes).
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (centrally placed relative to the entire base, crossing all three previous shapes). Constraint Check: Is this a single atomic word? (N/A).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front (Bottom of the top-down view). Constraint Check: Is this a single atomic word? (Yes).
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit (Centrally placed in the
+
+Step 003: Shape 2 (Yellow). Overlaps IDs: [0]. Dominant Position relative to base: back
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (Centrally placed, crossing over the middle of the base).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front. Constraint Check: Is this a single atomic word? Yes.
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit (centrally placed). Constraint Check: Omitted. Yes.
+
+Step 003: Shape 2 (Yellow). Overlaps IDs: [0]. Dominant Position relative to base: back. Constraint Check: Is this a s
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (spans symmetrically across the center). Constraint Check: Omitted. Yes.
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front. Constraint Check: Is this a single atomic word? (Yes).
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit (centrally placed).
+
+Step 003: Shape 2 (Yellow). Overlaps IDs: [0]. Dominant Positio
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (centrally placed).
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---
+
+REASONING_DRAFT
+
+Step 001: Shape 2 (Green). Overlaps IDs: [0]. Dominant Position relative to base: front (Bottom of Top-Down View). Constraint Check: Yes (single atomic word).
+
+Step 002: Shape 2 (Red). Overlaps IDs: [0]. Dominant Position relative to base: omit (Placed
+
+Step 003: Shape 2 (Yellow). Overlaps IDs: [0]. Dominant Position relative to base: back (Top of Top-Down Vie
+
+Step 004: Shape 4 (Blue). Overlaps IDs: [1, 2, 3]. Dominant Position relative to base: omit (Symmetrically spans across the center of the base). Constraint Check: Yes.
+
+FINAL_JSON_START
+
+{
+"objects": [
+{
+"id": 0,
+"object": "base",
+"edges": []
+},
+{
+"id": 1,
+"object": "Shape 2",
+"color": "green",
+"edges": [
+{
+"supporter": 0,
+"position": "front"
+}
+]
+},
+{
+"id": 2,
+"object": "Shape 2",
+"color": "red",
+"edges": [
+{
+"supporter": 0
+}
+]
+},
+{
+"id": 3,
+"object": "Shape 2",
+"color": "yellow",
+"edges": [
+{
+"supporter": 0,
+"position": "back"
+}
+]
+},
+{
+"id": 4,
+"object": "Shape 4",
+"color": "blue",
+"edges": [
+{
+"supporter": 1
+},
+{
+"supporter": 2
+},
+{
+"supporter": 3
+}
+]
+}
+]
+}
+
+FINAL_JSON_END
+
+---

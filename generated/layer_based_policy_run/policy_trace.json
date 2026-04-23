@@ -1,0 +1,102 @@
+[
+  {
+    "phase": "layer_based",
+    "layer": 1,
+    "selected_branch": "branch:source:1",
+    "batch": [
+      1
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  },
+  {
+    "phase": "layer_based",
+    "layer": 1,
+    "selected_branch": "branch:source:2",
+    "batch": [
+      2
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  },
+  {
+    "phase": "layer_based",
+    "layer": 2,
+    "selected_branch": "branch:source:1",
+    "batch": [
+      3,
+      4
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  },
+  {
+    "phase": "layer_based",
+    "layer": 2,
+    "selected_branch": "branch:source:2",
+    "batch": [
+      5,
+      6
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  },
+  {
+    "phase": "layer_based",
+    "layer": 3,
+    "selected_branch": "branch:merge:1,2",
+    "batch": [
+      7
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  },
+  {
+    "phase": "layer_based",
+    "layer": 4,
+    "selected_branch": "branch:merge:1,2",
+    "batch": [
+      8
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  },
+  {
+    "phase": "layer_based",
+    "layer": 5,
+    "selected_branch": "branch:merge:1,2",
+    "batch": [
+      9
+    ],
+    "rules": {
+      "same_layer_grouping": true,
+      "source_priority_branching": true,
+      "left_to_right_inside_branch": true,
+      "max_batch_size": 2
+    }
+  }
+]

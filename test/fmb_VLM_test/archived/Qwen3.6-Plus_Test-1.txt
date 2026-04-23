@@ -1,0 +1,768 @@
+## REASONING_DRAFT
+
+**Step 001: Shape 1 (Red)**
+- **Supporter Check:** In the Top-Down View, the red shape is on the left side. It does not overlap any other object IDs (as it is the first). It rests on the base.
+- **Position Selection:** Relative to the center of the grey base, the red block is clearly in the left half.
+- **Constraint Check:** Single atomic word? Yes (`"left"`).
+
+**Step 002: Shape 1 (Yellow)**
+- **Supporter Check:** The yellow shape is on the right side. It does not overlap ID 1 (Red) or any other objects. It rests on the base.
+- **Position Selection:** Relative to the center of the grey base, the yellow block is clearly in the right half.
+- **Constraint Check:** Single atomic word? Yes (`"right"`).
+
+**Step 003: Shape 2 (Green)**
+- **Supporter Check:** In the Top-Down View, the green bar spans horizontally across the middle. It visually overlaps both the Red block (ID 1) and the Yellow block (ID 2). Therefore, supporters are 1 and 2. Base (0) is excluded because real blocks are present.
+- **Position Selection:** The green bar is centered vertically within the base boundaries and spans symmetrically from left to right. It does not favor "front", "back", "left", or "right".
+- **Constraint Check:** Omission required due to central/symmetrical placement. Key omitted.
+
+**Step 004: Shape 3 (Blue)**
+- **Supporter Check:** In the Top-Down View, the blue T-shape is placed vertically in the center column. It overlaps the Green bar (ID 3). It sits between the Red (ID 1) and Yellow (ID 2) blocks but does not appear to overlap them significantly in the top-down projection (it fits in the gap or on top of the green). The primary visual overlap is with the Green bar. Supporter: 3.
+- **Position Selection:** The blue shape is centrally aligned horizontally (between left and right) and vertically (spanning front to back or centered). It acts as a central vertical element. It does not fit strictly into "left", "right", "front", or "back" relative to the whole base.
+- **Constraint Check:** Omission required due to central placement. Key omitted.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+
+## REASONING_DRAFT
+
+- **Step 001 (Shape 1 - Red):**
+    - **Supporter Check:** In the Top-Down View, the red block is on the left side of the base. It does not overlap any other objects yet. Therefore, it rests on the base (`id: 0`).
+    - **Position Selection:** The object is clearly positioned in the left half of the top-down view relative to the center of the grey base.
+    - **Selected Position:** `"left"`
+
+- **Step 002 (Shape 1 - Yellow):**
+    - **Supporter Check:** In the Top-Down View, the yellow block is on the right side of the base. It does not overlap the red block or any other objects. It rests on the base (`id: 0`).
+    - **Position Selection:** The object is clearly positioned in the right half of the top-down view relative to the center of the grey base.
+    - **Selected Position:** `"right"`
+
+- **Step 003 (Shape 2 - Green):**
+    - **Supporter Check:** In the Top-Down View, the green bar spans horizontally across the middle. It visually overlaps both the Red Shape 1 (`id: 1`) and the Yellow Shape 1 (`id: 2`). According to the policy, since it covers real blocks, we list them as supporters and ignore the base.
+    - **Position Selection:** The green bar is centered vertically and spans symmetrically across the horizontal axis of the base. It connects the left and right sides. Per the omission rule for centrally placed or symmetrical objects, the position key must be omitted.
+    - **Selected Position:** `Omit`
+
+- **Step 004 (Shape 3 - Blue):**
+    - **Supporter Check:** In the Top-Down View, the blue shape is a vertical bar located in the center column. It visually overlaps the horizontal Green Shape 2 (`id: 3`). It does not appear to overlap the Red or Yellow shapes directly in the 2D projection (it sits between their vertical extents). Thus, it rests on the Green shape.
+    - **Position Selection:** The blue shape is centered horizontally within the base boundaries. While it occupies the "middle" vertically, it is not biased towards the absolute "back" (top edge) or "front" (bottom edge) of the entire base; it is central. Per the omission rule for centrally placed objects, the position key must be omitted.
+    - **Selected Position:** `Omit`
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+- **Step 001 (Image 1):**
+    - **Red Shape 1:** Overlaps the empty base. In the Top-Down View, it is located on the left side of the grey square. Dominant Position: `"left"`.
+    - **Yellow Shape 1:** Overlaps the empty base. In the Top-Down View, it is located on the right side of the grey square. Dominant Position: `"right"`.
+
+- **Step 002 (Image 2):**
+    - **Green Shape 2:** Overlaps the Red Shape 1 and Yellow Shape 1 in the Top-Down View (the bar connects them). Since it has real supporters (IDs 1 and 2), the base is ignored. The object spans horizontally across the center of the assembly. According to the Omission Rule for centrally placed/symmetrical objects, the position key is omitted.
+
+- **Step 003 (Image 3):**
+    - **Blue Shape 3:** Overlaps the Green Shape 2 in the Top-Down View (vertical bar crosses the horizontal green bar). Supporter is ID 3. The object is a vertical bar centered in the top-down view. According to the Omission Rule, the position key is omitted.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+- **Step 001:** "Shape 1" (Red).
+    - **Supporter Check:** In the Top-Down view, the red rectangle is placed on the empty grey background. It does not overlap any other objects. Supporter: `0` (base).
+    - **Position Selection:** The object is located in the left half of the base area. Dominant Position: `"left"`.
+    - **Constraint Check:** Single atomic word? Yes.
+
+- **Step 002:** "Shape 1" (Yellow).
+    - **Supporter Check:** In the Top-Down view, the yellow rectangle is placed on the empty grey background. It does not overlap any other objects. Supporter: `0` (base).
+    - **Position Selection:** The object is located in the right half of the base area. Dominant Position: `"right"`.
+    - **Constraint Check:** Single atomic word? Yes.
+
+- **Step 003:** "Shape 2" (Green).
+    - **Supporter Check:** In the Top-Down view, the green horizontal bar overlaps both the Red Shape (ID 1) and the Yellow Shape (ID 2). Since it covers real blocks (IDs >= 1), the base (ID 0) is excluded. Supporters: `1`, `2`.
+    - **Position Selection:** The object spans horizontally across the center of the base, connecting the left and right sides. According to the Omission Rule for centrally placed/symmetrical objects, the position key must be omitted.
+    - **Constraint Check:** Key omitted? Yes.
+
+- **Step 004:** "Shape 3" (Blue).
+    - **Supporter Check:** In the Top-Down view, the blue vertical shape overlaps the Green Shape (ID 3). It sits between the red and yellow shapes but rests visually on top of the green bar. Supporter: `3`.
+    - **Position Selection:** The object is a vertical bar positioned in the central column of the base (between the left and right extremes). As it is centrally placed relative to the lateral axis, the position key must be omitted.
+    - **Constraint Check:** Key omitted? Yes.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+- **Step 001 (Image 1, Red Shape):**
+    - **Object:** "Shape 1" (Red).
+    - **Supporter Check:** In the Top-Down view, this object is placed on the empty grey background. It does not overlap any other objects. Supporter: `0` (base).
+    - **Position Selection:** The red block is located in the left half of the square base. Dominant Position: `"left"`.
+
+- **Step 002 (Image 1, Yellow Shape):**
+    - **Object:** "Shape 1" (Yellow).
+    - **Supporter Check:** Placed on the empty grey background. Supporter: `0` (base).
+    - **Position Selection:** The yellow block is located in the right half of the square base. Dominant Position: `"right"`.
+
+- **Step 003 (Image 2, Green Shape):**
+    - **Object:** "Shape 2" (Green).
+    - **Supporter Check:** In the Top-Down view, the green bar overlaps both the Red block (ID 1) and the Yellow block (ID 2). Since it has real supporters (IDs >= 1), we ignore the base. Supporters: `1, 2`.
+    - **Position Selection:** The green bar spans horizontally across the center, connecting the left and right sides. It is symmetric relative to the vertical axis. According to the omission rule for central/symmetric placement, I must omit the position key.
+
+- **Step 004 (Image 3, Blue Shape):**
+    - **Object:** "Shape 3" (Blue).
+    - **Supporter Check:** In the Top-Down view, the blue shape overlaps the Green bar (ID 3). It also slightly touches the empty space, but since it rests on ID 3, that is the primary support relation defined by occlusion. Supporter: `3`.
+    - **Position Selection:** The blue shape is a vertical bar centered in the middle of the base (between the red and yellow blocks). It is vertically aligned with the center. According to the omission rule, I must omit the position key.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+- **Step 001:** Shape 1 (Red). Overlaps IDs: [0]. Dominant Position relative to base: "left" (It is located in the left half of the Top-Down view).
+- **Step 002:** Shape 1 (Yellow). Overlaps IDs: [0]. Dominant Position relative to base: "right" (It is located in the right half of the Top-Down view).
+- **Step 003:** Shape 2 (Green). Overlaps IDs: [1, 2] (Visually spans across both red and yellow shapes in the Top-Down view). Dominant Position relative to base: Omit (The object is a horizontal bar spanning symmetrically across the center of the base; per rules, omit position key).
+- **Step 004:** Shape 3 (Blue). Overlaps IDs: [3] (Visually overlaps the green bar in the Top-Down view). Dominant Position relative to base: Omit (The object is placed vertically in the center column of the Top-Down view; per rules for central placement, omit position key).
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+**Step 1 (Image 1): Shape 1 (Red)**
+- **Supporter Check:** In the Top-Down View, the red rectangle is placed on the empty grey background. It does not overlap any other objects yet. Therefore, it rests on the base (`id: 0`).
+- **Position Selection:** The object is located in the left half of the square base area. Relative to the center of the base, its dominant position is `left`.
+- **Constraint Check:** "left" is a single atomic word. Valid.
+
+**Step 2 (Image 1): Shape 1 (Yellow)**
+- **Supporter Check:** In the Top-Down View, the yellow rectangle is placed on the empty grey background. It does not overlap the red shape or any other objects. Therefore, it rests on the base (`id: 0`).
+- **Position Selection:** The object is located in the right half of the square base area. Relative to the center of the base, its dominant position is `right`.
+- **Constraint Check:** "right" is a single atomic word. Valid.
+
+**Step 3 (Image 2): Shape 2 (Green)**
+- **Supporter Check:** In the Top-Down View, the green horizontal bar overlaps both the Red Shape 1 (`id: 1`) and the Yellow Shape 1 (`id: 2`). Since it overlaps real blocks, we do not list the base (`id: 0`) as a supporter. Supporters are `1` and `2`.
+- **Position Selection:** The green bar spans horizontally across the entire width of the assembly, connecting the left side to the right side. It is centrally aligned vertically within the base boundaries. Because it spans symmetrically across the center and lacks a single dominant directional bias relative to the whole base, the position key must be omitted.
+- **Constraint Check:** Omission is required for central/symmetric placement. Valid.
+
+**Step 4 (Image 3): Shape 3 (Blue)**
+- **Supporter Check:** In the Top-Down View, the blue T-shape overlaps the Green Shape 2 (`id: 3`) at the intersection point. It also extends into the empty space between the red and yellow shapes. Since it overlaps a real block (`id: 3`), we do not list the base. Supporter is `3`.
+- **Position Selection:** The vertical stem of the blue 'T' is aligned with the vertical centerline of the base. The horizontal arms extend symmetrically to the left and right. As it is centrally placed along the vertical axis and symmetrical horizontally, it lacks a single dominant directional bias relative to the base. The position key must be omitted.
+- **Constraint Check:** Omission is required for central/symmetric placement. Valid.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+- **Step 001 (Shape 1 - Red):**
+    - **Supporter Check:** In the Top-Down View, the red block is placed on the empty grey background. It does not overlap any other object IDs yet. Supporter: `0` (base).
+    - **Position Selection:** The red block is located in the left half of the top-down view relative to the center of the base. Dominant Position: `"left"`.
+
+- **Step 002 (Shape 1 - Yellow):**
+    - **Supporter Check:** In the Top-Down View, the yellow block is placed on the empty grey background. It does not overlap any other object IDs. Supporter: `0` (base).
+    - **Position Selection:** The yellow block is located in the right half of the top-down view relative to the center of the base. Dominant Position: `"right"`.
+
+- **Step 003 (Shape 2 - Green):**
+    - **Supporter Check:** In the Top-Down View, the green horizontal bar visually overlaps both the red block (ID 1) and the yellow block (ID 2). Since it covers real blocks, we ignore the base (ID 0). Supporters: `1`, `2`.
+    - **Position Selection:** The green bar spans horizontally across the middle of the assembly, connecting the left and right sides. It is centrally aligned vertically in the top-down image. According to the Omission Rule for central/symmetrical placement, I must omit the position key.
+
+- **Step 004 (Shape 3 - Blue):**
+    - **Supporter Check:** In the Top-Down View, the blue vertical bar visually overlaps the green bar (ID 3). It sits between the red and yellow structures but rests primarily on the green connector. Supporter: `3`.
+    - **Position Selection:** The blue bar is placed vertically in the center of the top-down view, crossing the green bar. It is symmetrically centered horizontally. According to the Omission Rule, I must omit the position key.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+**Step 001: Shape 1 (Red)**
+- **Supporter Check:** In the Top-Down View, the red block is on the left side. It does not overlap any other objects yet. It rests on the empty background base. Overlaps IDs: `[0]`.
+- **Position Selection:** The object is clearly positioned in the left half of the grey base area. Dominant Position: `left`.
+- **Constraint Check:** Single atomic word? Yes.
+
+**Step 002: Shape 1 (Yellow)**
+- **Supporter Check:** In the Top-Down View, the yellow block is on the right side. It does not overlap the red block or any other object. It rests on the empty background base. Overlaps IDs: `[0]`.
+- **Position Selection:** The object is clearly positioned in the right half of the grey base area. Dominant Position: `right`.
+- **Constraint Check:** Single atomic word? Yes.
+
+**Step 003: Shape 2 (Green)**
+- **Supporter Check:** In the Top-Down View, the green horizontal bar spans across the middle. It visually overlaps the Red block (ID 1) and the Yellow block (ID 2). Since it overlaps real blocks (IDs >= 1), we exclude ID 0. Overlaps IDs: `[1, 2]`.
+- **Position Selection:** The green bar is centered horizontally and vertically relative to the base boundaries; it connects the left and right sides symmetrically. According to the Omission Rule for centrally placed/symmetric objects, I must omit the position key.
+- **Constraint Check:** Key omitted? Yes.
+
+**Step 004: Shape 3 (Blue)**
+- **Supporter Check:** In the Top-Down View, the blue vertical shape is placed in the center. It visually overlaps the Green bar (ID 3). It also appears to sit between/over the gap occupied by the Red and Yellow blocks' inner faces, but primarily it rests on the Green bar which bridges them. To be safe and strictly follow occlusion: it covers the Green bar. Does it cover Red/Yellow? In the top-down view, the blue vertical bar is distinct from the red/yellow vertical bars. It sits *between* them horizontally but overlaps the green bar vertically. Wait, looking closely at Image 3 Top-Down: The Blue shape is a vertical bar in the middle. It overlaps the Green horizontal bar. It does *not* appear to overlap the Red or Yellow blocks directly in the 2D projection (there is white space between Blue and Red/Yellow). So it only supports off ID 3? Let's re-examine Image 3 Isometric. The Blue shape seems to rest on the Green bar and potentially the base in the gaps? No, the prompt says "Cover = Support". In Top-Down, Blue only overlaps Green. Overlaps IDs: `[3]`.
+- **Position Selection:** The blue shape is vertically oriented in the center of the assembly. Like the green bar, it is centrally located relative to the left/right axis. It spans the vertical center. Therefore, it is symmetric/central. I must omit the position key.
+- **Constraint Check:** Key omitted? Yes.
+
+*(Self-Correction on Step 004 Supporter)*: Let's look really closely at the Top-Down View of Step 3. The Blue shape is a "T" or arch shape? No, Object List shows an arch/U shape on its side? Actually, Object List Shape 3 looks like a wide "U" or bridge. In the Top-Down view, it appears as a vertical rectangle with two small horizontal protrusions or just a thick vertical bar? The Top-Down view shows a solid blue vertical rectangle. It sits directly on top of the green bar. It does not touch Red or Yellow in the 2D projection. So Supporter is only 3.
+
+Let's refine the colors based on Object List:
+- Shape 1 (Red): Red
+- Shape 1 (Yellow): Yellow
+- Shape 2: Green
+- Shape 3: Blue
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END
+
+## REASONING_DRAFT
+
+- **Step 001 (Image 1):**
+    - **Object:** "Shape 1" (Red).
+    - **Supporter Check:** In the Top-Down View, the red block is placed on the empty background. It does not overlap any other object IDs yet. Supporter: `0` (base).
+    - **Position Selection:** The red block is located in the left half of the grey base square. Dominant Position: `"left"`.
+    
+    - **Object:** "Shape 1" (Yellow).
+    - **Supporter Check:** Placed on the empty background. Supporter: `0` (base).
+    - **Position Selection:** The yellow block is located in the right half of the grey base square. Dominant Position: `"right"`.
+
+- **Step 002 (Image 2):**
+    - **Object:** "Shape 2" (Green).
+    - **Supporter Check:** In the Top-Down View, the green bar spans horizontally across the center, overlapping both the Red Shape 1 (ID 1) and Yellow Shape 1 (ID 2). Since it overlaps real blocks, the base (ID 0) is excluded. Supporters: `1`, `2`.
+    - **Position Selection:** The green bar is centrally located, spanning symmetrically from the left side to the right side. According to the Omission Rule for central/symmetrical placement, the position key must be omitted.
+
+- **Step 003 (Image 3):**
+    - **Object:** "Shape 3" (Blue).
+    - **Supporter Check:** In the Top-Down View, the blue shape is placed vertically in the middle. It overlaps the horizontal Green Shape 2 (ID 3). It does not appear to significantly overlap the outer Red or Yellow blocks which are covered by the green bar's ends or sit outside the blue vertical strip. Supporter: `3`.
+    - **Position Selection:** The blue shape is a vertical bar centered horizontally within the base. It spans from the back area to the front area but is centered left-to-right. Due to this central symmetry relative to the base's horizontal axis, the position key must be omitted.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 1",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 1",
+      "color": "yellow",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Shape 3",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END

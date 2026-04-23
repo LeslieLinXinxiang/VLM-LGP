@@ -1,0 +1,113 @@
+{
+  "prompt1": {
+    "strategies": [
+      {
+        "id": "strategy_1_provenance_pruned",
+        "description": "Provenance clustering + pruning scheduler policy",
+        "order": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "batches": [
+          [
+            1,
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ],
+        "metadata": {
+          "algorithm": "ProvenanceSetBranchClustering+Pruning",
+          "cluster_key_nodes": {
+            "sig:1": [
+              1
+            ],
+            "sig:2": [
+              2
+            ],
+            "sig:3": [
+              3
+            ],
+            "sig:1,2": [
+              4
+            ],
+            "sig:2,3": [
+              5
+            ],
+            "sig:1,2,3": [
+              6,
+              7,
+              8
+            ]
+          },
+          "cluster_assignment": [
+            {
+              "node_id": 1,
+              "cluster_id": 0,
+              "cluster_key": "sig:1"
+            },
+            {
+              "node_id": 2,
+              "cluster_id": 3,
+              "cluster_key": "sig:2"
+            },
+            {
+              "node_id": 3,
+              "cluster_id": 5,
+              "cluster_key": "sig:3"
+            },
+            {
+              "node_id": 4,
+              "cluster_id": 1,
+              "cluster_key": "sig:1,2"
+            },
+            {
+              "node_id": 5,
+              "cluster_id": 4,
+              "cluster_key": "sig:2,3"
+            },
+            {
+              "node_id": 6,
+              "cluster_id": 2,
+              "cluster_key": "sig:1,2,3"
+            },
+            {
+              "node_id": 7,
+              "cluster_id": 2,
+              "cluster_key": "sig:1,2,3"
+            },
+            {
+              "node_id": 8,
+              "cluster_id": 2,
+              "cluster_key": "sig:1,2,3"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "prompt2": {
+    "selected": "strategy_1_provenance_pruned",
+    "reason": "Policy-driven deterministic schedule."
+  }
+}

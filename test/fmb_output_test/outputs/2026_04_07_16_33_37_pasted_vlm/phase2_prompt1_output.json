@@ -1,0 +1,52 @@
+{
+  "strategies": [
+    {
+      "id": "strategy_1_branch_layer_cutting",
+      "description": "Controlled branch grouping plus hierarchy-aware batch cutting that preserves support dependencies while exposing a two-stage decomposition interface.",
+      "order": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batches": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "metadata": {
+        "algorithm": "BranchAwareLayerCuttingClustering",
+        "branch_groups": [
+          {
+            "branch": "left",
+            "nodes": [
+              1
+            ]
+          },
+          {
+            "branch": "right",
+            "nodes": [
+              2
+            ]
+          },
+          {
+            "branch": "bridge",
+            "nodes": [
+              3,
+              4
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

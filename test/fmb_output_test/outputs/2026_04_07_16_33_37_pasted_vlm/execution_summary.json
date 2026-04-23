@@ -1,0 +1,15 @@
+{
+  "source": "terminal_paste",
+  "output_dir": "/home/leslie/Projects/VLM_LGP/test/fmb_output_test/outputs/2026_04_07_16_33_37_pasted_vlm",
+  "codegen_dir": "/home/leslie/Projects/VLM_LGP/test/fmb_output_test/outputs/2026_04_07_16_33_37_pasted_vlm/phase2_codegen",
+  "generated_files": [
+    "step_1_batch_1.fol",
+    "step_1_batch_1.lgp",
+    "step_2_batch_1.fol",
+    "step_2_batch_1.lgp",
+    "step_3_batch_1.fol",
+    "step_3_batch_1.lgp",
+    "step_4_batch_1.fol",
+    "step_4_batch_1.lgp"
+  ]
+}
