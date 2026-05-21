@@ -35,7 +35,7 @@ VLM-LGP is a hybrid TAMP (Task and Motion Planning) framework. It uses logical s
 ## 5. External Interfaces
 
 - **Input**: `.fol` (Logic), `.lgp` (Parameters), `.g` (Scene geometry and initial states), plus Phase0 VLM inputs (`generated/phase0_capture.png`, `generated/phase0_specs.json`, selected prompt markdown).
-- **Output**: Trajectory text files, updated `.g` scenes (`output_state.g`), Phase0 semantic layout artifacts such as `generated/phase0_layout.json`, and optional diagnostics artifacts (scene xyz JSON/CSV exports) for simulator alignment analysis.
+- **Output**: Trajectory text files, gripper schedule files (`gripper.txt`), updated `.g` scenes (`output_state.g`), Phase0 semantic layout artifacts such as `generated/phase0_layout.json`, and optional diagnostics artifacts (scene xyz JSON/CSV exports) for simulator alignment analysis.
 
 ## 6. Architectural Constraints
 

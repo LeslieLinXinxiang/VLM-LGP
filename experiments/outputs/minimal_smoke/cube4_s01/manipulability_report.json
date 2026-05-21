@@ -1,0 +1,69 @@
+{
+  "version": "v1_static_test",
+  "score_type": "yoshikawa_position_normalized",
+  "tau_m": 0.08,
+  "base_link": "panda_link0",
+  "ee_link": "panda_hand",
+  "inputs": {
+    "layout_path": "experiments/outputs/minimal_smoke/cube4_s01/phase0_layout.json",
+    "infeasible_path": "experiments/outputs/minimal_smoke/cube4_s01/infeasible_objects.json",
+    "g_path": "generated/scene/scene_named.g",
+    "urdf_path": "/home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/panda_arm_hand.urdf",
+    "approach_offset_z": 0.08,
+    "counts": {
+      "layout_total": 4,
+      "infeasible_count": 0,
+      "feasible_count": 4
+    }
+  },
+  "objects": [
+    {
+      "anon_id": "obj_03",
+      "logical_id": "cube_1",
+      "object_type": "cube",
+      "target_xyz": null,
+      "ik_error": null,
+      "raw_score": null,
+      "manipulability_score": null,
+      "status": "unknown",
+      "reason": "missing_object_pose_in_g",
+      "rank": null
+    },
+    {
+      "anon_id": "obj_04",
+      "logical_id": "cube_2",
+      "object_type": "cube",
+      "target_xyz": null,
+      "ik_error": null,
+      "raw_score": null,
+      "manipulability_score": null,
+      "status": "unknown",
+      "reason": "missing_object_pose_in_g",
+      "rank": null
+    },
+    {
+      "anon_id": "obj_01",
+      "logical_id": "cube_3",
+      "object_type": "cube",
+      "target_xyz": null,
+      "ik_error": null,
+      "raw_score": null,
+      "manipulability_score": null,
+      "status": "unknown",
+      "reason": "missing_object_pose_in_g",
+      "rank": null
+    },
+    {
+      "anon_id": "obj_02",
+      "logical_id": "cube_4",
+      "object_type": "cube",
+      "target_xyz": null,
+      "ik_error": null,
+      "raw_score": null,
+      "manipulability_score": null,
+      "status": "unknown",
+      "reason": "missing_object_pose_in_g",
+      "rank": null
+    }
+  ]
+}

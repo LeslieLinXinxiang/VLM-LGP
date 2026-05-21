@@ -1,0 +1,66 @@
+[
+  {
+    "anon_id": "obj_01",
+    "logical_id": "cube_3",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.6,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_02",
+    "logical_id": "cube_4",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.6,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_03",
+    "logical_id": "cube_1",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.6,
+      0.1
+    ]
+  },
+  {
+    "anon_id": "obj_04",
+    "logical_id": "cube_2",
+    "shape": "box",
+    "object_type": "cube",
+    "size_signature": [
+      0.03,
+      0.03,
+      0.03
+    ],
+    "color_rgb": [
+      0.9,
+      0.6,
+      0.1
+    ]
+  }
+]

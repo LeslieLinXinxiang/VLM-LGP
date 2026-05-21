@@ -12,14 +12,14 @@ Use only these object labels:
 - `Triangular Prism`
 - `Cube`
 - `Rectangular Prism`
-- `Cylinder`
+- `Long Rectangular Prism`
 - `table` (reserved for ID 0 only)
 
 Recognition by shape:
 - triangle -> `Triangular Prism`
 - square -> `Cube`
 - elongated rectangle -> `Rectangular Prism`
-- circle/oval -> `Cylinder`
+- very elongated rectangle -> `Long Rectangular Prism`
 
 Do not merge adjacent blocks. Each visible block is one object.
 

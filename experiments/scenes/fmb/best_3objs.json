@@ -1,0 +1,44 @@
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "base",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Shape 2",
+      "color": "green",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "front"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Shape 2",
+      "color": "red",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "back"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Shape 4",
+      "color": "blue",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    }
+  ]
+}

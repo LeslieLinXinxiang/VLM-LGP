@@ -1,0 +1,82 @@
+{
+  "scenario_id": "cube4_s07",
+  "mode": "r",
+  "seed": 760,
+  "image_path": "experiments/inputs/cubeStacking/4cubes/cube_n04_s01.png",
+  "counts": {
+    "cube": 8
+  },
+  "object_total": 8,
+  "scene_path": "experiments/scenes/cube4/with_redundancy/cube4_s07_r.g",
+  "constraints": {
+    "pass": true,
+    "issues": []
+  },
+  "objects": [
+    {
+      "object_type": "cube",
+      "x": -0.24412868657673104,
+      "y": -0.1896127752685819,
+      "yaw_deg": -179.58791510822329,
+      "spawn_region": "left_init",
+      "anon_id": "obj_01"
+    },
+    {
+      "object_type": "cube",
+      "x": 0.3799527524947197,
+      "y": 0.20142730073286513,
+      "yaw_deg": 141.7369378584449,
+      "spawn_region": "right_init",
+      "anon_id": "obj_02"
+    },
+    {
+      "object_type": "cube",
+      "x": -0.3499205144630643,
+      "y": 0.06449518992426023,
+      "yaw_deg": -55.90258101805179,
+      "spawn_region": "left_init",
+      "anon_id": "obj_03"
+    },
+    {
+      "object_type": "cube",
+      "x": 0.4931083079098022,
+      "y": -0.22992703913674362,
+      "yaw_deg": 1.963557508645522,
+      "spawn_region": "right_init",
+      "anon_id": "obj_04"
+    },
+    {
+      "object_type": "cube",
+      "x": 0.4433384967200314,
+      "y": -0.09810472298119924,
+      "yaw_deg": 16.42236108103637,
+      "spawn_region": "right_init",
+      "anon_id": "obj_05"
+    },
+    {
+      "object_type": "cube",
+      "x": -0.4318312611462733,
+      "y": 0.20693548161051067,
+      "yaw_deg": 101.92468475981309,
+      "spawn_region": "left_init",
+      "anon_id": "obj_06"
+    },
+    {
+      "object_type": "cube",
+      "x": -0.432018414326226,
+      "y": 0.10771796875640799,
+      "yaw_deg": 6.407233225153362,
+      "spawn_region": "left_init",
+      "anon_id": "obj_07"
+    },
+    {
+      "object_type": "cube",
+      "x": 0.3521038882879062,
+      "y": 0.08328205508367237,
+      "yaw_deg": 109.50379488943952,
+      "spawn_region": "right_init",
+      "anon_id": "obj_08"
+    }
+  ],
+  "timestamp_utc": "2026-04-24T06:05:59.514863+00:00"
+}

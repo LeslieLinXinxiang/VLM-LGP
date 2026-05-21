@@ -1,0 +1,10 @@
+{
+  "tag": "3objs/s001/trial_01_nr/smart",
+  "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_01_nr.g",
+  "success": false,
+  "runtime_s": 48.83,
+  "exit_code": -9,
+  "timeout": false,
+  "memory_exceeded": true,
+  "memory_peak_mb": 16387.04
+}

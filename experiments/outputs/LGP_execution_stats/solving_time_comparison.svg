@@ -1,0 +1,48 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="white"/>
+<text x="400.0" y="30" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold">Average Solving Time</text>
+<line x1="60" y1="440" x2="60" y2="60" stroke="black" stroke-width="2"/>
+<line x1="60" y1="440" x2="740" y2="440" stroke="black" stroke-width="2"/>
+<line x1="60" y1="440.0" x2="740" y2="440.0" stroke="#ddd" stroke-width="1"/>
+<text x="50" y="445.0" font-family="Arial" font-size="12" text-anchor="end">0.0</text>
+<line x1="60" y1="364.0" x2="740" y2="364.0" stroke="#ddd" stroke-width="1"/>
+<text x="50" y="369.0" font-family="Arial" font-size="12" text-anchor="end">71.0</text>
+<line x1="60" y1="288.0" x2="740" y2="288.0" stroke="#ddd" stroke-width="1"/>
+<text x="50" y="293.0" font-family="Arial" font-size="12" text-anchor="end">142.0</text>
+<line x1="60" y1="212.0" x2="740" y2="212.0" stroke="#ddd" stroke-width="1"/>
+<text x="50" y="217.0" font-family="Arial" font-size="12" text-anchor="end">213.0</text>
+<line x1="60" y1="136.0" x2="740" y2="136.0" stroke="#ddd" stroke-width="1"/>
+<text x="50" y="141.0" font-family="Arial" font-size="12" text-anchor="end">284.0</text>
+<line x1="60" y1="60.0" x2="740" y2="60.0" stroke="#ddd" stroke-width="1"/>
+<text x="50" y="65.0" font-family="Arial" font-size="12" text-anchor="end">355.0</text>
+<text x="20" y="250.0" font-family="Arial" font-size="14" text-anchor="middle" transform="rotate(-90, 20, 250.0)">Time (seconds)</text>
+<text x="165.0" y="460" font-family="Arial" font-size="12" text-anchor="middle">4cubes</text>
+<rect x="100" y="409.30378949771637" width="25" height="30.696210502283645" fill="#4CAF50"><title>Smart NR: 28.67</title></rect>
+<rect x="135" y="415.10059645120504" width="25" height="24.89940354879495" fill="#81C784"><title>Smart R: 23.26</title></rect>
+<rect x="170" y="411.1762381135246" width="25" height="28.823761886475356" fill="#F44336"><title>Global NR: 26.93</title></rect>
+<rect x="205" y="405.9436873147364" width="25" height="34.056312685263606" fill="#E57373"><title>Global R: 31.81</title></rect>
+<text x="335.0" y="460" font-family="Arial" font-size="12" text-anchor="middle">5cubes</text>
+<rect x="270" y="406.5653753899791" width="25" height="33.434624610020855" fill="#4CAF50"><title>Smart NR: 31.23</title></rect>
+<rect x="305" y="403.44579677714415" width="25" height="36.55420322285585" fill="#81C784"><title>Smart R: 34.15</title></rect>
+<rect x="340" y="399.2589609874909" width="25" height="40.741039012509084" fill="#F44336"><title>Global NR: 38.06</title></rect>
+<rect x="375" y="371.84695563785743" width="25" height="68.15304436214255" fill="#E57373"><title>Global R: 63.66</title></rect>
+<text x="505.0" y="460" font-family="Arial" font-size="12" text-anchor="middle">6cubes</text>
+<rect x="440" y="400.63003493566595" width="25" height="39.36996506433403" fill="#4CAF50"><title>Smart NR: 36.78</title></rect>
+<rect x="475" y="394.2400489186655" width="25" height="45.75995108133452" fill="#81C784"><title>Smart R: 42.75</title></rect>
+<rect x="510" y="400.203232932172" width="25" height="39.796767067828" fill="#F44336"><title>Global NR: 37.18</title></rect>
+<rect x="545" y="283.8563774293399" width="25" height="156.14362257066009" fill="#E57373"><title>Global R: 145.86</title></rect>
+<text x="675.0" y="460" font-family="Arial" font-size="12" text-anchor="middle">7cubes</text>
+<rect x="610" y="396.22443105879717" width="25" height="43.77556894120285" fill="#4CAF50"><title>Smart NR: 40.89</title></rect>
+<rect x="645" y="378.19437189766853" width="25" height="61.805628102331475" fill="#81C784"><title>Smart R: 57.74</title></rect>
+<rect x="680" y="366.1676690568803" width="25" height="73.83233094311971" fill="#F44336"><title>Global NR: 68.97</title></rect>
+<rect x="715" y="123.33333333333331" width="25" height="316.6666666666667" fill="#E57373"><title>Global R: 295.81</title></rect>
+<text x="845.0" y="460" font-family="Arial" font-size="12" text-anchor="middle">8cubes</text>
+<rect x="780" y="381.142853735723" width="25" height="58.857146264277" fill="#4CAF50"><title>Smart NR: 54.98</title></rect>
+<rect x="815" y="374.098937371745" width="25" height="65.90106262825495" fill="#81C784"><title>Smart R: 61.56</title></rect>
+<rect x="850" y="356.6394234039457" width="25" height="83.36057659605427" fill="#F44336"><title>Global NR: 77.87</title></rect>
+<rect x="885" y="440.0" width="25" height="0.0" fill="#E57373"><title>Global R: 0.00</title></rect>
+<rect x="650" y="60" width="10" height="10" fill="#4CAF50"/> <text x="665" y="70" font-family="Arial" font-size="10">Smart NR</text>
+<rect x="650" y="75" width="10" height="10" fill="#81C784"/> <text x="665" y="85" font-family="Arial" font-size="10">Smart R</text>
+<rect x="650" y="90" width="10" height="10" fill="#F44336"/> <text x="665" y="100" font-family="Arial" font-size="10">Global NR</text>
+<rect x="650" y="105" width="10" height="10" fill="#E57373"/> <text x="665" y="115" font-family="Arial" font-size="10">Global R</text>
+</svg>

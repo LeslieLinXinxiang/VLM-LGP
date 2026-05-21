@@ -1,0 +1,46 @@
+# Trial 06 — cube_n08_s02
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-28 17:33:52
+- **Elapsed**: 49.0s
+- **Retries**: 0
+- **Image**: `/experiments/inputs/cubeStacking/8cubes/cube_n08_s02.png`
+
+## VLM Raw Output
+
+## REASONING_DRAFT
+- Total Count: 8 objects (excluding table).
+- Layer 1 (Base):
+  - Object 1: Width matches `RectPrism`. Left/Center/Right hit -> table. Supporter -> table. Position -> `table_left`.
+  - Object 2: Width matches `RectPrism`. Left/Center/Right hit -> table. Supporter -> table. Position -> `table_center`.
+  - Object 3: Width matches `RectPrism`. Left/Center/Right hit -> table. Supporter -> table. Position -> `table_right`.
+- Layer 2:
+  - Object 4: Width matches `RectPrism`. Left hits -> 2RectPrism, Center hits -> 2RectPrism, Right hits -> 2RectPrism. Supporter -> 2RectPrism. (Single child, no suffix).
+- Layer 3:
+  - Object 5: Width matches `Cube`. Left hits -> 4RectPrism, Center hits -> 4RectPrism, Right hits -> 4RectPrism. Supporter -> 4RectPrism. Position -> `4RectPrism_left`.
+  - Object 6: Width matches `Cube`. Left hits -> 4RectPrism, Center hits -> 4RectPrism, Right hits -> 4RectPrism. Supporter -> 4RectPrism. Position -> `4RectPrism_right`.
+- Layer 4:
+  - Object 7: Width matches `RectPrism`. Left hits -> 5Cube, Center hits -> (gap), Right hits -> 6Cube. Supporter -> 5Cube, 6Cube. (Multi-supporter, no suffix).
+- Layer 5:
+  - Object 8: Width matches `TriPrism`. Left hits -> 7RectPrism, Center hits -> 7RectPrism, Right hits -> 7RectPrism. Supporter -> 7RectPrism. (Single child, no suffix).
+
+## FINAL_PDDL_START
+(:action-sequence
+  (pick 1RectPrism)
+  (place 1RectPrism table_left)
+  (pick 2RectPrism)
+  (place 2RectPrism table_center)
+  (pick 3RectPrism)
+  (place 3RectPrism table_right)
+  (pick 4RectPrism)
+  (place 4RectPrism 2RectPrism)
+  (pick 5Cube)
+  (place 5Cube 4RectPrism_left)
+  (pick 6Cube)
+  (place 6Cube 4RectPrism_right)
+  (pick 7RectPrism)
+  (place 7RectPrism 5Cube 6Cube)
+  (pick 8TriPrism)
+  (place 8TriPrism 7RectPrism)
+)
+## FINAL_PDDL_END

@@ -67,23 +67,13 @@ cube4    (table) { Q:"t(-0.45  0.00 .065)", joint:rigid, shape:ssBox,    size:[.
 TriPrism (table) { Q:"t(-0.45  0.10 .05)",  joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", color:[1 .4 .7], contact:1, mass:.2, logical:{ is_object, is_place } }
 
 # -----------------------------------------------------------
-# 5 Placement Bases — Cross Pattern (top-down view)
-# Arm at (0, -0.3), bases centered in front work zone
-#
-#      Base_Top    (Y=-0.03, closer to arm)
-#          |
-# Base_Left - Base_Center - Base_Right  (Y=0.05, 8cm apart)
-#          |
-#      Base_Bottom (Y=0.13, farther from arm)
-#
-# Colored yellow to confirm placement, then set transparent.
-# Size: 25x25mm (matches Cube footprint), thin (2mm)
+# 5 Fixed placement slots on base_board
 # -----------------------------------------------------------
-Base_Center (table) { Q:"t( 0.00  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0], contact:0, logical:{ is_place } }
-Base_Left   (table) { Q:"t(-0.08  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0], contact:0, logical:{ is_place } }
-Base_Right  (table) { Q:"t( 0.08  0.05 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0], contact:0, logical:{ is_place } }
-Base_Top    (table) { Q:"t( 0.00 -0.03 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0], contact:0, logical:{ is_place } }
-Base_Bottom (table) { Q:"t( 0.00  0.13 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0], contact:0, logical:{ is_place } }
+Table_Left   (base_board) { Q:"t( 0.000 0.000  0.080) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Right  (base_board) { Q:"t(0.000 0.000 -0.080) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Front  (base_board) { Q:"t(0.059 0.000 0.000) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Back   (base_board) { Q:"t(-0.061 0.000 0.000) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Center (base_board) { Q:"t(00 0.000 0.000) d(-90 1 0 0) ", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Top-surface slots on cube1 and cube2

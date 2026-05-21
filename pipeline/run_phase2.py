@@ -50,6 +50,11 @@ def _phase2_graph_gated_loop(
         BranchAwareLayerCuttingClustering,
         KMeansBranchClustering,
     )
+    # Import test harness layer-based clustering for mainline switch
+    try:
+        from test.layer_based_clustering.run_layer_based_codegen import LayerBasedClustering
+    except Exception:
+        LayerBasedClustering = None
     
     print(f"[Phase2][Gate] Executing graph decomposition algorithm: {clustering_algorithm}")
 
@@ -59,13 +64,20 @@ def _phase2_graph_gated_loop(
     # switch back quickly for side-by-side debugging or regression comparison.
     if clustering_algorithm == "kmeans":
         clustering = KMeansBranchClustering(phase1_json, k=2, seed=7, max_batch_size=2)
+        p1_out, p2_out = clustering.generate_optimal_strategy()
+    elif clustering_algorithm == "layer_based_test" and LayerBasedClustering is not None:
+        # Use the test harness LayerBasedClustering implementation and adapt its output
+        clustering = LayerBasedClustering(phase1_json, max_batch_size=2)
+        result = clustering.build_execution_plan()
+        # result contains 'prompt1' and 'prompt2' keys
+        p1_out = result.get("prompt1", {})
+        p2_out = result.get("prompt2", {})
     else:
+        # default: branch-aware layer cutting
         clustering = BranchAwareLayerCuttingClustering(phase1_json)
-
-    # Legacy fallback (kept commented on purpose for quick rollback/testing):
-    # clustering = BranchAwareClustering(phase1_json)
-
-    p1_out, p2_out = clustering.generate_optimal_strategy()
+        # Legacy fallback (kept commented on purpose for quick rollback/testing):
+        # clustering = BranchAwareClustering(phase1_json)
+        p1_out, p2_out = clustering.generate_optimal_strategy()
     
     with open(os.path.join(generated_dir, "phase2_prompt1_output.json"), "w", encoding="utf-8") as f:
         json.dump(p1_out, f, indent=2, ensure_ascii=True)
@@ -100,6 +112,7 @@ def run_phase2_pipeline(
     history_chain,
     stop_before_solver: bool = False,
     clustering_algorithm: str = "branch_layer_cutting",
+    output_root_dir: str = None,
 ):
     """
     New Phase2 graph-gated pipeline.
@@ -111,7 +124,10 @@ def run_phase2_pipeline(
       success, output_g_path, result_img_path, node_summary, used_ids, stdout
     """
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    generated_dir = os.path.join(root_dir, "generated")
+    if output_root_dir:
+        generated_dir = output_root_dir
+    else:
+        generated_dir = os.path.join(root_dir, "generated")
     os.makedirs(generated_dir, exist_ok=True)
 
     node_id = 1

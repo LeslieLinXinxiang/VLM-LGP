@@ -141,11 +141,15 @@ def parse_and_inject(src_g_path, mapping_dict, dst_g_path):
         raise FileNotFoundError(f"Source file not found: {src_g_path}")
     with open(src_g_path, 'r') as f: content = f.read()
     print(f"[Core.Utils] Injecting names into scene...")
+    
+    import re
     sorted_keys = sorted(mapping_dict.keys(), key=len, reverse=True)
     for anon_id in sorted_keys:
         semantic_name = mapping_dict[anon_id]
-        if anon_id in content:
-            content = content.replace(anon_id, semantic_name)
+        # Use word boundaries and negative lookahead for file extensions to avoid corrupting mesh paths
+        pattern = re.compile(rf"\b{re.escape(anon_id)}\b(?!\.(?:obj|stl|g|dae|h5|yml))")
+        content = pattern.sub(semantic_name, content)
+        
     os.makedirs(os.path.dirname(dst_g_path), exist_ok=True)
     with open(dst_g_path, 'w') as f: f.write(content)
     print(f"[Core.Utils] Success. New scene saved to: {dst_g_path}")

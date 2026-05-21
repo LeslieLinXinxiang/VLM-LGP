@@ -1,0 +1,88 @@
+# Trial 03 — cube_n07_s02
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-25 03:50:19
+- **Elapsed**: 187.6s
+- **Image**: `/home/leslie/Projects/VLM_LGP/experiments/inputs/cubeStacking/7cubes/cube_n07_s02.png`
+
+## VLM Raw Output
+
+```json
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "table",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 4
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "object": "Rectangular Prism",
+      "edges": [
+        {
+          "supporter": 5
+        },
+        {
+          "supporter": 6
+        }
+      ]
+    }
+  ]
+}
+```

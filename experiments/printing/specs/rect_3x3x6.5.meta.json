@@ -1,0 +1,26 @@
+{
+  "part_id": "Rect_3x3x6.5",
+  "family": "rect_prism",
+  "dimensions_mm": {
+    "x": 30.0,
+    "y": 30.0,
+    "z": 65.0
+  },
+  "source_model": {
+    "format": "obj",
+    "path": "experiments/printing/models/obj/rect_3x3x6.5.obj",
+    "unit_policy": "mm"
+  },
+  "recommended_print_output": {
+    "format": "stl",
+    "path": "experiments/printing/models/stl/rect_3x3x6.5.stl",
+    "unit_policy": "mm"
+  },
+  "print_preset": {
+    "layer_height_mm": 0.2,
+    "infill_percent": 20,
+    "wall_count": 3,
+    "support": "none"
+  },
+  "status": "draft_ready"
+}

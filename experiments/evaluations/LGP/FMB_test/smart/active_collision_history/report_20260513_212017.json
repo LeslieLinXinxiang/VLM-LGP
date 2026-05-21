@@ -1,0 +1,34 @@
+{
+  "task_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB_test/smart",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1_batch_1.lgp",
+      "action_summary": "pick_touch shape_2_1 table l_gripper | place_straightOn shape_2_1 l_gripper Table_Front",
+      "pair_count": 6,
+      "full_motion_solver_ms": 420,
+      "pairs": [
+        ["base_board", "l_finger1"],
+        ["base_board", "l_finger2"],
+        ["base_board", "l_palm"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_1_batch_2.lgp",
+      "action_summary": "pick_touch shape_2_2 table l_gripper | place_straightOn shape_2_2 l_gripper Table_Back",
+      "pair_count": 6,
+      "full_motion_solver_ms": 4731,
+      "pairs": [
+        ["base_board", "l_finger1"],
+        ["base_board", "l_finger2"],
+        ["base_board", "l_palm"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    }
+  ]
+}

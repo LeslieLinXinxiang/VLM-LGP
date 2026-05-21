@@ -5,6 +5,7 @@ opencv-python-headless>=4.10.0
 # Communication
 pyzmq==27.1.0
 requests==2.32.5
+httpx>=0.25.0
 protobuf>=4.0.0
 
 # VLM APIs (Explicitly from your env)

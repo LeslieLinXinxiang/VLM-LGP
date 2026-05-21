@@ -1,0 +1,21 @@
+{
+  "task_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s002/trial_08_r/lgp_split_smart",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1_batch_1.lgp",
+      "action_summary": "pick_touch shape_2_1 table l_gripper | place_straightOn shape_2_1 l_gripper Table_Center",
+      "pair_count": 7,
+      "full_motion_solver_ms": 697,
+      "pairs": [
+        ["l_finger1", "shape_2_1"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_2_1"],
+        ["l_finger2", "shape_4_2_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_2_1"],
+        ["l_palm", "table"]
+      ]
+    }
+  ]
+}

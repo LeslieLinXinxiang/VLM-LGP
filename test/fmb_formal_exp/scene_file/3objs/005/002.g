@@ -46,7 +46,7 @@ shape_2_2 (Table_Center) {
   logical:{ is_object, is_box }
 }
 
-shape_3_2 (Table_Center) {
+shape_3_2 (Table_Left) {
   Q:"t(0. 0.0 0.0125) d(0 0 0 0)",
   joint:rigid,
   shape:ssBox,

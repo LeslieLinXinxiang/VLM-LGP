@@ -227,9 +227,14 @@ def build_phase0_assets_from_named_scene(
             }
         )
 
+    # Use a temporary prefix to avoid collision during multiple replacement passes
+    TEMP_PREFIX = "TEMP_ANON_ID_"
     for logical_id, anon_id in sorted(replace_pairs, key=lambda p: len(p[0]), reverse=True):
-        pattern = re.compile(rf"\b{re.escape(logical_id)}\b")
-        renamed_text = pattern.sub(anon_id, renamed_text)
+        pattern = re.compile(rf"\b{re.escape(logical_id)}\b(?!\.(?:obj|stl|g|dae))")
+        renamed_text = pattern.sub(TEMP_PREFIX + anon_id, renamed_text)
+
+    # Final pass to remove temporary prefix
+    renamed_text = renamed_text.replace(TEMP_PREFIX, "")
 
     os.makedirs(os.path.dirname(specs_output_path), exist_ok=True)
     with open(specs_output_path, "w") as f:

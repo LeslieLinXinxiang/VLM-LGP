@@ -1,0 +1,45 @@
+# Trial 09 — cube_n08_s04
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-28 17:48:30
+- **Elapsed**: 23.9s
+- **Retries**: 0
+- **Image**: `/experiments/inputs/cubeStacking/8cubes/cube_n08_s04.png`
+
+## VLM Raw Output
+
+## REASONING_DRAFT
+- Total Count: 8 objects (excluding table).
+- Layer 1 (Base):
+  - Object 1: Width matches `Long RectPrism`. Left/Center/Right hit -> table. Supporter -> table. (Position Policy: `table_center` as it is the only block on the table).
+- Layer 2:
+  - Object 2: Width matches `Cube`. Left hits -> 1Long RectPrism, Center hits -> 1Long RectPrism, Right hits -> 1Long RectPrism. Supporter -> 1Long RectPrism. (Position Policy: `1Long RectPrism_left` because it has multiple children).
+  - Object 3: Width matches `Cube`. Left hits -> 1Long RectPrism, Center hits -> 1Long RectPrism, Right hits -> 1Long RectPrism. Supporter -> 1Long RectPrism. (Position Policy: `1Long RectPrism_center`).
+  - Object 4: Width matches `Cube`. Left hits -> 1Long RectPrism, Center hits -> 1Long RectPrism, Right hits -> 1Long RectPrism. Supporter -> 1Long RectPrism. (Position Policy: `1Long RectPrism_right`).
+- Layer 3:
+  - Object 5: Width matches `Long RectPrism`. Left hits -> 2Cube, Center hits -> 3Cube, Right hits -> 4Cube. Supporter -> 2Cube, 3Cube, 4Cube. (Position Policy: Suffixes forbidden for multi-supporter blocks).
+- Layer 4:
+  - Object 6: Width matches `Cube`. Left hits -> 5Long RectPrism, Center hits -> 5Long RectPrism, Right hits -> 5Long RectPrism. Supporter -> 5Long RectPrism. (Position Policy: `5Long RectPrism_left` because it has multiple children).
+  - Object 7: Width matches `Cube`. Left hits -> 5Long RectPrism, Center hits -> 5Long RectPrism, Right hits -> 5Long RectPrism. Supporter -> 5Long RectPrism. (Position Policy: `5Long RectPrism_center`).
+  - Object 8: Width matches `Cube`. Left hits -> 5Long RectPrism, Center hits -> 5Long RectPrism, Right hits -> 5Long RectPrism. Supporter -> 5Long RectPrism. (Position Policy: `5Long RectPrism_right`).
+
+## FINAL_PDDL_START
+(:action-sequence
+  (pick 1Long RectPrism)
+  (place 1Long RectPrism table_center)
+  (pick 2Cube)
+  (place 2Cube 1Long RectPrism_left)
+  (pick 3Cube)
+  (place 3Cube 1Long RectPrism_center)
+  (pick 4Cube)
+  (place 4Cube 1Long RectPrism_right)
+  (pick 5Long RectPrism)
+  (place 5Long RectPrism 2Cube 3Cube 4Cube)
+  (pick 6Cube)
+  (place 6Cube 5Long RectPrism_left)
+  (pick 7Cube)
+  (place 7Cube 5Long RectPrism_center)
+  (pick 8Cube)
+  (place 8Cube 5Long RectPrism_right)
+)
+## FINAL_PDDL_END

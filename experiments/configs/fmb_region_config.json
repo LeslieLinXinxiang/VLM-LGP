@@ -1,0 +1,121 @@
+{
+  "table": {
+    "q": "t(0 0 .6)",
+    "size": [2.0, 4.0, 0.1, 0.02]
+  },
+  "robot": {
+    "base_edit_q": "t(0 0 0.05)",
+    "joint_defaults": {
+      "l_panda_joint1": 0.0,
+      "l_panda_joint2": -1.5,
+      "l_panda_joint3": 0.0,
+      "l_panda_joint4": -2.5,
+      "l_panda_joint5": 0.0,
+      "l_panda_joint6": 1.5,
+      "l_panda_joint7": 0.0,
+      "l_panda_finger_joint1": 0.04,
+      "l_panda_finger_joint2": 0.04
+    }
+  },
+  "regions": {
+    "init_regions": [
+      {
+        "name": "front_left",
+        "x": [-0.45, -0.05],
+        "y": [0.15, 0.45]
+      },
+      {
+        "name": "front_right",
+        "x": [-0.45, -0.05],
+        "y": [-0.45, -0.15]
+      },
+      {
+        "name": "side_left",
+        "x": [0.05, 0.40],
+        "y": [0.20, 0.45]
+      },
+      {
+        "name": "side_right",
+        "x": [0.05, 0.40],
+        "y": [-0.45, -0.20]
+      }
+    ]
+  },
+  "spawn": {
+    "min_center_distance": 0.12,
+    "yaw_min_deg": -180.0,
+    "yaw_max_deg": 180.0,
+    "max_sampling_trials": 8000
+  },
+  "base_board": {
+    "q": "t(0.45 0.00 0.075) d(90 1 0 0)"
+  },
+  "slots": {
+    "Table_Left":   "t(0.000 0.000 0.080) d(-90 1 0 0)",
+    "Table_Right":  "t(0.000 0.000 -0.080) d(-90 1 0 0)",
+    "Table_Front":  "t(0.059 0.000 0.000) d(-90 1 0 0) d(-90 0 0 1)",
+    "Table_Back":   "t(-0.061 0.000 0.000) d(-90 1 0 0) d(-90 0 0 1)",
+    "Table_Center": "t(0.000 0.000 0.000) d(-90 1 0 0) d(-90 0 0 1)"
+  },
+  "object_catalog": {
+    "shape_1": {
+      "type": "complex",
+      "spawn_z": 0.0625,
+      "proxy_shape": "ssBox",
+      "proxy_size": [0.025, 0.025, 0.025, 0.0],
+      "proxy_color": "[0.2 0.2 1.0]",
+      "proxy_contact": 0,
+      "proxy_logical": "is_object, is_box",
+      "mesh_q": "t(0 0.001 0.0275) d(90 1 0 0)",
+      "mesh_color": "[1.0 0.2 0.2 0.5]",
+      "mesh_contact": 1,
+      "mesh_mass": 0.1,
+      "mesh_logical": "is_object, is_box",
+      "handle_q": "t(-0.045 0 0.045) d(0 0 0 0)",
+      "handle_size": [0.03],
+      "handle_color": "[1 1 0]"
+    },
+    "shape_2": {
+      "type": "simple",
+      "spawn_z": 0.063,
+      "intrinsic_d": "d(-90 0 0 1)",
+      "color": "[0.2 1.0 0.2 1]",
+      "mass": 0.1,
+      "logical_tags": "is_object, is_box"
+    },
+    "shape_3": {
+      "type": "complex",
+      "spawn_z": 0.0625,
+      "proxy_shape": "ssBox",
+      "proxy_size": [0.025, 0.025, 0.025, 0.005],
+      "proxy_color": "[0.2 0.2 0.9]",
+      "proxy_contact": 0,
+      "proxy_logical": "is_object, is_box",
+      "mesh_q": "t(0 0.001 0.0325) d(90 1 0 0) d(90 0 1 0)",
+      "mesh_color": "[0.2 0.8 1.0 1]",
+      "mesh_contact": 1,
+      "mesh_mass": 0.1,
+      "mesh_logical": "is_object, is_box",
+      "handle_q": "t(0 0 0.065) d(0 0 0 0)",
+      "handle_size": [0.03],
+      "handle_color": "[1 1 0]"
+    },
+    "shape_4": {
+      "type": "complex",
+      "spawn_z": 0.0625,
+      "proxy_shape": "ssBox",
+      "proxy_size": [0.025, 0.025, 0.025, 0.0],
+      "proxy_color": "[1.0 0.5 0.2]",
+      "proxy_contact": 0,
+      "proxy_logical": "is_object",
+      "mesh_q": "t(0 0 0.0275) d(90 1 0 0) d(90 0 1 0)",
+      "mesh_color": "[1.0 0.5 0.2 1]",
+      "mesh_contact": 1,
+      "mesh_mass": 0.1,
+      "mesh_logical": "is_object, is_box",
+      "handle_q": "t(0 0 0.05) d(0 0 0 0)",
+      "handle_size": [0.03],
+      "handle_color": "[1 1 0]"
+    }
+  }
+}

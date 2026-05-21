@@ -1,0 +1,50 @@
+{
+  "scenario_id": "cube4_s09",
+  "mode": "nr",
+  "seed": 734,
+  "image_path": "experiments/inputs/cubeStacking/4cubes/cube_n04_s01.png",
+  "counts": {
+    "cube": 4
+  },
+  "object_total": 4,
+  "scene_path": "experiments/scenes/cube4/without_redundancy/cube4_s09_nr.g",
+  "constraints": {
+    "pass": true,
+    "issues": []
+  },
+  "objects": [
+    {
+      "object_type": "cube",
+      "x": 0.45208243432499945,
+      "y": 0.2051773201429714,
+      "yaw_deg": 63.06561856633519,
+      "spawn_region": "right_init",
+      "anon_id": "obj_01"
+    },
+    {
+      "object_type": "cube",
+      "x": 0.37584759390221534,
+      "y": 0.1560772604142288,
+      "yaw_deg": -158.102248438055,
+      "spawn_region": "right_init",
+      "anon_id": "obj_02"
+    },
+    {
+      "object_type": "cube",
+      "x": -0.4874629552949906,
+      "y": -0.226370104790682,
+      "yaw_deg": 166.47337635147488,
+      "spawn_region": "left_init",
+      "anon_id": "obj_03"
+    },
+    {
+      "object_type": "cube",
+      "x": -0.2856099903113855,
+      "y": 0.028975072478400532,
+      "yaw_deg": 81.43423843512227,
+      "spawn_region": "left_init",
+      "anon_id": "obj_04"
+    }
+  ],
+  "timestamp_utc": "2026-04-24T06:05:59.565600+00:00"
+}

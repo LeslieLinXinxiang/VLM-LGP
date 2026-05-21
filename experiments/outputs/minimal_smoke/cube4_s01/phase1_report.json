@@ -1,0 +1,22 @@
+{
+  "image": "experiments/inputs/cubeStacking/4cubes/cube_n04_s01.png",
+  "prompt": "prompts/phase1_graph_planner_length_rank_test.md",
+  "checks": {
+    "has_objects_key": true,
+    "object_count": 5,
+    "has_table_id_0": true,
+    "all_non_table_have_edges": true,
+    "all_supporters_exist_and_lower": true,
+    "table_supported_count": 3,
+    "multi_support_nodes": 0,
+    "no_position_in_multi_support_edges": true,
+    "inferred_layers_ok": true
+  },
+  "layers": {
+    "0": 0,
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 2
+  }
+}

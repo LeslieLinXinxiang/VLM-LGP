@@ -1,0 +1,7 @@
+{
+  "scenario_id": "6cubes_s05",
+  "image_path": "experiments/inputs/cubeStacking/6cubes/cube_n6c_s05.png",
+  "counts": {
+    "rectprism": 6
+  }
+}

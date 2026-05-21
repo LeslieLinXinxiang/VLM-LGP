@@ -1,0 +1,32 @@
+# Trial 03 — cube_n04_s02
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-28 00:50:09
+- **Elapsed**: 296.7s
+- **Retries**: 0
+- **Image**: `/experiments/inputs/cubeStacking/4cubes/cube_n04_s02.png`
+
+## VLM Raw Output
+
+## REASONING_DRAFT
+- Total Count: 4 objects (excluding table).
+- Layer 1 (Base):
+  - Object 1: Width matches `Long RectPrism`. Left/Center/Right hit -> table. Supporter -> table.
+- Layer 2:
+  - Object 2: Width matches `RectPrism` (rotated vertical). Left/Center/Right hit -> 1Long RectPrism. Supporter -> 1Long RectPrism.
+  - Object 3: Width matches `RectPrism` (rotated vertical). Left/Center/Right hit -> 1Long RectPrism. Supporter -> 1Long RectPrism.
+- Layer 3:
+  - Object 4: Width matches `Long RectPrism`. Left hits -> 2RectPrism, Center hits -> gap (spanning), Right hits -> 3RectPrism. Supporter -> 2RectPrism, 3RectPrism.
+
+## FINAL_PDDL_START
+(:action-sequence
+  (pick 1Long RectPrism)
+  (place 1Long RectPrism table_center)
+  (pick 2RectPrism)
+  (place 2RectPrism 1Long RectPrism_left)
+  (pick 3RectPrism)
+  (place 3RectPrism 1Long RectPrism_right)
+  (pick 4Long RectPrism)
+  (place 4Long RectPrism 2RectPrism 3RectPrism)
+)
+## FINAL_PDDL_END

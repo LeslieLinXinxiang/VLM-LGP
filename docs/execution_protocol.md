@@ -69,6 +69,19 @@ When asked to test Phase1 input/output only (prompt + image -> JSON), execute th
 	- Edge `source` is an existing vertex id.
 	- Edge `target` is existing vertex id or `table`.
 
+## 10.1 Phase1 Length-Rank Test Prompt Procedure (Cube-Stack)
+When asked to validate the robust test prompt variant for cube-stacking scenes, use this procedure:
+1. Use `prompts/phase1_graph_planner_length_rank_test.md` as prompt input.
+2. Use explicit image path for the target case under test.
+3. Run one direct VLM call via `core.vlm.VLMClient.generate_assembly_plan(...)`.
+4. Save output to a dedicated artifact (for example `generated/phase1_target_graph_length_rank_test.json`).
+5. Validate output contract:
+	- Top-level key is `objects` (table + object list contract).
+	- Allowed object labels are exactly: `Triangular Prism`, `Cube`, `Rectangular Prism`, `Long Rectangular Prism`, `table`.
+	- Real object ids are unique integers and supporter ids exist.
+	- Every non-table support edge must satisfy x-overlap and y-near-contact semantics from the prompt.
+	- Multi-support objects must not include `position` in edges.
+
 ## 11. DDE Optional Extension Invocation Protocol
 The DDE protocol remains the single command authority. Extension skills are optional and subordinate helpers.
 

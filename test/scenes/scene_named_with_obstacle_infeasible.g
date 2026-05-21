@@ -89,15 +89,13 @@ Base_Top    (table) { Q:"t( 0.00 -0.03 .051)", shape:ssBox, size:[.025 .025 .002
 Base_Bottom (table) { Q:"t( 0.00  0.13 .051)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
-# Placement Patch Slots — Left / Right on the Table (for layer-1 objects)
-#
-# Table surface at Z=0.65 (table Q:t(0 0 .6) + half-height 0.05).
-# Ghost slots at Z=0.651 (1mm above table surface), contact:0.
-# Assembly zone centered at (0, 0.05). Left = -X, Right = +X, 8cm apart.
-# Naming: Table_Left, Table_Right  (consistent with Rect_N_Left/Right)
+# Fixed placement slots on base_board
 # -----------------------------------------------------------
-Table_Left  (table) { Q:"t(-0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
-Table_Right (table) { Q:"t( 0.05  0.05 .051)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Left   (base_board) { Q:"t( 0.000 0.000  0.080) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Right  (base_board) { Q:"t(0.000 0.000 -0.080) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Front  (base_board) { Q:"t(0.059 0.000 0.000) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Back   (base_board) { Q:"t(-0.061 0.000 0.000) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Center (base_board) { Q:"t(00 0.000 0.000) d(-90 1 0 0) ", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Left / Right on each Rect

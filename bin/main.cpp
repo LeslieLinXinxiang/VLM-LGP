@@ -403,14 +403,39 @@ void writeCleanKinematicState(const rai::Configuration&, const rai::Configuratio
 
 int main(int argc, char** argv) {
     rai::initCmdLine(argc, argv);
-    // 我们期望：exe <task_dir> <input_g> [master_home_g]
+    // 我们期望：exe <task_dir> <input_g> [master_home_g] [--collision-policy=follow_lgp|active_runtime]
     if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " <task_dir> <input_g_file> [master_home_g]" << std::endl;
+        std::cerr << "Usage: " << argv[0]
+                  << " <task_dir> <input_g_file> [master_home_g] [--collision-policy=follow_lgp|active_runtime]"
+                  << std::endl;
         return 1;
     }
     
     std::string task_directory = argv[1];
     std::string input_g_file = argv[2];
+    std::string home_source = input_g_file;
+    std::string collision_policy = "follow_lgp";
+
+    for(int i = 3; i < argc; ++i) {
+        std::string arg = argv[i];
+        const std::string policy_prefix = "--collision-policy=";
+        if(arg.rfind(policy_prefix, 0) == 0) {
+            collision_policy = arg.substr(policy_prefix.size());
+            continue;
+        }
+        if(!arg.empty() && arg[0] != '-') {
+            home_source = arg;
+        }
+    }
+
+    if(collision_policy != "follow_lgp" && collision_policy != "active_runtime") {
+        std::cerr << "Invalid --collision-policy: " << collision_policy
+                  << " (expected follow_lgp or active_runtime)" << std::endl;
+        return 1;
+    }
+
+    const bool use_active_runtime = (collision_policy == "active_runtime");
+    std::cout << ">>> [System] Collision policy: " << collision_policy << std::endl;
     
     // [Marc's Fix: Q6] 确定真正的全局 Home
     arr q_home_global;
@@ -418,7 +443,6 @@ int main(int argc, char** argv) {
         rai::Configuration C_home;
         // 如果提供了 master_home_g (比如 raw_assets 里的那个)，就用它；
         // 否则回退到当前的 input_g_file (仅对 Node 1 有效)
-        std::string home_source = (argc == 4) ? argv[3] : input_g_file;
         C_home.addFile(home_source.c_str());
         q_home_global = C_home.getJointState();
         std::cout << ">>> [System] Global Home captured from: " << home_source << std::endl;
@@ -456,21 +480,31 @@ int main(int argc, char** argv) {
     if (!lgp_files.empty()) {
         for (const auto& lgp_path : lgp_files) {
             std::string current_lgp_path = lgp_path.string();
+            std::string lgp_filename = lgp_path.filename().string();
+            
             try {
                 rai::Configuration C_initial_step;
                 C_initial_step.addFile(current_state_file.c_str());
+                
                 auto tamp = rai::default_LGP_TAMP_Abstraction(C_initial_step, current_lgp_path.c_str());
+                
+                // [DIAGNOSTIC] Print subtask filename
+                std::cout << ">>> [System] Subtask: " << lgp_filename << std::endl;
+
                 rai::LGP_Tool lgp(C_initial_step, *tamp);
                 lgp.solve();
 
                 auto ways = lgp.getSolvedKOMO();
                 StringAA solved_plan = lgp.getSolvedPlan();
-                std::vector<std::pair<std::string, std::string>> active_pairs =
-                    extractActivePairsFromWaypoints(ways, active_radius_m);
-                active_pairs = keepPairsPresentInConfig(active_pairs, C_initial_step);
+                std::vector<std::pair<std::string, std::string>> active_pairs;
 
-                tamp->explicitCollisions = toStringAFlatPairs(active_pairs);
-                tamp->useBroadCollisions = false;
+                if(use_active_runtime) {
+                    active_pairs = extractActivePairsFromWaypoints(ways, active_radius_m);
+                    active_pairs = keepPairsPresentInConfig(active_pairs, C_initial_step);
+
+                    tamp->explicitCollisions = toStringAFlatPairs(active_pairs);
+                    tamp->useBroadCollisions = false;
+                }
 
                 ActiveCollisionSummary summary;
                 summary.lgp_file = lgp_path.filename().string();
@@ -478,35 +512,41 @@ int main(int argc, char** argv) {
                 summary.radius_m = active_radius_m;
                 summary.pairs = active_pairs;
 
-                std::cout << "\n[ACTIVE_COLL] subtask: " << summary.lgp_file
-                          << " | radius=" << active_radius_m << "m"
-                          << " | active_pairs=" << summary.pairs.size() << std::endl;
+                if(use_active_runtime) {
+                    std::cout << "\n[ACTIVE_COLL] subtask: " << summary.lgp_file
+                              << " | radius=" << active_radius_m << "m"
+                              << " | active_pairs=" << summary.pairs.size() << std::endl;
 
-                active_pairs = keepPairsPresentInConfig(active_pairs, C_initial_step);
-                tamp->explicitCollisions = toStringAFlatPairs(active_pairs);
-                tamp->useBroadCollisions = false;
+                    active_pairs = keepPairsPresentInConfig(active_pairs, C_initial_step);
+                    tamp->explicitCollisions = toStringAFlatPairs(active_pairs);
+                    tamp->useBroadCollisions = false;
+                }
 
                 auto t0 = std::chrono::steady_clock::now();
+                // [REVERT] Re-enabling the full motion solver as 'ways' was only a kinematic seed.
+                // This is necessary for LGP to actually perform collision-free path search.
                 PTR<KOMO> solved_komo = lgp.get_fullMotionProblem(true);
                 if(solved_komo){
                     auto ret = rai::NLP_Solver(solved_komo->nlp(), 0).solve();
                     (void)ret;
-                    auto t1 = std::chrono::steady_clock::now();
-                    summary.full_motion_solver_ms =
-                        std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
                 }
+                auto t1 = std::chrono::steady_clock::now();
+                summary.full_motion_solver_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
 
                 if(solved_komo){
-                    summary.pairs = active_pairs;
-                    active_summaries.push_back(summary);
+                    if(use_active_runtime) {
+                        summary.pairs = active_pairs;
+                        active_summaries.push_back(summary);
 
-                    // Incremental persistence: write partial report after each finished subtask.
-                    writeActiveCollisionReport(report_file, task_directory, active_radius_m, active_summaries);
-                    std::cout << "[ACTIVE_COLL] Partial report updated: " << report_file
-                              << " | completed=" << active_summaries.size() << std::endl;
+                        // Incremental persistence: write partial report after each finished subtask.
+                        writeActiveCollisionReport(report_file, task_directory, active_radius_m, active_summaries);
+                        std::cout << "[ACTIVE_COLL] Partial report updated: " << report_file
+                                  << " | completed=" << active_summaries.size() << std::endl;
+                    }
 
                     if (!shared_viewer) shared_viewer = solved_komo->get_viewer();
                     else solved_komo->set_viewer(shared_viewer);
+                    
                     solved_komo->view_play(false, current_lgp_path.c_str(), 1.0);
                     resampleAndPrintTrajectory(solved_komo.get(), 1.0, 100.0);
                     
@@ -522,9 +562,11 @@ int main(int argc, char** argv) {
             }
         }
 
-        printActiveCollisionTable(active_summaries);
-        writeActiveCollisionReport(report_file, task_directory, active_radius_m, active_summaries);
-        std::cout << "[ACTIVE_COLL] Report written to: " << report_file << std::endl;
+        if(use_active_runtime) {
+            printActiveCollisionTable(active_summaries);
+            writeActiveCollisionReport(report_file, task_directory, active_radius_m, active_summaries);
+            std::cout << "[ACTIVE_COLL] Report written to: " << report_file << std::endl;
+        }
     }
 
 // ==============================================================================

@@ -18,6 +18,11 @@ try:
         split_infeasible_objects_from_reachability,
         split_infeasible_objects_from_reachability_field,
     )
+
+    # [NEW] Import manipulability tool
+    sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "test", "manipulability"))
+    from urdf_static_manipulability import compute_static_manipulability_report
+
     print(">>> [DEBUG] Imports successful.")
 except ImportError as e:
     print(f">>> [FATAL ERROR] Import failed: {e}")
@@ -192,11 +197,67 @@ def execute_phase0(
                 )
             _save_layout(infeasible_report, infeasible_json)
 
+            # [NEW] Physics-Aware Re-ordering (Manipulability + Reachability)
+            print("[Step 4] Re-ordering inventory based on physical scores...")
+            urdf_path = os.path.join(root_dir, "simulation/mujoco_ros2_control_examples/panda_resources/panda_description/urdf/panda.urdf")
+            
+            try:
+                # 1. Compute manipulability
+                manip_report = compute_static_manipulability_report(
+                    layout_path=layout_json,
+                    infeasible_path=infeasible_json,
+                    g_path=unnamed_g,
+                    urdf_path=urdf_path
+                )
+                
+                # 2. Merge scores and re-sort layout_list
+                # We want to sort primarily by (is_feasible, combined_score DESC)
+                # First, create a lookup for reachability scores from the report
+                reach_map = {row["logical_id"]: row.get("reachability_score", 0.0) for row in score_report.get("objects", [])}
+                manip_map = {row["logical_id"]: row.get("manipulability_score", 0.0) for row in manip_report.get("objects", [])}
+                
+                # Re-sort layout_list
+                def physics_score_key(item):
+                    lid = item["logical_id"]
+                    r_score = reach_map.get(lid, 0.0) or 0.0
+                    m_score = manip_map.get(lid, 0.0) or 0.0
+                    # Combined score (geometric mean or simple product)
+                    combined = r_score * m_score
+                    # We want high scores first. 
+                    # Also group by object type to keep cube_N, rect_N grouping
+                    return (item["object_type"], -combined, lid)
+
+                layout_list.sort(key=physics_score_key)
+                
+                # 3. Re-assign logical_ids based on new order
+                type_counters = {}
+                prefix_map = {"cylinder": "cyl", "cube": "cube", "rectprism": "rectprism", "longrect": "longrect", "triprism": "triprism", "mesh": "mesh"}
+                
+                new_mapping = {}
+                for item in layout_list:
+                    ot = item["object_type"]
+                    prefix = prefix_map.get(ot, ot)
+                    type_counters[prefix] = type_counters.get(prefix, 0) + 1
+                    new_id = f"{prefix}_{type_counters[prefix]}"
+                    
+                    # Update mapping from anon_id to this new physical-aware name
+                    new_mapping[item["anon_id"]] = new_id
+                    item["logical_id"] = new_id
+                
+                # 4. Final Injection with the new physics-aware mapping
+                print(f"[Step 5] Final Injection with physics-aware names: {len(new_mapping)} objects")
+                parse_and_inject(unnamed_g, new_mapping, scene_named_g)
+                _save_layout(layout_list, layout_json)
+                
+            except Exception as e:
+                print(f"[WARNING] Physics-aware re-ordering failed, falling back to distance order: {e}")
+
             print(f">>> PHASE 0 COMPLETE. Layout: {layout_json}")
             print(f">>> PHASE 0 COMPLETE. Infeasible: {infeasible_json}")
             print(f">>> PHASE 0 COMPLETE. Scene Ready: {scene_named_g}")
             return {
                 "success": True,
+                "layout": layout_list,
                 "layout_path": layout_json,
                 "infeasible_path": infeasible_json,
                 "scene_named_path": scene_named_g,

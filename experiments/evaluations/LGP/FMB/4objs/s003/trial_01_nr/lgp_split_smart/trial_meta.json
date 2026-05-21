@@ -1,0 +1,62 @@
+{
+  "tag": "4objs/s003/trial_01_nr",
+  "vlm_gt": {
+    "objects": [
+      {
+        "edges": [],
+        "id": 0,
+        "object": "base"
+      },
+      {
+        "color": "green",
+        "edges": [
+          {
+            "supporter": 0
+          }
+        ],
+        "id": 1,
+        "object": "Shape 2"
+      },
+      {
+        "color": "cyan",
+        "edges": [
+          {
+            "supporter": 1
+          }
+        ],
+        "id": 2,
+        "object": "Shape 4"
+      },
+      {
+        "color": "blue",
+        "edges": [
+          {
+            "position": "left",
+            "supporter": 1
+          }
+        ],
+        "id": 3,
+        "object": "Shape 4"
+      },
+      {
+        "color": "yellow",
+        "edges": [
+          {
+            "position": "right",
+            "supporter": 1
+          }
+        ],
+        "id": 4,
+        "object": "Shape 4"
+      }
+    ]
+  },
+  "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_01_nr.g",
+  "mode": "lgp_split_smart",
+  "success": false,
+  "runtime_s": 61.68,
+  "exit_code": -9,
+  "timeout": false,
+  "memory_exceeded": true,
+  "memory_peak_mb": 16049.54
+}

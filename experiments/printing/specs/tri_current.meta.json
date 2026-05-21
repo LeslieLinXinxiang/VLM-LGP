@@ -1,0 +1,26 @@
+{
+  "part_id": "Tri_current",
+  "family": "triangular_prism",
+  "dimensions_mm": {
+    "x_base_width": 30.0,
+    "y_depth": 30.0,
+    "z_height": 30.0
+  },
+  "source_model": {
+    "format": "obj",
+    "path": "experiments/printing/models/obj/tri_current_mm.obj",
+    "unit_policy": "mm"
+  },
+  "recommended_print_output": {
+    "format": "stl",
+    "path": "experiments/printing/models/stl/tri_current.stl",
+    "unit_policy": "mm"
+  },
+  "print_preset": {
+    "layer_height_mm": 0.2,
+    "infill_percent": 20,
+    "wall_count": 3,
+    "support": "none"
+  },
+  "status": "draft_ready"
+}

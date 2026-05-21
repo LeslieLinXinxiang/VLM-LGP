@@ -13,7 +13,7 @@ _BASE_PATTERN = re.compile(
     r"Edit\s+l_panda_base\b[^\n]*\{\s*Q:\s*\"[^\"]*t\(([^)]+)\)",
     re.IGNORECASE,
 )
-_OBJECT_BLOCK_PATTERN = re.compile(r"(?m)^\s*(obj_\d+)\s*\([^)]*\)\s*\{([^}]*)\}")
+_OBJECT_BLOCK_PATTERN = re.compile(r"(?m)^\s*((?:obj|shape)_\d+(?:_\d+)?)\s*\([^)]*\)\s*\{([^}]*)\}")
 _TRANSLATION_PATTERN = re.compile(r"Q\s*:\s*\"[^\"]*t\(([^)]+)\)", re.IGNORECASE)
 _SHAPE_PATTERN = re.compile(r"shape\s*:\s*([A-Za-z_][\w]*)", re.IGNORECASE)
 _SIZE_PATTERN = re.compile(r"size\s*:\s*\[([^\]]+)\]", re.IGNORECASE)
@@ -78,11 +78,19 @@ def _classify_object_type(shape: str, logical_id_hint: str, size_signature: List
             x, y, z = size_signature[0], size_signature[1], size_signature[2]
             if _is_near(x, y) and _is_near(y, z):
                 return "cube"
+            if max(x, y) > 0.08:  # 阈值：长度大于 8cm 判定为长方体
+                return "longrect"
         return "rectprism"
 
     if shape == "mesh":
         mesh_l = (mesh_path or "").lower()
         lid_l = (logical_id_hint or "").lower()
+        
+        # FMB shape pattern: shape_N_M
+        m = re.search(r"shape_(\d+)", lid_l)
+        if m:
+            return f"shape_{m.group(1)}"
+            
         if "tri" in mesh_l or "prism" in mesh_l or "tri" in lid_l:
             return "triprism"
         return "mesh"
@@ -154,12 +162,16 @@ def build_phase0_layout_from_unnamed_g(unnamed_g_path: str) -> List[Dict]:
         "cylinder": [],
         "cube": [],
         "rectprism": [],
+        "longrect": [],
         "triprism": [],
         "mesh": [],
     }
 
     for obj in objects:
-        grouped.setdefault(obj["object_type"], []).append(obj)
+        ot = obj["object_type"]
+        if ot not in grouped:
+            grouped[ot] = []
+        grouped[ot].append(obj)
 
     prefix_map = {
         "cylinder": "cyl",

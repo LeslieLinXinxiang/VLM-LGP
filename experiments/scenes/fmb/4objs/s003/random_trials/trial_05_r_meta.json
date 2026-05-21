@@ -1,0 +1,77 @@
+{
+  "scenario_id": "trial_05",
+  "mode": "r",
+  "seed": 10948,
+  "counts": {
+    "shape_2": 2,
+    "shape_4": 6
+  },
+  "object_total": 8,
+  "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_05_r.g",
+  "objects": [
+    {
+      "anon_id": "shape_2_1",
+      "object_type": "shape_2",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_1.obj",
+      "x": -0.37412424509581876,
+      "y": 0.4450412474754757,
+      "yaw_deg": 29.4720110767077
+    },
+    {
+      "anon_id": "shape_2_2",
+      "object_type": "shape_2",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_2.obj",
+      "x": -0.21983655541848296,
+      "y": -0.15297773368049472,
+      "yaw_deg": 111.61495507494197
+    },
+    {
+      "anon_id": "shape_4_1",
+      "object_type": "shape_4",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_1.obj",
+      "x": -0.12897688479978153,
+      "y": -0.33789442611101567,
+      "yaw_deg": 48.81141630416204
+    },
+    {
+      "anon_id": "shape_4_2",
+      "object_type": "shape_4",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_2.obj",
+      "x": -0.4185771233501002,
+      "y": -0.17939480309820494,
+      "yaw_deg": 112.10676318850483
+    },
+    {
+      "anon_id": "shape_4_3",
+      "object_type": "shape_4",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_3.obj",
+      "x": 0.061122121563896056,
+      "y": 0.24194056449651344,
+      "yaw_deg": 80.31911903141008
+    },
+    {
+      "anon_id": "shape_4_4",
+      "object_type": "shape_4",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_4.obj",
+      "x": 0.06385427423334133,
+      "y": -0.2578080907790945,
+      "yaw_deg": 39.385794310312434
+    },
+    {
+      "anon_id": "shape_4_5",
+      "object_type": "shape_4",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_5.obj",
+      "x": 0.23673226444707585,
+      "y": 0.37618225090490565,
+      "yaw_deg": 163.70477613520012
+    },
+    {
+      "anon_id": "shape_4_6",
+      "object_type": "shape_4",
+      "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_6.obj",
+      "x": -0.0750563835562128,
+      "y": 0.3679148013258807,
+      "yaw_deg": 138.91459280091175
+    }
+  ]
+}

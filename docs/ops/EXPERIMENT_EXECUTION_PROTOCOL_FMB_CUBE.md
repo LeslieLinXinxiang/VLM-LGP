@@ -39,6 +39,13 @@ Mandatory freeze checklist:
 
 No large-scale run is allowed before this gate is complete.
 
+## 3.2 Current Status Milestones
+
+- 2026-04-20: Cube input image design freeze completed (`n=4..8`, 5 variants each, single-image protocol).
+- 2026-04-22: FMB input image design freeze completed for current experiment cycle.
+- 2026-04-22: Input freeze gate marked ready for formal comparative execution.
+- 2026-04-23 (planned): Start formal experiment design/execution cycle (manifest finalize -> batch run -> log validation -> aggregation).
+
 ## 4. Experiment Matrix
 
 Dimensions:

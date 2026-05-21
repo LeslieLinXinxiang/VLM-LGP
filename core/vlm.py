@@ -28,7 +28,7 @@ load_dotenv(os.path.join(_ROOT, ".env"), override=False)
 VLM_BACKEND = os.getenv("VLM_BACKEND", "qwen")
 
 QWEN_API_KEY = os.getenv("QWEN_API_KEY", "")
-QWEN_MODEL   = os.getenv("QWEN_MODEL_NAME", "qwen3.5-flash")
+QWEN_MODEL   = os.getenv("QWEN_MODEL_NAME", "qwen3.6-plus")
 QWEN_PROXY   = os.getenv("QWEN_PROXY_URL") or None
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
@@ -42,8 +42,8 @@ PROXY_URL  = QWEN_PROXY     if VLM_BACKEND == "qwen" else GEMINI_PROXY
 # ============================================================================
 
 # ============================================================================
-VLM_TEMPERATURE = 0.0
-VLM_TOP_P = 0.35
+VLM_TEMPERATURE = 0.85
+VLM_TOP_P = 0.8
 VLM_PRINT_RAW_OUTPUT = True
 VLM_SAVE_RAW_OUTPUT = False
 VLM_RAW_OUTPUT_PATH = "generated/phase1_raw_output.txt"
@@ -134,7 +134,7 @@ class VLMClient:
                     "max_tokens": 65536,
                 }
                 headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-                response = self.http_client.post(QWEN_URL, json=payload, headers=headers, timeout=120)
+                response = self.http_client.post(QWEN_URL, json=payload, headers=headers, timeout=400)
                 response.raise_for_status()
 
                 choices = response.json().get("choices", [])
@@ -166,11 +166,14 @@ class VLMClient:
             except httpx.HTTPStatusError as e:
                 code = e.response.status_code if e.response is not None else "?"
                 print(f"\n[VLM] Qwen API Error: HTTP {code} - {(e.response.text if e.response else '')[:200]}")
-                time.sleep(2)
+                time.sleep(5)
+            except (httpx.TimeoutException, httpx.NetworkError) as e:
+                print(f"\n[VLM] Qwen API Network/Timeout Error: {e}. Retrying...")
+                time.sleep(10)
             except Exception as e:
-                print(f"\n[VLM] Qwen API Error: {e}")
-                time.sleep(2)
-        raise RuntimeError("VLM call failed.")
+                print(f"\n[VLM] Qwen API Unknown Error: {e}")
+                time.sleep(5)
+        raise RuntimeError(f"VLM call failed after {self.model} retries.")
 
     def _call_gemini_with_retry(self, prompt_content, is_json_output=True):
         """Call Gemini API with retry logic"""
@@ -219,7 +222,9 @@ class VLMClient:
                 else:
                     return full_text
             except Exception as e:
-                print(f"\n[VLM] API Error: {e}")
+                import traceback as _tb
+                print(f"\n[VLM] API Error: {type(e).__name__}: {e}")
+                print(_tb.format_exc())
                 time.sleep(2)
                 continue
         raise RuntimeError("VLM call failed.")

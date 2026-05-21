@@ -1,0 +1,83 @@
+# Trial 10 — cube_n05_s05
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-28 18:58:26
+- **Elapsed**: 35.8s
+- **Retries**: 0
+- **Image**: `/experiments/inputs/cubeStacking/5cubes/cube_n05_s05.png`
+
+## VLM Raw Output
+
+## REASONING_DRAFT
+- Total Count: 5 objects (excluding table).
+- Layer 1 (Base):
+  - ID 1: Width matches `Cube`. Left corner hits -> 0. Right corner hits -> 0. Supporter -> 0. Position: left (multiple blocks on table).
+  - ID 2: Width matches `Cube`. Left corner hits -> 0. Right corner hits -> 0. Supporter -> 0. Position: right (multiple blocks on table).
+- Layer 2:
+  - ID 3: Width matches `RectPrism`. Left corner hits -> 1. Right corner hits -> 2. Supporter -> [1, 2]. Position: FORBIDDEN (multi-supporter).
+- Layer 3:
+  - ID 4: Width matches `Cube`. Left corner hits -> 3. Right corner hits -> 3. Supporter -> 3. Position: FORBIDDEN (supporter 3 has only one child).
+- Layer 4:
+  - ID 5: Width matches `TriPrism`. Left corner hits -> 4. Right corner hits -> 4. Supporter -> 4. Position: FORBIDDEN (supporter 4 has only one child).
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "table",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 3
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "TriPrism",
+      "edges": [
+        {
+          "supporter": 4
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END

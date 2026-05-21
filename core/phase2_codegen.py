@@ -33,7 +33,9 @@ import re
 
 # ─── FOL fixed header ────────────────────────────────────────────────────────
 
-_FOL_HEADER = """\
+def _fol_header(has_wait: bool = False) -> str:
+    # We ignore has_wait for now because WAIT keyword causes crashes in this binary version
+    return """\
 FOL_World{
   hasWait=false
   gamma = 1.
@@ -128,13 +130,29 @@ DecisionRule place_on_4_supports { S1, S2, S3, S4, Obj, Hand,
 }"""
 
 # ─── Object type → scene name prefix ─────────────────────────────────────────
+# Supports both standard formats (from prompts) and VLM's actual PascalCase outputs
 
 _TYPE_PREFIX = {
+    # Standard format (from prompts)
     "rectangular prism": "rect",
     "cylinder":          "cyl",
     "triangular prism":  "tri",
     "cube":              "cube",
     "box":               "cube",
+    "long rectangular prism": "longrect",
+    
+    # VLM's PascalCase formats (fallback support)
+    "rectprism":         "rectprism",
+    "triprism":          "triprism",
+    "longrectprism":     "longrect",
+    "long_rectprism":    "longrect",
+    "long rectprism":    "longrect",
+    
+    # FMB Shape support
+    "shape 1": "shape_1",
+    "shape 2": "shape_2",
+    "shape 3": "shape_3",
+    "shape 4": "shape_4",
 }
 
 
@@ -156,9 +174,15 @@ def build_id_to_name(phase1_objects: list, inventory_data: list = None) -> dict:
     if inventory_data:
         for item in inventory_data:
             logical_id = item.get("logical_id", "")
-            m = re.match(r'^([a-zA-Z]+)', logical_id)
+            # [Fix] Improved regex to capture prefixes before the first underscore
+            # This ensures 'longrect_1' yields 'longrect' as the prefix
+            m = re.match(r'^([a-zA-Z_]+)(?=_\d+)', logical_id)
             if m:
                 pfx = m.group(1).lower()
+                inventory_by_prefix.setdefault(pfx, []).append(logical_id)
+            else:
+                # Fallback if no digit suffix
+                pfx = re.match(r'^([a-zA-Z_]+)', logical_id).group(1).lower()
                 inventory_by_prefix.setdefault(pfx, []).append(logical_id)
         
         for pfx in inventory_by_prefix:
@@ -203,7 +227,7 @@ def _place_rule(n: int) -> str:
 
 # ─── Terminal builder ─────────────────────────────────────────────────────────
 
-def _terminal(obj_name: str, edges: list, id_to_name: dict) -> str:
+def _terminal(obj_name: str, edges: list, id_to_name: dict, id_to_obj: dict) -> str:
     """
     Build the LGP terminal predicate string.
 
@@ -215,20 +239,48 @@ def _terminal(obj_name: str, edges: list, id_to_name: dict) -> str:
         sup_name = id_to_name[sup_id]
         pos      = edge.get("position", "").lower()
 
-        if pos in ("left", "right", "center", "middle"):
+        if pos in ("left", "right", "center", "middle", "front", "back"):
             slot_key = "center" if pos == "middle" else pos
-            # Table: Table_Left / Table_Right
+            # Table: Table_Left / Table_Right / Table_Center
             if sup_name == "table":
                 slot = f"Table_{slot_key.capitalize()}"
                 return f"(on {slot} {obj_name})"
-            # Rect_N: Rect_N_Left / Rect_N_Right / Rect_N_Center
-            m = re.match(r"^rect_(\d+)$", sup_name)
+            # rectprism_N: rectprism_1_Left / rectprism_1_Right / rectprism_1_Center
+            m = re.match(r"^(rectprism|longrect)_(\d+)$", sup_name)
             if m:
-                slot = f"Rect_{m.group(1)}_{slot_key.capitalize()}"
+                # Use sup_name directly to preserve case (e.g., 'rectprism_1')
+                slot = f"{sup_name}_{slot_key.capitalize()}"
                 return f"(on {slot} {obj_name})"
-        # default: place on supporter directly (cyl_N, rect_N no-pos, etc.)
+        
+        # [Marc's Fix] Fallback for Table without specific position
+        if sup_name == "table":
+            return f"(on Table_Center {obj_name})"
+
+        # default: place on supporter directly (cyl_N, cube_N, etc.)
         return f"(on {sup_name} {obj_name})"
     else:
+        # FMB Shape custom logic: map multi-supporter slots to Table slots
+        # For multiple supporters, check their relative positions on the table
+        sup_pos_set = set()
+        for e in edges:
+            sup_id = e["supporter"]
+            # Look up the supporter object to find its slot position
+            if sup_id in id_to_obj:
+                sup_obj = id_to_obj[sup_id]
+                if len(sup_obj.get("edges", [])) == 1:
+                    sup_pos = sup_obj["edges"][0].get("position", "").lower()
+                    if sup_pos:
+                        sup_pos_set.add(sup_pos)
+        
+        if "front" in sup_pos_set and "back" in sup_pos_set:
+            return f"(on Table_Center {obj_name})"
+        elif all(p == "left" for p in sup_pos_set if p):
+            return f"(on Table_Left {obj_name})"
+        elif all(p == "right" for p in sup_pos_set if p):
+            return f"(on Table_Right {obj_name})"
+        elif all(p == "center" for p in sup_pos_set if p):
+            return f"(on Table_Center {obj_name})"
+
         # multi-supporter bridge: (on s1 s2 [s3 [s4]] obj)
         sup_names = " ".join(id_to_name[e["supporter"]] for e in edges)
         return f"(on {sup_names} {obj_name})"
@@ -236,15 +288,37 @@ def _terminal(obj_name: str, edges: list, id_to_name: dict) -> str:
 
 # ─── File content builders ────────────────────────────────────────────────────
 
-def _fol_content(pick: str, place: str) -> str:
-    return _FOL_HEADER + pick + "\n" + place + "\n"
+def _fol_content(pick: str, place: str, has_wait: bool = False) -> str:
+    return _fol_header(has_wait=has_wait) + pick + "\n" + place + "\n"
 
 
-def _lgp_content(fol_filename: str, terminal: str) -> str:
+def _global_fol_content(has_wait: bool = False) -> str:
+    """A single unified FOL containing ALL pick and place rules.
+    Used by split_global mode: every step gets a copy of this same file,
+    giving the solver a globally consistent rule-set across all phases.
+    """
+    all_rules = (
+        _RULE_PICK_TOUCH + "\n" +
+        _RULE_PICK_CYLINDER + "\n" +
+        _RULE_PLACE_STRAIGHT + "\n" +
+        _RULE_PLACE_2 + "\n" +
+        _RULE_PLACE_3 + "\n" +
+        _RULE_PLACE_4 + "\n"
+    )
+    return _fol_header(has_wait=has_wait) + all_rules
+
+
+def _lgp_content(fol_filename: str, terminal: str, collision_mode: str = "global") -> str:
+    """
+    collision_mode:
+      "global" → genericCollisions: true, coll: []   (split_global behavior)
+      "smart"  → genericCollisions: false, coll: []  (split_smart: active_runtime fills coll at runtime)
+    """
+    generic = "true" if collision_mode == "global" else "false"
     return (
         f"fol: <{fol_filename}>\n"
         f'terminal: " {terminal} "\n'
-        f"genericCollisions: true\n"
+        f"genericCollisions: {generic}\n"
         f"coll: []\n"
     )
 
@@ -257,6 +331,9 @@ def generate_step_files(
     prompt2_output: dict,
     out_dir:        str,
     inventory_data: list = None,
+    collision_mode: str  = "global",
+    has_wait: bool = False,
+    combine_terminals: bool = False,
 ) -> list:
     """
     Generate all step_N_batch_M.fol and .lgp files into out_dir.
@@ -300,28 +377,67 @@ def generate_step_files(
     generated = []
 
     for step_idx, batch in enumerate(batches, start=1):
-        for batch_idx, obj_id in enumerate(batch, start=1):
-            obj      = id_to_obj[obj_id]
-            obj_name = id_to_name[obj_id]
-            edges    = obj["edges"]
+        if combine_terminals:
+            # Combine all terminals for the entire batch into ONE file
+            combined_terminals = []
+            picks = set()
+            places = set()
 
-            if not edges:
-                raise ValueError(f"Object id={obj_id} ({obj_name}) has no edges/supporters.")
-
-            pick     = _pick_rule(_norm(obj["object"]))
-            place    = _place_rule(len(edges))
-            terminal = _terminal(obj_name, edges, id_to_name)
-
-            base     = f"step_{step_idx}_batch_{batch_idx}"
+            for obj_id in batch:
+                obj      = id_to_obj[obj_id]
+                obj_name = id_to_name[obj_id]
+                edges    = obj["edges"]
+                if not edges:
+                    raise ValueError(f"Object id={obj_id} ({obj_name}) has no edges/supporters.")
+                
+                term = _terminal(obj_name, edges, id_to_name, id_to_obj)
+                num_supporters = len(term.strip("()").split()) - 2
+                
+                picks.add(_pick_rule(_norm(obj["object"])))
+                places.add(_place_rule(num_supporters))
+                combined_terminals.append(term)
+            
+            terminal = " ".join(combined_terminals)
+            base     = f"step_{step_idx}_batch_1" # One batch per step
             fol_path = os.path.join(out_dir, f"{base}.fol")
             lgp_path = os.path.join(out_dir, f"{base}.lgp")
-
+            
             with open(fol_path, "w") as f:
-                f.write(_fol_content(pick, place))
+                f.write(_global_fol_content(has_wait=has_wait))
             with open(lgp_path, "w") as f:
-                f.write(_lgp_content(f"{base}.fol", terminal))
-
+                f.write(_lgp_content(f"{base}.fol", terminal, collision_mode=collision_mode))
+            
             generated.extend([fol_path, lgp_path])
-            print(f"  [codegen] {base:25s}  obj={obj_name:10s}  terminal={terminal}")
+            print(f"  [codegen] {base:25s}  obj=COMBINED    terminal={terminal}")
+        else:
+            for batch_idx, obj_id in enumerate(batch, start=1):
+                obj      = id_to_obj[obj_id]
+                obj_name = id_to_name[obj_id]
+                edges    = obj["edges"]
+
+                if not edges:
+                    raise ValueError(f"Object id={obj_id} ({obj_name}) has no edges/supporters.")
+                
+                terminal = _terminal(obj_name, edges, id_to_name, id_to_obj)
+                num_supporters = len(terminal.strip("()").split()) - 2
+
+                pick     = _pick_rule(_norm(obj["object"]))
+                place    = _place_rule(num_supporters)
+
+                base     = f"step_{step_idx}_batch_{batch_idx}"
+                fol_path = os.path.join(out_dir, f"{base}.fol")
+                lgp_path = os.path.join(out_dir, f"{base}.lgp")
+
+                with open(fol_path, "w") as f:
+                    if collision_mode == "global":
+                        f.write(_global_fol_content(has_wait=has_wait))
+                    else:
+                        f.write(_fol_content(pick, place, has_wait=has_wait))
+                    
+                with open(lgp_path, "w") as f:
+                    f.write(_lgp_content(f"{base}.fol", terminal, collision_mode=collision_mode))
+
+                generated.extend([fol_path, lgp_path])
+                print(f"  [codegen] {base:25s}  obj={obj_name:10s}  terminal={terminal}")
 
     return sorted(generated)

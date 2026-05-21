@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "method": "gmm_esdf_mvp",
-  "scene_input": "unnamed.g",
+  "scene_input": "trial_01_r.g",
   "params": {
     "alpha": 0.6,
     "beta": 0.4,
@@ -13,513 +13,207 @@
   "obstacle_count": 0,
   "objects": [
     {
-      "logical_id": "cyl_1",
-      "anon_id": "obj_01",
-      "object_type": "cylinder",
+      "logical_id": "shape_2_2",
+      "anon_id": "shape_2_1",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.3,
-        -0.1,
-        0.665
+        -0.1856,
+        0.2321,
+        0.6625
       ],
-      "gmm_score": 0.19297191629847196,
+      "gmm_score": 0.2290545490065565,
       "esdf_score": 1.0,
-      "reachability_score": 0.5157831497790832,
+      "reachability_score": 0.5374327294039339,
+      "threshold": 0.45,
+      "decision": "infeasible",
+      "reason": "komo_policy_gate_infeasible"
+    },
+    {
+      "logical_id": "shape_2_4",
+      "anon_id": "shape_2_2",
+      "object_type": "shape_2",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.3959,
+        0.2933,
+        0.6625
+      ],
+      "gmm_score": 0.16666919163311453,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5000015149798688,
+      "threshold": 0.45,
+      "decision": "infeasible",
+      "reason": "komo_policy_gate_infeasible"
+    },
+    {
+      "logical_id": "shape_2_1",
+      "anon_id": "shape_2_3",
+      "object_type": "shape_2",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.0884,
+        -0.2387,
+        0.6625
+      ],
+      "gmm_score": 0.1787155358435463,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5072293215061278,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     {
-      "logical_id": "rect_1",
-      "anon_id": "obj_02",
-      "object_type": "rectprism",
+      "logical_id": "shape_2_3",
+      "anon_id": "shape_2_4",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.3,
-        -0.1,
-        0.665
+        0.3584,
+        -0.3197,
+        0.6625
       ],
-      "gmm_score": 0.19437219681449522,
+      "gmm_score": 0.17722565705764057,
       "esdf_score": 1.0,
-      "reachability_score": 0.5166233180886971,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "cyl_2",
-      "anon_id": "obj_03",
-      "object_type": "cylinder",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.3,
-        0.0,
-        0.665
-      ],
-      "gmm_score": 0.2510019108519185,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5506011465111511,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "rect_2",
-      "anon_id": "obj_04",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3,
-        0.0,
-        0.665
-      ],
-      "gmm_score": 0.25878054201710193,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552683252102611,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "cube_1",
-      "anon_id": "obj_05",
-      "object_type": "cube",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.45,
-        -0.1,
-        0.665
-      ],
-      "gmm_score": 0.1913132060926378,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5147879236555827,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "rect_3",
-      "anon_id": "obj_06",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        -0.1,
-        0.665
-      ],
-      "gmm_score": 0.1943716999531064,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5166230199718639,
+      "reachability_score": 0.5063353942345844,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     {
       "logical_id": "cube_2",
-      "anon_id": "obj_07",
+      "anon_id": "shape_4_1",
       "object_type": "cube",
-      "sample_point_source": "center",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.3,
-        0.1,
-        0.665
+        -0.1911,
+        0.3892,
+        0.7224999999999999
       ],
-      "gmm_score": 0.2369745391310927,
+      "gmm_score": 0.22903130622949563,
       "esdf_score": 1.0,
-      "reachability_score": 0.5421847234786557,
+      "reachability_score": 0.5374187837376974,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     {
-      "logical_id": "rect_4",
-      "anon_id": "obj_08",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3,
-        0.1,
-        0.665
-      ],
-      "gmm_score": 0.2587805419161872,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552683251497124,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "cube_3",
-      "anon_id": "obj_09",
+      "logical_id": "cube_1",
+      "anon_id": "shape_4_2",
       "object_type": "cube",
-      "sample_point_source": "center",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.45,
-        0.0,
-        0.665
+        -0.274,
+        -0.2708,
+        0.7224999999999999
       ],
-      "gmm_score": 0.2417897879350147,
+      "gmm_score": 0.16816845517841453,
       "esdf_score": 1.0,
-      "reachability_score": 0.5450738727610088,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "rect_5",
-      "anon_id": "obj_10",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        0.0,
-        0.665
-      ],
-      "gmm_score": 0.2587798805552628,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552679283331576,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "cube_4",
-      "anon_id": "obj_11",
-      "object_type": "cube",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.3,
-        0.2,
-        0.665
-      ],
-      "gmm_score": 0.16368212548596314,
-      "esdf_score": 1.0,
-      "reachability_score": 0.4982092752915779,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "rect_6",
-      "anon_id": "obj_12",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3,
-        0.2,
-        0.665
-      ],
-      "gmm_score": 0.1943721966037805,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5166233179622683,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "tri_1",
-      "anon_id": "obj_13",
-      "object_type": "triprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.45,
-        0.1,
-        0.65
-      ],
-      "gmm_score": 0.21054157050836,
-      "esdf_score": 1.0,
-      "reachability_score": 0.526324942305016,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "rect_7",
-      "anon_id": "obj_14",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        0.1,
-        0.665
-      ],
-      "gmm_score": 0.25877988055524415,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552679283331465,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    {
-      "logical_id": "rect_8",
-      "anon_id": "obj_15",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        0.2,
-        0.665
-      ],
-      "gmm_score": 0.19437169995306736,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5166230199718405,
+      "reachability_score": 0.5009010731070487,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     }
   ],
   "decisions": {
-    "cyl_1": {
-      "logical_id": "cyl_1",
-      "anon_id": "obj_01",
-      "object_type": "cylinder",
+    "shape_2_2": {
+      "logical_id": "shape_2_2",
+      "anon_id": "shape_2_1",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.3,
-        -0.1,
-        0.665
+        -0.1856,
+        0.2321,
+        0.6625
       ],
-      "gmm_score": 0.19297191629847196,
+      "gmm_score": 0.2290545490065565,
       "esdf_score": 1.0,
-      "reachability_score": 0.5157831497790832,
+      "reachability_score": 0.5374327294039339,
+      "threshold": 0.45,
+      "decision": "infeasible",
+      "reason": "komo_policy_gate_infeasible"
+    },
+    "shape_2_4": {
+      "logical_id": "shape_2_4",
+      "anon_id": "shape_2_2",
+      "object_type": "shape_2",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.3959,
+        0.2933,
+        0.6625
+      ],
+      "gmm_score": 0.16666919163311453,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5000015149798688,
+      "threshold": 0.45,
+      "decision": "infeasible",
+      "reason": "komo_policy_gate_infeasible"
+    },
+    "shape_2_1": {
+      "logical_id": "shape_2_1",
+      "anon_id": "shape_2_3",
+      "object_type": "shape_2",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.0884,
+        -0.2387,
+        0.6625
+      ],
+      "gmm_score": 0.1787155358435463,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5072293215061278,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
-    "rect_1": {
-      "logical_id": "rect_1",
-      "anon_id": "obj_02",
-      "object_type": "rectprism",
+    "shape_2_3": {
+      "logical_id": "shape_2_3",
+      "anon_id": "shape_2_4",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.3,
-        -0.1,
-        0.665
+        0.3584,
+        -0.3197,
+        0.6625
       ],
-      "gmm_score": 0.19437219681449522,
+      "gmm_score": 0.17722565705764057,
       "esdf_score": 1.0,
-      "reachability_score": 0.5166233180886971,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "cyl_2": {
-      "logical_id": "cyl_2",
-      "anon_id": "obj_03",
-      "object_type": "cylinder",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.3,
-        0.0,
-        0.665
-      ],
-      "gmm_score": 0.2510019108519185,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5506011465111511,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "rect_2": {
-      "logical_id": "rect_2",
-      "anon_id": "obj_04",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3,
-        0.0,
-        0.665
-      ],
-      "gmm_score": 0.25878054201710193,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552683252102611,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "cube_1": {
-      "logical_id": "cube_1",
-      "anon_id": "obj_05",
-      "object_type": "cube",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.45,
-        -0.1,
-        0.665
-      ],
-      "gmm_score": 0.1913132060926378,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5147879236555827,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "rect_3": {
-      "logical_id": "rect_3",
-      "anon_id": "obj_06",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        -0.1,
-        0.665
-      ],
-      "gmm_score": 0.1943716999531064,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5166230199718639,
+      "reachability_score": 0.5063353942345844,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     "cube_2": {
       "logical_id": "cube_2",
-      "anon_id": "obj_07",
+      "anon_id": "shape_4_1",
       "object_type": "cube",
-      "sample_point_source": "center",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.3,
-        0.1,
-        0.665
+        -0.1911,
+        0.3892,
+        0.7224999999999999
       ],
-      "gmm_score": 0.2369745391310927,
+      "gmm_score": 0.22903130622949563,
       "esdf_score": 1.0,
-      "reachability_score": 0.5421847234786557,
+      "reachability_score": 0.5374187837376974,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
-    "rect_4": {
-      "logical_id": "rect_4",
-      "anon_id": "obj_08",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3,
-        0.1,
-        0.665
-      ],
-      "gmm_score": 0.2587805419161872,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552683251497124,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "cube_3": {
-      "logical_id": "cube_3",
-      "anon_id": "obj_09",
+    "cube_1": {
+      "logical_id": "cube_1",
+      "anon_id": "shape_4_2",
       "object_type": "cube",
-      "sample_point_source": "center",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.45,
-        0.0,
-        0.665
+        -0.274,
+        -0.2708,
+        0.7224999999999999
       ],
-      "gmm_score": 0.2417897879350147,
+      "gmm_score": 0.16816845517841453,
       "esdf_score": 1.0,
-      "reachability_score": 0.5450738727610088,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "rect_5": {
-      "logical_id": "rect_5",
-      "anon_id": "obj_10",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        0.0,
-        0.665
-      ],
-      "gmm_score": 0.2587798805552628,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552679283331576,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "cube_4": {
-      "logical_id": "cube_4",
-      "anon_id": "obj_11",
-      "object_type": "cube",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.3,
-        0.2,
-        0.665
-      ],
-      "gmm_score": 0.16368212548596314,
-      "esdf_score": 1.0,
-      "reachability_score": 0.4982092752915779,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "rect_6": {
-      "logical_id": "rect_6",
-      "anon_id": "obj_12",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3,
-        0.2,
-        0.665
-      ],
-      "gmm_score": 0.1943721966037805,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5166233179622683,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "tri_1": {
-      "logical_id": "tri_1",
-      "anon_id": "obj_13",
-      "object_type": "triprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        -0.45,
-        0.1,
-        0.65
-      ],
-      "gmm_score": 0.21054157050836,
-      "esdf_score": 1.0,
-      "reachability_score": 0.526324942305016,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "rect_7": {
-      "logical_id": "rect_7",
-      "anon_id": "obj_14",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        0.1,
-        0.665
-      ],
-      "gmm_score": 0.25877988055524415,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5552679283331465,
-      "threshold": 0.45,
-      "decision": "feasible",
-      "reason": "score>=tau_r"
-    },
-    "rect_8": {
-      "logical_id": "rect_8",
-      "anon_id": "obj_15",
-      "object_type": "rectprism",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.45,
-        0.2,
-        0.665
-      ],
-      "gmm_score": 0.19437169995306736,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5166230199718405,
+      "reachability_score": 0.5009010731070487,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
@@ -527,8 +221,8 @@
   },
   "policy_gate": {
     "enabled": true,
-    "status": "skipped",
-    "infeasible_count": 0,
+    "status": "ok",
+    "infeasible_count": 2,
     "error_count": 0,
     "reference": "action_pick/action_pick_cylinder constraints in manipTools.cpp"
   }

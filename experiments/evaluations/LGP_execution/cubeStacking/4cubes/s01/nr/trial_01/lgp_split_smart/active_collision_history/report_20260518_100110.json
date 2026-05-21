@@ -1,0 +1,90 @@
+{
+  "task_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP_execution/cubeStacking/4cubes/s01/nr/trial_01/lgp_split_smart",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1_batch_1.lgp",
+      "action_summary": "pick_touch cube_1 table l_gripper | place_straightOn cube_1 l_gripper Table_Left",
+      "pair_count": 9,
+      "full_motion_solver_ms": 1311,
+      "pairs": [
+        ["cube_1", "cube_2"],
+        ["cube_1", "l_finger1"],
+        ["cube_1", "l_finger2"],
+        ["cube_1", "l_palm"],
+        ["cube_1", "table"],
+        ["cube_2", "l_finger2"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_1_batch_2.lgp",
+      "action_summary": "pick_touch cube_2 table l_gripper | place_straightOn cube_2 l_gripper Table_Center",
+      "pair_count": 13,
+      "full_motion_solver_ms": 2486,
+      "pairs": [
+        ["cube_1", "cube_2"],
+        ["cube_1", "l_finger1"],
+        ["cube_1", "l_finger2"],
+        ["cube_1", "l_palm"],
+        ["cube_2", "cube_3"],
+        ["cube_2", "l_finger1"],
+        ["cube_2", "l_finger2"],
+        ["cube_2", "l_palm"],
+        ["cube_2", "table"],
+        ["cube_3", "l_finger2"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_2_batch_1.lgp",
+      "action_summary": "pick_touch cube_3 table l_gripper | place_straightOn cube_3 l_gripper Table_Right",
+      "pair_count": 12,
+      "full_motion_solver_ms": 2787,
+      "pairs": [
+        ["cube_1", "l_finger1"],
+        ["cube_2", "cube_3"],
+        ["cube_2", "l_finger1"],
+        ["cube_2", "l_finger2"],
+        ["cube_2", "l_palm"],
+        ["cube_3", "l_finger1"],
+        ["cube_3", "l_finger2"],
+        ["cube_3", "l_palm"],
+        ["cube_3", "table"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_3_batch_1.lgp",
+      "action_summary": "pick_touch cube_4 table l_gripper | place_straightOn cube_4 l_gripper cube_2",
+      "pair_count": 18,
+      "full_motion_solver_ms": 40311,
+      "pairs": [
+        ["cube_1", "cube_4"],
+        ["cube_1", "l_finger1"],
+        ["cube_1", "l_finger2"],
+        ["cube_2", "cube_4"],
+        ["cube_2", "l_finger1"],
+        ["cube_2", "l_finger2"],
+        ["cube_2", "l_palm"],
+        ["cube_3", "cube_4"],
+        ["cube_3", "l_finger1"],
+        ["cube_3", "l_finger2"],
+        ["cube_3", "l_palm"],
+        ["cube_4", "l_finger1"],
+        ["cube_4", "l_finger2"],
+        ["cube_4", "l_palm"],
+        ["cube_4", "table"],
+        ["l_finger1", "table"],
+        ["l_finger2", "table"],
+        ["l_palm", "table"]
+      ]
+    }
+  ]
+}

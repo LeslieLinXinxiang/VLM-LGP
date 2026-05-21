@@ -1,0 +1,53 @@
+{
+  "table": {
+    "q": "t(0 0 .6)",
+    "size": [2.0, 4.0, 0.1, 0.02]
+  },
+  "robot": {
+    "base_edit_q": "t(0 -.3 .05) d(90 0 0 1)",
+    "joint_defaults": {
+      "l_panda_joint1": 0.0,
+      "l_panda_joint2": -1.5,
+      "l_panda_joint3": 0.0,
+      "l_panda_joint4": -2.5,
+      "l_panda_joint5": 0.0,
+      "l_panda_joint6": 1.5,
+      "l_panda_joint7": 0.0,
+      "l_panda_finger_joint1": 0.04,
+      "l_panda_finger_joint2": 0.04
+    }
+  },
+  "regions": {
+    "work_region": {
+      "x": [-0.10, 0.10],
+      "y": [0.08, 0.28]
+    },
+    "init_regions": [
+      {
+        "name": "left_init",
+        "x": [-0.45, -0.30],
+        "y": [-0.10, 0.20]
+      },
+      {
+        "name": "right_init",
+        "x": [0.30, 0.45],
+        "y": [-0.10, 0.20]
+      }
+    ]
+  },
+  "spawn": {
+    "min_center_distance": 0.085,
+    "z_center_rel_table": 0.065,
+    "yaw_min_deg": -180.0,
+    "yaw_max_deg": 180.0,
+    "max_sampling_trials": 5000
+  },
+  "object_catalog": {
+    "cube": {
+      "shape": "ssBox",
+      "size": [0.03, 0.03, 0.03, 0.001],
+      "logical_tags": "is_object, is_box, is_place",
+      "mass": 0.2
+    }
+  }
+}

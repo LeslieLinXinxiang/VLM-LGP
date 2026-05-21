@@ -42,7 +42,13 @@ def validate_plan(plan_json, valid_inventory_list):
         if not isinstance(objects, list) or not objects:
             return False, "CRITICAL: 'objects' must be a non-empty array."
 
-        allowed_objects = {"Triangular Prism", "Cube", "Rectangular Prism", "Cylinder"}
+        # Flexible object-type check: accept any name containing a known shape keyword.
+        # This is intentionally permissive to avoid wasting tokens on name retries.
+        def _is_valid_obj_type(name):
+            if not isinstance(name, str): return False
+            n = name.lower().replace(" ", "").replace("-", "")
+            return any(kw in n for kw in ("cube", "prism", "cylinder", "table"))
+
         allowed_positions = {"left", "center", "right"}
 
         ids = []
@@ -89,7 +95,7 @@ def validate_plan(plan_json, valid_inventory_list):
                 if obj_id == 0:
                     continue
 
-                if obj_name not in allowed_objects:
+                if not _is_valid_obj_type(obj_name):
                     errors.append(f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
 
                 if not isinstance(edges, list) or not edges:
@@ -142,7 +148,8 @@ def validate_plan(plan_json, valid_inventory_list):
             obj_name = obj.get("object")
             on_list = obj.get("on")
 
-            if obj_name not in allowed_objects:
+            n = str(obj_name).lower().replace(" ", "").replace("-", "")
+            if not any(kw in n for kw in ("cube", "prism", "cylinder", "table")):
                 errors.append(f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
 
             if not isinstance(on_list, list) or not on_list:
@@ -213,7 +220,7 @@ def validate_plan(plan_json, valid_inventory_list):
         return False, "\n".join(errors)
     return True, "Valid (legacy schema)"
 
-def execute_phase1(target_img_path=None):
+def execute_phase1(target_img_path=None, output_json_path=None, prompt_path=None):
     """
     Returns: (bool success, str output_path)
     """
@@ -221,9 +228,12 @@ def execute_phase1(target_img_path=None):
     
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     layout_json = os.path.join(root_dir, "generated/phase0_layout.json")
-    prompt_file = os.path.join(root_dir, "prompts/phase1_graph_planner.md")
+    prompt_file = prompt_path if prompt_path else os.path.join(root_dir, "prompts/phase1_graph_planner.md")
     test_dir = os.path.join(root_dir, "test")
-    output_graph_json = os.path.join(root_dir, "generated/phase1_target_graph.json")
+    if output_json_path:
+        output_graph_json = output_json_path
+    else:
+        output_graph_json = os.path.join(root_dir, "generated/phase1_target_graph.json")
 
     mapping_list = load_json(layout_json)
     if not mapping_list:
@@ -244,8 +254,11 @@ def execute_phase1(target_img_path=None):
     
     # 2. [CRITICAL FIX] Save as "phase1_target.png" so Driver/Slicer can find it
     global_target_path = os.path.join(root_dir, "generated", "phase1_target.png")
-    shutil.copy(target_img_path, global_target_path)
-    print(f"[Phase1] Saved global target reference to: {global_target_path}")
+    if os.path.abspath(target_img_path) != os.path.abspath(global_target_path):
+        shutil.copy(target_img_path, global_target_path)
+        print(f"[Phase1] Saved global target reference to: {global_target_path}")
+    else:
+        print(f"[Phase1] Global target reference already at: {global_target_path}")
 
     vlm = VLMClient()
     max_attempts = 3

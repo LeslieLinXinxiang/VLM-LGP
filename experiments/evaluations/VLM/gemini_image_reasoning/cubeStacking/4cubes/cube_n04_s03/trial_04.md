@@ -1,0 +1,31 @@
+# Trial 04 — cube_n04_s03
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-28 15:45:14
+- **Elapsed**: 10.2s
+- **Retries**: 0
+- **Image**: `/experiments/inputs/cubeStacking/4cubes/cube_n04_s03.png`
+
+## VLM Raw Output
+
+## REASONING_DRAFT
+- Total Count: 4 objects (excluding table).
+- Layer 1 (Base):
+  - Object 1: Width matches `Cube`. Left/Center/Right hit -> table. Supporter -> table. (Suffix: `table_left`).
+  - Object 2: Width matches `Cube`. Left/Center/Right hit -> table. Supporter -> table. (Suffix: `table_right`).
+- Layer 2:
+  - Object 3: Width matches `Cube`. Left hits -> 1Cube, Center hits -> 1Cube, Right hits -> 1Cube. Supporter -> 1Cube. (No suffix: 1Cube has only one child).
+  - Object 4: Width matches `Cube`. Left hits -> 2Cube, Center hits -> 2Cube, Right hits -> 2Cube. Supporter -> 2Cube. (No suffix: 2Cube has only one child).
+
+## FINAL_PDDL_START
+(:action-sequence
+  (pick 1Cube)
+  (place 1Cube table_left)
+  (pick 2Cube)
+  (place 2Cube table_right)
+  (pick 3Cube)
+  (place 3Cube 1Cube)
+  (pick 4Cube)
+  (place 4Cube 2Cube)
+)
+## FINAL_PDDL_END

@@ -597,13 +597,8 @@ void ManipulationHelper::action_pick(str action, double time, str gripper,
   // =================================================================
   // 4. [Phase 3] 最终抓取 (Final Grasp)
   // =================================================================
-  // 最终瞬间，必须精确对准目标物体的抓取点 (XY居中，Z高度贴合)
-  komo->addObjective({time}, FS_positionRel, {gripper, targetF->name}, OT_eq,
-                     arr{1, 0, 0} * 1e2);
-  komo->addObjective({time}, FS_positionRel, {gripper, targetF->name}, OT_eq,
-                     arr{0, 1, 0} * 1e2);
-  komo->addObjective({time}, FS_positionDiff, {gripper, targetF->name}, OT_sos,
-                     {1e2});
+  // 最终瞬间，必须精确对准目标物体的抓取点 (XYZ 全锁定为硬约束)
+  komo->addObjective({time}, FS_positionDiff, {gripper, targetF->name}, OT_eq, {1e2});
 
   // =================================================================
   // 5. [Phase 4] 全程避障 (Global Collision Avoidance)

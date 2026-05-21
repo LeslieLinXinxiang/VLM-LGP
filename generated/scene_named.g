@@ -59,19 +59,13 @@ cube_4   (world) { Q:"t(0.50  0.30 0.015) d(-90 1 0 0)", joint:rigid, shape:ssBo
 tri_1    (world) { Q:"t(0.40  0.45 0.020) d(-90 1 0 0)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", color:[1 .4 .7], contact:1, mass:.2, logical:{ is_object, is_place } }
 
 # -----------------------------------------------------------
-# 5 Placement Bases — Cross Pattern (1:1 with MJ)
+# Fixed placement slots on base_board
 # -----------------------------------------------------------
-Base_Center (world) { Q:"t( 0.30  0.00 0.001)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Left   (world) { Q:"t( 0.30  0.08 0.001)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Right  (world) { Q:"t( 0.30 -0.08 0.001)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Top    (world) { Q:"t( 0.22  0.00 0.001)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-Base_Bottom (world) { Q:"t( 0.38  0.00 0.001)", shape:ssBox, size:[.025 .025 .002 .001], color:[1 1 0 0], contact:0, logical:{ is_place } }
-
-# -----------------------------------------------------------
-# Placement Patch Slots
-# -----------------------------------------------------------
-Table_Left  (world) { Q:"t( 0.30  0.05 0.001)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
-Table_Right (world) { Q:"t( 0.30 -0.05 0.001)", shape:ssBox, size:[.025 .025 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Left   (base_board) { Q:"t( 0.000 0.000  0.080) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Right  (base_board) { Q:"t(0.000 0.000 -0.080) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Front  (base_board) { Q:"t(0.059 0.000 0.000) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Back   (base_board) { Q:"t(-0.061 0.000 0.000) d(-90 1 0 0)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
+Table_Center (base_board) { Q:"t(00 0.000 0.000) d(-90 1 0 0) ", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Placement Patch Slots — Object Relative (Unchanged)

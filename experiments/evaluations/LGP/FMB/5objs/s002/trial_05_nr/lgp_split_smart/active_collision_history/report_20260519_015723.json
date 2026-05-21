@@ -1,0 +1,111 @@
+{
+  "task_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/5objs/s002/trial_05_nr/lgp_split_smart",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1_batch_1.lgp",
+      "action_summary": "pick_touch shape_2_1 table l_gripper | place_straightOn shape_2_1 l_gripper Table_Front",
+      "pair_count": 6,
+      "full_motion_solver_ms": 790,
+      "pairs": [
+        ["l_finger1", "shape_2_1"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_2_1"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_2_1"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_1_batch_2.lgp",
+      "action_summary": "pick_touch shape_2_2 table l_gripper | place_straightOn shape_2_2 l_gripper Table_Back",
+      "pair_count": 9,
+      "full_motion_solver_ms": 3901,
+      "pairs": [
+        ["l_finger1", "shape_2_1"],
+        ["l_finger1", "shape_2_2"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_2_2"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_2_1"],
+        ["l_palm", "shape_2_2"],
+        ["l_palm", "table"],
+        ["shape_2_1", "shape_2_2"]
+      ]
+    },
+    {
+      "lgp_file": "step_2_batch_1.lgp",
+      "action_summary": "pick_touch shape_4_1 table l_gripper | place_straightOn shape_4_1 l_gripper Table_Center",
+      "pair_count": 14,
+      "full_motion_solver_ms": 33969,
+      "pairs": [
+        ["l_finger1", "shape_2_1"],
+        ["l_finger1", "shape_2_2"],
+        ["l_finger1", "shape_4_1_mesh"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_2_1"],
+        ["l_finger2", "shape_2_2"],
+        ["l_finger2", "shape_4_1_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_2_1"],
+        ["l_palm", "shape_4_1_mesh"],
+        ["l_palm", "table"],
+        ["l_panda_coll1", "l_panda_coll6"],
+        ["shape_2_1", "shape_4_1_mesh"],
+        ["shape_2_2", "shape_4_1_mesh"]
+      ]
+    },
+    {
+      "lgp_file": "step_2_batch_2.lgp",
+      "action_summary": "pick_touch shape_4_2 table l_gripper | place_straightOn shape_4_2 l_gripper Table_Center",
+      "pair_count": 16,
+      "full_motion_solver_ms": 2020,
+      "pairs": [
+        ["l_finger1", "shape_2_1"],
+        ["l_finger1", "shape_2_2"],
+        ["l_finger1", "shape_4_1_mesh"],
+        ["l_finger1", "shape_4_2_mesh"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_2_1"],
+        ["l_finger2", "shape_2_2"],
+        ["l_finger2", "shape_4_1_mesh"],
+        ["l_finger2", "shape_4_2_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_4_1_mesh"],
+        ["l_palm", "shape_4_2_mesh"],
+        ["l_palm", "table"],
+        ["shape_2_1", "shape_4_2_mesh"],
+        ["shape_2_2", "shape_4_2_mesh"],
+        ["shape_4_1_mesh", "shape_4_2_mesh"]
+      ]
+    },
+    {
+      "lgp_file": "step_3_batch_1.lgp",
+      "action_summary": "pick_touch shape_4_3 table l_gripper | place_straightOn shape_4_3 l_gripper Table_Center",
+      "pair_count": 20,
+      "full_motion_solver_ms": 6527,
+      "pairs": [
+        ["l_finger1", "shape_2_1"],
+        ["l_finger1", "shape_2_2"],
+        ["l_finger1", "shape_4_1_mesh"],
+        ["l_finger1", "shape_4_2_mesh"],
+        ["l_finger1", "shape_4_3_mesh"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_2_1"],
+        ["l_finger2", "shape_2_2"],
+        ["l_finger2", "shape_4_1_mesh"],
+        ["l_finger2", "shape_4_2_mesh"],
+        ["l_finger2", "shape_4_3_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_4_1_mesh"],
+        ["l_palm", "shape_4_2_mesh"],
+        ["l_palm", "shape_4_3_mesh"],
+        ["l_palm", "table"],
+        ["shape_2_1", "shape_4_3_mesh"],
+        ["shape_2_2", "shape_4_3_mesh"],
+        ["shape_4_1_mesh", "shape_4_3_mesh"],
+        ["shape_4_2_mesh", "shape_4_3_mesh"]
+      ]
+    }
+  ]
+}

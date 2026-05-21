@@ -11,10 +11,12 @@
 
 ### 1. 完整测试运行（包含 VLM 推理）
 **目标**：从头启动，调用 VLM 并端到端生成 LGP 轨迹。
+- **新主线入口**：`python3 driver_gemini_mainline.py --image generated/phase1_target.png --vlm-backend gemini --gemini-model gemini-3.0-flash --execution-mode docker`
 - **阶段 0**：`python3 pipeline/run_phase0.py`（完成 Reachability 测算）
 - **阶段 0.5**：`python3 test/manipulability/run_static_manipulability_test.py --layout generated/phase0_layout.json --infeasible generated/infeasible_objects.json --g-file unnamed.g --urdf rai/test/newLGP/rai-robotModels/panda/panda_arm_hand.urdf`
 - **阶段 1 (VLM)**：`python3 pipeline/run_phase1.py`（该脚本会弹窗要求选择输入图片，并调用 VLM 接口输出 `phase1_target_graph.json`）
 - **阶段 2 (LGP 前置)**：使用测试沙盒脚本或通过 `PYTHONPATH=$PWD python3 pipeline/run_phase2.py` 生成 `.fol` 与 `.lgp` 文件。
+- **部署包导出**：新主线会额外输出 `traj.txt` 与 `gripper.txt`，其中 `gripper.txt` 保存的是 1-based 轨迹行号切换点，默认开夹爪，按 close/open 交替。
 - **LGP 求解器**：自动拉起或手动执行 `bin/x.exe generated/node_1_run generated/scene/scene_named.g`
 
 ### 2. 完整测试运行（不包含 VLM 推理，直接使用已有图缓存）

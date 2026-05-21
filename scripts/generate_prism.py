@@ -1,15 +1,15 @@
 import os
 
-def create_triangular_prism(filepath, base_w=0.040, depth=0.035, height=0.020):
-    # 底面向下放在桌子上, 尺寸 40mm (X) * 35mm (Y)
-    # 顶部高度为 20mm (Z)
-    
+
+def create_triangular_prism(filepath, base_w=0.040, depth=0.035, height=0.020, origin_offset_z=-0.002):
+    # 原点相对几何中心上移 2mm, 尺寸 40mm (X) * 35mm (Y) * 20mm (Z)
+
     hw = base_w / 2.0
     hd = depth / 2.0
     
-    # 几何中心此时下移到底面 (底部z=0), 满足用户要求
-    z_bottom = 0.0
-    z_top = height
+    # 基准几何仍以中心对称，但整体向下平移 2mm，以实现“原点上抬 2mm”
+    z_bottom = -height / 2.0 + origin_offset_z
+    z_top = height / 2.0 + origin_offset_z
 
     # 顶点: (x, y, z)
     # y正方向为前(Front)，y负方向为后(Back)
@@ -43,7 +43,7 @@ def create_triangular_prism(filepath, base_w=0.040, depth=0.035, height=0.020):
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
     with open(filepath, 'w') as f:
         f.write("# Triangular Prism (Ramp/Roof shape)\n")
-        f.write(f"# base_width={base_w}, depth={depth}, height={height}\n")
+        f.write(f"# base_width={base_w}, depth={depth}, height={height}, origin_offset_z={origin_offset_z}\n")
         for v in vertices:
             f.write(f"v {v[0]:.6f} {v[1]:.6f} {v[2]:.6f}\n")
         for face in faces:

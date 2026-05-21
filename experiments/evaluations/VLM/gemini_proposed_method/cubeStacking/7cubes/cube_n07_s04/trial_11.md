@@ -1,0 +1,110 @@
+# Trial 11 — cube_n07_s04
+
+- **Status**: ✅ PASS
+- **Timestamp**: 2026-04-28 19:45:11
+- **Elapsed**: 51.2s
+- **Retries**: 0
+- **Image**: `/experiments/inputs/cubeStacking/7cubes/cube_n07_s04.png`
+
+## VLM Raw Output
+
+## REASONING_DRAFT
+- Total Count: 7 objects (excluding table).
+- Layer 1 (Base):
+  - ID 1: Width matches `RectPrism`. Left corner hits -> 0. Right corner hits -> 0. Supporter -> 0. Position: left.
+  - ID 2: Width matches `RectPrism`. Left corner hits -> 0. Right corner hits -> 0. Supporter -> 0. Position: center.
+  - ID 3: Width matches `RectPrism`. Left corner hits -> 0. Right corner hits -> 0. Supporter -> 0. Position: right.
+- Layer 2:
+  - ID 4: Width matches `RectPrism`. Left corner hits -> 1. Right corner hits -> 2. Supporters -> 1, 2.
+  - ID 5: Width matches `RectPrism`. Left corner hits -> 2. Right corner hits -> 3. Supporters -> 2, 3.
+- Layer 3:
+  - ID 6: Width matches `RectPrism`. Left corner hits -> 4. Right corner hits -> 5. Supporters -> 4, 5.
+- Layer 4:
+  - ID 7: Width matches `Cube`. Left corner hits -> 6. Right corner hits -> 6. Supporter -> 6.
+
+## FINAL_JSON_START
+{
+  "objects": [
+    {
+      "id": 0,
+      "object": "table",
+      "edges": []
+    },
+    {
+      "id": 1,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "left"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "center"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 0,
+          "position": "right"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 1
+        },
+        {
+          "supporter": 2
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 2
+        },
+        {
+          "supporter": 3
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "object": "RectPrism",
+      "edges": [
+        {
+          "supporter": 4
+        },
+        {
+          "supporter": 5
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "object": "Cube",
+      "edges": [
+        {
+          "supporter": 6
+        }
+      ]
+    }
+  ]
+}
+## FINAL_JSON_END

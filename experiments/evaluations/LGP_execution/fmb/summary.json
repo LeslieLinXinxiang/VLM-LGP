@@ -1,0 +1,22 @@
+{
+  "total": 3,
+  "successful": 0,
+  "summary": {
+    "3objs/smart": {
+      "success": 0,
+      "fail": 1,
+      "skip": 0
+    },
+    "3objs/global": {
+      "success": 0,
+      "fail": 1,
+      "skip": 0
+    },
+    "3objs/combine": {
+      "success": 0,
+      "fail": 1,
+      "skip": 0
+    }
+  },
+  "timestamp": "2026-05-14 14:06:06"
+}

@@ -1,0 +1,161 @@
+{
+  "version": "v1",
+  "method": "gmm_esdf_mvp",
+  "scene_input": "unnamed_with_table_slots.g",
+  "params": {
+    "alpha": 0.6,
+    "beta": 0.4,
+    "tau_r": 0.45,
+    "seed": 42,
+    "gmm_sigma": 0.12,
+    "gmm_score_mode": "absolute_kernel_density"
+  },
+  "obstacle_count": 0,
+  "objects": [
+    {
+      "logical_id": "cube_3",
+      "anon_id": "obj_01",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        -0.3831,
+        0.1554,
+        0.665
+      ],
+      "gmm_score": 0.25000068287714905,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5500004097262894,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "cube_4",
+      "anon_id": "obj_02",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.3256,
+        0.2178,
+        0.665
+      ],
+      "gmm_score": 0.37848522572783483,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6270911354367009,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "cube_1",
+      "anon_id": "obj_03",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.4142,
+        -0.15,
+        0.665
+      ],
+      "gmm_score": 0.25715192927407193,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5542911575644431,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "cube_2",
+      "anon_id": "obj_04",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.2236,
+        0.1221,
+        0.665
+      ],
+      "gmm_score": 0.38216514305233135,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6292990858313988,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    }
+  ],
+  "decisions": {
+    "cube_3": {
+      "logical_id": "cube_3",
+      "anon_id": "obj_01",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        -0.3831,
+        0.1554,
+        0.665
+      ],
+      "gmm_score": 0.25000068287714905,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5500004097262894,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "cube_4": {
+      "logical_id": "cube_4",
+      "anon_id": "obj_02",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.3256,
+        0.2178,
+        0.665
+      ],
+      "gmm_score": 0.37848522572783483,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6270911354367009,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "cube_1": {
+      "logical_id": "cube_1",
+      "anon_id": "obj_03",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.4142,
+        -0.15,
+        0.665
+      ],
+      "gmm_score": 0.25715192927407193,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5542911575644431,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "cube_2": {
+      "logical_id": "cube_2",
+      "anon_id": "obj_04",
+      "object_type": "cube",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.2236,
+        0.1221,
+        0.665
+      ],
+      "gmm_score": 0.38216514305233135,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6292990858313988,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    }
+  },
+  "policy_gate": {
+    "enabled": true,
+    "status": "ok",
+    "infeasible_count": 0,
+    "error_count": 0,
+    "reference": "action_pick/action_pick_cylinder constraints in manipTools.cpp"
+  }
+}
