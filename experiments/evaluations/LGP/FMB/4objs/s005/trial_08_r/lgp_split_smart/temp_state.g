@@ -3,63 +3,63 @@ table(world): { pose: [0, 0, 0.6], shape: ssBox, size: [2, 4, 0.1, 0.02], color:
 l_panda_base(table): { pose: [0, 0, 0.05], multibody: True, multibody_gravity: False }
 l_panda_link0(l_panda_base): { shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link0.h5> }
 l_panda_joint1_origin(l_panda_link0): { pose: [0, 0, 0.333] }
-l_panda_joint1(l_panda_joint1_origin): { pose: [0.999992, 0, 0, -0.00400766], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, color: [1, 1, 1, 1], mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link1.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
-l_panda_joint2_origin(l_panda_joint1): { pose: [0.707107, -0.707107, 4.33681e-19, 0] }
-l_panda_joint2(l_panda_joint2_origin): { pose: [0.984391, 2.53703e-17, -1.38778e-17, 0.175997], joint: hingeZ, limits: [-1.7628, 1.7628], shape: mesh, color: [1, 1, 1, 1], mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link2.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
-l_panda_joint3_origin(l_panda_joint2): { pose: [1.38778e-17, -0.316, -4.86432e-18, 0.707107, 0.707107, 7.80626e-18, -5.63785e-18] }
-l_panda_joint3(l_panda_joint3_origin): { pose: [-1.30551e-17, 4.87594e-18, -4.82235e-18, 0.999995, -5.71375e-17, -6.68098e-17, 0.00318488], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link3.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
-l_panda_joint4_origin(l_panda_joint3): { pose: [0.0825, 1.35525e-20, 3.1225e-17, 0.707107, 0.707107, 6.80337e-18, 0] }
-l_panda_joint4(l_panda_joint4_origin): { pose: [-1.24578e-22, -3.01114e-22, -1.0842e-19, 0.29759, -2.77556e-17, 0, -0.954694], joint: hingeZ, limits: [-3.0718, -0.0698], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link4.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
-l_panda_joint5_origin(l_panda_joint4): { pose: [-0.0825, 0.384, 2.1066e-16, 0.707107, -0.707107, 9.17506e-18, 4.06711e-17] }
-l_panda_joint5(l_panda_joint5_origin): { pose: [2.14585e-16, 2.91573e-16, -2.83442e-16, 0.999989, -1.06685e-16, -8.95949e-19, -0.0046901], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link5.h5>, mj_actuator_kp: "120.", mj_joint_damping: "10." }
-l_panda_joint6_origin(l_panda_joint5): { pose: [0.707107, 0.707107, -1.30104e-18, -1.38778e-17] }
-l_panda_joint6(l_panda_joint6_origin): { pose: [0.124903, 2.1684e-18, 7.03376e-17, 0.992169], joint: hingeZ, limits: [0.5, 3], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link6.h5>, mj_actuator_kp: "120.", mj_joint_damping: "10." }
-l_panda_joint7_origin(l_panda_joint6): { pose: [0.088, 3.62716e-17, -1.8876e-18, 0.707107, 0.707107, 1.09775e-18, -1.44233e-17] }
-l_panda_joint7(l_panda_joint7_origin): { pose: [-3.34277e-21, 4.74327e-19, 5.59018e-23, 0.92303, -3.3773e-20, 1.05456e-19, -0.384728], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link7.h5>, mj_actuator_kp: "120.", mj_joint_damping: "10." }
-l_panda_joint8_origin(l_panda_joint7): { pose: [5.04832e-19, 5.38713e-19, 0.107, 1, -3.17637e-22, 5.71747e-21, -3.53528e-17] }
-l_panda_joint8(l_panda_joint8_origin): { pose: [2.23225e-20, 1.94907e-20, -5.55112e-16, 1, 9.52912e-22, -1.05879e-21, 2.01584e-17] }
-l_panda_hand_joint_origin(l_panda_joint8): { pose: [0.92388, -1.69407e-21, -3.38813e-21, -0.382683] }
-l_panda_hand_joint(l_panda_hand_joint_origin): { pose: [1, -1.01644e-20, -1.01644e-20, -7.83719e-17], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/hand.h5> }
-l_panda_finger_joint1_origin(l_panda_hand_joint): { pose: [-3.64224e-20, 2.79351e-18, 0.0584, 1, 6.77626e-21, 1.01644e-20, -2.28608e-17] }
-l_panda_finger_joint2_origin(l_panda_hand_joint): { pose: [-3.64224e-20, 2.79351e-18, 0.0584, 1, 6.77626e-21, 1.01644e-20, -2.28608e-17] }
-l_panda_finger_joint1(l_panda_finger_joint1_origin): { pose: [-4.96688e-17, 0.04, -3.18769e-16, 1, -3.38813e-21, -6.77626e-21, -2.28608e-17], joint: transY, limits: [0, 0.04], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/finger.h5>, mj_actuator_kp: "500.", mj_joint_damping: "100.", joint_active: False }
-l_panda_finger_joint2(l_panda_finger_joint2_origin): { pose: [4.96442e-17, -0.04, -3.47365e-16, 1, -3.38813e-21, -6.77626e-21, -2.28608e-17], joint: transY, joint_scale: -1, limits: [0, 0.04], mimic: "l_panda_finger_joint1", mj_actuator_kp: "500.", mj_joint_damping: "100." }
-l_panda_rightfinger_0(l_panda_finger_joint2): { pose: [-9.93879e-17, 1.09889e-16, 1.7472e-20, -1.03385e-13, -6.77626e-21, 0, 1], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/finger.h5> }
+l_panda_joint1(l_panda_joint1_origin): { pose: [0.999769, 0, 0, 0.0215155], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, color: [1, 1, 1, 1], mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link1.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
+l_panda_joint2_origin(l_panda_joint1): { pose: [0.707107, -0.707107, 1.73472e-18, 0] }
+l_panda_joint2(l_panda_joint2_origin): { pose: [0.984385, 4.77049e-18, 0, 0.176029], joint: hingeZ, limits: [-1.7628, 1.7628], shape: mesh, color: [1, 1, 1, 1], mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link2.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
+l_panda_joint3_origin(l_panda_joint2): { pose: [2.77556e-17, -0.316, -1.24791e-18, 0.707107, 0.707107, 0, -2.94903e-17] }
+l_panda_joint3(l_panda_joint3_origin): { pose: [1.30757e-17, 1.13608e-18, 4.8309e-18, 0.999855, 3.25261e-19, 5.25127e-17, -0.0170329], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link3.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
+l_panda_joint4_origin(l_panda_joint3): { pose: [0.0825, 1.35525e-18, -7.28584e-17, 0.707107, 0.707107, -7.04731e-18, 1.38778e-17] }
+l_panda_joint4(l_panda_joint4_origin): { pose: [2.60315e-17, 9.59714e-18, 1.17466e-18, 0.297951, -1.38778e-17, -5.55112e-17, -0.954581], joint: hingeZ, limits: [-3.0718, -0.0698], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link4.h5>, mj_actuator_kp: "870.", mj_joint_damping: "100." }
+l_panda_joint5_origin(l_panda_joint4): { pose: [-0.0825, 0.384, -1.96024e-16, 0.707107, -0.707107, 3.89229e-17, -4.31512e-17] }
+l_panda_joint5(l_panda_joint5_origin): { pose: [2.79276e-17, -2.16716e-17, 1.07725e-16, 0.999684, -4.33681e-19, -4.50672e-17, 0.0251279], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link5.h5>, mj_actuator_kp: "120.", mj_joint_damping: "10." }
+l_panda_joint6_origin(l_panda_joint5): { pose: [0.707107, 0.707107, 2.08167e-17, -1.38778e-17] }
+l_panda_joint6(l_panda_joint6_origin): { pose: [0.125719, -1.73472e-17, -3.90313e-18, 0.992066], joint: hingeZ, limits: [0.5, 3], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link6.h5>, mj_actuator_kp: "120.", mj_joint_damping: "10." }
+l_panda_joint7_origin(l_panda_joint6): { pose: [0.088, -3.54602e-17, -6.44437e-19, 0.707107, 0.707107, -3.21466e-17, -2.26598e-17] }
+l_panda_joint7(l_panda_joint7_origin): { pose: [-2.44559e-20, -6.50061e-19, 4.70449e-22, 0.906152, -5.01849e-17, -2.54855e-17, -0.422952], joint: hingeZ, limits: [-2.8973, 2.8973], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/link7.h5>, mj_actuator_kp: "120.", mj_joint_damping: "10." }
+l_panda_joint8_origin(l_panda_joint7): { pose: [1.33492e-17, 1.47316e-17, 0.107, 1, -1.01644e-20, -2.03288e-20, -4.71749e-17] }
+l_panda_joint8(l_panda_joint8_origin): { pose: [-7.37206e-21, 7.11559e-20, 1.11022e-16, 1, -3.38813e-21, 6.77626e-21, 8.33624e-18] }
+l_panda_hand_joint_origin(l_panda_joint8): { pose: [0.92388, 1.35525e-20, 4.06576e-20, -0.382683] }
+l_panda_hand_joint(l_panda_hand_joint_origin): { pose: [1, 0, 0, 2.16021e-17], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/hand.h5> }
+l_panda_finger_joint1_origin(l_panda_hand_joint): { pose: [6.09864e-19, -1.20482e-17, 0.0584, 1, -1.35525e-20, 2.71051e-20, 2.16021e-17] }
+l_panda_finger_joint2_origin(l_panda_hand_joint): { pose: [6.09864e-19, -1.20482e-17, 0.0584, 1, -1.35525e-20, 2.71051e-20, 2.16021e-17] }
+l_panda_finger_joint1(l_panda_finger_joint1_origin): { pose: [3.52947e-17, 0.04, 3.13741e-17, 1, 0, 0, 2.16021e-17], joint: transY, limits: [0, 0.04], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/finger.h5>, mj_actuator_kp: "500.", mj_joint_damping: "100.", joint_active: False }
+l_panda_finger_joint2(l_panda_finger_joint2_origin): { pose: [-3.52947e-17, -0.04, -3.13741e-17, 1, 0, 0, 2.16021e-17], joint: transY, joint_scale: -1, limits: [0, 0.04], mimic: "l_panda_finger_joint1", mj_actuator_kp: "500.", mj_joint_damping: "100." }
+l_panda_rightfinger_0(l_panda_finger_joint2): { pose: [1.16945e-17, 5.8991e-19, 8.46809e-21, -1.03396e-13, 5.42101e-20, -5.42101e-20, 1], shape: mesh, mesh: </home/leslie/Projects/VLM_LGP/rai/test/newLGP/rai-robotModels/panda/meshes/finger.h5> }
 l_panda_coll0(l_panda_link0): { pose: [-0.04, 0, 0.03, 0.707107, 0, 0.707107, 0], shape: capsule, size: [0.1, 0.11], color: [1, 1, 1, 0.1], contact: -2 }
 l_panda_coll1(l_panda_joint1): { pose: [0, 0, -0.15], shape: capsule, size: [0.2, 0.08], color: [1, 1, 1, 0.1], contact: -2 }
-l_panda_coll3(l_panda_joint3): { pose: [2.77556e-17, -1.0842e-19, -0.15, 1, 2.43945e-19, 1.18627e-18, -1.0842e-19], shape: capsule, size: [0.2, 0.08], color: [1, 1, 1, 0.1], contact: -2 }
-l_panda_coll5(l_panda_joint5): { pose: [2.08167e-17, 0.02, -0.2, 1, -1.0842e-19, 1.93683e-17, 2.03288e-19], shape: capsule, size: [0.22, 0.09], color: [1, 1, 1, 0.1], contact: -2 }
-l_panda_coll2(l_panda_joint2): { pose: [1, 0, 0, -1.38778e-17], shape: capsule, size: [0.12, 0.12], color: [1, 1, 1, 0.1], contact: -2 }
-l_panda_coll4(l_panda_joint4): { pose: [1, 0, 2.77556e-17, 6.93889e-18], shape: capsule, size: [0.12, 0.08], color: [1, 1, 1, 0.1], contact: -2 }
-l_panda_coll6(l_panda_joint6): { pose: [2.34575e-17, -6.10728e-17, -0.04, 1, 3.47284e-20, 1.12757e-17, -9.75782e-18], shape: capsule, size: [0.1, 0.07], color: [1, 1, 1, 0.1], contact: -2 }
-l_panda_coll7(l_panda_joint7): { pose: [-6.84471e-18, -6.9984e-18, 0.01, 1, -3.17637e-22, 5.71747e-21, -3.53528e-17], shape: capsule, size: [0.1, 0.07], color: [1, 1, 1, 0.1], contact: -2 }
-l_gripper(l_panda_joint7): { pose: [-7.83336e-18, 1.84009e-17, 0.2105, 2.34277e-17, 0.92388, 0.382683, 5.65689e-17], shape: marker, size: [0.03], color: [0.9, 0.9, 0.9], logical: { is_gripper: True } }
-l_palm(l_panda_hand_joint): { pose: [0.707107, 0.707107, 0, -3.34883e-17], shape: capsule, size: [0.14, 0.07], color: [1, 1, 1, 0.1], contact: -3 }
-l_finger1(l_panda_finger_joint1): { pose: [8.9467e-17, 0.008, 0.045, 1, 3.38813e-21, 0, -2.28608e-17], shape: ssBox, size: [0.02, 0.016, 0.02, 0.005], color: [1, 1, 1, 0.1], contact: -2 }
-l_finger2(l_panda_finger_joint2): { pose: [-8.89385e-17, -0.008, 0.045, 1, 3.38813e-21, 0, -2.28608e-17], shape: ssBox, size: [0.02, 0.016, 0.02, 0.005], color: [1, 1, 1, 0.1], contact: -2 }
+l_panda_coll3(l_panda_joint3): { pose: [6.93889e-18, -4.33681e-19, -0.15, 1, 2.1684e-19, -3.25667e-17, 2.60209e-18], shape: capsule, size: [0.2, 0.08], color: [1, 1, 1, 0.1], contact: -2 }
+l_panda_coll5(l_panda_joint5): { pose: [-2.77556e-17, 0.02, -0.2, 1, -4.33681e-19, 2.25379e-17, -4.8247e-18], shape: capsule, size: [0.22, 0.09], color: [1, 1, 1, 0.1], contact: -2 }
+l_panda_coll2(l_panda_joint2): { shape: capsule, size: [0.12, 0.12], color: [1, 1, 1, 0.1], contact: -2 }
+l_panda_coll4(l_panda_joint4): { pose: [1, -5.55112e-17, -1.38778e-17, -4.16334e-17], shape: capsule, size: [0.12, 0.08], color: [1, 1, 1, 0.1], contact: -2 }
+l_panda_coll6(l_panda_joint6): { pose: [7.16149e-18, 6.49166e-18, -0.04, 1, -7.31836e-19, -5.20417e-18, -3.81639e-17], shape: capsule, size: [0.1, 0.07], color: [1, 1, 1, 0.1], contact: -2 }
+l_panda_coll7(l_panda_joint7): { pose: [1.62359e-17, 1.78724e-17, 0.01, 1, -1.01644e-20, -2.03288e-20, -4.71749e-17], shape: capsule, size: [0.1, 0.07], color: [1, 1, 1, 0.1], contact: -2 }
+l_gripper(l_panda_joint7): { pose: [-2.48079e-17, 9.75782e-19, 0.2105, 2.34804e-17, 0.92388, 0.382683, 5.65852e-17], shape: marker, size: [0.03], color: [0.9, 0.9, 0.9], logical: { is_gripper: True } }
+l_palm(l_panda_hand_joint): { pose: [0.707107, 0.707107, 5.55112e-17, 5.28549e-18], shape: capsule, size: [0.14, 0.07], color: [1, 1, 1, 0.1], contact: -3 }
+l_finger1(l_panda_finger_joint1): { pose: [-6.57298e-18, 0.008, 0.045, 1, -1.35525e-20, 2.71051e-20, 2.16021e-17], shape: ssBox, size: [0.02, 0.016, 0.02, 0.005], color: [1, 1, 1, 0.1], contact: -2 }
+l_finger2(l_panda_finger_joint2): { pose: [3.998e-18, -0.008, 0.045, 1, -1.35525e-20, 2.71051e-20, 2.16021e-17], shape: ssBox, size: [0.02, 0.016, 0.02, 0.005], color: [1, 1, 1, 0.1], contact: -2 }
 base_board(table): { pose: [0.45, 0, 0.075, 0.707107, 0.707107, 0, 0], joint: rigid, shape: mesh, color: [0.75, 0.75, 0.75, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/base_board.obj", mass: 0.5, inertia: [0.00281664, 0.00530266, 0.00273272], logical: { is_object: True, is_place: True } }
 Table_Left(base_board): { pose: [0, -1.77636e-17, 0.08, 0.707107, -0.707107, -0, -0], shape: ssBox, size: [0.02, 0.02, 0.001, 0.0005], color: [0, 1, 1, 0], logical: { is_place: True } }
 Table_Right(base_board): { pose: [0, 1.77636e-17, -0.08, 0.707107, -0.707107, -0, -0], shape: ssBox, size: [0.02, 0.02, 0.001, 0.0005], color: [0, 1, 1, 0], logical: { is_place: True } }
 Table_Front(base_board): { pose: [0.059, 0, 0, 0.5, -0.5, -0.5, -0.5], shape: ssBox, size: [0.02, 0.02, 0.001, 0.0005], color: [0, 1, 1, 0], logical: { is_place: True } }
 Table_Back(base_board): { pose: [-0.061, 0, 0, 0.5, -0.5, -0.5, -0.5], shape: ssBox, size: [0.02, 0.02, 0.001, 0.0005], color: [0, 1, 1, 0], logical: { is_place: True } }
 Table_Center(base_board): { pose: [0.5, -0.5, -0.5, -0.5], shape: ssBox, size: [0.02, 0.02, 0.001, 0.0005], color: [0, 1, 1, 0], logical: { is_place: True } }
-shape_2_1(table): { pose: [0.45, -1.05868e-09, 0.0885, 0.707107, -2.04734e-09, 5.04017e-09, -0.707107], joint: rigid, shape: mesh, color: [0.2, 1, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_1.obj", contact: 1, mass: 0.1, inertia: [2.18118e-05, 0.00035027, 0.00035027], logical: { is_object: True, is_box: True } }
-shape_2_2(table): { pose: [-0.1018, 0.207, 0.063, 0.999082, -0, 0, 0.0428347], joint: rigid, shape: mesh, color: [0.2, 1, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_2.obj", contact: 1, mass: 0.1, inertia: [2.18118e-05, 0.00035027, 0.00035027], logical: { is_object: True, is_box: True } }
-shape_4_1(table): { pose: [0.3862, 0.3178, 0.0625, 0.522647, -0, -0, -0.852549], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
+shape_2_1(table): { pose: [0.45, -4.14232e-08, 0.0885003, 0.707107, -3.98754e-08, 5.28769e-08, -0.707107], joint: rigid, shape: mesh, color: [0.2, 1, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_1.obj", contact: 1, mass: 0.1, inertia: [2.18118e-05, 0.00035027, 0.00035027], logical: { is_object: True, is_box: True } }
+shape_2_2(table): { pose: [-0.181, -0.2191, 0.063, 0.579139, 0, -0, -0.815229], joint: rigid, shape: mesh, color: [0.2, 1, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_2.obj", contact: 1, mass: 0.1, inertia: [2.18118e-05, 0.00035027, 0.00035027], logical: { is_object: True, is_box: True } }
+shape_4_1(table): { pose: [-0.3013, 0.3955, 0.0625, 0.161087, -0, -0, -0.98694], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
 shape_4_1_mesh(shape_4_1): { pose: [0, 0, 0.0275, 0.5, 0.5, 0.5, 0.5], joint: rigid, shape: mesh, color: [1, 0.5, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_1.obj", contact: 1, mass: 0.1, inertia: [0.000205608, 0.000175411, 6.1141e-05], logical: { is_object: True, is_box: True } }
 shape_4_1_handle(shape_4_1): { pose: [0, 0, 0.05], shape: marker, size: [0.03], color: [1, 1, 0] }
-shape_4_2(table): { pose: [0.1837, 0.3072, 0.0625, 0.996412, -0, -0, -0.0846344], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
+shape_4_2(table): { pose: [0.2658, 0.2182, 0.0625, 0.264883, -0, -0, -0.964281], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
 shape_4_2_mesh(shape_4_2): { pose: [0, 0, 0.0275, 0.5, 0.5, 0.5, 0.5], joint: rigid, shape: mesh, color: [1, 0.5, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_2.obj", contact: 1, mass: 0.1, inertia: [0.000205608, 0.000175411, 6.1141e-05], logical: { is_object: True, is_box: True } }
 shape_4_2_handle(shape_4_2): { pose: [0, 0, 0.05], shape: marker, size: [0.03], color: [1, 1, 0] }
-shape_4_3(table): { pose: [0.309, -0.3978, 0.0625, 0.986083, 0, 0, 0.166252], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
+shape_4_3(table): { pose: [-0.1866, -0.339, 0.0625, 0.390892, -0, -0, -0.920437], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
 shape_4_3_mesh(shape_4_3): { pose: [0, 0, 0.0275, 0.5, 0.5, 0.5, 0.5], joint: rigid, shape: mesh, color: [1, 0.5, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_3.obj", contact: 1, mass: 0.1, inertia: [0.000205608, 0.000175411, 6.1141e-05], logical: { is_object: True, is_box: True } }
-shape_4_3_handle(shape_4_3): { pose: [0, 0, 0.05], shape: marker, size: [0.03], color: [1, 1, 0] }
-shape_4_4(table): { pose: [0.2385, -0.2874, 0.0625, 0.927413, 0, 0, 0.37404], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
+shape_4_3_handle(shape_4_3): { pose: [0, 0, 0.05, 1, 0, 0, 0], shape: marker, size: [0.03], color: [1, 1, 0] }
+shape_4_4(table): { pose: [-0.2259, 0.2286, 0.0625, 0.924911, -0, -0, -0.380183], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
 shape_4_4_mesh(shape_4_4): { pose: [0, 0, 0.0275, 0.5, 0.5, 0.5, 0.5], joint: rigid, shape: mesh, color: [1, 0.5, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_4.obj", contact: 1, mass: 0.1, inertia: [0.000205608, 0.000175411, 6.1141e-05], logical: { is_object: True, is_box: True } }
 shape_4_4_handle(shape_4_4): { pose: [0, 0, 0.05], shape: marker, size: [0.03], color: [1, 1, 0] }
-shape_4_5(table): { pose: [-0.4241, 0.4301, 0.0625, 0.992862, -0, -0, -0.11927], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
+shape_4_5(table): { pose: [0.1211, 0.2162, 0.0625, 0.726035, -0, -0, -0.687658], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
 shape_4_5_mesh(shape_4_5): { pose: [0, 0, 0.0275, 0.5, 0.5, 0.5, 0.5], joint: rigid, shape: mesh, color: [1, 0.5, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_5.obj", contact: 1, mass: 0.1, inertia: [0.000205608, 0.000175411, 6.1141e-05], logical: { is_object: True, is_box: True } }
 shape_4_5_handle(shape_4_5): { pose: [0, 0, 0.05], shape: marker, size: [0.03], color: [1, 1, 0] }
-shape_4_6(table): { pose: [-0.2537, 0.1673, 0.0625, 0.632165, -0, -0, -0.774834], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
+shape_4_6(table): { pose: [0.2895, -0.3914, 0.0625, 0.413899, 0, 0, 0.910323], joint: rigid, shape: ssBox, size: [0.025, 0.025, 0.025, 0], color: [1, 0.5, 0.2], logical: { is_object: True } }
 shape_4_6_mesh(shape_4_6): { pose: [0, 0, 0.0275, 0.5, 0.5, 0.5, 0.5], joint: rigid, shape: mesh, color: [1, 0.5, 0.2, 1], mesh: "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_6.obj", contact: 1, mass: 0.1, inertia: [0.000205608, 0.000175411, 6.1141e-05], logical: { is_object: True, is_box: True } }
 shape_4_6_handle(shape_4_6): { pose: [0, 0, 0.05], shape: marker, size: [0.03], color: [1, 1, 0] }

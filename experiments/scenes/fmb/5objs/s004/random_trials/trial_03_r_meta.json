@@ -1,7 +1,7 @@
 {
   "scenario_id": "trial_03",
   "mode": "r",
-  "seed": 14294,
+  "seed": 14341,
   "counts": {
     "shape_2": 4,
     "shape_4": 6
@@ -13,81 +13,81 @@
       "anon_id": "shape_2_1",
       "object_type": "shape_2",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_1.obj",
-      "x": 0.18221934987528043,
-      "y": -0.4421225457469494,
-      "yaw_deg": 144.5348077143555
+      "x": 0.2602681750331749,
+      "y": 0.43223831491928566,
+      "yaw_deg": 53.67430483724007
     },
     {
       "anon_id": "shape_2_2",
       "object_type": "shape_2",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_2.obj",
-      "x": -0.33612084945371024,
-      "y": 0.3069118336199045,
-      "yaw_deg": 104.7614057534119
+      "x": 0.2378997053004438,
+      "y": -0.44152981396038493,
+      "yaw_deg": -156.36149638738743
     },
     {
       "anon_id": "shape_2_3",
       "object_type": "shape_2",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_3.obj",
-      "x": -0.11377990901186052,
-      "y": 0.25563003592159017,
-      "yaw_deg": -110.12887475343814
+      "x": -0.30798566576507613,
+      "y": -0.2876078047547419,
+      "yaw_deg": -161.6359062070887
     },
     {
       "anon_id": "shape_2_4",
       "object_type": "shape_2",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_4.obj",
-      "x": 0.31404835325589125,
-      "y": 0.42244624484670285,
-      "yaw_deg": 2.3721699457528587
+      "x": -0.413096137351965,
+      "y": -0.40615118825480245,
+      "yaw_deg": 107.41623210944914
     },
     {
       "anon_id": "shape_4_1",
       "object_type": "shape_4",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_1.obj",
-      "x": -0.2617218302911166,
-      "y": -0.29958670360507456,
-      "yaw_deg": -50.887240013448405
+      "x": 0.37709587859997634,
+      "y": 0.25762973881015755,
+      "yaw_deg": -86.28449113148787
     },
     {
       "anon_id": "shape_4_2",
       "object_type": "shape_4",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_2.obj",
-      "x": -0.07090370909617044,
-      "y": -0.38157411647432915,
-      "yaw_deg": -107.32811211997108
+      "x": 0.07280588329043003,
+      "y": 0.40062714879195327,
+      "yaw_deg": 172.9096037079264
     },
     {
       "anon_id": "shape_4_3",
       "object_type": "shape_4",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_3.obj",
-      "x": -0.30233517609805405,
-      "y": 0.4488928038191522,
-      "yaw_deg": 48.753785819763294
+      "x": -0.4428459467591521,
+      "y": -0.20697615967418043,
+      "yaw_deg": 126.6282005033355
     },
     {
       "anon_id": "shape_4_4",
       "object_type": "shape_4",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_4.obj",
-      "x": 0.3881723430559826,
-      "y": -0.21216378410472259,
-      "yaw_deg": 11.655755046756326
+      "x": -0.0973160975723174,
+      "y": 0.4404628049754452,
+      "yaw_deg": 11.95312616570672
     },
     {
       "anon_id": "shape_4_5",
       "object_type": "shape_4",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_5.obj",
-      "x": 0.2202183314301771,
-      "y": -0.30296046088434736,
-      "yaw_deg": -147.27579761086474
+      "x": -0.22474694616543123,
+      "y": 0.4019517646324766,
+      "yaw_deg": 8.637864600573891
     },
     {
       "anon_id": "shape_4_6",
       "object_type": "shape_4",
       "mesh_path": "/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_4_6.obj",
-      "x": 0.3282038633665806,
-      "y": 0.28983446819209036,
-      "yaw_deg": -95.96515596724099
+      "x": 0.39031676500641876,
+      "y": -0.42970173455810967,
+      "yaw_deg": 112.97279780661012
     }
   ]
 }

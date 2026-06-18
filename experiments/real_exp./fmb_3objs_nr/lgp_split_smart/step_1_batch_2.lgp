@@ -1,0 +1,4 @@
+fol: <shared_rules.fol>
+terminal: " (on Table_Back shape_2_2) "
+genericCollisions: false
+coll: []

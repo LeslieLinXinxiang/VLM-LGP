@@ -77,7 +77,7 @@
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_07_nr.g",
   "mode": "lgp_split_smart",
   "success": true,
-  "runtime_s": 130.45,
+  "runtime_s": 100.13,
   "exit_code": 0,
   "timeout": false,
   "memory_exceeded": false,

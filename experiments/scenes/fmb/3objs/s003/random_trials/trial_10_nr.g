@@ -24,12 +24,12 @@ Table_Front (base_board) { Q:"t(0.059 0.000 0.000) d(-90 1 0 0) d(-90 0 0 1)", s
 Table_Back (base_board) { Q:"t(-0.061 0.000 0.000) d(-90 1 0 0) d(-90 0 0 1)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 Table_Center (base_board) { Q:"t(0.000 0.000 0.000) d(-90 1 0 0) d(-90 0 0 1)", shape:ssBox, size:[.02 .02 .001 .0005], color:[0 1 1 0], contact:0, logical:{ is_place } }
 
-shape_3_1 (table) { Q:"t(0.3767 0.3411 0.0625) d(7.05 0 0 1)", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.005], color:[0.2 0.2 0.9], contact:0, logical:{ is_object, is_box } }
+shape_3_1 (table) { Q:"t(0.3262 -0.4004 0.0625) d(42.58 0 0 1)", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.005], color:[0.2 0.2 0.9], contact:0, logical:{ is_object, is_box } }
 shape_3_1_mesh (shape_3_1) { Q:"t(0 0.001 0.0325) d(90 1 0 0) d(90 0 1 0)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_3_1.obj", color:[0.2 0.8 1.0 1], contact:1, mass:0.1, logical:{ is_object, is_box } }
 shape_3_1_handle (shape_3_1) { Q:"t(0 0 0.065) d(0 0 0 0)", shape:marker, size:[0.03], color:[1 1 0] }
-shape_3_2 (table) { Q:"t(-0.3306 0.1849 0.0625) d(-136.48 0 0 1)", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.005], color:[0.2 0.2 0.9], contact:0, logical:{ is_object, is_box } }
+shape_3_2 (table) { Q:"t(-0.3108 -0.2570 0.0625) d(66.69 0 0 1)", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.005], color:[0.2 0.2 0.9], contact:0, logical:{ is_object, is_box } }
 shape_3_2_mesh (shape_3_2) { Q:"t(0 0.001 0.0325) d(90 1 0 0) d(90 0 1 0)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_3_2.obj", color:[0.2 0.8 1.0 1], contact:1, mass:0.1, logical:{ is_object, is_box } }
 shape_3_2_handle (shape_3_2) { Q:"t(0 0 0.065) d(0 0 0 0)", shape:marker, size:[0.03], color:[1 1 0] }
-shape_3_3 (table) { Q:"t(-0.0687 0.3060 0.0625) d(-21.95 0 0 1)", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.005], color:[0.2 0.2 0.9], contact:0, logical:{ is_object, is_box } }
+shape_3_3 (table) { Q:"t(0.2889 0.3070 0.0625) d(30.52 0 0 1)", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.005], color:[0.2 0.2 0.9], contact:0, logical:{ is_object, is_box } }
 shape_3_3_mesh (shape_3_3) { Q:"t(0 0.001 0.0325) d(90 1 0 0) d(90 0 1 0)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_3_3.obj", color:[0.2 0.8 1.0 1], contact:1, mass:0.1, logical:{ is_object, is_box } }
 shape_3_3_handle (shape_3_3) { Q:"t(0 0 0.065) d(0 0 0 0)", shape:marker, size:[0.03], color:[1 1 0] }

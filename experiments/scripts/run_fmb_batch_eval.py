@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
-FMB Full Batch LGP Evaluation
-Runs lgp_split_smart (active_runtime) for all FMB scenarios and trials.
+FMB Full Batch LGP Evaluation.
+
+Supports:
+    - lgp_split_smart
+    - lgp_split_global
+    - lgp_combined (single merged task file per trial)
+
 VLM plans: experiments/evaluations/VLM/gemini_proposed_method/FMB/{Nobjs}/{NNN}/trial_XX.md
 Scenes:     experiments/scenes/fmb/{Nobjs}/{sNNN}/random_trials/trial_XX_{mode}.g
-Output:     experiments/evaluations/LGP/FMB/{Nobjs}/{sNNN}/trial_XX_{mode}/lgp_split_smart/
+Output:     experiments/evaluations/LGP/FMB/{Nobjs}/{sNNN}/trial_XX_{mode}/<mode>/
 """
 import argparse
 import json
@@ -48,6 +53,15 @@ def _extract_json_from_md(md_path: Path) -> dict:
     if m:
         return json.loads(m.group(1))
     raise ValueError(f"No FINAL_JSON block in {md_path}")
+
+
+def _selected_strategy(prompt1: dict, prompt2: dict) -> dict:
+    raw_list = prompt1.get("strategies", prompt1.get("candidates", []))
+    selected_id = prompt2["selected"]
+    selected = next((s for s in raw_list if s["id"] == selected_id), None)
+    if selected is None:
+        raise ValueError(f"Strategy '{selected_id}' not found in Prompt1 output.")
+    return selected
 
 
 def _run_solver(exec_dir: Path, scene_g: Path, timeout_s: int, max_mem_mb: int, collision_policy: str = "active_runtime") -> dict:
@@ -112,13 +126,18 @@ def _run_solver(exec_dir: Path, scene_g: Path, timeout_s: int, max_mem_mb: int, 
         except: pass
 
 
-def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb):
+def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb, mode_filter: str | None = None):
     trial_work_dir.mkdir(parents=True, exist_ok=True)
-    
-    smart_done = (trial_work_dir / "lgp_split_smart" / "output_state.g").exists()
-    global_done = (trial_work_dir / "lgp_split_global" / "output_state.g").exists()
-    if smart_done and global_done:
-        return [{"success": True, "cached": True}] * 2
+
+    if mode_filter:
+        done = (trial_work_dir / mode_filter / "output_state.g").exists()
+        if done:
+            return [{"success": True, "cached": True, "mode": mode_filter}]
+    else:
+        smart_done = (trial_work_dir / "lgp_split_smart" / "output_state.g").exists()
+        global_done = (trial_work_dir / "lgp_split_global" / "output_state.g").exists()
+        if smart_done and global_done:
+            return [{"success": True, "cached": True}] * 2
 
     # Phase 0
     phase0 = execute_phase0(
@@ -126,6 +145,7 @@ def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb):
         unnamed_g_path=str(scene_g),
         auto_prepare_from_named_scene=False,
         reachability_mode="gmm_esdf_mvp",
+        disable_physics_reordering=True,  # Keep original object names from scene file
     )
     if not phase0 or not phase0.get("success"):
         return [{"success": False, "error": "phase0_failed", "runtime_s": 0}]
@@ -139,10 +159,38 @@ def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb):
     # Clustering + codegen
     clustering = LayerBasedClustering(phase1_json=phase1_json, max_batch_size=2)
     plan = clustering.build_execution_plan()
-    
+    selected_strategy = _selected_strategy(plan["prompt1"], plan["prompt2"])
+
     results = []
 
-    for lgp_mode in ["lgp_split_smart", "lgp_split_global"]:
+    mode_specs = [
+        {
+            "name": "lgp_split_smart",
+            "collision_policy": "active_runtime",
+            "collision_mode": "smart",
+            "combine_terminals": False,
+        },
+        {
+            "name": "lgp_split_global",
+            "collision_policy": "follow_lgp",
+            "collision_mode": "global",
+            "combine_terminals": False,
+        },
+        {
+            "name": "lgp_combined",
+            "collision_policy": "follow_lgp",
+            "collision_mode": "global",
+            "combine_terminals": True,
+        },
+    ]
+
+    if mode_filter:
+        mode_specs = [m for m in mode_specs if m["name"] == mode_filter]
+        if not mode_specs:
+            raise ValueError(f"Unknown mode_filter: {mode_filter}")
+
+    for spec in mode_specs:
+        lgp_mode = spec["name"]
         mode_dir = trial_work_dir / lgp_mode
         if (mode_dir / "output_state.g").exists():
             print(f"  - {lgp_mode} already done, skipping.")
@@ -153,8 +201,8 @@ def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb):
             shutil.rmtree(mode_dir)
         mode_dir.mkdir(parents=True, exist_ok=True)
 
-        policy = "active_runtime" if lgp_mode == "lgp_split_smart" else "follow_lgp"
-        coll_mode = "smart" if lgp_mode == "lgp_split_smart" else "global"
+        policy = spec["collision_policy"]
+        coll_mode = spec["collision_mode"]
 
         generate_step_files(
             phase1_json=phase1_json,
@@ -163,6 +211,7 @@ def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb):
             out_dir=str(mode_dir),
             inventory_data=layout,
             collision_mode=coll_mode,
+            combine_terminals=spec["combine_terminals"],
         )
 
         print(f"  - Running {lgp_mode} (policy={policy})...")
@@ -183,6 +232,7 @@ def main():
     parser.add_argument("--max-mem-mb", type=int, default=16000)
     parser.add_argument("--skip-existing", action="store_true")
     parser.add_argument("--scenarios", nargs="+", default=["001", "002", "003", "004", "005"])
+    parser.add_argument("--mode", choices=["lgp_split_smart", "lgp_split_global", "lgp_combined"], default=None)
     args = parser.parse_args()
 
     vlm_base = ROOT_DIR / "experiments/evaluations/VLM/gemini_proposed_method/FMB"
@@ -215,17 +265,23 @@ def main():
 
                     trial_work_dir = out_base / mag / scen_id / f"trial_{trial_idx:02d}_{mode}"
 
-                    if args.skip_existing and (trial_work_dir / "lgp_split_smart" / "output_state.g").exists() and (trial_work_dir / "lgp_split_global" / "output_state.g").exists():
-                        print(f"  [CACHED] {mag}/{scen_id}/trial_{trial_idx:02d}_{mode}")
-                        skip += 1
-                        continue
+                    if args.mode:
+                        if args.skip_existing and (trial_work_dir / args.mode / "output_state.g").exists():
+                            print(f"  [CACHED] {mag}/{scen_id}/trial_{trial_idx:02d}_{mode} [{args.mode}]")
+                            skip += 1
+                            continue
+                    else:
+                        if args.skip_existing and (trial_work_dir / "lgp_split_smart" / "output_state.g").exists() and (trial_work_dir / "lgp_split_global" / "output_state.g").exists():
+                            print(f"  [CACHED] {mag}/{scen_id}/trial_{trial_idx:02d}_{mode}")
+                            skip += 1
+                            continue
 
                     total += 1
                     tag = f"{mag}/{scen_id}/trial_{trial_idx:02d}_{mode}"
                     print(f"\n[{total}] Running: {tag}")
 
                     try:
-                        res_list = run_one(vlm_md, scene_g, trial_work_dir, timeout_s=args.timeout_s, max_mem_mb=args.max_mem_mb)
+                        res_list = run_one(vlm_md, scene_g, trial_work_dir, timeout_s=args.timeout_s, max_mem_mb=args.max_mem_mb, mode_filter=args.mode)
                     except Exception as e:
                         res_list = [{"success": False, "error": str(e), "runtime_s": 0}]
 

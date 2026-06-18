@@ -1,0 +1,9 @@
+{
+  "total_trials": 100,
+  "total_successes": 1,
+  "overall_success_rate": 0.01,
+  "results_csv": "experiments/outputs/fmb_plots/lgp_combined_results.csv",
+  "summary_csv": "experiments/outputs/fmb_plots/lgp_combined_summary.csv",
+  "png": "experiments/outputs/fmb_plots/lgp_combined_results.png",
+  "svg": "experiments/outputs/fmb_plots/lgp_combined_results.svg"
+}

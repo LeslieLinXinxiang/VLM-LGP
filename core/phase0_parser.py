@@ -70,6 +70,13 @@ def _is_near(a: float, b: float, eps: float = 1e-6) -> bool:
 
 
 def _classify_object_type(shape: str, logical_id_hint: str, size_signature: List[float], mesh_path: str) -> str:
+    # FMB shape pattern: shape_N_M or shape_N (preserve for named scenes)
+    if logical_id_hint:
+        lid_l = (logical_id_hint or "").lower()
+        m = re.search(r"shape_(\d+)", lid_l)
+        if m:
+            return f"shape_{m.group(1)}"
+    
     if shape == "cylinder":
         return "cylinder"
 
@@ -84,14 +91,8 @@ def _classify_object_type(shape: str, logical_id_hint: str, size_signature: List
 
     if shape == "mesh":
         mesh_l = (mesh_path or "").lower()
-        lid_l = (logical_id_hint or "").lower()
         
-        # FMB shape pattern: shape_N_M
-        m = re.search(r"shape_(\d+)", lid_l)
-        if m:
-            return f"shape_{m.group(1)}"
-            
-        if "tri" in mesh_l or "prism" in mesh_l or "tri" in lid_l:
+        if "tri" in mesh_l or "prism" in mesh_l:
             return "triprism"
         return "mesh"
 

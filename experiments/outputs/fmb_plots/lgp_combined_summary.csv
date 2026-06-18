@@ -1,0 +1,11 @@
+scenario,nr_r,trials,successes,success_rate,median_runtime_s,mean_runtime_s
+s001,nr,10,0,0.0,,
+s001,r,10,0,0.0,,
+s002,nr,10,0,0.0,,
+s002,r,10,0,0.0,,
+s003,nr,10,0,0.0,,
+s003,r,10,0,0.0,,
+s004,nr,10,0,0.0,,
+s004,r,10,1,0.1,97.41,97.41
+s005,nr,10,0,0.0,,
+s005,r,10,0,0.0,,

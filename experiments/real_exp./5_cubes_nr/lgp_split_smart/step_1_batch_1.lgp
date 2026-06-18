@@ -1,0 +1,4 @@
+fol: <shared_rules.fol>
+terminal: " (on Table_Left cube_1) "
+genericCollisions: false
+coll: []

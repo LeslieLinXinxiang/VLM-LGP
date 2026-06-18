@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "method": "gmm_esdf_mvp",
-  "scene_input": "trial_01_r.g",
+  "scene_input": "unnamed.g",
   "params": {
     "alpha": 0.6,
     "beta": 0.4,
@@ -13,207 +13,275 @@
   "obstacle_count": 0,
   "objects": [
     {
-      "logical_id": "shape_2_2",
-      "anon_id": "shape_2_1",
-      "object_type": "shape_2",
-      "sample_point_source": "center",
+      "logical_id": "cube_1",
+      "anon_id": "obj_01",
+      "object_type": "cube",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.1856,
-        0.2321,
-        0.6625
+        0.1696,
+        -0.0005999999999999894,
+        0.7675000000000001
       ],
-      "gmm_score": 0.2290545490065565,
+      "gmm_score": 0.3374669068173372,
       "esdf_score": 1.0,
-      "reachability_score": 0.5374327294039339,
-      "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
-    },
-    {
-      "logical_id": "shape_2_4",
-      "anon_id": "shape_2_2",
-      "object_type": "shape_2",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3959,
-        0.2933,
-        0.6625
-      ],
-      "gmm_score": 0.16666919163311453,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5000015149798688,
-      "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
-    },
-    {
-      "logical_id": "shape_2_1",
-      "anon_id": "shape_2_3",
-      "object_type": "shape_2",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.0884,
-        -0.2387,
-        0.6625
-      ],
-      "gmm_score": 0.1787155358435463,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5072293215061278,
+      "reachability_score": 0.6024801440904024,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     {
-      "logical_id": "shape_2_3",
-      "anon_id": "shape_2_4",
-      "object_type": "shape_2",
+      "logical_id": "marker_1",
+      "anon_id": "obj_02",
+      "object_type": "marker",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.3584,
-        -0.3197,
-        0.6625
+        0.3487,
+        0.09820000000000001,
+        0.7775000000000001
       ],
-      "gmm_score": 0.17722565705764057,
+      "gmm_score": 0.4139016910438458,
       "esdf_score": 1.0,
-      "reachability_score": 0.5063353942345844,
+      "reachability_score": 0.6483410146263074,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "mesh_2",
+      "anon_id": "obj_03",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.3487,
+        0.09820000000000001,
+        0.745
+      ],
+      "gmm_score": 0.4260504970631737,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6556302982379043,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "mesh_3",
+      "anon_id": "obj_04",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.1696,
+        -0.0005999999999999894,
+        0.745
+      ],
+      "gmm_score": 0.33890611268150095,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6033436676089006,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "mesh_1",
+      "anon_id": "obj_05",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.0,
+        0.25,
+        0.73
+      ],
+      "gmm_score": 0.14624673095696827,
+      "esdf_score": 1.0,
+      "reachability_score": 0.487748038574181,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "mesh_4",
+      "anon_id": "obj_06",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        -0.3516,
+        0.0819,
+        0.718
+      ],
+      "gmm_score": 0.125868788656683,
+      "esdf_score": 1.0,
+      "reachability_score": 0.47552127319400983,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     {
       "logical_id": "cube_2",
-      "anon_id": "shape_4_1",
+      "anon_id": "obj_07",
       "object_type": "cube",
-      "sample_point_source": "handle",
+      "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.1911,
-        0.3892,
-        0.7224999999999999
+        0.3487,
+        0.09820000000000001,
+        0.7175
       ],
-      "gmm_score": 0.22903130622949563,
+      "gmm_score": 0.4131863097939541,
       "esdf_score": 1.0,
-      "reachability_score": 0.5374187837376974,
+      "reachability_score": 0.6479117858763724,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     {
-      "logical_id": "cube_1",
-      "anon_id": "shape_4_2",
-      "object_type": "cube",
-      "sample_point_source": "handle",
+      "logical_id": "mesh_5",
+      "anon_id": "obj_08",
+      "object_type": "mesh",
+      "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.274,
-        -0.2708,
-        0.7224999999999999
+        -0.173,
+        0.4708,
+        0.718
       ],
-      "gmm_score": 0.16816845517841453,
+      "gmm_score": 0.13331392284789817,
       "esdf_score": 1.0,
-      "reachability_score": 0.5009010731070487,
+      "reachability_score": 0.47998835370873894,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     }
   ],
   "decisions": {
-    "shape_2_2": {
-      "logical_id": "shape_2_2",
-      "anon_id": "shape_2_1",
-      "object_type": "shape_2",
-      "sample_point_source": "center",
+    "cube_1": {
+      "logical_id": "cube_1",
+      "anon_id": "obj_01",
+      "object_type": "cube",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.1856,
-        0.2321,
-        0.6625
+        0.1696,
+        -0.0005999999999999894,
+        0.7675000000000001
       ],
-      "gmm_score": 0.2290545490065565,
+      "gmm_score": 0.3374669068173372,
       "esdf_score": 1.0,
-      "reachability_score": 0.5374327294039339,
-      "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
-    },
-    "shape_2_4": {
-      "logical_id": "shape_2_4",
-      "anon_id": "shape_2_2",
-      "object_type": "shape_2",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.3959,
-        0.2933,
-        0.6625
-      ],
-      "gmm_score": 0.16666919163311453,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5000015149798688,
-      "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
-    },
-    "shape_2_1": {
-      "logical_id": "shape_2_1",
-      "anon_id": "shape_2_3",
-      "object_type": "shape_2",
-      "sample_point_source": "center",
-      "sample_point_xyz": [
-        0.0884,
-        -0.2387,
-        0.6625
-      ],
-      "gmm_score": 0.1787155358435463,
-      "esdf_score": 1.0,
-      "reachability_score": 0.5072293215061278,
+      "reachability_score": 0.6024801440904024,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
-    "shape_2_3": {
-      "logical_id": "shape_2_3",
-      "anon_id": "shape_2_4",
-      "object_type": "shape_2",
+    "marker_1": {
+      "logical_id": "marker_1",
+      "anon_id": "obj_02",
+      "object_type": "marker",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.3584,
-        -0.3197,
-        0.6625
+        0.3487,
+        0.09820000000000001,
+        0.7775000000000001
       ],
-      "gmm_score": 0.17722565705764057,
+      "gmm_score": 0.4139016910438458,
       "esdf_score": 1.0,
-      "reachability_score": 0.5063353942345844,
+      "reachability_score": 0.6483410146263074,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "mesh_2": {
+      "logical_id": "mesh_2",
+      "anon_id": "obj_03",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.3487,
+        0.09820000000000001,
+        0.745
+      ],
+      "gmm_score": 0.4260504970631737,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6556302982379043,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "mesh_3": {
+      "logical_id": "mesh_3",
+      "anon_id": "obj_04",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.1696,
+        -0.0005999999999999894,
+        0.745
+      ],
+      "gmm_score": 0.33890611268150095,
+      "esdf_score": 1.0,
+      "reachability_score": 0.6033436676089006,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "mesh_1": {
+      "logical_id": "mesh_1",
+      "anon_id": "obj_05",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        0.0,
+        0.25,
+        0.73
+      ],
+      "gmm_score": 0.14624673095696827,
+      "esdf_score": 1.0,
+      "reachability_score": 0.487748038574181,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "mesh_4": {
+      "logical_id": "mesh_4",
+      "anon_id": "obj_06",
+      "object_type": "mesh",
+      "sample_point_source": "center",
+      "sample_point_xyz": [
+        -0.3516,
+        0.0819,
+        0.718
+      ],
+      "gmm_score": 0.125868788656683,
+      "esdf_score": 1.0,
+      "reachability_score": 0.47552127319400983,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
     "cube_2": {
       "logical_id": "cube_2",
-      "anon_id": "shape_4_1",
+      "anon_id": "obj_07",
       "object_type": "cube",
-      "sample_point_source": "handle",
+      "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.1911,
-        0.3892,
-        0.7224999999999999
+        0.3487,
+        0.09820000000000001,
+        0.7175
       ],
-      "gmm_score": 0.22903130622949563,
+      "gmm_score": 0.4131863097939541,
       "esdf_score": 1.0,
-      "reachability_score": 0.5374187837376974,
+      "reachability_score": 0.6479117858763724,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
     },
-    "cube_1": {
-      "logical_id": "cube_1",
-      "anon_id": "shape_4_2",
-      "object_type": "cube",
-      "sample_point_source": "handle",
+    "mesh_5": {
+      "logical_id": "mesh_5",
+      "anon_id": "obj_08",
+      "object_type": "mesh",
+      "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.274,
-        -0.2708,
-        0.7224999999999999
+        -0.173,
+        0.4708,
+        0.718
       ],
-      "gmm_score": 0.16816845517841453,
+      "gmm_score": 0.13331392284789817,
       "esdf_score": 1.0,
-      "reachability_score": 0.5009010731070487,
+      "reachability_score": 0.47998835370873894,
       "threshold": 0.45,
       "decision": "feasible",
       "reason": "score>=tau_r"
@@ -222,7 +290,7 @@
   "policy_gate": {
     "enabled": true,
     "status": "ok",
-    "infeasible_count": 2,
+    "infeasible_count": 0,
     "error_count": 0,
     "reference": "action_pick/action_pick_cylinder constraints in manipTools.cpp"
   }

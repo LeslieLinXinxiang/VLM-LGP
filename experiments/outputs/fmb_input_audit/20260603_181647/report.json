@@ -1,0 +1,174 @@
+{
+  "totals": {
+    "trials": 2,
+    "fatal_trials": 0,
+    "ok_trials": 2,
+    "fatal_issues": 0,
+    "info_issues": 0
+  },
+  "audits": [
+    {
+      "trial_tag": "3objs/s001/trial_01_nr/lgp_split_global",
+      "mag": "3objs",
+      "scenario": "001",
+      "trial_idx": 1,
+      "mode": "nr",
+      "policy": "lgp_split_global",
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_01.md",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_01_nr.g",
+      "lgp_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_global",
+      "status": "OK",
+      "issues": [],
+      "expected_objects": [
+        {
+          "family": "shape_2",
+          "index": 1,
+          "expected_name": "shape_2_1",
+          "md_id": 1,
+          "md_object": "Shape 2"
+        },
+        {
+          "family": "shape_2",
+          "index": 2,
+          "expected_name": "shape_2_2",
+          "md_id": 2,
+          "md_object": "Shape 2"
+        },
+        {
+          "family": "shape_4",
+          "index": 1,
+          "expected_name": "shape_4_1",
+          "md_id": 3,
+          "md_object": "Shape 4"
+        }
+      ],
+      "scene_objects": [
+        {
+          "line_no": 27,
+          "name": "shape_2_1",
+          "parent": "table",
+          "logical_flags": [
+            "is_object",
+            "is_box"
+          ],
+          "is_object": true,
+          "is_place": false,
+          "translation": null,
+          "raw_line": "shape_2_1 (table) { Q:\"t(0.1543 -0.3855 0.063) d(-90 0 0 1) d(-172.79 0 0 1)\", joint:rigid, shape:mesh, mesh:\"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_1.obj\", color:[0.2 1.0 0.2 1], contact:1, mass:0.1, logical:{ is_object, is_box } }"
+        },
+        {
+          "line_no": 30,
+          "name": "shape_2_2",
+          "parent": "table",
+          "logical_flags": [
+            "is_object",
+            "is_box"
+          ],
+          "is_object": true,
+          "is_place": false,
+          "translation": null,
+          "raw_line": "shape_2_2 (table) { Q:\"t(0.2834 0.4212 0.063) d(-90 0 0 1) d(50.25 0 0 1)\", joint:rigid, shape:mesh, mesh:\"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_2.obj\", color:[0.2 1.0 0.2 1], contact:1, mass:0.1, logical:{ is_object, is_box } }"
+        },
+        {
+          "line_no": 33,
+          "name": "shape_4_1",
+          "parent": "table",
+          "logical_flags": [
+            "is_object"
+          ],
+          "is_object": true,
+          "is_place": false,
+          "translation": null,
+          "raw_line": "shape_4_1 (table) { Q:\"t(-0.2157 0.3465 0.0625) d(4.62 0 0 1)\", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.0], color:[1.0 0.5 0.2], contact:0, logical:{ is_object } }"
+        }
+      ],
+      "lgp_files": [
+        "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_global/step_1_batch_1.lgp",
+        "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_global/step_1_batch_2.lgp",
+        "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_global/step_2_batch_1.lgp"
+      ]
+    },
+    {
+      "trial_tag": "3objs/s001/trial_01_nr/lgp_split_smart",
+      "mag": "3objs",
+      "scenario": "001",
+      "trial_idx": 1,
+      "mode": "nr",
+      "policy": "lgp_split_smart",
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_01.md",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_01_nr.g",
+      "lgp_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_smart",
+      "status": "OK",
+      "issues": [],
+      "expected_objects": [
+        {
+          "family": "shape_2",
+          "index": 1,
+          "expected_name": "shape_2_1",
+          "md_id": 1,
+          "md_object": "Shape 2"
+        },
+        {
+          "family": "shape_2",
+          "index": 2,
+          "expected_name": "shape_2_2",
+          "md_id": 2,
+          "md_object": "Shape 2"
+        },
+        {
+          "family": "shape_4",
+          "index": 1,
+          "expected_name": "shape_4_1",
+          "md_id": 3,
+          "md_object": "Shape 4"
+        }
+      ],
+      "scene_objects": [
+        {
+          "line_no": 27,
+          "name": "shape_2_1",
+          "parent": "table",
+          "logical_flags": [
+            "is_object",
+            "is_box"
+          ],
+          "is_object": true,
+          "is_place": false,
+          "translation": null,
+          "raw_line": "shape_2_1 (table) { Q:\"t(0.1543 -0.3855 0.063) d(-90 0 0 1) d(-172.79 0 0 1)\", joint:rigid, shape:mesh, mesh:\"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_1.obj\", color:[0.2 1.0 0.2 1], contact:1, mass:0.1, logical:{ is_object, is_box } }"
+        },
+        {
+          "line_no": 30,
+          "name": "shape_2_2",
+          "parent": "table",
+          "logical_flags": [
+            "is_object",
+            "is_box"
+          ],
+          "is_object": true,
+          "is_place": false,
+          "translation": null,
+          "raw_line": "shape_2_2 (table) { Q:\"t(0.2834 0.4212 0.063) d(-90 0 0 1) d(50.25 0 0 1)\", joint:rigid, shape:mesh, mesh:\"/home/leslie/Projects/VLM_LGP/assets/fmb/new_fmb/shape_2_2.obj\", color:[0.2 1.0 0.2 1], contact:1, mass:0.1, logical:{ is_object, is_box } }"
+        },
+        {
+          "line_no": 33,
+          "name": "shape_4_1",
+          "parent": "table",
+          "logical_flags": [
+            "is_object"
+          ],
+          "is_object": true,
+          "is_place": false,
+          "translation": null,
+          "raw_line": "shape_4_1 (table) { Q:\"t(-0.2157 0.3465 0.0625) d(4.62 0 0 1)\", joint:rigid, shape:ssBox, size:[0.025 0.025 0.025 0.0], color:[1.0 0.5 0.2], contact:0, logical:{ is_object } }"
+        }
+      ],
+      "lgp_files": [
+        "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_smart/step_1_batch_1.lgp",
+        "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_smart/step_1_batch_2.lgp",
+        "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s001/trial_01_nr/lgp_split_smart/step_2_batch_1.lgp"
+      ]
+    }
+  ],
+  "issues": []
+}

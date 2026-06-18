@@ -199,9 +199,22 @@ def build_id_to_name(phase1_objects: list, inventory_data: list = None) -> dict:
         obj_name_norm = _norm(obj["object"])
         prefix = _TYPE_PREFIX.get(obj_name_norm, obj_name_norm.replace(" ", "_"))
         
-        if inventory_data and prefix in inventory_by_prefix and inventory_by_prefix[prefix]:
+        # Handle prefix aliases to be robust to rect/rectprism and tri/triprism naming differences
+        lookup_prefix = prefix
+        if inventory_data:
+            if lookup_prefix not in inventory_by_prefix or not inventory_by_prefix[lookup_prefix]:
+                if lookup_prefix == "rectprism" and "rect" in inventory_by_prefix and inventory_by_prefix["rect"]:
+                    lookup_prefix = "rect"
+                elif lookup_prefix == "rect" and "rectprism" in inventory_by_prefix and inventory_by_prefix["rectprism"]:
+                    lookup_prefix = "rectprism"
+                elif lookup_prefix == "triprism" and "tri" in inventory_by_prefix and inventory_by_prefix["tri"]:
+                    lookup_prefix = "tri"
+                elif lookup_prefix == "tri" and "triprism" in inventory_by_prefix and inventory_by_prefix["triprism"]:
+                    lookup_prefix = "triprism"
+
+        if inventory_data and lookup_prefix in inventory_by_prefix and inventory_by_prefix[lookup_prefix]:
             # Exact Match Pop from dictionary
-            result[oid] = inventory_by_prefix[prefix].pop(0)
+            result[oid] = inventory_by_prefix[lookup_prefix].pop(0)
         else:
             # Fallback legacy behavior if dictionary is depleted/missing
             counters[prefix] = counters.get(prefix, 0) + 1
@@ -246,7 +259,7 @@ def _terminal(obj_name: str, edges: list, id_to_name: dict, id_to_obj: dict) -> 
                 slot = f"Table_{slot_key.capitalize()}"
                 return f"(on {slot} {obj_name})"
             # rectprism_N: rectprism_1_Left / rectprism_1_Right / rectprism_1_Center
-            m = re.match(r"^(rectprism|longrect)_(\d+)$", sup_name)
+            m = re.match(r"^(rectprism|rect|longrect)_(\d+)$", sup_name)
             if m:
                 # Use sup_name directly to preserve case (e.g., 'rectprism_1')
                 slot = f"{sup_name}_{slot_key.capitalize()}"
@@ -376,40 +389,43 @@ def generate_step_files(
     batches   = selected["batches"]
     generated = []
 
-    for step_idx, batch in enumerate(batches, start=1):
-        if combine_terminals:
-            # Combine all terminals for the entire batch into ONE file
-            combined_terminals = []
-            picks = set()
-            places = set()
+    if combine_terminals:
+        # Merge the entire trial into a single task file.
+        # Keep md order: batches are traversed in order, then objects in each batch.
+        combined_terminals = []
+        combined_obj_names = []
+        seen_ids = set()
 
+        for batch in batches:
             for obj_id in batch:
+                if obj_id in seen_ids:
+                    continue
+                seen_ids.add(obj_id)
+
                 obj      = id_to_obj[obj_id]
                 obj_name = id_to_name[obj_id]
                 edges    = obj["edges"]
                 if not edges:
                     raise ValueError(f"Object id={obj_id} ({obj_name}) has no edges/supporters.")
-                
+
                 term = _terminal(obj_name, edges, id_to_name, id_to_obj)
-                num_supporters = len(term.strip("()").split()) - 2
-                
-                picks.add(_pick_rule(_norm(obj["object"])))
-                places.add(_place_rule(num_supporters))
                 combined_terminals.append(term)
-            
-            terminal = " ".join(combined_terminals)
-            base     = f"step_{step_idx}_batch_1" # One batch per step
-            fol_path = os.path.join(out_dir, f"{base}.fol")
-            lgp_path = os.path.join(out_dir, f"{base}.lgp")
-            
-            with open(fol_path, "w") as f:
-                f.write(_global_fol_content(has_wait=has_wait))
-            with open(lgp_path, "w") as f:
-                f.write(_lgp_content(f"{base}.fol", terminal, collision_mode=collision_mode))
-            
-            generated.extend([fol_path, lgp_path])
-            print(f"  [codegen] {base:25s}  obj=COMBINED    terminal={terminal}")
-        else:
+                combined_obj_names.append(obj_name)
+
+        terminal = " ".join(combined_terminals)
+        base     = "step_1_batch_1"
+        fol_path = os.path.join(out_dir, f"{base}.fol")
+        lgp_path = os.path.join(out_dir, f"{base}.lgp")
+
+        with open(fol_path, "w") as f:
+            f.write(_global_fol_content(has_wait=has_wait))
+        with open(lgp_path, "w") as f:
+            f.write(_lgp_content(f"{base}.fol", terminal, collision_mode=collision_mode))
+
+        generated.extend([fol_path, lgp_path])
+        print(f"  [codegen] {base:25s}  obj=COMBINED    terminal={terminal}")
+    else:
+        for step_idx, batch in enumerate(batches, start=1):
             for batch_idx, obj_id in enumerate(batch, start=1):
                 obj      = id_to_obj[obj_id]
                 obj_name = id_to_name[obj_id]

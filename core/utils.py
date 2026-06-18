@@ -146,6 +146,11 @@ def parse_and_inject(src_g_path, mapping_dict, dst_g_path):
     sorted_keys = sorted(mapping_dict.keys(), key=len, reverse=True)
     for anon_id in sorted_keys:
         semantic_name = mapping_dict[anon_id]
+        # Rename the sub-frames like obj_03_Left to rect_1_Left first
+        for suffix in ["_Left", "_Right", "_Center", "_Back", "_Front"]:
+            pattern_suffix = re.compile(rf"\b{re.escape(anon_id + suffix)}\b")
+            content = pattern_suffix.sub(semantic_name + suffix, content)
+            
         # Use word boundaries and negative lookahead for file extensions to avoid corrupting mesh paths
         pattern = re.compile(rf"\b{re.escape(anon_id)}\b(?!\.(?:obj|stl|g|dae|h5|yml))")
         content = pattern.sub(semantic_name, content)

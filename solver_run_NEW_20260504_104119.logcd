@@ -1,0 +1,10 @@
+STACK6 ./bin/x.exe(+0xb985) [0x60f709199985]
+STACK5 /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main
+STACK4 /lib/x86_64-linux-gnu/libc.so.6(+0x2a1ca) [0x7a091ec2a1ca]
+STACK3 ./bin/x.exe(+0x8361) [0x60f709196361]
+STACK2 rai::Configuration::addFile(char const*, char const*)
+STACK1 rai::FileToken::getIs()
+STACK0 rai::LogToken::~LogToken()
+== ERROR:util.cpp:getIs:1106(-2) could not open file '6' for input from '/home/leslie/Projects/VLM_LGP / /home/leslie/Projects/VLM_LGP'
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  util.cpp:getIs:1106(-2) could not open file '6' for input from '/home/leslie/Projects/VLM_LGP / /home/leslie/Projects/VLM_LGP'

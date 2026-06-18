@@ -1,0 +1,4851 @@
+{
+  "totals": {
+    "scene_files": 300,
+    "md_matches": 300,
+    "with_any_issue": 14,
+    "fatal_scenes": 14,
+    "missing_md": 0
+  },
+  "audits": [
+    {
+      "scene_tag": "3objs/s001/trial_01_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_01.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_01_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_01.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_02_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_02.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_02_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_02.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_03_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_03.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_03_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_03.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_04_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_04.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_04_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_04.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_05_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_05.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_05_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_05.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_06_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_06.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_06_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_06.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_07_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_07.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_07_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_07.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_08_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_08.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_08_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_08.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_09_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_09.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_09_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_09.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_10_nr",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_10.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s001/trial_10_r",
+      "mag": "3objs",
+      "scenario": "s001",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/001/trial_10.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_01_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_01.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_01_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_01.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_02_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_02.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_02_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_02.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_03_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_03.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_03_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_03.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_04_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_04.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_04_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_04.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_05_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_05.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_05_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_05.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_06_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_06.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_06_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_06.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_07_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_07.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_07_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_07.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_08_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_08.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_08_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_08.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_09_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_09.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_09_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_09.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_10_nr",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_10.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s002/trial_10_r",
+      "mag": "3objs",
+      "scenario": "s002",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_10.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_01_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_01.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_01_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_01.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_02_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_02.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_02_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_02.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_03_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_03.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_03_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_03.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_04_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_04.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_04_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_04.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_05_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_05.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_05_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_05.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_06_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_06.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_06_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_06.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_07_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_07.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_07_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_07.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_08_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_08.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_08_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_08.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_09_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_09.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_09_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_09.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_10_nr",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_10.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s003/trial_10_r",
+      "mag": "3objs",
+      "scenario": "s003",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_10.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s004/trial_01_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_01.md",
+      "expected_count": 2,
+      "actual_count": 2,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s004/trial_01_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_01.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s004/trial_02_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_02.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_02_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_02.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_03_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_03.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_03_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_03.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_04_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_04.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_04_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_04.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_05_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_05.md",
+      "expected_count": 2,
+      "actual_count": 2,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s004/trial_05_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_05.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s004/trial_06_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_06.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_06_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_06.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_07_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_07.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_07_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_07.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_08_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_08.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_08_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_08.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_09_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_09.md",
+      "expected_count": 3,
+      "actual_count": 2,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 3,
+            "actual_count": 2
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_3"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_09_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_09.md",
+      "expected_count": 6,
+      "actual_count": 4,
+      "issues": [
+        {
+          "severity": "FATAL",
+          "category": "scene_count_mismatch",
+          "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+          "evidence": {
+            "expected_count": 6,
+            "actual_count": 4
+          }
+        },
+        {
+          "severity": "FATAL",
+          "category": "scene_missing_objects",
+          "message": "Scene is missing expected task objects",
+          "evidence": {
+            "missing": [
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "expected": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4",
+              "shape_2_5",
+              "shape_2_6"
+            ],
+            "actual": [
+              "shape_2_1",
+              "shape_2_2",
+              "shape_2_3",
+              "shape_2_4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scene_tag": "3objs/s004/trial_10_nr",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_10.md",
+      "expected_count": 2,
+      "actual_count": 2,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s004/trial_10_r",
+      "mag": "3objs",
+      "scenario": "s004",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_10.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_01_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_01.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_01_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_01.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_02_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_02.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_02_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_02.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_03_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_03.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_03_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_03.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_04_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_04.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_04_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_04.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_05_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_05.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_05_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_05.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_06_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_06.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_06_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_06.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_07_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_07.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_07_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_07.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_08_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_08.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_08_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_08.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_09_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_09.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_09_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_09.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_10_nr",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_10.md",
+      "expected_count": 3,
+      "actual_count": 3,
+      "issues": []
+    },
+    {
+      "scene_tag": "3objs/s005/trial_10_r",
+      "mag": "3objs",
+      "scenario": "s005",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s005/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/005/trial_10.md",
+      "expected_count": 6,
+      "actual_count": 6,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_01_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_01.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_01_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_01.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_02_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_02.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_02_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_02.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_03_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_03.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_03_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_03.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_04_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_04.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_04_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_04.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_05_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_05.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_05_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_05.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_06_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_06.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_06_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_06.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_07_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_07.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_07_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_07.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_08_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_08.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_08_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_08.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_09_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_09.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_09_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_09.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_10_nr",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_10.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s001/trial_10_r",
+      "mag": "4objs",
+      "scenario": "s001",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_10.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_01_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_01.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_01_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_01.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_02_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_02.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_02_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_02.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_03_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_03.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_03_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_03.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_04_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_04.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_04_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_04.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_05_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_05.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_05_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_05.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_06_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_06.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_06_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_06.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_07_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_07.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_07_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_07.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_08_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_08.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_08_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_08.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_09_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_09.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_09_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_09.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_10_nr",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_10.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s002/trial_10_r",
+      "mag": "4objs",
+      "scenario": "s002",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_10.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_01_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_01.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_01_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_01.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_02_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_02.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_02_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_02.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_03_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_03.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_03_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_03.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_04_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_04.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_04_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_04.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_05_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_05.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_05_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_05.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_06_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_06.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_06_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_06.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_07_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_07.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_07_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_07.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_08_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_08.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_08_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_08.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_09_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_09.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_09_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_09.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_10_nr",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_10.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s003/trial_10_r",
+      "mag": "4objs",
+      "scenario": "s003",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/003/trial_10.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_01_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_01.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_01_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_01.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_02_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_02.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_02_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_02.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_03_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_03.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_03_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_03.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_04_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_04.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_04_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_04.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_05_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_05.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_05_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_05.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_06_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_06.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_06_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_06.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_07_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_07.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_07_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_07.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_08_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_08.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_08_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_08.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_09_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_09.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_09_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_09.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_10_nr",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_10.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s004/trial_10_r",
+      "mag": "4objs",
+      "scenario": "s004",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s004/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/004/trial_10.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_01_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_01.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_01_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_01.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_02_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_02.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_02_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_02.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_03_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_03.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_03_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_03.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_04_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_04.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_04_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_04.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_05_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_05.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_05_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_05.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_06_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_06.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_06_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_06.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_07_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_07.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_07_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_07.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_08_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_08.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_08_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_08.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_09_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_09.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_09_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_09.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_10_nr",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_10.md",
+      "expected_count": 4,
+      "actual_count": 4,
+      "issues": []
+    },
+    {
+      "scene_tag": "4objs/s005/trial_10_r",
+      "mag": "4objs",
+      "scenario": "s005",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/005/trial_10.md",
+      "expected_count": 8,
+      "actual_count": 8,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_01_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_01.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_01_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_01.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_02_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_02.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_02_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_02.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_03_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_03.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_03_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_03.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_04_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_04.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_04_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_04.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_05_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_05.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_05_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_05.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_06_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_06.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_06_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_06.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_07_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_07.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_07_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_07.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_08_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_08.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_08_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_08.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_09_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_09.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_09_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_09.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_10_nr",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_10.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s001/trial_10_r",
+      "mag": "5objs",
+      "scenario": "s001",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s001/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/001/trial_10.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_01_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_01.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_01_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_01.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_02_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_02.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_02_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_02.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_03_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_03.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_03_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_03.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_04_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_04.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_04_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_04.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_05_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_05.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_05_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_05.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_06_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_06.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_06_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_06.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_07_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_07.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_07_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_07.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_08_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_08.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_08_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_08.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_09_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_09.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_09_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_09.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_10_nr",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_10.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s002/trial_10_r",
+      "mag": "5objs",
+      "scenario": "s002",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_10.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_01_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_01.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_01_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_01.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_02_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_02.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_02_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_02.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_03_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_03.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_03_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_03.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_04_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_04.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_04_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_04.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_05_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_05.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_05_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_05.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_06_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_06.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_06_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_06.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_07_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_07.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_07_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_07.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_08_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_08.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_08_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_08.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_09_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_09.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_09_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_09.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_10_nr",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_10.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s003/trial_10_r",
+      "mag": "5objs",
+      "scenario": "s003",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s003/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/003/trial_10.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_01_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_01.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_01_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_01.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_02_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_02.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_02_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_02.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_03_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_03.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_03_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_03.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_04_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_04.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_04_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_04.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_05_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_05.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_05_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_05.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_06_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_06.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_06_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_06.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_07_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_07.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_07_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_07.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_08_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_08.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_08_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_08.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_09_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_09.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_09_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_09.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_10_nr",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_10.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s004/trial_10_r",
+      "mag": "5objs",
+      "scenario": "s004",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s004/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/004/trial_10.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_01_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 1,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_01_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_01.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_01_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 1,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_01_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_01.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_02_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 2,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_02_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_02.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_02_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 2,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_02_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_02.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_03_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 3,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_03_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_03.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_03_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 3,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_03_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_03.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_04_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 4,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_04_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_04.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_04_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 4,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_04_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_04.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_05_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 5,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_05_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_05.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_05_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 5,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_05_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_05.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_06_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 6,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_06_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_06.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_06_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 6,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_06_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_06.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_07_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 7,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_07_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_07.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_07_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 7,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_07_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_07.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_08_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 8,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_08_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_08.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_08_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 8,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_08_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_08.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_09_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 9,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_09_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_09.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_09_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 9,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_09_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_09.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_10_nr",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 10,
+      "mode": "nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_10_nr.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_10.md",
+      "expected_count": 5,
+      "actual_count": 5,
+      "issues": []
+    },
+    {
+      "scene_tag": "5objs/s005/trial_10_r",
+      "mag": "5objs",
+      "scenario": "s005",
+      "trial_idx": 10,
+      "mode": "r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_10_r.g",
+      "md_exists": true,
+      "md_path": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_10.md",
+      "expected_count": 10,
+      "actual_count": 10,
+      "issues": []
+    }
+  ],
+  "issues": [
+    {
+      "scene_tag": "3objs/s004/trial_02_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_02_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_02_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_02_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_02_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_02_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_02_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_02_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_03_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_03_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_03_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_03_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_03_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_03_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_03_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_03_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_04_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_04_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_04_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_04_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_04_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_04_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_04_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_04_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_06_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_06_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_06_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_06_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_06_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_06_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_06_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_06_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_07_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_07_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_07_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_07_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_07_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_07_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_07_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_07_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_08_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_08_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_08_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_08_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_09_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_09_nr.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 3,
+        "actual_count": 2
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_09_nr",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_09_nr.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_3"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2"
+        ]
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_09_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_09_r.g",
+      "severity": "FATAL",
+      "category": "scene_count_mismatch",
+      "message": "Number of task objects in scene does not match FINAL_JSON expectation",
+      "evidence": {
+        "expected_count": 6,
+        "actual_count": 4
+      }
+    },
+    {
+      "scene_tag": "3objs/s004/trial_09_r",
+      "scene_path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_09_r.g",
+      "severity": "FATAL",
+      "category": "scene_missing_objects",
+      "message": "Scene is missing expected task objects",
+      "evidence": {
+        "missing": [
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "expected": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4",
+          "shape_2_5",
+          "shape_2_6"
+        ],
+        "actual": [
+          "shape_2_1",
+          "shape_2_2",
+          "shape_2_3",
+          "shape_2_4"
+        ]
+      }
+    }
+  ]
+}

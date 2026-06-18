@@ -54,9 +54,9 @@
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s005/random_trials/trial_07_r.g",
   "mode": "lgp_split_global",
   "success": false,
-  "runtime_s": 300.93,
+  "runtime_s": 301.07,
   "exit_code": -9,
   "timeout": true,
   "memory_exceeded": false,
-  "memory_peak_mb": 13819.66
+  "memory_peak_mb": 13775.2
 }

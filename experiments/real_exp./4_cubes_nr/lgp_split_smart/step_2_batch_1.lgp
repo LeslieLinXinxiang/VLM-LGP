@@ -1,0 +1,4 @@
+fol: <shared_rules.fol>
+terminal: " (on cube_1 cube_2 rect_1) "
+genericCollisions: false
+coll: []

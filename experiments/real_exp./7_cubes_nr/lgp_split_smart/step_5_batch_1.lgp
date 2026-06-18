@@ -1,0 +1,4 @@
+fol: <shared_rules.fol>
+terminal: " (on longrect_2 rect_1) "
+genericCollisions: false
+coll: []

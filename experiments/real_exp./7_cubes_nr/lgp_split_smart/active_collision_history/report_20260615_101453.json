@@ -1,0 +1,50 @@
+{
+  "task_dir": "/home/leslie/Projects/VLM_LGP/experiments/real_exp./7_cubes_nr/lgp_split_smart",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1_batch_1.lgp",
+      "action_summary": "pick_touch longrect_1 table l_gripper | place_straightOn longrect_1 l_gripper Table_Center",
+      "pair_count": 15,
+      "full_motion_solver_ms": 2494,
+      "pairs": [
+        ["cube_2", "l_finger1"],
+        ["cube_2", "l_palm"],
+        ["cube_2", "longrect_1"],
+        ["cube_3", "l_finger1"],
+        ["cube_3", "l_palm"],
+        ["cube_3", "longrect_1"],
+        ["l_finger1", "longrect_1"],
+        ["l_finger1", "table"],
+        ["l_finger2", "longrect_1"],
+        ["l_finger2", "longrect_2"],
+        ["l_finger2", "table"],
+        ["l_palm", "longrect_1"],
+        ["l_palm", "table"],
+        ["longrect_1", "longrect_2"],
+        ["longrect_1", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_2_batch_1.lgp",
+      "action_summary": "pick_touch cube_1 table l_gripper | place_straightOn cube_1 l_gripper longrect_1_Left",
+      "pair_count": 13,
+      "full_motion_solver_ms": 927,
+      "pairs": [
+        ["cube_1", "l_finger1"],
+        ["cube_1", "l_finger2"],
+        ["cube_1", "l_palm"],
+        ["cube_1", "longrect_1"],
+        ["cube_1", "rect_1"],
+        ["cube_1", "table"],
+        ["l_finger1", "longrect_1"],
+        ["l_finger1", "rect_1"],
+        ["l_finger1", "table"],
+        ["l_finger2", "longrect_1"],
+        ["l_finger2", "table"],
+        ["l_palm", "longrect_1"],
+        ["l_palm", "table"]
+      ]
+    }
+  ]
+}

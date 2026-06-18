@@ -4,8 +4,8 @@
   "gripper": "l_gripper",
   "trajectory_log_path": "/home/leslie/Projects/VLM_LGP/generated/pick_waypoint_trajectory.log",
   "results": {
-    "cube_1": {
-      "object_type": "box",
+    "mesh_5": {
+      "object_type": "unknown",
       "pick_action": "pick_touch",
       "status": "feasible",
       "message": "solver feasible"

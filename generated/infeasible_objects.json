@@ -1,25 +1,6 @@
 {
   "status": "ok",
   "scene_path": "/home/leslie/Projects/VLM_LGP/generated/scene/scene_named.g",
-  "infeasible_objects": {
-    "shape_2_2": {
-      "status": "infeasible",
-      "message": "komo_policy_gate_infeasible",
-      "pick_action": "pick_touch",
-      "object_type": "shape_2",
-      "reachability_score": 0.5374327294039339,
-      "gmm_score": 0.2290545490065565,
-      "esdf_score": 1.0
-    },
-    "shape_2_4": {
-      "status": "infeasible",
-      "message": "komo_policy_gate_infeasible",
-      "pick_action": "pick_touch",
-      "object_type": "shape_2",
-      "reachability_score": 0.5000015149798688,
-      "gmm_score": 0.16666919163311453,
-      "esdf_score": 1.0
-    }
-  },
+  "infeasible_objects": {},
   "errors": {}
 }

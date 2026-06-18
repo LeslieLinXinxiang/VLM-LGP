@@ -1,0 +1,28 @@
+{
+  "severity": "FATAL",
+  "category": "scene_extra_objects",
+  "trial_tag": "3objs/s001/trial_01_r/lgp_split_smart",
+  "stage": "scene",
+  "message": "Scene contains extra task objects not present in FINAL_JSON",
+  "path": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s001/random_trials/trial_01_r.g",
+  "evidence": {
+    "extra": [
+      "shape_2_3",
+      "shape_2_4",
+      "shape_4_2"
+    ],
+    "expected": [
+      "shape_2_1",
+      "shape_2_2",
+      "shape_4_1"
+    ],
+    "actual": [
+      "shape_2_1",
+      "shape_2_2",
+      "shape_2_3",
+      "shape_2_4",
+      "shape_4_1",
+      "shape_4_2"
+    ]
+  }
+}

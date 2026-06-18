@@ -1,0 +1,67 @@
+{
+  "task_dir": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/LGP/FMB/3objs/s003/trial_09_r/lgp_split_smart",
+  "radius_m": 0.15,
+  "subtasks": [
+    {
+      "lgp_file": "step_1_batch_1.lgp",
+      "action_summary": "pick_touch shape_3_1 table l_gripper | place_straightOn shape_3_1 l_gripper Table_Left",
+      "pair_count": 9,
+      "full_motion_solver_ms": 6212,
+      "pairs": [
+        ["l_finger1", "shape_3_1_mesh"],
+        ["l_finger1", "shape_3_2_mesh"],
+        ["l_finger1", "shape_3_3_mesh"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_3_1_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_3_1_mesh"],
+        ["l_palm", "shape_3_3_mesh"],
+        ["l_palm", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_1_batch_2.lgp",
+      "action_summary": "pick_touch shape_3_1 table l_gripper | place_straightOn shape_3_1 l_gripper table | pick_touch shape_3_2 table l_gripper | place_straightOn shape_3_2 l_gripper Table_Center",
+      "pair_count": 18,
+      "full_motion_solver_ms": 12993,
+      "pairs": [
+        ["l_finger1", "l_panda_coll0"],
+        ["l_finger1", "l_panda_coll1"],
+        ["l_finger1", "shape_3_1_mesh"],
+        ["l_finger1", "shape_3_2_mesh"],
+        ["l_finger1", "table"],
+        ["l_finger2", "l_panda_coll0"],
+        ["l_finger2", "l_panda_coll1"],
+        ["l_finger2", "shape_3_1_mesh"],
+        ["l_finger2", "shape_3_2_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "l_panda_coll0"],
+        ["l_palm", "l_panda_coll1"],
+        ["l_palm", "shape_3_1_mesh"],
+        ["l_palm", "shape_3_2_mesh"],
+        ["l_palm", "table"],
+        ["l_panda_coll0", "shape_3_1_mesh"],
+        ["l_panda_coll1", "shape_3_1_mesh"],
+        ["shape_3_1_mesh", "table"]
+      ]
+    },
+    {
+      "lgp_file": "step_2_batch_1.lgp",
+      "action_summary": "pick_touch shape_3_3 table l_gripper | place_straightOn shape_3_3 l_gripper Table_Right",
+      "pair_count": 10,
+      "full_motion_solver_ms": 2782,
+      "pairs": [
+        ["l_finger1", "shape_3_2_mesh"],
+        ["l_finger1", "shape_3_3_mesh"],
+        ["l_finger1", "table"],
+        ["l_finger2", "shape_3_2_mesh"],
+        ["l_finger2", "shape_3_3_mesh"],
+        ["l_finger2", "table"],
+        ["l_palm", "shape_3_2_mesh"],
+        ["l_palm", "shape_3_3_mesh"],
+        ["l_palm", "table"],
+        ["shape_3_2_mesh", "shape_3_3_mesh"]
+      ]
+    }
+  ]
+}

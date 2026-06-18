@@ -1,0 +1,4 @@
+fol: <shared_rules.fol>
+terminal: " (on Table_Center rect_2) "
+genericCollisions: false
+coll: []
