@@ -1,5 +1,5 @@
 ** compiled at:     Jan 26 2026 10:17:56
-** execution start: 2026-06-18 10:35:20:479230
+** execution start: 2026-06-18 11:08:35:941076
 graph.cpp:initParameters:1589(3) opening config file 'rai.cfg'
 graph.cpp:initParameters:1596(3)  - failed
 graph.cpp:initParameters:1602(3) opening base config file '/home/leslie/Projects/VLM_LGP/rai/../local.cfg'
@@ -151,8 +151,8 @@ util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
 util.cpp:cd_file:1077(3) entering path '/home/leslie/Projects/VLM_LGP/experiments/real_exp./8_cubes_nr/lgp_split_smart' from '/home/leslie/Projects/VLM_LGP/bin'
 util.cpp:getIs:1104(3) opening input file 'temp_state.g'
 util.cpp:cd_base:1068(3) entering path '/home/leslie/Projects/VLM_LGP/bin'
-** execution stop: 2026-06-18 10:37:00:291269
-** real time: 99.8121sec
-** CPU time: 287.319
+** execution stop: 2026-06-18 11:10:17:229205
+** real time: 101.288sec
+** CPU time: 277.909
 
 ** set+queried params:
