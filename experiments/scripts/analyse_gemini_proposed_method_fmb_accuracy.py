@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 """
-Gemini proposed method accuracy analysis.
+Gemini proposed method accuracy analysis — FMB.
 
-Reads trial markdown files under experiments/evaluations/VLM/gemini_proposed_method/cubeStacking,
-extracts FINAL_JSON blocks (with FINAL_PDDL as fallback), selects a reference trial, and writes accuracy reports
-plus a cross-magnitude summary under experiments/outputs/gemini_proposed_method/accuracy_analysis/cubeStacking.
+Same methodology as analyse_gemini_proposed_method_accuracy.py (cube stacking):
+reads trial markdown files under experiments/evaluations/VLM/gemini_proposed_method/FMB,
+extracts FINAL_JSON blocks (with FINAL_PDDL as fallback), selects a reference trial per
+case as the answer with the highest support rate among that case's valid trials, and
+writes accuracy reports plus a cross-magnitude summary under
+experiments/outputs/gemini_proposed_method/accuracy_analysis/FMB.
+
+Only difference from the cube script: FMB trial files are numbered trial_01..trial_10
+(cube's are trial_02..trial_11) and the magnitude directories are 3objs/4objs/5objs.
 """
 import json
 import re
@@ -13,34 +19,11 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-EVAL_ROOT = ROOT / "experiments/evaluations/VLM/gemini_proposed_method/cubeStacking"
-OUTPUT_ROOT = ROOT / "experiments/outputs/gemini_proposed_method/accuracy_analysis/cubeStacking"
-START_TRIAL = 2  # Trials start from 02
+EVAL_ROOT = ROOT / "experiments/evaluations/VLM/gemini_proposed_method/FMB"
+OUTPUT_ROOT = ROOT / "experiments/outputs/gemini_proposed_method/accuracy_analysis/FMB"
+START_TRIAL = 1  # Trials start from 01
 NUM_TRIALS = 10  # Run 10 trials
-TRIALS = list(range(START_TRIAL, START_TRIAL + NUM_TRIALS))  # [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-
-# Manual visual-inspection overrides.
-# The automated GT-vote can only compare JSON topology text; it cannot judge whether
-# two *different* topologies are both geometrically valid readings of the same target
-# image. cube_n07_s01 hit an exact 5/10 vs 5/10 split between "id5 RectPrism bridges
-# all 3 cubes below it" and "id5 RectPrism rests on the center cube only" (see
-# accuracy_report.md for 7cubes, pre-override, for the raw trial breakdown). Manual
-# review of the target image (2026-08-17) confirmed both readings are visually valid
-# for this structure — the RectPrism's footprint is ambiguous in the source image
-# itself, not misread by the VLM in either group. Scored as fully correct rather than
-# 50% because neither group should be penalized.
-MANUAL_OVERRIDES = {
-    "cube_n07_s01": {
-        "acc": 100.0,
-        "reason": (
-            "Manually reviewed against the target image (2026-08-17): the disputed "
-            "id5 RectPrism placement has two geometrically valid readings — bridging "
-            "all 3 cubes below it, or resting on the center cube only — split exactly "
-            "5/10 vs 5/10 across trials. Neither reading is a VLM error, so this case "
-            "is scored as fully correct rather than 50%."
-        ),
-    },
-}
+TRIALS = list(range(START_TRIAL, START_TRIAL + NUM_TRIALS))  # [1, 2, ..., 10]
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
@@ -67,16 +50,19 @@ def canonicalize_graph(parsed):
     semantically meaningful — two trials that agree on every object's type/color and
     its supporter set/positions, but enumerate the objects in a different order (and
     therefore give them different ids), describe the *same* graph and must compare
-    equal. Comparing raw JSON text treats such id permutations as distinct answers,
-    which can fragment a correct majority across several differently-numbered
-    variants and let a genuinely wrong minority win the "highest support rate" GT
-    vote by accident (confirmed for FMB 3objs/004; ported here to check cube for the
-    same failure mode).
+    equal. Comparing raw JSON text (as the previous normalize_final_block did) treats
+    such id permutations as distinct answers, which can fragment a correct majority
+    across several differently-numbered variants and let a genuinely wrong minority
+    (e.g. one that always lists objects in the same fixed, incomplete order) win the
+    "highest support rate" GT vote by accident. See FMB 3objs/004 for a real instance
+    of this: 7/10 trials had the correct 3-object graph split into 3 different id
+    orderings (2+3+2), while 3/10 trials that all omitted the same object produced
+    identical text and briefly outvoted every individual correct variant.
 
-    Resolves each object's signature recursively from its supporters (id 0 = table),
+    Resolves each object's signature recursively from its supporters (id 0 = base),
     memoized, with each object's own edge set sorted so multi-supporter ordering
     doesn't matter either. Returns a hashable tuple, or None if the graph is
-    malformed (missing table, dangling supporter reference, reference cycle, ...).
+    malformed (missing base, dangling supporter reference, reference cycle, ...).
     """
     if not isinstance(parsed, dict) or "objects" not in parsed:
         return None
@@ -104,11 +90,22 @@ def canonicalize_graph(parsed):
         edges = o.get("edges", [])
         if not isinstance(edges, list):
             return None
-        # Position on a multi-supporter (bridging) edge is dropped from the signature —
-        # see the matching comment in analyse_gemini_proposed_method_fmb_accuracy.py for
-        # the empirical verification against core.graph_clustering.KMeansBranchClustering
-        # (batch grouping differs, but precedence/feasibility does not — batching is a
-        # solver efficiency choice, not a correctness criterion).
+        # Position on a multi-supporter (bridging) edge is dropped from the signature.
+        # Verified empirically against the real downstream consumer
+        # (core.graph_clustering.KMeansBranchClustering): the supporter *set* alone
+        # already pins the object's location once it bridges >1 support — including or
+        # omitting a left/right label on those edges only perturbs a k-means feature
+        # used for solver batch-grouping (confirmed by running both FMB 4objs/004 and
+        # 5objs/005 variants through generate_optimal_strategy(): batch counts differed,
+        # e.g. [[1,2],[3,4]] vs [[1,2],[3],[4]]). But batch grouping is a solver
+        # efficiency choice, not a feasibility criterion — _build_dependency_safe_batches
+        # enforces precedence gating regardless of raw cluster assignment, so every
+        # grouping still builds lower supports before upper ones. Since the supporter
+        # set (which *is* compared) is what actually determines build order and physical
+        # feasibility, a bridging edge's position label carries no scored information.
+        # Single-supporter edges are unaffected: there position is the only thing that
+        # distinguishes e.g. "front" from "back" placement on an otherwise-identical
+        # supporter, so it stays part of the signature.
         is_multi_support = len(edges) > 1
         edge_sigs = []
         for e in edges:
@@ -120,11 +117,15 @@ def canonicalize_graph(parsed):
             pos = None if is_multi_support else e.get("position")
             edge_sigs.append((str(supp_sig), pos))
         edge_sigs.sort(key=lambda x: (x[0], str(x[1])))
-        # Color deliberately excluded from the signature — see the matching comment
-        # in analyse_gemini_proposed_method_fmb_accuracy.py. Cube objects don't carry
-        # a "color" field at all today, so this is a no-op here now, but keeping the
-        # two scripts' comparison semantics identical avoids future drift if that
-        # changes.
+        # Color is deliberately excluded from the signature: it exists in the schema
+        # only to let the VLM tell apart two simultaneously-present same-type objects
+        # in its own reasoning, not as a scored attribute. Two trials that place the
+        # same type of object in the same structural position (same supporters, same
+        # position label) describe the same graph even if they name its color
+        # differently (e.g. "purple" vs "magenta" for one RGB(255,52,255) swatch,
+        # confirmed by pixel sampling on FMB 3objs/005 — both names are for the same
+        # object, neither is more "right"). Placement, not color-naming, is what this
+        # metric scores.
         sig = (o.get("object"), tuple(edge_sigs))
         sig_cache[oid] = sig
         return sig
@@ -157,7 +158,7 @@ def normalize_final_block(block: str):
             canon = canonicalize_graph(parsed)
             if canon is not None:
                 return ("CANON",) + canon
-            # Malformed graph (missing table, dangling ref, ...): fall back to raw
+            # Malformed graph (missing base, dangling ref, ...): fall back to raw
             # JSON text so it still registers as a distinct answer instead of being
             # silently dropped.
             return json.dumps(parsed, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
@@ -188,7 +189,7 @@ def load_case_trials(case_dir: Path):
 
 
 def choose_reference_trial(trials):
-    """Select reference answer: pick the answer with highest support rate (>20% threshold).
+    """Select reference answer: pick the answer with highest support rate.
     If multiple candidates exist at same high support, pick the one whose first trial appears earliest.
     """
     valid_trials = [(t, raw, norm) for t, raw, norm in trials if norm is not None]
@@ -203,12 +204,12 @@ def choose_reference_trial(trials):
             first_occurrence[norm] = t
 
     total_valid = len(valid_trials)
-    
+
     # Find the answer with the highest support rate
     best_norm = None
     best_acc = 0
     best_trial = None
-    
+
     for norm_block in freq:
         acc = freq[norm_block] / total_valid * 100
         # Prefer answer with higher support; if equal, prefer earlier trial
@@ -216,11 +217,11 @@ def choose_reference_trial(trials):
             best_acc = acc
             best_norm = norm_block
             best_trial = first_occurrence[norm_block]
-    
+
     if best_norm is None:
         t, raw, norm = valid_trials[0]
         return t, norm, freq
-    
+
     return best_trial, best_norm, freq
 
 
@@ -276,16 +277,8 @@ def build_magnitude_table(mag_dir: Path):
         trial_results, acc, gt_trial, n_valid, _ = analyse_case(case_dir)
         cells = fmt_trial_row(trial_results, gt_trial)
         gt_label = f"T{gt_trial:02d}" if gt_trial is not None else "N/A"
-
-        override = MANUAL_OVERRIDES.get(name)
-        display_acc = override["acc"] if override else acc
-        acc_cell = f"{display_acc:.0f}%*" if override else f"{display_acc:.0f}%"
-
-        rows.append([name] + cells + [acc_cell, gt_label])
-        summary_list.append({
-            "case": name, "acc": display_acc, "magnitude": mag_name, "gt_trial": gt_trial,
-            "n_valid": n_valid, "override_reason": override["reason"] if override else None,
-        })
+        rows.append([name] + cells + [f"{acc:.0f}%", gt_label])
+        summary_list.append({"case": name, "acc": acc, "magnitude": mag_name, "gt_trial": gt_trial, "n_valid": n_valid})
 
     return rows, summary_list
 
@@ -327,10 +320,6 @@ def main():
         table_md = rows_to_md_table(rows)
 
         avg_acc = sum(s["acc"] for s in summary_list) / len(summary_list) if summary_list else 0
-        override_notes = "\n".join(
-            f"\n> \\* `{s['case']}`: {s['override_reason']}"
-            for s in summary_list if s.get("override_reason")
-        )
         md_content = textwrap.dedent(f"""\
             # Accuracy Report — {mag_name}
 
@@ -340,7 +329,6 @@ def main():
             {table_md}
 
             **Average Accuracy: {avg_acc:.1f}%**
-            {override_notes}
         """)
         (out_dir / "accuracy_report.md").write_text(md_content, encoding="utf-8")
         print(f"  → {out_dir}/accuracy_report.md  (avg {avg_acc:.1f}%)")
@@ -363,9 +351,9 @@ def main():
     comp_table = rows_to_md_table(comp_rows)
     overall_avg = sum(s["acc"] for s in all_summaries) / len(all_summaries) if all_summaries else 0
     comp_md = textwrap.dedent(f"""\
-        # Cross-Magnitude Accuracy Comparison — Gemini Proposed Method
+        # Cross-Magnitude Accuracy Comparison — Gemini Proposed Method (FMB)
 
-        > Each case's accuracy = % of valid trials whose FINAL_PDDL block matches the selected reference trial.
+        > Each case's accuracy = % of valid trials whose FINAL_JSON block matches the selected reference trial.
 
         {comp_table}
 
@@ -377,20 +365,36 @@ def main():
         - Reference answer selection:
           - Find the answer with the highest support rate across all trials.
           - If multiple answers have equal high support, pick the one whose first trial appears earliest.
-        - Trial range analyzed: `trial_02.md` → `trial_11.md`.
+        - Trial range analyzed: `trial_01.md` → `trial_10.md`.
         - Graph comparison is id-numbering-independent (`canonicalize_graph`): two
           trials that agree on every object's type/color/supporter-set/position but
           assign different sequential `id`s (an artifact of scan order, not a real
           structural difference) are treated as the same answer. An earlier version
           of this script compared raw JSON text instead, which could fragment a
           correct majority across multiple id-orderings and let a wrong minority win
-          the GT vote by coincidence — this was confirmed for FMB `3objs/004` and this
-          fix was ported here to check cube for the same failure mode.
-        - Manual override: `cube_n07_s01` (7cubes) is scored 100% instead of the raw
-          50% GT-vote result. See its accuracy_report.md footnote for the reasoning —
-          the automated vote split it 5/10 vs 5/10 between two topologies that manual
-          image review confirmed are *both* geometrically valid readings of the same
-          structure, not a VLM error.
+          the GT vote by coincidence — this happened for `3objs/004` (see git history
+          of this file / accuracy_report.md for that case).
+        - Color is not scored: two trials describing the same object at the same
+          structural position (same supporters, same position label) count as the
+          same answer regardless of what color name each used (e.g. "purple" vs
+          "magenta" for one RGB(255,52,255) swatch — verified by pixel sampling on
+          `3objs/005`). Color only exists in the schema so the VLM can tell apart
+          simultaneously-present same-type objects in its own reasoning; it is not a
+          placement fact.
+        - Position on a multi-supporter (bridging) edge is not scored: verified
+          empirically against the real downstream consumer
+          (`core.graph_clustering.KMeansBranchClustering`) that including vs. omitting
+          a left/right label on a bridging edge only perturbs solver batch-grouping
+          (batch *count* can differ), never build precedence or physical feasibility —
+          `_build_dependency_safe_batches` enforces dependency-safe ordering regardless
+          of raw cluster assignment. Affected `4objs/004` and `5objs/005`.
+        - Single-supporter position (e.g. front/back on an object resting directly on
+          base) is still scored: it is the only thing distinguishing otherwise-identical
+          placements. One case (`5objs/003`) was investigated as a possible GT
+          mis-selection (majority omits position on an edge that looked off-center) but
+          pixel-measurement of the source image showed the disputed object's centerline
+          sits within 0.2% of the base's centerline — the majority's "omit" is correct
+          per the prompt's own centering rule, not a bug. Left unchanged at 70%.
     """)
     (OUTPUT_ROOT / "cross_magnitude_comparison.md").write_text(comp_md, encoding="utf-8")
     print(f"\n→ Cross-magnitude table: {OUTPUT_ROOT}/cross_magnitude_comparison.md")
