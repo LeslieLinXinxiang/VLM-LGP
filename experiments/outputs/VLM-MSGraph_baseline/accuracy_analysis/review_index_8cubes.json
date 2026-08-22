@@ -1,0 +1,1872 @@
+[
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s01/trial_01",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s01",
+    "trial": 1,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s01/trial_01.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s01.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "right"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 7,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_4"
+      },
+      {
+        "step": 8,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "Long RectPrism"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "right",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "adjacent_to",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from Object List accounted for (2 Cubes, 4 RectPrisms, 1 Long RectPrism, 1 TriPrism). Sequences correctly reflect structural dependencies. Position 'center' assigned to RectPrism_2 as it is flanked by two siblings on the same supporter. RectPrism_4 correctly identified as a bridging object."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s01/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s01",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s01/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s01.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "right"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 7,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_4"
+      },
+      {
+        "step": 8,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "Long RectPrism"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "right",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "adjacent_to",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "above",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Part list counts verified: 4 RectPrisms, 2 Cubes, 1 Long RectPrism, 1 TriPrism. RectPrism_2 is designated 'center' because it is right of RectPrism_1 and left of RectPrism_3. Step 6 correctly uses an array for its bridging supporters."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s02/trial_01",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s02",
+    "trial": 1,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s02/trial_01.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s02.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_4",
+        "position": "left"
+      },
+      {
+        "step": 6,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_4",
+        "position": "right"
+      },
+      {
+        "step": 7,
+        "subject": "RectPrism_5",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 8,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_5"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "right",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "RectPrism_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "above",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "above",
+        "object": "RectPrism_4",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "above",
+        "object": "RectPrism_4",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "above",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "above",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "above",
+        "object": "RectPrism_5",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly follows a bottom-up logic. The first three steps establish the base. RectPrism_4 relies on the central base block. The two cubes are placed side-by-side on RectPrism_4, requiring positional disambiguation. RectPrism_5 acts as a bridge over both cubes. The TriPrism completes the apex."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s02/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s02",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s02/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s02.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_4",
+        "position": "left"
+      },
+      {
+        "step": 6,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_4",
+        "position": "right"
+      },
+      {
+        "step": 7,
+        "subject": "RectPrism_5",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 8,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_5"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "RectPrism_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "right",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from part list present. RectPrism_2 is identified as center because it is right of RectPrism_1 and left of RectPrism_3. RectPrism_5 is a bridging part correctly assigned to both cubes in one step. Position values are used only to disambiguate identical supporter sets."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s03/trial_01",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s03",
+    "trial": 1,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s03/trial_01.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s03.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_1",
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_1",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 6,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "right"
+      },
+      {
+        "step": 7,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 8,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_3",
+          "Cube_4"
+        ]
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "left",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "left",
+        "object": "Cube_4",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "left",
+        "object": "RectPrism_4",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "adjacent_to",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly follows a bottom-to-top sequence. Positions are assigned to sibling pairs sharing a single common supporter. Bridging RectPrisms have unique composite supporter sets and thus require no additional positional labels."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s03/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s03",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s03/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s03.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_1",
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_1",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 6,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "right"
+      },
+      {
+        "step": 7,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 8,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_3",
+          "Cube_4"
+        ]
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "left",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "left",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "left",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "above",
+        "object": "RectPrism_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "above",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "adjacent_to",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly follows a bottom-to-top sequence. Position values are assigned to resolve ties where multiple objects share the same supporter set (table, RectPrism_1, or RectPrism_2). Top layer prisms (RectPrism_3, RectPrism_4) have unique supporter sets and do not require position values."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s04/trial_01",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s04",
+    "trial": 1,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s04/trial_01.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s04.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2",
+          "Cube_3"
+        ]
+      },
+      {
+        "step": 6,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 7,
+        "subject": "Cube_5",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "center"
+      },
+      {
+        "step": 8,
+        "subject": "Cube_6",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Long RectPrism",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "left",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "right",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism",
+        "predicate": "on",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "on",
+        "object": "RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_6",
+        "predicate": "on",
+        "object": "RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "left",
+        "object": "Cube_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "right",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "left",
+        "object": "Cube_6",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_6",
+        "predicate": "right",
+        "object": "Cube_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "adjacent_to",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "adjacent_to",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "adjacent_to",
+        "object": "Cube_5",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "adjacent_to",
+        "object": "Cube_6",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly contains 6 cubes (indexed 1-6), 1 Long RectPrism (bottom base), and 1 RectPrism (middle bridge). TriPrism listed in inventory is not used in the final assembly and is excluded from the sequence."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s04/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s04",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s04/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s04.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Long RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_1",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_1",
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_1",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "Long RectPrism_2",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2",
+          "Cube_3"
+        ]
+      },
+      {
+        "step": 6,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 7,
+        "subject": "Cube_5",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_2",
+        "position": "center"
+      },
+      {
+        "step": 8,
+        "subject": "Cube_6",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_2",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Long RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "Long RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "Long RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "Long RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "on",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "Long RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "on",
+        "object": "Long RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_6",
+        "predicate": "on",
+        "object": "Long RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "left",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "right",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "left",
+        "object": "Cube_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "right",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "left",
+        "object": "Cube_6",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_6",
+        "predicate": "right",
+        "object": "Cube_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_1",
+        "predicate": "below",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "above",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from part list (6 Cubes, 2 Long RectPrisms) are accounted for. Sequence follows physical dependency (bottom-to-top). Bridging part Long RectPrism_2 correctly identifies its multi-supporter set. Position values are used only for tied supporter sets (Cubes 1-3 and Cubes 4-6) to ensure unique identification."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s05/trial_01",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s05",
+    "trial": 1,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s05/trial_01.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s05.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": "RectPrism_1"
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism_5",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_6",
+        "predicate": "attach_to",
+        "object": "RectPrism_3"
+      },
+      {
+        "step": 7,
+        "subject": "RectPrism_7",
+        "predicate": "attach_to",
+        "object": [
+          "RectPrism_4",
+          "RectPrism_5"
+        ]
+      },
+      {
+        "step": 8,
+        "subject": "RectPrism_8",
+        "predicate": "attach_to",
+        "object": [
+          "RectPrism_5",
+          "RectPrism_6"
+        ]
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_6",
+        "predicate": "on",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_7",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_7",
+        "predicate": "on",
+        "object": "RectPrism_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_8",
+        "predicate": "on",
+        "object": "RectPrism_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_8",
+        "predicate": "on",
+        "object": "RectPrism_6",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly consists of 8 RectPrisms arranged in three tiers. Bottom tier has 3 blocks sharing the table (positional tie). Middle tier has 3 blocks stacked vertically on those below. Top tier has 2 blocks bridging the middle tier. All indices follow left-to-right, bottom-to-top scan order."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s05/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s05",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s05/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s05.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": "RectPrism_1"
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism_5",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_6",
+        "predicate": "attach_to",
+        "object": "RectPrism_3"
+      },
+      {
+        "step": 7,
+        "subject": "RectPrism_7",
+        "predicate": "attach_to",
+        "object": [
+          "RectPrism_4",
+          "RectPrism_5"
+        ]
+      },
+      {
+        "step": 8,
+        "subject": "RectPrism_8",
+        "predicate": "attach_to",
+        "object": [
+          "RectPrism_5",
+          "RectPrism_6"
+        ]
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_6",
+        "predicate": "on",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_7",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_7",
+        "predicate": "on",
+        "object": "RectPrism_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_8",
+        "predicate": "on",
+        "object": "RectPrism_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_8",
+        "predicate": "on",
+        "object": "RectPrism_6",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "right",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_5",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_5",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_6",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_7",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_8",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_7",
+        "predicate": "left",
+        "object": "RectPrism_8",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Object indices assigned left-to-right, then bottom-to-top. Supporting relations for bridging objects 7 and 8 identified and merged into single steps with array objects. Position values applied only to the three sibling blocks on the table whose supporter sets tied."
+  }
+]

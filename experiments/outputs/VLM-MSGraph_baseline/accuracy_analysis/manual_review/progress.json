@@ -1,0 +1,14 @@
+{
+  "total": 10,
+  "scored": 10,
+  "remaining": 0,
+  "ratio": 1.0,
+  "per_benchmark": {
+    "cubeStacking": {
+      "total": 10,
+      "scored": 10
+    }
+  },
+  "last_index": 9,
+  "updated_at": "2026-08-18T15:52:04"
+}

@@ -1,0 +1,803 @@
+{
+  "cubeStacking/4cubes/cube_n04_s01/trial_01": {
+    "timestamp": "2026-08-18T14:36:31",
+    "key": "cubeStacking/4cubes/cube_n04_s01/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s01",
+    "trial": 1
+  },
+  "cubeStacking/4cubes/cube_n04_s02/trial_01": {
+    "timestamp": "2026-08-18T14:36:38",
+    "key": "cubeStacking/4cubes/cube_n04_s02/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s02",
+    "trial": 1
+  },
+  "cubeStacking/4cubes/cube_n04_s03/trial_01": {
+    "timestamp": "2026-08-18T15:27:32",
+    "key": "cubeStacking/4cubes/cube_n04_s03/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s03",
+    "trial": 1
+  },
+  "cubeStacking/4cubes/cube_n04_s04/trial_01": {
+    "timestamp": "2026-08-18T14:37:04",
+    "key": "cubeStacking/4cubes/cube_n04_s04/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s04",
+    "trial": 1
+  },
+  "cubeStacking/4cubes/cube_n04_s05/trial_01": {
+    "timestamp": "2026-08-18T14:37:20",
+    "key": "cubeStacking/4cubes/cube_n04_s05/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s05",
+    "trial": 1
+  },
+  "cubeStacking/5cubes/cube_n05_s01/trial_01": {
+    "timestamp": "2026-08-17T21:38:23",
+    "key": "cubeStacking/5cubes/cube_n05_s01/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s01",
+    "trial": 1
+  },
+  "cubeStacking/5cubes/cube_n05_s02/trial_01": {
+    "timestamp": "2026-08-17T21:38:34",
+    "key": "cubeStacking/5cubes/cube_n05_s02/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s02",
+    "trial": 1
+  },
+  "cubeStacking/5cubes/cube_n05_s03/trial_01": {
+    "timestamp": "2026-08-17T21:38:45",
+    "key": "cubeStacking/5cubes/cube_n05_s03/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s03",
+    "trial": 1
+  },
+  "cubeStacking/5cubes/cube_n05_s04/trial_01": {
+    "timestamp": "2026-08-17T21:38:54",
+    "key": "cubeStacking/5cubes/cube_n05_s04/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s04",
+    "trial": 1
+  },
+  "cubeStacking/5cubes/cube_n05_s05/trial_01": {
+    "timestamp": "2026-08-17T21:39:22",
+    "key": "cubeStacking/5cubes/cube_n05_s05/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s05",
+    "trial": 1
+  },
+  "cubeStacking/6cubes/cube_n06_s01/trial_01": {
+    "timestamp": "2026-08-17T21:39:40",
+    "key": "cubeStacking/6cubes/cube_n06_s01/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s01",
+    "trial": 1
+  },
+  "cubeStacking/6cubes/cube_n06_s02/trial_01": {
+    "timestamp": "2026-08-17T21:39:45",
+    "key": "cubeStacking/6cubes/cube_n06_s02/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s02",
+    "trial": 1
+  },
+  "cubeStacking/6cubes/cube_n06_s03/trial_01": {
+    "timestamp": "2026-08-17T21:39:51",
+    "key": "cubeStacking/6cubes/cube_n06_s03/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s03",
+    "trial": 1
+  },
+  "cubeStacking/6cubes/cube_n06_s04/trial_01": {
+    "timestamp": "2026-08-17T21:40:13",
+    "key": "cubeStacking/6cubes/cube_n06_s04/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s04",
+    "trial": 1
+  },
+  "cubeStacking/6cubes/cube_n06_s05/trial_01": {
+    "timestamp": "2026-08-17T21:40:19",
+    "key": "cubeStacking/6cubes/cube_n06_s05/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s05",
+    "trial": 1
+  },
+  "cubeStacking/7cubes/cube_n07_s01/trial_01": {
+    "timestamp": "2026-08-17T21:40:49",
+    "key": "cubeStacking/7cubes/cube_n07_s01/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s01",
+    "trial": 1
+  },
+  "cubeStacking/7cubes/cube_n07_s02/trial_01": {
+    "timestamp": "2026-08-17T21:41:04",
+    "key": "cubeStacking/7cubes/cube_n07_s02/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s02",
+    "trial": 1
+  },
+  "cubeStacking/7cubes/cube_n07_s03/trial_01": {
+    "timestamp": "2026-08-17T21:41:15",
+    "key": "cubeStacking/7cubes/cube_n07_s03/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s03",
+    "trial": 1
+  },
+  "cubeStacking/7cubes/cube_n07_s04/trial_01": {
+    "timestamp": "2026-08-17T21:41:33",
+    "key": "cubeStacking/7cubes/cube_n07_s04/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s04",
+    "trial": 1
+  },
+  "cubeStacking/7cubes/cube_n07_s05/trial_01": {
+    "timestamp": "2026-08-17T21:41:42",
+    "key": "cubeStacking/7cubes/cube_n07_s05/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s05",
+    "trial": 1
+  },
+  "cubeStacking/8cubes/cube_n08_s01/trial_01": {
+    "timestamp": "2026-08-18T15:51:35",
+    "key": "cubeStacking/8cubes/cube_n08_s01/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s01",
+    "trial": 1
+  },
+  "cubeStacking/8cubes/cube_n08_s02/trial_01": {
+    "timestamp": "2026-08-18T15:51:41",
+    "key": "cubeStacking/8cubes/cube_n08_s02/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s02",
+    "trial": 1
+  },
+  "cubeStacking/8cubes/cube_n08_s03/trial_01": {
+    "timestamp": "2026-08-18T15:51:44",
+    "key": "cubeStacking/8cubes/cube_n08_s03/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s03",
+    "trial": 1
+  },
+  "cubeStacking/8cubes/cube_n08_s04/trial_01": {
+    "timestamp": "2026-08-18T15:56:16",
+    "key": "cubeStacking/8cubes/cube_n08_s04/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s04",
+    "trial": 1,
+    "note": "strict re-review: step5 subject 'RectPrism' is not in this scene's part list (Cube:6, Long RectPrism:2 only); pixel measurement confirms both bars are identical width 407px (Long RectPrism), so the correct name was Long RectPrism_2, as trial_02 correctly used. Downgraded from 'correct' under stricter grading standard."
+  },
+  "cubeStacking/8cubes/cube_n08_s05/trial_01": {
+    "timestamp": "2026-08-18T15:51:58",
+    "key": "cubeStacking/8cubes/cube_n08_s05/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s05",
+    "trial": 1
+  },
+  "FMB/3objs/001/trial_01": {
+    "timestamp": "2026-08-17T21:43:02",
+    "key": "FMB/3objs/001/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "001",
+    "trial": 1
+  },
+  "FMB/3objs/002/trial_01": {
+    "timestamp": "2026-08-17T21:43:07",
+    "key": "FMB/3objs/002/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "002",
+    "trial": 1
+  },
+  "FMB/3objs/003/trial_01": {
+    "timestamp": "2026-08-17T21:43:09",
+    "key": "FMB/3objs/003/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "003",
+    "trial": 1
+  },
+  "FMB/3objs/004/trial_01": {
+    "timestamp": "2026-08-17T21:43:11",
+    "key": "FMB/3objs/004/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "004",
+    "trial": 1
+  },
+  "FMB/3objs/005/trial_01": {
+    "timestamp": "2026-08-17T21:43:15",
+    "key": "FMB/3objs/005/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "005",
+    "trial": 1
+  },
+  "FMB/4objs/001/trial_01": {
+    "timestamp": "2026-08-17T21:43:38",
+    "key": "FMB/4objs/001/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "001",
+    "trial": 1
+  },
+  "FMB/4objs/002/trial_01": {
+    "timestamp": "2026-08-17T21:43:47",
+    "key": "FMB/4objs/002/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "002",
+    "trial": 1
+  },
+  "FMB/4objs/003/trial_01": {
+    "timestamp": "2026-08-17T21:43:58",
+    "key": "FMB/4objs/003/trial_01",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "003",
+    "trial": 1
+  },
+  "FMB/4objs/004/trial_01": {
+    "timestamp": "2026-08-17T21:44:04",
+    "key": "FMB/4objs/004/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "004",
+    "trial": 1
+  },
+  "FMB/4objs/005/trial_01": {
+    "timestamp": "2026-08-17T21:49:45",
+    "key": "FMB/4objs/005/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "005",
+    "trial": 1
+  },
+  "FMB/5objs/001/trial_01": {
+    "timestamp": "2026-08-17T21:49:58",
+    "key": "FMB/5objs/001/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "001",
+    "trial": 1
+  },
+  "FMB/5objs/002/trial_01": {
+    "timestamp": "2026-08-17T21:50:12",
+    "key": "FMB/5objs/002/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "002",
+    "trial": 1
+  },
+  "FMB/5objs/003/trial_01": {
+    "timestamp": "2026-08-17T21:50:15",
+    "key": "FMB/5objs/003/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "003",
+    "trial": 1
+  },
+  "FMB/5objs/004/trial_01": {
+    "timestamp": "2026-08-17T21:50:17",
+    "key": "FMB/5objs/004/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "004",
+    "trial": 1
+  },
+  "FMB/5objs/005/trial_01": {
+    "timestamp": "2026-08-17T21:50:24",
+    "key": "FMB/5objs/005/trial_01",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "005",
+    "trial": 1
+  },
+  "cubeStacking/4cubes/cube_n04_s01/trial_02": {
+    "timestamp": "2026-08-18T14:36:32",
+    "key": "cubeStacking/4cubes/cube_n04_s01/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s01",
+    "trial": 2
+  },
+  "cubeStacking/4cubes/cube_n04_s02/trial_02": {
+    "timestamp": "2026-08-18T14:36:44",
+    "key": "cubeStacking/4cubes/cube_n04_s02/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s02",
+    "trial": 2
+  },
+  "cubeStacking/4cubes/cube_n04_s04/trial_02": {
+    "timestamp": "2026-08-18T14:37:06",
+    "key": "cubeStacking/4cubes/cube_n04_s04/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s04",
+    "trial": 2
+  },
+  "cubeStacking/4cubes/cube_n04_s05/trial_02": {
+    "timestamp": "2026-08-18T14:37:21",
+    "key": "cubeStacking/4cubes/cube_n04_s05/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s05",
+    "trial": 2
+  },
+  "cubeStacking/5cubes/cube_n05_s01/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/5cubes/cube_n05_s01/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s01",
+    "trial": 2
+  },
+  "cubeStacking/5cubes/cube_n05_s03/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/5cubes/cube_n05_s03/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s03",
+    "trial": 2
+  },
+  "cubeStacking/5cubes/cube_n05_s04/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/5cubes/cube_n05_s04/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s04",
+    "trial": 2
+  },
+  "cubeStacking/5cubes/cube_n05_s05/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/5cubes/cube_n05_s05/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s05",
+    "trial": 2
+  },
+  "cubeStacking/6cubes/cube_n06_s01/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/6cubes/cube_n06_s01/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s01",
+    "trial": 2
+  },
+  "cubeStacking/6cubes/cube_n06_s02/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/6cubes/cube_n06_s02/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s02",
+    "trial": 2
+  },
+  "cubeStacking/6cubes/cube_n06_s03/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/6cubes/cube_n06_s03/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s03",
+    "trial": 2
+  },
+  "cubeStacking/6cubes/cube_n06_s05/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/6cubes/cube_n06_s05/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s05",
+    "trial": 2
+  },
+  "cubeStacking/7cubes/cube_n07_s02/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/7cubes/cube_n07_s02/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s02",
+    "trial": 2
+  },
+  "cubeStacking/7cubes/cube_n07_s03/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/7cubes/cube_n07_s03/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s03",
+    "trial": 2
+  },
+  "cubeStacking/7cubes/cube_n07_s04/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/7cubes/cube_n07_s04/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s04",
+    "trial": 2
+  },
+  "cubeStacking/7cubes/cube_n07_s05/trial_02": {
+    "timestamp": "2026-08-18T12:25:04",
+    "key": "cubeStacking/7cubes/cube_n07_s05/trial_02",
+    "label": "auto_match_trial01",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s05",
+    "trial": 2
+  },
+  "cubeStacking/8cubes/cube_n08_s02/trial_02": {
+    "timestamp": "2026-08-18T15:51:42",
+    "key": "cubeStacking/8cubes/cube_n08_s02/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s02",
+    "trial": 2
+  },
+  "cubeStacking/8cubes/cube_n08_s03/trial_02": {
+    "timestamp": "2026-08-18T15:51:45",
+    "key": "cubeStacking/8cubes/cube_n08_s03/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s03",
+    "trial": 2
+  },
+  "cubeStacking/8cubes/cube_n08_s05/trial_02": {
+    "timestamp": "2026-08-18T15:51:58",
+    "key": "cubeStacking/8cubes/cube_n08_s05/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s05",
+    "trial": 2
+  },
+  "FMB/3objs/001/trial_02": {
+    "timestamp": "2026-08-18T12:31:02",
+    "key": "FMB/3objs/001/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "001",
+    "trial": 2
+  },
+  "FMB/3objs/002/trial_02": {
+    "timestamp": "2026-08-18T12:31:10",
+    "key": "FMB/3objs/002/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "002",
+    "trial": 2
+  },
+  "FMB/3objs/003/trial_02": {
+    "timestamp": "2026-08-18T12:31:15",
+    "key": "FMB/3objs/003/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "003",
+    "trial": 2
+  },
+  "FMB/3objs/004/trial_02": {
+    "timestamp": "2026-08-18T12:31:19",
+    "key": "FMB/3objs/004/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "004",
+    "trial": 2
+  },
+  "FMB/3objs/005/trial_02": {
+    "timestamp": "2026-08-18T12:31:26",
+    "key": "FMB/3objs/005/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "005",
+    "trial": 2
+  },
+  "FMB/4objs/001/trial_02": {
+    "timestamp": "2026-08-18T12:31:34",
+    "key": "FMB/4objs/001/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "001",
+    "trial": 2
+  },
+  "FMB/4objs/002/trial_02": {
+    "timestamp": "2026-08-18T12:31:39",
+    "key": "FMB/4objs/002/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "002",
+    "trial": 2
+  },
+  "FMB/4objs/003/trial_02": {
+    "timestamp": "2026-08-18T12:31:52",
+    "key": "FMB/4objs/003/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "003",
+    "trial": 2
+  },
+  "FMB/4objs/004/trial_02": {
+    "timestamp": "2026-08-18T12:31:59",
+    "key": "FMB/4objs/004/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "004",
+    "trial": 2
+  },
+  "FMB/4objs/005/trial_02": {
+    "timestamp": "2026-08-18T12:32:16",
+    "key": "FMB/4objs/005/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "005",
+    "trial": 2
+  },
+  "FMB/5objs/001/trial_02": {
+    "timestamp": "2026-08-18T12:32:26",
+    "key": "FMB/5objs/001/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "001",
+    "trial": 2
+  },
+  "FMB/5objs/002/trial_02": {
+    "timestamp": "2026-08-18T12:32:41",
+    "key": "FMB/5objs/002/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "002",
+    "trial": 2
+  },
+  "FMB/5objs/003/trial_02": {
+    "timestamp": "2026-08-18T12:32:48",
+    "key": "FMB/5objs/003/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "003",
+    "trial": 2
+  },
+  "FMB/5objs/004/trial_02": {
+    "timestamp": "2026-08-18T12:32:51",
+    "key": "FMB/5objs/004/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "004",
+    "trial": 2
+  },
+  "FMB/5objs/005/trial_02": {
+    "timestamp": "2026-08-18T12:32:58",
+    "key": "FMB/5objs/005/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "005",
+    "trial": 2
+  },
+  "cubeStacking/4cubes/cube_n04_s03/trial_02": {
+    "timestamp": "2026-08-18T15:27:34",
+    "key": "cubeStacking/4cubes/cube_n04_s03/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s03",
+    "trial": 2
+  },
+  "cubeStacking/5cubes/cube_n05_s02/trial_02": {
+    "timestamp": "2026-08-18T12:33:34",
+    "key": "cubeStacking/5cubes/cube_n05_s02/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s02",
+    "trial": 2
+  },
+  "cubeStacking/6cubes/cube_n06_s04/trial_02": {
+    "timestamp": "2026-08-18T12:33:52",
+    "key": "cubeStacking/6cubes/cube_n06_s04/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s04",
+    "trial": 2
+  },
+  "cubeStacking/7cubes/cube_n07_s01/trial_02": {
+    "timestamp": "2026-08-18T12:34:02",
+    "key": "cubeStacking/7cubes/cube_n07_s01/trial_02",
+    "label": "wrong",
+    "value": 0,
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s01",
+    "trial": 2
+  },
+  "cubeStacking/8cubes/cube_n08_s01/trial_02": {
+    "timestamp": "2026-08-18T15:51:36",
+    "key": "cubeStacking/8cubes/cube_n08_s01/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s01",
+    "trial": 2
+  },
+  "cubeStacking/8cubes/cube_n08_s04/trial_02": {
+    "timestamp": "2026-08-18T15:51:56",
+    "key": "cubeStacking/8cubes/cube_n08_s04/trial_02",
+    "label": "correct",
+    "value": 1,
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s04",
+    "trial": 2
+  }
+}

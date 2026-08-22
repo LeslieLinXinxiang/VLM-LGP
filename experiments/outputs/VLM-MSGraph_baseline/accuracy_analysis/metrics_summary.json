@@ -1,0 +1,246 @@
+{
+  "protocol": {
+    "track": "Track 1 (semantic/matching layer, non-redundant scenarios only)",
+    "sampling": "8 configs x 5 scenarios x 1 seed = 40 trials",
+    "reporting_rule": "pooled per benchmark; per-magnitude cells are descriptive only (N=5)",
+    "design_doc": "docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md"
+  },
+  "indexed_count": 80,
+  "scored_count": 80,
+  "unscored_keys": [],
+  "benchmarks": {
+    "cubeStacking": {
+      "pooled": {
+        "correct": 46,
+        "total": 50,
+        "accuracy": 92.0,
+        "wilson95_low": 81.1614974549363,
+        "wilson95_high": 96.84509967442094
+      },
+      "by_trial": {
+        "1": {
+          "correct": 22,
+          "total": 25,
+          "accuracy": 88.0
+        },
+        "2": {
+          "correct": 24,
+          "total": 25,
+          "accuracy": 96.0
+        }
+      },
+      "magnitudes": {
+        "4cubes": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 100.0,
+          "cases": {
+            "cube_n04_s01/trial_01": 1,
+            "cube_n04_s01/trial_02": 1,
+            "cube_n04_s02/trial_01": 1,
+            "cube_n04_s02/trial_02": 1,
+            "cube_n04_s03/trial_01": 1,
+            "cube_n04_s03/trial_02": 1,
+            "cube_n04_s04/trial_01": 1,
+            "cube_n04_s04/trial_02": 1,
+            "cube_n04_s05/trial_01": 1,
+            "cube_n04_s05/trial_02": 1
+          }
+        },
+        "5cubes": {
+          "correct": 9,
+          "total": 10,
+          "accuracy": 90.0,
+          "cases": {
+            "cube_n05_s01/trial_01": 1,
+            "cube_n05_s01/trial_02": 1,
+            "cube_n05_s02/trial_01": 0,
+            "cube_n05_s02/trial_02": 1,
+            "cube_n05_s03/trial_01": 1,
+            "cube_n05_s03/trial_02": 1,
+            "cube_n05_s04/trial_01": 1,
+            "cube_n05_s04/trial_02": 1,
+            "cube_n05_s05/trial_01": 1,
+            "cube_n05_s05/trial_02": 1
+          }
+        },
+        "6cubes": {
+          "correct": 9,
+          "total": 10,
+          "accuracy": 90.0,
+          "cases": {
+            "cube_n06_s01/trial_01": 1,
+            "cube_n06_s01/trial_02": 1,
+            "cube_n06_s02/trial_01": 1,
+            "cube_n06_s02/trial_02": 1,
+            "cube_n06_s03/trial_01": 1,
+            "cube_n06_s03/trial_02": 1,
+            "cube_n06_s04/trial_01": 0,
+            "cube_n06_s04/trial_02": 1,
+            "cube_n06_s05/trial_01": 1,
+            "cube_n06_s05/trial_02": 1
+          }
+        },
+        "7cubes": {
+          "correct": 9,
+          "total": 10,
+          "accuracy": 90.0,
+          "cases": {
+            "cube_n07_s01/trial_01": 1,
+            "cube_n07_s01/trial_02": 0,
+            "cube_n07_s02/trial_01": 1,
+            "cube_n07_s02/trial_02": 1,
+            "cube_n07_s03/trial_01": 1,
+            "cube_n07_s03/trial_02": 1,
+            "cube_n07_s04/trial_01": 1,
+            "cube_n07_s04/trial_02": 1,
+            "cube_n07_s05/trial_01": 1,
+            "cube_n07_s05/trial_02": 1
+          }
+        },
+        "8cubes": {
+          "correct": 9,
+          "total": 10,
+          "accuracy": 90.0,
+          "cases": {
+            "cube_n08_s01/trial_01": 1,
+            "cube_n08_s01/trial_02": 1,
+            "cube_n08_s02/trial_01": 1,
+            "cube_n08_s02/trial_02": 1,
+            "cube_n08_s03/trial_01": 1,
+            "cube_n08_s03/trial_02": 1,
+            "cube_n08_s04/trial_01": 0,
+            "cube_n08_s04/trial_02": 1,
+            "cube_n08_s05/trial_01": 1,
+            "cube_n08_s05/trial_02": 1
+          }
+        }
+      }
+    },
+    "FMB": {
+      "pooled": {
+        "correct": 14,
+        "total": 30,
+        "accuracy": 46.666666666666664,
+        "wilson95_low": 30.232127224128234,
+        "wilson95_high": 63.857986718474955
+      },
+      "by_trial": {
+        "1": {
+          "correct": 7,
+          "total": 15,
+          "accuracy": 46.666666666666664
+        },
+        "2": {
+          "correct": 7,
+          "total": 15,
+          "accuracy": 46.666666666666664
+        }
+      },
+      "magnitudes": {
+        "3objs": {
+          "correct": 8,
+          "total": 10,
+          "accuracy": 80.0,
+          "cases": {
+            "001/trial_01": 0,
+            "001/trial_02": 1,
+            "002/trial_01": 1,
+            "002/trial_02": 1,
+            "003/trial_01": 1,
+            "003/trial_02": 1,
+            "004/trial_01": 1,
+            "004/trial_02": 0,
+            "005/trial_01": 1,
+            "005/trial_02": 1
+          }
+        },
+        "4objs": {
+          "correct": 5,
+          "total": 10,
+          "accuracy": 50.0,
+          "cases": {
+            "001/trial_01": 1,
+            "001/trial_02": 0,
+            "002/trial_01": 1,
+            "002/trial_02": 1,
+            "003/trial_01": 1,
+            "003/trial_02": 0,
+            "004/trial_01": 0,
+            "004/trial_02": 0,
+            "005/trial_01": 0,
+            "005/trial_02": 1
+          }
+        },
+        "5objs": {
+          "correct": 1,
+          "total": 10,
+          "accuracy": 10.0,
+          "cases": {
+            "001/trial_01": 0,
+            "001/trial_02": 0,
+            "002/trial_01": 0,
+            "002/trial_02": 1,
+            "003/trial_01": 0,
+            "003/trial_02": 0,
+            "004/trial_01": 0,
+            "004/trial_02": 0,
+            "005/trial_01": 0,
+            "005/trial_02": 0
+          }
+        }
+      }
+    }
+  },
+  "overall": {
+    "correct": 60,
+    "total": 80,
+    "accuracy": 75.0,
+    "wilson95_low": 64.51511899886556,
+    "wilson95_high": 83.1938941879057
+  },
+  "wrong_cases": [
+    "cubeStacking/5cubes/cube_n05_s02/trial_01",
+    "cubeStacking/6cubes/cube_n06_s04/trial_01",
+    "cubeStacking/7cubes/cube_n07_s01/trial_02",
+    "cubeStacking/8cubes/cube_n08_s04/trial_01",
+    "FMB/3objs/001/trial_01",
+    "FMB/3objs/004/trial_02",
+    "FMB/4objs/001/trial_02",
+    "FMB/4objs/003/trial_02",
+    "FMB/4objs/004/trial_01",
+    "FMB/4objs/004/trial_02",
+    "FMB/4objs/005/trial_01",
+    "FMB/5objs/001/trial_01",
+    "FMB/5objs/001/trial_02",
+    "FMB/5objs/002/trial_01",
+    "FMB/5objs/003/trial_01",
+    "FMB/5objs/003/trial_02",
+    "FMB/5objs/004/trial_01",
+    "FMB/5objs/004/trial_02",
+    "FMB/5objs/005/trial_01",
+    "FMB/5objs/005/trial_02"
+  ],
+  "format_compliance": {
+    "available": true,
+    "per_benchmark": {
+      "cubeStacking": {
+        "pass": 50,
+        "total": 50,
+        "rate": 100.0,
+        "failures": []
+      },
+      "FMB": {
+        "pass": 30,
+        "total": 30,
+        "rate": 100.0,
+        "failures": []
+      }
+    },
+    "overall": {
+      "pass": 80,
+      "total": 80,
+      "rate": 100.0
+    }
+  }
+}

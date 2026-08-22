@@ -1,0 +1,3848 @@
+[
+  {
+    "key": "FMB/3objs/001/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "001",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/3objs/001/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/001/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/001/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ]
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "above",
+        "object": "table",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "attach_to",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "attach_to",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "The assembly begins with the two base bars (Shape 2) placed on the table. They share the same supporter, so they are disambiguated by their front/back positions as seen in the top-down view. The bridge part (Shape 4) is then attached to both bars simultaneously as a single bridging action.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Base"
+        ]
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/3objs/002/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "002",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/3objs/002/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/002/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/002/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2",
+        "predicate": "go_through",
+        "object": "Shape 4_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2",
+        "predicate": "go_through",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "adjacent_to",
+        "object": "Shape 2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from the list are accounted for. Shape 2 is used as a supporter for Shape 4 only after it has been placed in step 1. The two Shape 4 instances are disambiguated by position because they share the same supporter set. Schema is valid JSON.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "attach_to",
+        "object": "Base"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/3objs/003/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "003",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/3objs/003/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/003/001.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 3_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 3_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 3_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 3_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_1",
+        "predicate": "left",
+        "object": "Shape 3_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "left",
+        "object": "Shape 3_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "right",
+        "object": "Shape 3_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 3_3",
+        "predicate": "right",
+        "object": "Shape 3_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 3_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 3_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "adjacent_to",
+        "object": "Shape 3_3",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All three Shape 3 parts are supported by the table. Using the left-to-right scan order (Yellow, Cyan, Magenta), Shape 3_1 is leftmost, Shape 3_3 is rightmost, and Shape 3_2 is center because it sits between the other two on the same axis.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 3_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 3_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 3_3",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "right"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/3objs/004/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "004",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/3objs/004/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/004/001.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "insert",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "insert",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "insert",
+        "object": "table",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "left",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "left",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "insert",
+        "object": "table",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "insert",
+        "object": "table",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "insert",
+        "object": "table",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "right",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "right",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "adjacent_to",
+        "object": "Shape 2_3",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All 3 instances of Shape 2 are accounted for. The gray base is designated as 'table'. Because all three bars are inserted into the same table base, they form a tied supporter group and require position values. Indices were assigned left-to-right (Green_1, Red_2, Yellow_3).",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/3objs/005/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "3objs",
+    "case_name": "005",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/3objs/005/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/005/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/3objs/005/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 3_1",
+        "predicate": "insert",
+        "object": [
+          "table",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 3_2",
+        "predicate": "insert",
+        "object": [
+          "table",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_1",
+        "predicate": "left",
+        "object": "Shape 3_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "right",
+        "object": "Shape 3_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_1",
+        "predicate": "above",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "above",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 3_1",
+        "predicate": "insert",
+        "object": "Shape 2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 3_2",
+        "predicate": "insert",
+        "object": "Shape 2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2",
+        "predicate": "adjacent_to",
+        "object": "Shape 3_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2",
+        "predicate": "adjacent_to",
+        "object": "Shape 3_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "The assembly sequence places the central red bar first, followed by the two arches (Shape 3) which straddle it. The arches are bridging objects supported by both the table and the bar. Because they share the exact same supporter set, they are disambiguated by position.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "attach_to",
+        "object": "Base"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 3_1",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 3_2",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/4objs/001/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "001",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/4objs/001/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/001/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/001/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "above",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "above",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All objects from the part list are included with correct indexing. Shape 2 instances (green and red bars) are placed first on the table, followed by Shape 4 instances (blue and yellow) which bridge across both bars and the table. Positional disambiguation is applied to tied supporter sets: front/back for the bars and left/right for the complex shapes.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/4objs/002/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "002",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/4objs/002/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/002/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/002/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ]
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "front",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "back",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "on",
+        "object": "Shape 2_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "above",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4",
+        "predicate": "above",
+        "object": "Shape 2_3",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "No corrections needed. Bridging object Shape 4 correctly assigned to multiple supporters in a single row. Sibling disambiguation applied to Shape 2 instances on table using front/center/back axis based on spatial triples recorded in stage 1.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ]
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/4objs/003/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "003",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/4objs/003/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/003/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/003/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "Shape 2",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": "Shape 2",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": "Shape 2",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": "Shape 2",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "left",
+        "object": "Shape 4_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "right",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "adjacent_to",
+        "object": "Shape 4_3",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "The three Shape 4 instances (Blue, Cyan, Yellow) all share the same supporter (Shape 2), creating a tied group that requires positional disambiguation. Shape 4_2 is identified as 'center' because it is recorded as being right of 4_1 and left of 4_3 on the same axis. Indices are assigned left-to-right: 4_1 (Blue), 4_2 (Cyan), 4_3 (Yellow).",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "attach_to",
+        "object": "Base"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "FMB/4objs/004/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "004",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/4objs/004/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/004/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/004/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "insert",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "insert",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "insert",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "insert",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "insert",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "insert",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from the list are accounted for with unique indices based on scan order. Supporting relations are correctly identified and used to form a sequential assembly plan. Positional disambiguation is applied to tied supporter sets (Shape 2 bars on table, Shape 4 pieces on bars). Bridging objects use array notation for multiple supporters.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Base"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Base"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/4objs/005/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "4objs",
+    "case_name": "005",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/4objs/005/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/005/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/4objs/005/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "base",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "insert",
+        "object": "base"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 4_1",
+        "predicate": "insert",
+        "object": [
+          "base",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_2",
+        "predicate": "insert",
+        "object": [
+          "base",
+          "Shape 2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_3",
+        "predicate": "insert",
+        "object": [
+          "base",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2",
+        "predicate": "on",
+        "object": "base",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "base",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "base",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "base",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "left",
+        "object": "Shape 4_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2",
+        "predicate": "insert",
+        "object": "base",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "insert",
+        "object": "base",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "insert",
+        "object": "base",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "insert",
+        "object": "base",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "right",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "The assembly sequence correctly prioritizes the internal bar (Shape 2) before the bridging components (Shape 4). Positional values are assigned to the Shape 4 siblings because they share an identical supporter set. All indices follow the prescribed scan order.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2",
+        "predicate": "insert",
+        "object": "BasePlate"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "BasePlate",
+          "Shape 2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "BasePlate",
+          "Shape 2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "BasePlate",
+          "Shape 2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/5objs/001/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "001",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/5objs/001/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/001/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/001/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "front"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "back"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "left",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "left",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "right",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "right",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "front",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "back",
+        "object": "Shape 4_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": "Shape 2_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": "Shape 2_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All objects from the part list are accounted for and indexed according to scan order (Shape 2_1: Green, Shape 2_2: Red, Shape 2_3: Yellow; Shape 4_1: Orange, Shape 4_2: Blue). Bridging objects Shape 4_1 and Shape 4_2 correctly list all three supporters in an array. Positional disambiguation (left/center/right and front/back) is applied to all rows because they belong to groups sharing identical supporter sets.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "front"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "back"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/5objs/002/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "002",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/5objs/002/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/002/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/002/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "base",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "base",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "base",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "left",
+        "object": "Shape 4_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "right",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from PART_LIST are accounted for. Shape 2_1 and Shape 2_2 are the first layer on the base. Shape 4 parts bridge the Shape 2 bars. Positional values are assigned to resolve ties in supporter sets (base for Shape 2, and the pair of Shape 2 bars for Shape 4). Shape 4_2 is correctly identified as center.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Base",
+          "Shape 2_1"
+        ]
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ]
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_2",
+          "Base"
+        ]
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/5objs/003/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "003",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/5objs/003/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/003/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/003/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "left",
+        "object": "Shape 4_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "right",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "above",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "above",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "above",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "The assembly sequence correctly prioritizes the base-level bars before the top-level bridges. All bridging components are identified with their full supporter sets, and positional disambiguation (front/back for bars, left/center/right for bridges) is used to ensure the sequence is executable as the objects share identical supporter sets.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "insert",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "insert",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/5objs/004/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "004",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/5objs/004/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/004/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/004/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_3",
+        "predicate": "attach_to",
+        "object": [
+          "table",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "right",
+        "object": "Shape 4_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "left",
+        "object": "Shape 4_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "right",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts indexed correctly (Shape 2_1 yellow, Shape 2_2 green; Shape 4_1 blue, Shape 4_2 cyan, Shape 4_3 red). Supporter sets are unique for each group (Shape 2 group on table, Shape 4 group bridging bars and table), and positions within those groups are disambiguated using front/back and left/center/right respectively.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "insert",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "insert",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 4_1",
+        "predicate": "insert",
+        "object": [
+          "Base",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_2",
+        "predicate": "insert",
+        "object": [
+          "Base",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "center"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_3",
+        "predicate": "insert",
+        "object": [
+          "Base",
+          "Shape 2_1",
+          "Shape 2_2"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "FMB/5objs/005/trial_02",
+    "benchmark": "FMB",
+    "magnitude": "5objs",
+    "case_name": "005",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/FMB/5objs/005/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/005/001.png",
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/FMB/5objs/005/002.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Shape 2_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "on",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "on",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_1",
+        "predicate": "front",
+        "object": "Shape 2_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "front",
+        "object": "Shape 2_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "left",
+        "object": "Shape 4_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Shape 2_2",
+        "predicate": "back",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 2_3",
+        "predicate": "back",
+        "object": "Shape 2_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "above",
+        "object": "Shape 2_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_2",
+        "predicate": "above",
+        "object": "Shape 2_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Shape 4_1",
+        "predicate": "adjacent_to",
+        "object": "Shape 4_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from the part list are included. Shape 2_1, 2_2, and 2_3 are the green, red, and yellow bars respectively, indexed by front-to-back scan order. Shape 4_1 and 4_2 are the blue and orange bridges, indexed by left-to-right scan order. Positional disambiguation is applied to the Shape 2 siblings on the table and the Shape 4 siblings on the shared set of bars.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Shape 2_1",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "front"
+      },
+      {
+        "step": 2,
+        "subject": "Shape 2_2",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Shape 2_3",
+        "predicate": "attach_to",
+        "object": "Base",
+        "position": "back"
+      },
+      {
+        "step": 4,
+        "subject": "Shape 4_1",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "left"
+      },
+      {
+        "step": 5,
+        "subject": "Shape 4_2",
+        "predicate": "attach_to",
+        "object": [
+          "Shape 2_1",
+          "Shape 2_2",
+          "Shape 2_3"
+        ],
+        "position": "right"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "cubeStacking/4cubes/cube_n04_s03/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "4cubes",
+    "case_name": "cube_n04_s03",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/4cubes/cube_n04_s03/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/4cubes/cube_n04_s03.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "left",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "front",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "front",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "right",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "back",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "back",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "adjacent_to",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "adjacent_to",
+        "object": "Cube_4",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "adjacent_to",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "adjacent_to",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All 4 cubes from the part list are included as subjects. They all share the table as a supporter, requiring distinct position values. The assignments (left, front, back, right) uniquely identify the bottom-left, bottom-right, top-left, and top-right positions respectively.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "front"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "back"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "cubeStacking/5cubes/cube_n05_s02/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "5cubes",
+    "case_name": "cube_n05_s02",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/5cubes/cube_n05_s02/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/5cubes/cube_n05_s02.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Cube_1"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "Cube_2"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "left",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "right",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "adjacent_to",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "adjacent_to",
+        "object": "Cube_4",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly follows a bottom-up sequence. Cube_1 and Cube_2 are disambiguated by position because they share the same supporter (RectPrism). Cube_3 and Cube_4 have unique supporters and do not require position values.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "right"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Cube_1"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "Cube_2"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "cubeStacking/6cubes/cube_n06_s04/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "6cubes",
+    "case_name": "cube_n06_s04",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/6cubes/cube_n06_s04/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/6cubes/cube_n06_s04.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_1"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 6,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_3"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "above",
+        "object": "RectPrism_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "above",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "above",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "above",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Assembly involves 6 pieces. RectPrism_1 and RectPrism_2 share the anchor 'table' as their supporter, requiring positional disambiguation (left/right). All other objects have unique individual supporters or a unique supporter combination (RectPrism_3 bridging Cube_1 and Cube_2), so no further position values are needed.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_1"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      },
+      {
+        "step": 5,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 6,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "Long RectPrism"
+      }
+    ],
+    "reference_note": "NO VALID REFERENCE (trial_01 scored WRONG) — full manual review, nothing to auto-check against."
+  },
+  {
+    "key": "cubeStacking/7cubes/cube_n07_s01/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "7cubes",
+    "case_name": "cube_n07_s01",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/7cubes/cube_n07_s01/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/7cubes/cube_n07_s01.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "Long RectPrism",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2",
+          "Cube_3"
+        ]
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_1"
+      },
+      {
+        "step": 6,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "left",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "right",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism",
+        "predicate": "below",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Long RectPrism",
+        "predicate": "below",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Long RectPrism",
+        "predicate": "below",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "above",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "above",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "above",
+        "object": "Cube_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "above",
+        "object": "RectPrism_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "above",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "The assembly is a vertical stack starting from the Long RectPrism. Three cubes are placed side-by-side on the base, requiring positional disambiguation (left, center, right) because they share the same single supporter. RectPrism_1 acts as a bridge over all three cubes, while RectPrism_2 and the TriPrism follow in a simple vertical sequence.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "Cube_2"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_1"
+      },
+      {
+        "step": 7,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_2"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s01/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s01",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s01/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s01.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "right"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 7,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_4"
+      },
+      {
+        "step": 8,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "Long RectPrism"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "left",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "right",
+        "object": "RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "left",
+        "object": "RectPrism_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_3",
+        "predicate": "right",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism",
+        "predicate": "on",
+        "object": "RectPrism_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "TriPrism",
+        "predicate": "on",
+        "object": "Long RectPrism",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "RectPrism_1",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_2",
+        "predicate": "adjacent_to",
+        "object": "RectPrism_3",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "adjacent_to",
+        "object": "Cube_2",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "RectPrism_4",
+        "predicate": "above",
+        "object": "RectPrism_2",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "Part list counts verified: 4 RectPrisms, 2 Cubes, 1 Long RectPrism, 1 TriPrism. RectPrism_2 is designated 'center' because it is right of RectPrism_1 and left of RectPrism_3. Step 6 correctly uses an array for its bridging supporters.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "RectPrism_2",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "center"
+      },
+      {
+        "step": 2,
+        "subject": "RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "RectPrism_3",
+        "predicate": "attach_to",
+        "object": "table",
+        "position": "right"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 5,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "RectPrism_2",
+        "position": "right"
+      },
+      {
+        "step": 6,
+        "subject": "RectPrism_4",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2"
+        ]
+      },
+      {
+        "step": 7,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "RectPrism_4"
+      },
+      {
+        "step": 8,
+        "subject": "TriPrism",
+        "predicate": "attach_to",
+        "object": "Long RectPrism"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  },
+  {
+    "key": "cubeStacking/8cubes/cube_n08_s04/trial_02",
+    "benchmark": "cubeStacking",
+    "magnitude": "8cubes",
+    "case_name": "cube_n08_s04",
+    "trial": 2,
+    "md_path": "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/evaluations/VLM/VLM-MSGraph_baseline/cubeStacking/8cubes/cube_n08_s04/trial_02.md",
+    "image_paths": [
+      "/Users/linxinxiang/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP/experiments/inputs/cubeStacking/8cubes/cube_n08_s04.png"
+    ],
+    "parse_mode": "strict",
+    "anchor_object": "table",
+    "ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Long RectPrism_1",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_1",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_1",
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_1",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "Long RectPrism_2",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2",
+          "Cube_3"
+        ]
+      },
+      {
+        "step": 6,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_2",
+        "position": "left"
+      },
+      {
+        "step": 7,
+        "subject": "Cube_5",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_2",
+        "position": "center"
+      },
+      {
+        "step": 8,
+        "subject": "Cube_6",
+        "predicate": "attach_to",
+        "object": "Long RectPrism_2",
+        "position": "right"
+      }
+    ],
+    "raw_triples": [
+      {
+        "subject": "Long RectPrism_1",
+        "predicate": "on",
+        "object": "table",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "on",
+        "object": "Long RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "on",
+        "object": "Long RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "on",
+        "object": "Long RectPrism_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "on",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "on",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "on",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "on",
+        "object": "Long RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "on",
+        "object": "Long RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_6",
+        "predicate": "on",
+        "object": "Long RectPrism_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_1",
+        "predicate": "left",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "right",
+        "object": "Cube_1",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_2",
+        "predicate": "left",
+        "object": "Cube_3",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_3",
+        "predicate": "right",
+        "object": "Cube_2",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_4",
+        "predicate": "left",
+        "object": "Cube_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "right",
+        "object": "Cube_4",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_5",
+        "predicate": "left",
+        "object": "Cube_6",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Cube_6",
+        "predicate": "right",
+        "object": "Cube_5",
+        "source": "relation_narrator"
+      },
+      {
+        "subject": "Long RectPrism_1",
+        "predicate": "below",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      },
+      {
+        "subject": "Long RectPrism_2",
+        "predicate": "above",
+        "object": "Cube_1",
+        "source": "image_narrator"
+      }
+    ],
+    "self_check_notes": "All parts from part list (6 Cubes, 2 Long RectPrisms) are accounted for. Sequence follows physical dependency (bottom-to-top). Bridging part Long RectPrism_2 correctly identifies its multi-supporter set. Position values are used only for tied supporter sets (Cubes 1-3 and Cubes 4-6) to ensure unique identification.",
+    "reference_ordered_triples": [
+      {
+        "step": 1,
+        "subject": "Long RectPrism",
+        "predicate": "attach_to",
+        "object": "table"
+      },
+      {
+        "step": 2,
+        "subject": "Cube_1",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 3,
+        "subject": "Cube_2",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "center"
+      },
+      {
+        "step": 4,
+        "subject": "Cube_3",
+        "predicate": "attach_to",
+        "object": "Long RectPrism",
+        "position": "right"
+      },
+      {
+        "step": 5,
+        "subject": "RectPrism",
+        "predicate": "attach_to",
+        "object": [
+          "Cube_1",
+          "Cube_2",
+          "Cube_3"
+        ]
+      },
+      {
+        "step": 6,
+        "subject": "Cube_4",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "left"
+      },
+      {
+        "step": 7,
+        "subject": "Cube_5",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "center"
+      },
+      {
+        "step": 8,
+        "subject": "Cube_6",
+        "predicate": "attach_to",
+        "object": "RectPrism",
+        "position": "right"
+      }
+    ],
+    "reference_note": "DIFFERS from trial_01 (verified correct) — review needed."
+  }
+]
