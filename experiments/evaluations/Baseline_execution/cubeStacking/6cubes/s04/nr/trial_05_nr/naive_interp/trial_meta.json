@@ -1,0 +1,58 @@
+{
+  "mode_name": "naive_interp",
+  "benchmark": "cubeStacking",
+  "mag": "6cubes",
+  "case": "cube_n06_s04",
+  "redundancy_mode": "nr",
+  "trial": "trial_05_nr",
+  "scene": "/home/leslie/Projects/VLM_LGP/experiments/scenes/6cubes/s04/random_trials/trial_05_nr.g",
+  "action_sequence": [
+    [
+      "rectprism_1",
+      [
+        "Table_Left"
+      ]
+    ],
+    [
+      "rectprism_2",
+      [
+        "Table_Right"
+      ]
+    ],
+    [
+      "cube_1",
+      [
+        "rectprism_1"
+      ]
+    ],
+    [
+      "cube_2",
+      [
+        "rectprism_2"
+      ]
+    ],
+    [
+      "rectprism_3",
+      [
+        "Table_Left"
+      ]
+    ],
+    [
+      "triprism_1",
+      [
+        "rectprism_3"
+      ]
+    ]
+  ],
+  "wall_time_s": 7.946835994720459,
+  "success": false,
+  "n_actions": 6,
+  "n_actions_completed_ok": 4,
+  "collision_violation": true,
+  "n_actions_with_collision": 2,
+  "max_penetration_m": -0.01823272058812935,
+  "total_violation_samples": 8008,
+  "mean_final_place_error_m": 0.011425336535537475,
+  "snapshot": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/Baseline_execution/cubeStacking/6cubes/s04/nr/trial_05_nr/naive_interp/exec/final_state.png",
+  "video": null
+}

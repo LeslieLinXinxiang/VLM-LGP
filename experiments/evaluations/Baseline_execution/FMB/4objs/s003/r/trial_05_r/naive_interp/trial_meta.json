@@ -1,0 +1,46 @@
+{
+  "mode_name": "naive_interp",
+  "benchmark": "FMB",
+  "mag": "4objs",
+  "case": "003",
+  "redundancy_mode": "r",
+  "trial": "trial_05_r",
+  "scene": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s003/random_trials/trial_05_r.g",
+  "action_sequence": [
+    [
+      "shape_2_1",
+      [
+        "Table_Center"
+      ]
+    ],
+    [
+      "shape_4_1",
+      [
+        "shape_2_1"
+      ]
+    ],
+    [
+      "shape_4_2",
+      [
+        "shape_2_1"
+      ]
+    ],
+    [
+      "shape_4_3",
+      [
+        "shape_2_1"
+      ]
+    ]
+  ],
+  "wall_time_s": 3.615154981613159,
+  "success": false,
+  "n_actions": 4,
+  "n_actions_completed_ok": 0,
+  "collision_violation": false,
+  "n_actions_with_collision": 0,
+  "max_penetration_m": 0.0,
+  "total_violation_samples": 0,
+  "mean_final_place_error_m": null,
+  "snapshot": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/Baseline_execution/FMB/4objs/s003/r/trial_05_r/naive_interp/exec/final_state.png",
+  "video": null
+}

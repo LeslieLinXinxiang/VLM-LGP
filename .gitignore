@@ -18,6 +18,14 @@ generated/*
 !generated/.gitkeep
 venv_eval/
 scratch/
+MUJOCO_LOG.TXT
+
+# Track 2 baseline trial outputs: keep the structured data (trial_meta.json, .fol/.lgp/.g,
+# matching the existing LGP/ trial-output convention), exclude regenerable per-trial media
+# (screenshots/video/MJCF XML - large, byproduct of running the converter, not analysis input)
+experiments/evaluations/Baseline_execution/**/*.png
+experiments/evaluations/Baseline_execution/**/*.mp4
+experiments/evaluations/Baseline_execution/**/*.xml
 
 # === 核心豁免 (白名单 - 强制保留) ===
 # 即使上面忽略了 .so 或在子目录里被忽略，也要强制保留这些：

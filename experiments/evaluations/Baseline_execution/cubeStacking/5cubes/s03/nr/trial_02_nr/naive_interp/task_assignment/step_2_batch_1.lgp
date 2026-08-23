@@ -1,0 +1,4 @@
+fol: <step_2_batch_1.fol>
+terminal: " (on cube_1 cube_3) "
+genericCollisions: false
+coll: []

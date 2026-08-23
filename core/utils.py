@@ -144,17 +144,34 @@ def parse_and_inject(src_g_path, mapping_dict, dst_g_path):
     
     import re
     sorted_keys = sorted(mapping_dict.keys(), key=len, reverse=True)
+
+    # Two-phase rename: mapping_dict can contain a PERMUTATION (e.g. shape_3_1 -> shape_3_2
+    # and shape_3_2 -> shape_3_1, which the physics-aware reordering step produces routinely
+    # whenever it re-orders same-family objects relative to their original positions) - not
+    # just fresh, non-colliding target names. Substituting directly into the same accumulating
+    # `content` buffer, one key at a time, is the classic "swap without a temp variable" bug:
+    # once the first rename writes its target name into the buffer, the SECOND rename's global
+    # `.sub()` can no longer tell that occurrence apart from a genuine original of its own
+    # source name, and collapses both into the same final name - a silent duplicate object,
+    # while the frame that should have gotten that first name never does. Routing every rename
+    # through a unique placeholder first (that can't collide with any key or value in this
+    # mapping) makes the two phases independent, so any permutation - not just simple 1:1
+    # renames to fresh names - comes out correct.
+    placeholder_of = {anon_id: f"__PARSE_INJECT_TMP_{i}__" for i, anon_id in enumerate(sorted_keys)}
     for anon_id in sorted_keys:
-        semantic_name = mapping_dict[anon_id]
+        placeholder = placeholder_of[anon_id]
         # Rename the sub-frames like obj_03_Left to rect_1_Left first
         for suffix in ["_Left", "_Right", "_Center", "_Back", "_Front"]:
             pattern_suffix = re.compile(rf"\b{re.escape(anon_id + suffix)}\b")
-            content = pattern_suffix.sub(semantic_name + suffix, content)
-            
+            content = pattern_suffix.sub(placeholder + suffix, content)
+
         # Use word boundaries and negative lookahead for file extensions to avoid corrupting mesh paths
         pattern = re.compile(rf"\b{re.escape(anon_id)}\b(?!\.(?:obj|stl|g|dae|h5|yml))")
-        content = pattern.sub(semantic_name, content)
-        
+        content = pattern.sub(placeholder, content)
+
+    for anon_id in sorted_keys:
+        content = content.replace(placeholder_of[anon_id], mapping_dict[anon_id])
+
     os.makedirs(os.path.dirname(dst_g_path), exist_ok=True)
     with open(dst_g_path, 'w') as f: f.write(content)
     print(f"[Core.Utils] Success. New scene saved to: {dst_g_path}")

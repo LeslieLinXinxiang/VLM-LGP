@@ -1,0 +1,4 @@
+fol: <step_6_batch_1.fol>
+terminal: " (on longrect_2_Right cube_6) "
+genericCollisions: false
+coll: []
