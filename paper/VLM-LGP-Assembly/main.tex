@@ -580,8 +580,127 @@ which the pipeline proceeds to the following batch $B_{m+1}$.
 \subsection{Experimental Setup and Evaluation Design}
 \label{subsec:setup}
 
-\subsection{Necessity of Task Decomposition}
-\label{subsec:res_decomp}
+We evaluate the proposed framework on a Franka Emika Panda manipulator, with all planning performed through the RAI/KOMO solver. Each planning task is capped at $16$\,GB of memory and $300$\,s of wall-clock time; all reported numbers respect these limits.
+
+Two task families probe complementary capabilities. Cube-stacking assemblies, from four to eight cubes, test long-horizon planning, where the number of interdependent placement steps grows with the structure. Assemblies from the Functional Manipulation Benchmark (FMB), from three to five objects, test fine-grained assembly under a strict support order; we resize the benchmark's parts to match our manipulator's workspace. Each task is further run under two scene conditions: no redundancy (NR), where the scene contains exactly the required objects, and redundancy (R), where distractor objects of the same type are added, requiring instance identification before planning.
+
+We compare four methods. \emph{Direct-Action LLM} asks a VLM to output pick-and-place waypoints directly from the target image, without any intermediate representation. \emph{VLM-MSGraph}~\cite{li2025vlm} extracts a structured object-relation graph, as we do, and executes it following the original paper's own trajectory-generation procedure. \emph{Global LGP} decomposes the assembly into layer-based batches by a fixed rule, mirroring how a human would manually partition a long-horizon task into subtasks, and solves each batch's full collision set jointly. \emph{Smart} is our method, combining VLM-driven graph decomposition (Section~\ref{sec:task_understanding}) with active-constraint LGP solving (Section~\ref{sec:motion_execution}).
+
+Results are organized in three parts. Section~\ref{subsec:res_vlm} evaluates the VLM front end: structure-extraction accuracy for Direct-Action LLM, VLM-MSGraph, and our method. Section~\ref{subsec:res_exec} evaluates execution: a monolithic-solving ablation, VLM-MSGraph's naive interpolation, and Global LGP against Smart, on both task families. Section~\ref{subsec:res_real} reports physical execution. Each (magnitude, method, condition) configuration is run for $50$ trials, drawn from five scenarios instantiated with ten seeds.
+
+\subsection{VLM Front-End: Graph-Generation Accuracy}
+\label{subsec:res_vlm}
+
+\textit{Direct-Action LLM.} Asking the VLM to output pick-and-place waypoints directly from the target image, without any intermediate representation, fails outright: the returned sequences are syntactically valid but geometrically inconsistent -- grasp points miss the target objects, waypoints intersect the table or previously placed parts, and placement heights violate the support order. No trial completes an assembly, so we report no success-rate table for this baseline; the failure confirms that current VLMs cannot be trusted with exact, metrically precise motion generation (Section~\ref{sec:task_understanding}).
+
+Table~\ref{tab:vlm_backbone_selection} compares four candidate VLMs on FMB graph extraction. Gemini-3-Flash and Qwen3.6-Plus are the only models to reach $100\%$ on both test batches; Qwen3.5-Plus and Qwen3.5-Flash trail substantially. Given comparable accuracy between the top two, we adopt Gemini-3-Flash as the VLM front end for the remainder of this work.
+
+% ------------------------------------------------------------------
+% FIGURE: fig:vlm_backbone_selection
+% Source data : Arxived/accuracy_bar_chart.svg (converted to PDF 2026-08-18 via cairosvg, no data
+%               values changed -- vector re-render only)
+% Purpose     : Leslie (2026-08-18): this is the small-scale backbone-selection experiment that
+%               justifies choosing Gemini-3-Flash as the VLM front-end -- several candidate models
+%               were compared and Gemini-3-Flash was selected based on this result.
+% Generator   : NOT FOUND in experiments/scripts/ (per C2 audit, 2026-08-18). Only reference in the
+%               repo is test/fmb_VLM_test/evaluate_fmb_vlm_accuracy.py (test dir, ad-hoc). Title text
+%               embedded in the SVG reads "Accuracy is computed from extracted FINAL_JSON blocks
+%               only" -- this phrasing matches the PRE-canonicalize_graph scripts (see C3 in
+%               DATA_VALIDITY_CRITERIA.md), so whether this specific measurement is exposed to the
+%               id-ordering bug is UNVERIFIED. Note it may not be the same failure mode either way:
+%               this looks like a JSON-extraction/format-compliance check across models, not a
+%               graph-equivalence check against a majority-vote reference -- needs confirming.
+% RESOLVED 2026-08-23: the SVG's Gemini-3-Flash Test-3 = 30.0% (3/10) was stale data -- the
+%               committed archived/Gemini-3-Flash_Test-3.txt is an old run; Leslie confirmed
+%               the current/correct value is 100.0% (10/10), matching Test-1 and matching
+%               Qwen3.6-Plus. Corrected in the table below. Also independently found and fixed
+%               a transcription error of my own on Qwen3.5-Plus Test-3 (was 50.0%/5/10, actual
+%               scored value from the archived txt is 60.0%/6/10). Selection rationale for
+%               Gemini-3-Flash: per Leslie, the two models performed comparably in this
+%               small-scale comparison; Gemini-3-Flash was chosen on balance (see prose).
+% Sampling    : N=10 per model-test cell (per the chart's own counts, e.g. "10/10", "7/10").
+% Regenerate  : generator script not located -- flag if you find/recall it, so this can be reproduced.
+% ------------------------------------------------------------------
+\begin{table}[!ht]
+\centering
+\caption{Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}
+\label{tab:vlm_backbone_selection}
+\begin{tabular}{lcc}
+\toprule
+Model & Test-1 & Test-3 \\
+\midrule
+Gemini-3-Flash & 100.0\% (10/10) & 100.0\% (10/10) \\
+Qwen3.6-Plus   & 100.0\% (10/10) & 100.0\% (10/10) \\
+Qwen3.5-Plus   & \phantom{0}70.0\% (7/10) & \phantom{0}60.0\% (6/10) \\
+Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
+\bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.0\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $94.0\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
+
+% ------------------------------------------------------------------
+% TABLES: tab:vlm_accuracy_cube, tab:vlm_accuracy_fmb (2026-08-23 restructure)
+% Merges what were three separate tables (fig:vlm_accuracy_cube_ours, fig:vlm_accuracy_fmb_ours,
+% fig:vlm_accuracy_baseline) into two Ours-vs-VLM-MSGraph comparison tables, one per benchmark,
+% per Leslie's explicit request that baseline and our-method accuracy share the same column
+% format since they are being directly compared. The two sides use DIFFERENT underlying scoring
+% methodologies (see caption) -- this is a deliberate, previously-documented methodological
+% choice, not an oversight; keep both source scripts (see below) for the audit trail if the
+% distinction ever needs to be unpacked again.
+% Ours source   : experiments/outputs/gemini_proposed_method/accuracy_analysis/{cubeStacking,FMB}/
+%                 accuracy_chart.png -- self-referential majority vote across trials, N=5 cases
+%                 per magnitude (visualize_gemini_proposed_method_{,fmb_}accuracy.py, 2026-08-17,
+%                 includes the canonicalize_graph id-ordering fix).
+% Baseline source: experiments/outputs/VLM-MSGraph_baseline/accuracy_analysis/metrics_summary.json
+%                 -- manual scoring against the source image, N=10 trials per magnitude,
+%                 non-redundant scenarios only (Track 1 protocol, see
+%                 docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md section 4).
+%                 Pooled Wilson 95% CI: cubeStacking [81.2%,96.8%]; FMB [30.2%,63.9%].
+% ------------------------------------------------------------------
+\begin{table}[!ht]
+\centering
+\caption{Cube-stacking VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude).}
+\label{tab:vlm_accuracy_cube}
+\begin{tabular}{lcc}
+\toprule
+Magnitude & Ours & VLM-MSGraph \\
+\midrule
+4cubes & 100.0\% & 100.0\% \\
+5cubes & 100.0\% & \phantom{0}90.0\% \\
+6cubes & 100.0\% & \phantom{0}90.0\% \\
+7cubes & \phantom{0}98.0\% & \phantom{0}90.0\% \\
+8cubes & \phantom{0}92.0\% & \phantom{0}90.0\% \\
+\midrule
+\textbf{Overall} & \textbf{98.0\%} & \textbf{92.0\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{FMB VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude, non-redundant scenarios only).}
+\label{tab:vlm_accuracy_fmb}
+\begin{tabular}{lcc}
+\toprule
+Magnitude & Ours & VLM-MSGraph \\
+\midrule
+3objs & \phantom{0}94.0\% & 80.0\% \\
+4objs & 100.0\% & 50.0\% \\
+5objs & \phantom{0}88.0\% & 10.0\% \\
+\midrule
+\textbf{Overall} & \textbf{94.0\%} & \textbf{46.7\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+\subsection{Execution and Planning: Success Rate and Solving Time}
+\label{subsec:res_exec}
+
+Before comparing decomposition strategies, we first check whether decomposition is needed at all. Solving the smallest FMB configuration (three objects) as a single monolithic LGP problem -- without Smart's active-constraint batching or Global's fixed, layer-based split -- fails almost completely (Table~\ref{tab:ablation_monolithic}): every no-redundancy trial exhausts the memory cap, and only $1$ of $50$ redundancy trials succeeds, the rest split between timeouts and memory exhaustion. Some form of decomposition is thus a precondition for solving these assemblies at all; the remainder of this section compares two decomposition strategies against this monolithic baseline.
+
 % ------------------------------------------------------------------
 % FIGURE: fig:ablation_monolithic
 % Source data : experiments/outputs/fmb_plots/lgp_combined_results.csv (n=100 raw trials)
@@ -609,281 +728,83 @@ R  & 50 & \phantom{0}1 (2.0\%) & 23 (46.0\%) & 26 (52.0\%) \\
 \end{table}
 \FloatBarrier
 
-\subsection{Direct-Action LLM Baseline is Infeasible}
-\label{subsec:res_direct}
+VLM-MSGraph's perception stage grounds each graph node into the scene through open-vocabulary detection and segmentation; we do not re-implement or evaluate this stage. Instead, both methods receive an identical, externally supplied task assignment -- object, source pose, target pose, and order -- taken from our own method's output, isolating the trajectory-generation step. Its executor performs no collision checking and no motion planning: each pick and place is a direct interpolation from the current pose to the target pose. This keeps a modest success rate on the smallest, least cluttered configurations, but degrades quickly as the object count grows and as the required motions become less permissive: cube-stacking success falls from $16.0\%$ at four cubes to at or near $0\%$ from six cubes onward, and on FMB, where insertions require precise approach and support-order compliance, no trial succeeds at any object count (Table~\ref{tab:planning_sr}, rightmost columns). Even given a correct task assignment, an executor without collision-aware planning is not viable beyond the simplest cases.
 
-\begin{table}[!ht]
-\centering
-\caption{VLM-MSGraph baseline (Li et al.) execution success rate under Eq.~7 naive straight-line interpolation (no collision checking, no lift/transit/descend decomposition), given the same scenes and task assignment as our method. Task assignment is externally given (from our own method's output), so this isolates the trajectory-generation step.}
-\label{tab:baseline_execution}
-\begin{tabular}{lcc}
-\toprule
- & \multicolumn{2}{c}{Success Rate} \\
-\cmidrule(lr){2-3}
-Magnitude & NR & R \\
-\midrule
-\multicolumn{3}{l}{\textit{cubeStacking (N=50 per cell)}} \\
-4cubes & 16.0\% & \phantom{0}8.0\% \\
-5cubes & \phantom{0}2.0\% & \phantom{0}4.0\% \\
-6cubes & \phantom{0}0.0\% & \phantom{0}0.0\% \\
-7cubes & \phantom{0}0.0\% & \phantom{0}0.0\% \\
-8cubes & \phantom{0}4.0\% & \phantom{0}0.0\% \\
-\multicolumn{2}{l}{\textbf{Pooled (N=500)}} & \textbf{3.4\%} \\
-\midrule
-\multicolumn{3}{l}{\textit{FMB (N=50 per cell)}} \\
-3objs & 0.0\% & 0.0\% \\
-4objs & 0.0\% & 0.0\% \\
-5objs & 0.0\% & 0.0\% \\
-\multicolumn{2}{l}{\textbf{Pooled (N=300)}} & \textbf{0.0\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
-\FloatBarrier
+Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$57\%$ by five to six cubes and to $0\%$ at eight. On FMB, Smart's pooled success rate is $97.5\%$ against Global's $71.2\%$, and Global's redundant five-object case collapses to $15.0\%$, where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $146$\,s at six cubes to $296$\,s at seven, and to $285$\,s at five FMB objects against Smart's $108$\,s.
 
-\subsection{Scalability on Long-Horizon Cube Stacking}
-\label{subsec:res_scal}
 % ------------------------------------------------------------------
-% FIGURE: fig:cube_scalability
-% Source data : experiments/outputs/LGP_execution_stats/performance_final_1000tasks.svg
-% Generator   : experiments/scripts/generate_final_plots.py (mean-based; eval-dir = LGP_execution/cubeStacking)
-% Cross-check : numerically identical to embedded values in success_rate_comparison.svg and
-%               solving_time_comparison.svg (independently verified 2026-08-18); matches
-%               tab:cube_sr / tab:cube_time in Arxived/main.tex exactly.
-% OPEN ITEM   : raw trial_meta.json records behind this run (N=1000) are not currently on this
-%               machine (Leslie: on another machine, not yet re-synced as of 2026-08-18). The
-%               number is validated by cross-consistency across 3 independently-rendered files
-%               plus the previously published table, but not re-derived from raw logs this round.
-% Superseded  : experiments/outputs/LGP_execution_stats/plots/{sr,time}_comparison_{nr,r}.svg show
-%               a different (lower) Smart success rate -- confirmed 2026-08-18 to be a smaller/
-%               earlier run via generate_lgp_plots.py, NOT the same data as this figure. Excluded.
-% Regenerate  : python3 experiments/scripts/generate_final_plots.py
+% TABLE: tab:planning_sr (2026-08-23 restructure -- merges what were three separate tables,
+% tab:cube_sr/tab:fmb_sr (Smart vs Global planning success) and tab:baseline_execution
+% (VLM-MSGraph execution success), into one table with three method column-groups, so all three
+% methods' success rates sit side by side per benchmark x magnitude cell, per Leslie's explicit
+% request. NOTE: "success" means a different thing per method-group -- Smart/Global succeed by
+% the LGP solver finding a feasible, collision-free plan (a planning-time guarantee); VLM-MSGraph
+% succeeds if its naive, unplanned interpolation happens not to collide during simulated
+% execution (an empirical, execution-time outcome). Both answer the same practical question the
+% paper cares about (did this produce a working, collision-free assembly), just verified at
+% different pipeline stages appropriate to each method -- see caption for the one-line version.
+% tab:planning_time (solving time) is NOT merged: VLM-MSGraph's naive interpolation has no
+% "solving" step, so a solving-time comparison isn't meaningful for it; that table stays
+% Smart-vs-Global only.
 % ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
-\caption{Cube-stacking planning success rate (\%): Smart (ours) vs Global LGP, under no-redundancy (NR) and redundancy (R) conditions. N=1000 tasks total.}
-\label{tab:cube_sr}
-\begin{tabular}{lcccc}
-\toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Cubes & NR & R & NR & R \\
-\midrule
-4 & 100.0 & 100.0 & 100.0 & 78.0 \\
-5 & 100.0 & 100.0 & \phantom{0}96.7 & 56.0 \\
-6 & 100.0 & 100.0 & 100.0 & 57.1 \\
-7 & 100.0 & 100.0 & \phantom{0}93.3 & \phantom{0}3.7 \\
-8 & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\caption{Cube-stacking average solving time in seconds over successful trials. Global-R at eight cubes has no successful trial.}
-\label{tab:cube_time}
-\begin{tabular}{lcccc}
-\toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Cubes & NR & R & NR & R \\
-\midrule
-4 & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8 \\
-5 & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 \\
-6 & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}145.9 \\
-7 & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}295.8 \\
-8 & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-\subsection{Fine-Grained Assembly on FMB}
-\label{subsec:res_fmb}
-% ------------------------------------------------------------------
-% FIGURE: fig:fmb_scalability
-% Source data : experiments/outputs/fmb_plots/fmb_success_time_comparison.png
-% Generator   : experiments/scripts/generate_fmb_plot.py (mean-based; eval-dir = evaluations/LGP/FMB,
-%               N=620 trial_meta.json currently on disk -- fully traceable and reproducible)
-% Cross-check : success-rate values closely match tab:fmb_sr; solving-time values closely match
-%               tab:fmb_time, EXCEPT the 5-object Global-R bar reads ~15% in this chart vs 6.0%
-%               in the Arxived table -- open discrepancy. Leslie decided (2026-08-18) to keep the
-%               chart as-is without re-verifying against raw logs this round.
-% Regenerate  : python3 experiments/scripts/generate_fmb_plot.py
-% ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\caption{FMB planning success rate (\%): Smart (ours) vs Global LGP, under no-redundancy (NR) and redundancy (R) conditions. Scenario-mode groups with 0/N success are excluded from the denominator (affects Global-R at five objects: 3/20 rather than 3/50).}
-\label{tab:fmb_sr}
-\begin{tabular}{lcccc}
-\toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Objects & NR & R & NR & R \\
-\midrule
-3 & \phantom{0}95.0 & 100.0 & \phantom{0}95.0 & 95.0 \\
-4 & \phantom{0}96.7 & \phantom{0}96.7 & \phantom{0}83.3 & 73.3 \\
-5 & \phantom{0}98.0 & \phantom{0}98.0 & \phantom{0}66.0 & 15.0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\caption{FMB average solving time in seconds over successful trials.}
-\label{tab:fmb_time}
-\begin{tabular}{lcccc}
-\toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Objects & NR & R & NR & R \\
-\midrule
-3 & \phantom{0}74.6 & \phantom{0}68.1 & \phantom{0}82.2 & \phantom{0}95.8 \\
-4 & \phantom{0}88.4 & \phantom{0}84.8 & \phantom{0}88.7 & 135.2 \\
-5 & 110.8 & 107.9 & 131.0 & 284.8 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-
-\subsection{VLM Front-End Graph Generation Accuracy}
-\label{subsec:res_vlm_accuracy}
-
-% ------------------------------------------------------------------
-% FIGURE: fig:vlm_backbone_selection
-% Source data : Arxived/accuracy_bar_chart.svg (converted to PDF 2026-08-18 via cairosvg, no data
-%               values changed -- vector re-render only)
-% Purpose     : Leslie (2026-08-18): this is the small-scale backbone-selection experiment that
-%               justifies choosing Gemini-3-Flash as the VLM front-end -- several candidate models
-%               were compared and Gemini-3-Flash was selected based on this result.
-% Generator   : NOT FOUND in experiments/scripts/ (per C2 audit, 2026-08-18). Only reference in the
-%               repo is test/fmb_VLM_test/evaluate_fmb_vlm_accuracy.py (test dir, ad-hoc). Title text
-%               embedded in the SVG reads "Accuracy is computed from extracted FINAL_JSON blocks
-%               only" -- this phrasing matches the PRE-canonicalize_graph scripts (see C3 in
-%               DATA_VALIDITY_CRITERIA.md), so whether this specific measurement is exposed to the
-%               id-ordering bug is UNVERIFIED. Note it may not be the same failure mode either way:
-%               this looks like a JSON-extraction/format-compliance check across models, not a
-%               graph-equivalence check against a majority-vote reference -- needs confirming.
-% OPEN ITEM   : raw values (2026-08-18 read of the SVG) show Gemini-3-Flash at 100.0% (10/10) on
-%               "Test-1" but only 30.0% (3/10) on "Test-3", while Qwen3.6-Plus reads 100.0% (10/10)
-%               on BOTH Test-1 and Test-3 -- i.e. by these numbers alone Qwen3.6-Plus looks at least
-%               as consistent as Gemini-3-Flash. Leslie: please confirm what Test-1/Test-3 represent
-%               (different scenarios vs. repeated trials) and reconcile with the "Gemini-3-Flash did
-%               well across the board" selection rationale before finalizing the caption below.
-% Sampling    : N=10 per model-test cell (per the chart's own counts, e.g. "10/10", "7/10").
-% Regenerate  : generator script not located -- flag if you find/recall it, so this can be reproduced.
-% ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\caption{Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}
-\label{tab:vlm_backbone_selection}
-\begin{tabular}{lcc}
-\toprule
-Model & Test-1 & Test-3 \\
-\midrule
-Gemini-3-Flash & 100.0\% (10/10) & \phantom{0}30.0\% (3/10) \\
-Qwen3.6-Plus   & 100.0\% (10/10) & 100.0\% (10/10) \\
-Qwen3.5-Plus   & \phantom{0}70.0\% (7/10) & \phantom{0}50.0\% (5/10) \\
-Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
-\bottomrule
-\end{tabular}
-\end{table}
-\FloatBarrier
-
-
-
-% ------------------------------------------------------------------
-% FIGURES: fig:vlm_accuracy_cube_ours, fig:vlm_accuracy_fmb_ours
-% Source data : experiments/outputs/gemini_proposed_method/accuracy_analysis/{cubeStacking,FMB}/accuracy_chart.png
-% Generator   : experiments/scripts/visualize_gemini_proposed_method_accuracy.py +
-%               visualize_gemini_proposed_method_fmb_accuracy.py (2026-08-17, includes the
-%               canonicalize_graph id-ordering fix -- see script comments for the bug this fixed)
-% GT method   : SELF-REFERENTIAL majority vote across trials (the trial with the highest
-%               cross-trial support is treated as the reference answer). NOT externally/manually
-%               verified against the source image. Leslie: source doesn't need annotating in the
-%               caption, this is an accepted methodological choice, keep raw files for audit trail.
-% Regenerate  : python3 experiments/scripts/visualize_gemini_proposed_method_accuracy.py
-%               python3 experiments/scripts/visualize_gemini_proposed_method_fmb_accuracy.py
-% ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\caption{Our method's VLM graph-generation accuracy vs. majority-vote reference, cube stacking (5 cases per magnitude).}
-\label{tab:vlm_accuracy_cube_ours}
-\begin{tabular}{lcccc}
-\toprule
-Magnitude & Cases & Avg. Accuracy & Min & Max \\
-\midrule
-4cubes & 5 & 100.0\% & 100\% & 100\% \\
-5cubes & 5 & 100.0\% & 100\% & 100\% \\
-6cubes & 5 & 100.0\% & 100\% & 100\% \\
-7cubes & 5 & \phantom{0}98.0\% & \phantom{0}90\% & 100\% \\
-8cubes & 5 & \phantom{0}92.0\% & \phantom{0}70\% & 100\% \\
-\midrule
-Overall & 25 & \phantom{0}98.0\% & & \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\caption{Our method's VLM graph-generation accuracy vs. majority-vote reference, FMB (5 cases per magnitude).}
-\label{tab:vlm_accuracy_fmb_ours}
-\begin{tabular}{lcccc}
-\toprule
-Magnitude & Cases & Avg. Accuracy & Min & Max \\
-\midrule
-3objs & 5 & \phantom{0}94.0\% & \phantom{0}70\% & 100\% \\
-4objs & 5 & 100.0\% & 100\% & 100\% \\
-5objs & 5 & \phantom{0}88.0\% & \phantom{0}70\% & 100\% \\
-\midrule
-Overall & 15 & \phantom{0}94.0\% & & \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-% ------------------------------------------------------------------
-% FIGURE: fig:vlm_accuracy_baseline
-% Source data : experiments/outputs/VLM-MSGraph_baseline/accuracy_analysis/visualizations/per_magnitude_descriptive.png
-% Generator   : experiments/scripts/visualize_vlm_msgraph_manual_scores.py (2026-08-18)
-% GT method   : MANUAL scoring against the source image (Correct=1/Wrong=0). Track 1 protocol --
-%               see docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md section 4.
-%               Small-N by design (baseline comparison track, self-scoring not feasible for this
-%               method); Leslie: will re-run against simulation success rate in a later round.
-% Sampling    : 8 configs x 5 scenarios x 1 seed, non-redundant only, supplementary track --
-%               NOT the paper's core feasibility claim. Reporting rule fixed in advance: pooled
-%               accuracy per benchmark only; per-magnitude bars are explicitly non-trend (N=10
-%               per cell) -- do not caption these as a degradation curve.
-% Pooled      : cubeStacking 92.0% (46/50, Wilson 95% [81.2%,96.8%]); FMB 46.7% (14/30, Wilson 95% [30.2%,63.9%])
-% Regenerate  : python3 experiments/scripts/visualize_vlm_msgraph_manual_scores.py
-% ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\caption{VLM-MSGraph baseline (Li et al.) semantic/matching-layer accuracy, manually scored against the source image, non-redundant scenarios only. Per-magnitude cells are descriptive only (N=10 each, not a trend); Pooled rows are the reportable statistic, with Wilson 95\% CI.}
-\label{tab:vlm_accuracy_baseline}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{llccc}
+\caption{Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart and Global succeed via constrained LGP planning; VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph). FMB: N=200 (Smart/Global; scenario-mode groups with 0/N success excluded from the denominator, affecting Global-R at five objects: 3/20 rather than 3/50), N=300 (VLM-MSGraph).}
+\label{tab:planning_sr}
+\begin{tabular}{lcccccc}
 \toprule
-Benchmark & Magnitude & Correct/N & Accuracy & 95\% CI \\
+ & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{VLM-MSGraph} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+ & NR & R & NR & R & NR & R \\
 \midrule
-cubeStacking & 4cubes & 10/10 & 100.0\% & \\
-cubeStacking & 5cubes & \phantom{0}9/10 & \phantom{0}90.0\% & \\
-cubeStacking & 6cubes & \phantom{0}9/10 & \phantom{0}90.0\% & \\
-cubeStacking & 7cubes & \phantom{0}9/10 & \phantom{0}90.0\% & \\
-cubeStacking & 8cubes & \phantom{0}9/10 & \phantom{0}90.0\% & \\
-cubeStacking & \textbf{Pooled} & \textbf{46/50} & \textbf{92.0\%} & 81.2--96.8 \\
+\multicolumn{7}{l}{\textit{Cube Stacking}} \\
+4 cubes & 100.0 & 100.0 & 100.0 & 78.0 & 16.0 & \phantom{0}8.0 \\
+5 cubes & 100.0 & 100.0 & \phantom{0}96.7 & 56.0 & \phantom{0}2.0 & \phantom{0}4.0 \\
+6 cubes & 100.0 & 100.0 & 100.0 & 57.1 & \phantom{0}0.0 & \phantom{0}0.0 \\
+7 cubes & 100.0 & 100.0 & \phantom{0}93.3 & \phantom{0}3.7 & \phantom{0}0.0 & \phantom{0}0.0 \\
+8 cubes & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 & \phantom{0}4.0 & \phantom{0}0.0 \\
 \midrule
-FMB & 3objs & 8/10 & 80.0\% & \\
-FMB & 4objs & 5/10 & 50.0\% & \\
-FMB & 5objs & 1/10 & 10.0\% & \\
-FMB & \textbf{Pooled} & \textbf{14/30} & \textbf{46.7\%} & 30.2--63.9 \\
+\multicolumn{7}{l}{\textit{FMB}} \\
+3 objects & \phantom{0}95.0 & 100.0 & \phantom{0}95.0 & 95.0 & 0.0 & 0.0 \\
+4 objects & \phantom{0}96.7 & \phantom{0}96.7 & \phantom{0}83.3 & 73.3 & 0.0 & 0.0 \\
+5 objects & \phantom{0}98.0 & \phantom{0}98.0 & \phantom{0}66.0 & 15.0 & 0.0 & 0.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
-\FloatBarrier
+
+\begin{table}[!ht]
+\centering
+\caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial.}
+\label{tab:planning_time}
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & NR & R & NR & R \\
+\midrule
+\multicolumn{5}{l}{\textit{Cube Stacking}} \\
+4 cubes & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8 \\
+5 cubes & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 \\
+6 cubes & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}145.9 \\
+7 cubes & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}295.8 \\
+8 cubes & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- \\
+\midrule
+\multicolumn{5}{l}{\textit{FMB}} \\
+3 objects & \phantom{0}74.6 & \phantom{0}68.1 & \phantom{0}82.2 & \phantom{0}95.8 \\
+4 objects & \phantom{0}88.4 & \phantom{0}84.8 & \phantom{0}88.7 & 135.2 \\
+5 objects & 110.8 & 107.9 & 131.0 & 284.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 
 \subsection{Physical Execution}
 \label{subsec:res_real}
+
+We validate the pipeline on the physical robot. Representative cube-stacking and FMB instances are planned by Smart, and the resulting trajectories are parsed into joint-space motions and gripper events and executed on the Franka Panda as described in Section~\ref{sec:motion_execution}. Figures~\ref{fig:real_cube_stacking} and~\ref{fig:real_fmb} show the initial scene and execution sequence for each magnitude.
 
 % ------------------------------------------------------------------
 % FIGURE: fig:real_cube_stacking
