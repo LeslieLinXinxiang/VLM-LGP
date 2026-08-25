@@ -35,6 +35,8 @@
 \usepackage{booktabs}
 \usepackage{url}
 \usepackage{placeins} % \FloatBarrier -- keeps figures from drifting past the References section
+\usepackage{algorithm}
+\usepackage{algpseudocode} % \State, \For, \If, etc. for Algorithm~\ref{alg:vlm_graph}
 
 \newcommand{\zz}[1]{{\color{red}ZZ: #1}}
 
@@ -262,31 +264,118 @@ Finally, the task plan and scene information are integrated into a LGP formulati
 
 \zz{write the method corresponding to the outline given in the last paragraph of the introduction, we have three components, detail each one in one subsection}
 
-\subsection{VLM-Based Task Understanding}
+\subsection{Assembly Graph Generation and Decomposition}
 \label{sec:task_understanding}
 
-\zz{Introduce in each subsubsection: 1. how VLM converts the image input into assembly graph. 2. How this graph is converted into action plans}
+
 
 \subsubsection{VLM for Assembly Graph Generation}
-\textcolor{red}{Input: Image, Output: Graph}
+Given the input image(s) $\mathcal{I}$, the framework first converts the scene into an assembly graph $\mathcal{G}$ to support reliable task plan generation.
+Leveraging its strong visual reasoning capability, we employ a VLM to perform the image-to-graph conversion $f_{\mathrm{G}}$.
+Unlike many existing approaches that directly use VLMs to generate action sequences, our method restricts the VLM to extracting the assembly structure, thereby reducing reliance on potentially unreliable planning outputs.
+The resulting graph provides a structured representation that bridges visual task understanding and high-level planning, allowing task dependencies to be systematically analyzed and decomposed.
 
-Following the mapping $\mathcal{G}=f_{\mathrm{VLM}}(\mathcal{I})$ introduced in
-Section~\ref{sec:problem_formulation}, we use a VLM to convert the target
-assembly image $\mathcal{I}$ into the object-support graph
-$\mathcal{G}=(\mathcal{V},\mathcal{E})$, rather than asking it to predict
-precise object coordinates or a long executable program directly. This
-choice follows the capability boundary of current VLMs: they are
-comparatively reliable at inferring relational structure, support
-dependencies, and coarse left-right or above-below organization, but less
-stable when required to output exact geometry, long symbolic code, or
-mathematically precise layouts. We therefore let the VLM produce the
-structural representation that it is best suited to provide. Each node
+Each node
 $v \in \mathcal{V}$ denotes one target object instance, and each directed
 edge $(u,v) \in \mathcal{E}$ indicates that object $u$ must support object
 $v$ in the final assembly. The graph is directed because support precedence
 is asymmetric, and optional local labels such as left/right placement hints
 are retained only as geometric side information rather than as the
 execution order itself.
+
+\textbf{Input representation.} $\mathcal{I}=\{I_1,\dots,I_S\}$ is a small set
+of rendered images rather than a single raw photograph. Each $I_s$ composites
+the target scene together with an \emph{object-list legend} that draws every
+candidate part to scale (Fig.~\ref{fig:vlm_input}); the legend serves as a
+visual reference against which the VLM matches each block's shape and size,
+turning open-ended shape recognition into a template-matching problem against
+a small closed vocabulary. For cube stacking, $S{=}1$: a single composite
+image pairs the legend with the finished structure. For FMB, $S$ equals the
+number of assembly steps, each rendered as a top-down/isometric composite; the
+VLM is given the full incremental image sequence rather than only the final
+state, so that a part occluded in the final view can be attributed to the step
+at which it disappears from the top-down view.
+
+\textbf{Prompting strategy.} $f_{\mathrm{G}}$ is instantiated as a single
+zero-shot call: the VLM client also supports injecting few-shot visual
+exemplars into the prompt, but we found the explicit reasoning procedure below
+sufficient and disable this in the deployed pipeline. Rather than asking the
+VLM to state a support relation directly, the prompt requires it to justify
+each edge through an explicit, checkable visual test. For cube stacking, every
+block's bottom-left and bottom-right corners are projected straight down onto
+the layer below; both corners landing on the same block yields a single
+support edge, corners landing on different blocks yield a bridging edge over
+exactly those blocks, and any candidate lying outside this horizontal
+footprint is rejected regardless of layer alignment. For FMB, support is read
+only from the top-down view under a cover-implies-support rule, with the
+isometric view explicitly excluded as evidence for depth to prevent
+perspective ambiguity from being mistaken for occlusion; a color that appears
+as disconnected fragments in the top-down view is treated as an occluded,
+lower-layer object. The prompt further constrains position labels
+(left/right/center for cube stacking; left/right/front/back for FMB) to a
+small enumerated set, with explicit rules for when a label must appear versus
+must be omitted, and requires the VLM to externalize this reasoning as
+free-form text before emitting the final graph, so that intermediate errors
+remain inspectable.
+
+\textbf{Output schema and validation.} The VLM's response must contain a
+delimited JSON block listing, for every object, an integer id, an object-type
+string drawn from the legend vocabulary, and a set of edges each carrying a
+supporter id and an optional position label; id~$0$ is reserved for the
+table/base and always has an empty edge set. This block is extracted
+deterministically via its delimiters and parsed into $\mathcal{G}$; because
+generation is stochastic, the parsed graph need not satisfy the schema on the
+first attempt. We therefore wrap the call in the closed-loop procedure of
+Algorithm~\ref{alg:vlm_graph}: a deterministic validator, independent of the
+VLM, checks a set of structural invariants -- id uniqueness and contiguity,
+every supporter id strictly smaller than its supported object's id (which
+rules out both cyclic and transitive skip-layer edges), a non-empty edge set
+for every real object, at least one object resting on the table, and position
+labels present only where the policy above requires them. A failed check is
+converted into a natural-language error list and appended to the next call as
+feedback, with the same images resubmitted; if no attempt validates within $K$
+rounds, the scene is reported as a hard failure.
+
+\begin{algorithm}[t]
+\caption{Closed-Loop Assembly Graph Extraction}
+\label{alg:vlm_graph}
+\begin{algorithmic}[1]
+\Require image set $\mathcal{I}=\{I_1,\dots,I_S\}$, VLM $f_{\mathrm{G}}$,
+prompt template $\Pi$, max attempts $K$
+\Ensure assembly graph $\mathcal{G}$, or \textsc{Fail}
+\State $\textit{feedback} \gets \emptyset$
+\For{$k = 1$ \textbf{to} $K$}
+    \State $(\textit{draft}, \mathcal{G}_k) \gets f_{\mathrm{G}}(\mathcal{I}, \Pi, \textit{feedback})$
+        \Comment{draft: free-text reasoning trace}
+    \State $(\textit{valid}, \textit{errors}) \gets \textsc{Validate}(\mathcal{G}_k)$
+    \If{\textit{valid}}
+        \State \Return $\mathcal{G}_k$
+    \EndIf
+    \State $\textit{feedback} \gets \textsc{FormatFeedback}(\textit{errors})$
+\EndFor
+\State \Return \textsc{Fail}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/vlm_input_cube_stacking.png}\\
+\small (a) Cube stacking\\[4pt]
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{cc}
+  \includegraphics[width=0.48\textwidth]{figures/vlm_input_fmb_step1.png} &
+  \includegraphics[width=0.48\textwidth]{figures/vlm_input_fmb_step2.png}
+\end{tabular}\\
+\small (b) FMB, two-step incremental image sequence for one scenario
+\caption{Representative VLM input images used for assembly graph generation.
+(a) Cube stacking: a single composite image pairing an object-list legend
+(used as a visual scale reference) with the target structure. (b) FMB: the
+incremental image sequence for one scenario, each frame composited from an
+object-list legend, a top-down view (primary evidence for support edges), and
+an isometric view (consistency check only).}
+\label{fig:vlm_input}
+\end{figure*}
+\FloatBarrier
 
 \subsubsection{Graph Decomposition and Clustering}
 \textcolor{red}{Input: Graph, Output: Short-horizon action plans}
@@ -638,6 +727,37 @@ Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
 \end{table}
 \FloatBarrier
 
+FMB structures frequently include bridging relations, where one object spans multiple supporters and is partially occluded in any single view of the final assembly. Table~\ref{tab:vlm_input_format} compares two ways of presenting such structures to the VLM, on two representative bridging scenes: a single composite image of the final assembly, which requires inferring occluded support from color fragmentation, versus a sequence of one image per build step. Sequential input reaches $100\%$ on both scenes; single-image input drops to $80$--$90\%$, with errors concentrated on the occluded bridging relations. We adopt sequential, per-step image input for all FMB experiments in this work.
+
+% ------------------------------------------------------------------
+% TABLE: tab:vlm_input_format
+% Source data : test/fmb_VLM_test/outputs/accuracy_summary.json, models
+%               Gemini-3-Flash_test{6,7}_{Single,Sequential}_Input (same harness as
+%               tab:vlm_backbone_selection, different run/variable).
+% Purpose     : isolates image-input format (single composite image vs. per-build-step
+%               sequence) as the only variable, holding backbone (Gemini-3-Flash) and scene
+%               fixed. test6 = task_hpair_threebars_front_center_back (3 bars + 2 bridges);
+%               test7 = task_single_input_yellow_red_green_blue (3 bars + 1 bridge). Both are
+%               bridging-relation scenes, chosen because occlusion inference is where
+%               single-image input is expected to fail.
+% Sampling    : N=10 trials per scene per format (40 VLM calls total).
+% Regenerate  : python3 test/fmb_VLM_test/evaluate_fmb_vlm_accuracy.py
+% ------------------------------------------------------------------
+\begin{table}[!ht]
+\centering
+\caption{FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}
+\label{tab:vlm_input_format}
+\begin{tabular}{lcc}
+\toprule
+Scene & Single-Image & Sequential-Image \\
+\midrule
+3 bars + 2 bridges & \phantom{0}80.0\% (8/10) & 100.0\% (10/10) \\
+3 bars + 1 bridge  & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
+\bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+
 Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.0\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $94.0\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
 
 % ------------------------------------------------------------------
@@ -841,8 +961,11 @@ We validate the pipeline on the physical robot. Representative cube-stacking and
 \end{figure*}
 \FloatBarrier
 
+\section{Discussion}
 
+\subsection{Role of VLM}
 
+% This choice follows the capability boundary of current VLMs: they are comparatively reliable at inferring relational structure, support dependencies, and coarse left-right or above-below organization, but less stable when required to output exact geometry, long symbolic code, or mathematically precise layouts. 
 
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
