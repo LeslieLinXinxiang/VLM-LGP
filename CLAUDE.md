@@ -7,7 +7,7 @@ might still be relevant next time.
 
 ---
 
-## Current phase: VLM-MSGraph baseline paper insertion — done, needs Overleaf sync
+## Current phase: Results section fully written (tables + prose) — pushed, needs Overleaf sync
 
 Full design/rationale lives in
 [docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md](docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md)
@@ -185,7 +185,22 @@ only the choice of which numbers to display flip-flopped. If a future session se
 looking "too high" and is tempted to swap back to raw numbers, don't do it unilaterally — this
 specific back-and-forth already happened twice in one session; ask first and link this note.
 
-### TODO (next session, on the Ubuntu machine): rerun the 3 broken FMB scenarios and backfill `tab:fmb_sr`
+### TODO — IN PROGRESS as of 2026-08-24: rerunning the 3 broken FMB scenarios
+
+**Status**: user is currently rerunning the FMB matrix (Smart / Global / Monolithic) on the
+Ubuntu machine to resolve exactly this TODO. Once that run lands, they'll decide whether
+`main.tex`'s numbers/prose need updating — do not preemptively rewrite `tab:planning_sr` or the
+Results prose around it before that decision is made; ask first, per the diagnostic outcomes
+below.
+
+**Note on labels**: this TODO was written when the FMB success-rate table was still
+`tab:fmb_sr` (a standalone table in its own subsection). As of the 2026-08-23/24 Results-prose
+session, that table was merged into `tab:planning_sr` (Table V in the compiled PDF), which now
+also includes a third VLM-MSGraph column-group and lives in the merged "Execution and Planning"
+subsection (`subsec:res_exec`) in `main.tex`. Everywhere below that says `tab:fmb_sr`, read
+`tab:planning_sr`'s *FMB block* (rows `3 objects`/`4 objects`/`5 objects`, the `Smart (Ours)` and
+`Global` column-groups only — the new `VLM-MSGraph` columns are unrelated to this TODO and
+should not be touched by it).
 
 **Exactly what's missing/broken** (self-contained — do not need to re-derive this from git
 history or chat transcript):
@@ -222,25 +237,77 @@ Global-R, which is a separate, already-understood issue — see above, not part 
   needed — but note this in the scenario's own directory (e.g. a `KNOWN_INFEASIBLE.md`) so a
   third pass doesn't re-investigate the same dead end.
 - **Bug/regression** (scene generation or solver pipeline issue that happens to hit these
-  three): fix it, rerun the 120 trials, recompute `tab:fmb_sr` and `tab:fmb_time` using the
-  same excluded-groups aggregation as `experiments/scripts/generate_fmb_plot.py` (see the
-  comment block directly above `tab:fmb_sr` in `main.tex`, currently ~line 703, for the exact
-  methodology), and update both tables in `main.tex` (currently at lines ~716–745). Also update
-  the `tab:fmb_sr` caption's underlying data if the excluded/raw gap changes materially — but
-  per the user's twice-confirmed call, still do **not** add an N/exclusion explanation to the
+  three): fix it, rerun the 120 trials, recompute the FMB rows of `tab:planning_sr` (Table V)
+  and `tab:planning_time` (Table VI) using the same excluded-groups aggregation as
+  `experiments/scripts/generate_fmb_plot.py`, and update both tables in `main.tex`
+  (`subsec:res_exec`). Also recompute the pooled FMB prose numbers ($97.5\%$ Smart / $71.2\%$
+  Global, stated in the paragraph right before Table V) if they change. Per the user's
+  twice-confirmed call, still do **not** add an N/exclusion explanation to the `tab:planning_sr`
   caption itself; ask if this constraint should change.
 
 This is the direct follow-up to close out this table before the paper is finalized, not a
 someday-maybe item.
 
-**Still open**: the edited `main.tex` is local-only until synced back to Overleaf (this
-session cannot push to Overleaf directly — no git remote for it). User needs to let the
-Overleaf extension pick up the change, or re-upload manually. Also noticed mid-session that
-`main.tex` on disk got touched by something external (Overleaf's watcher, most likely) and
-reverted a couple of in-progress table-formatting fixes (the `tab:vlm_accuracy_baseline`
-overfull-hbox fix) — re-applied them, but if you pick this up on another machine, re-run
-`latexmk -pdf -g main.tex` and grep the log for `Overfull`/`Underfull` before trusting the PDF
-looks the way this session left it.
+**Historical note**: during this same session, `main.tex` on disk got touched by something
+external (Overleaf's watcher, most likely) at least twice, each time reverting in-progress
+table-formatting fixes (the `tab:vlm_accuracy_baseline` overfull-hbox fix, and once a full
+revert of `tab:fmb_sr`'s numbers back to a stale raw/unexcluded version). Both times this was
+caught by re-running `latexmk -pdf -g main.tex` and grepping the log for `Overfull`/`Underfull`
+before trusting the PDF — do this on any future session too, don't assume the file on disk
+matches what the last session left, even right after a `git pull`.
+
+### Done (2026-08-24): Results section prose, written top to bottom
+
+All Results subsections now have real prose, not just headers + tables (they previously had
+none at all in the new `main.tex`, unlike `Arxived/main.tex` which had full prose — that gap is
+what this pass closed). Restructured into two subsections per the user's explicit narrative,
+not the original Arxived structure:
+
+- **`subsec:res_vlm`** ("VLM Front-End: Graph-Generation Accuracy"): Direct-Action LLM
+  (qualitative, no table — no trial ever completes, so there's nothing to tabulate) → backbone
+  selection (`tab:vlm_backbone_selection`, moved here from its own subsection) → our method vs.
+  VLM-MSGraph accuracy (`tab:vlm_accuracy_cube`/`tab:vlm_accuracy_fmb`).
+- **`subsec:res_exec`** ("Execution and Planning: Success Rate and Solving Time"): monolithic-
+  solving ablation (`tab:ablation_monolithic`) → VLM-MSGraph naive-interpolation execution →
+  Global vs. Smart planning (`tab:planning_sr`/`tab:planning_time`).
+
+Table changes made while writing (content, not just prose):
+- `tab:vlm_backbone_selection`: Gemini-3-Flash Test-3 was showing a stale $30.0\%$ (3/10) from
+  an outdated archived run — **user confirmed this is their own transcription error, not a data
+  issue to investigate further; corrected to $100.0\%$ (10/10)** (matching Test-1). Also fixed
+  Qwen3.5-Plus Test-3 from a value that didn't match its own source file ($50.0\%$/5/10 →
+  $60.0\%$/6/10, per the archived `.txt`). Selection rationale in prose: Gemini-3-Flash and
+  Qwen3.6-Plus performed comparably; Gemini-3-Flash chosen on balance, not because it strictly
+  dominated (do not overstate this in future edits).
+- `tab:baseline_execution` (VLM-MSGraph Track 2, previously its own table) was **merged into
+  `tab:planning_sr`** as a third `VLM-MSGraph` column-group alongside `Smart (Ours)` and
+  `Global`, per explicit user request so the three methods' success rates sit side by side for
+  direct visual comparison. Caption flags that "success" means different things per
+  column-group (Smart/Global = solver found a feasible plan; VLM-MSGraph = naive interpolation
+  happened not to collide during simulated execution) — this is intentional and was reviewed,
+  not an oversight to "fix" later. `tab:planning_time` (solving time) was deliberately **not**
+  merged the same way — VLM-MSGraph's naive interpolation has no solving step, so a time
+  comparison isn't meaningful for it.
+- FMB pooled success-rate numbers in prose (Smart $97.5\%$, Global $71.2\%$) were **recomputed
+  from `tab:planning_sr`'s current cell values**, not copied from Arxived's $60.5\%$ for Global
+  — that old number mixed exclusion methodologies (see "Data-integrity finding" above); $71.2\%$
+  is the number consistent with the now-standardized excluded-groups methodology used
+  throughout this table. If `tab:planning_sr`'s FMB cells change (see the TODO above, currently
+  in progress on Ubuntu), this pooled number must be recomputed again, not left stale.
+
+**Style constraints given explicitly by the user, apply to any future edits of this section**:
+restrained, academic wording, concise, avoid "AI-flavor" phrasing (no meta-commentary like "in
+this section we...", no hedging filler, no listy over-explaining). Also: VLM-MSGraph's
+execution primitive (straight-line interpolation, no collision checking) is **the method as
+published**, not something we imposed or weakened — do not phrase it as if we added those
+limitations; that critique belongs in the Execution results paragraph (where the actual
+numbers are), not in the Setup section's method definitions. Global LGP's layer-based split is
+described as mirroring a human manually partitioning a long-horizon task into subtasks — keep
+this framing if the method description is touched again.
+
+Compiles clean with `latexmk -pdf`; only pre-existing warnings remain (the Eq. 2 overfull hbox,
+one cosmetic underfull hbox in the Setup paragraph, and the undefined `cite_komo_2014`
+citation) — no new ones introduced by this pass.
 
 ---
 
