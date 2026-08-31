@@ -185,13 +185,46 @@ only the choice of which numbers to display flip-flopped. If a future session se
 looking "too high" and is tempted to swap back to raw numbers, don't do it unilaterally — this
 specific back-and-forth already happened twice in one session; ask first and link this note.
 
-### TODO — IN PROGRESS as of 2026-08-24: rerunning the 3 broken FMB scenarios
+### Done (2026-08-31): the 3 broken FMB scenarios were a bug, not infeasibility — fixed and rerun
 
-**Status**: user is currently rerunning the FMB matrix (Smart / Global / Monolithic) on the
-Ubuntu machine to resolve exactly this TODO. Once that run lands, they'll decide whether
-`main.tex`'s numbers/prose need updating — do not preemptively rewrite `tab:planning_sr` or the
-Results prose around it before that decision is made; ask first, per the diagnostic outcomes
-below.
+**Resolution**: it was the bug/regression outcome (second bullet below), not infeasibility.
+Root cause (commit `d300637e`, pushed from the Ubuntu machine): `_terminal()` in
+`core/phase2_codegen.py` had two bugs in how it resolved a multi-supporter (bridging) object's
+placement terminal — (1) it didn't check the bridging object's own per-edge position label
+before falling back to the supporters' positions, so two distinct bridging objects spanning the
+same supporter pair collapsed onto the identical `Table_Center` terminal, and (2) supporter
+position aggregation silently dropped an unlabeled supporter instead of treating it as
+implicit "center", so a bridging object with one labeled + one unlabeled supporter resolved to
+a raw "stack on both supporters" terminal instead of `Table_Center`. Both produced solver
+*timeouts*, not fast failures — which is why the diagnostic in this TODO (looking for a
+`timeout`/`memory_exceeded`/IK-failure split) would have found "mostly timeout" and pointed
+here.
+
+Fixed, then **all of FMB was rerun with the 300s wall-clock cap removed** (16GB memory cap
+only) to separate genuine infeasibility from under-provisioned search time — not just the 3
+broken scenarios, the whole `{3objs,4objs,5objs}` matrix (900 solves), since the old
+exclusion-based-denominator methodology this TODO was working around is no longer needed once
+nothing is artificially timing out. Confirmed post-fix: Smart is 20/20 on all three previously
+all-zero scenarios (`3objs/s002`, `4objs/s003`, `4objs/s005`) — genuinely a bug, not an
+infeasible scene. Also added a `lgp_combined` (monolithic, no decomposition) column for both
+benchmarks — FMB fully (`--combined-only`, no timeout), cube stacking only at 4cubes (100
+trials, 0% success, memory-bound; 5–8cubes not executed, per the rule that a strictly easier
+magnitude already failing completely implies the harder ones do too).
+
+`tab:planning_sr`/`tab:planning_time` (Table VI/VII) were updated accordingly on 2026-08-31 —
+see the new entry near the bottom of this file ("Table VI/VII FMB refresh") for the exact old
+vs. new numbers and the commit hashes to revert against. The paragraphs below (the original
+TODO write-up) are kept as the historical record of how this was diagnosed; nothing below this
+point needs further action.
+
+<details>
+<summary>Original TODO text (resolved, kept for history)</summary>
+
+**Status** (as originally written, 2026-08-24): user is currently rerunning the FMB matrix
+(Smart / Global / Monolithic) on the Ubuntu machine to resolve exactly this TODO. Once that run
+lands, they'll decide whether `main.tex`'s numbers/prose need updating — do not preemptively
+rewrite `tab:planning_sr` or the Results prose around it before that decision is made; ask
+first, per the diagnostic outcomes below.
 
 **Note on labels**: this TODO was written when the FMB success-rate table was still
 `tab:fmb_sr` (a standalone table in its own subsection). As of the 2026-08-23/24 Results-prose
@@ -256,6 +289,40 @@ caught by re-running `latexmk -pdf -g main.tex` and grepping the log for `Overfu
 before trusting the PDF — do this on any future session too, don't assume the file on disk
 matches what the last session left, even right after a `git pull`.
 
+</details>
+
+**Root cause identified (2026-08-31)**: it's **Antigravity IDE's "Overleaf Workshop" extension**,
+not a vague "Overleaf's watcher". `paper/VLM-LGP-Assembly/.overleaf/settings.json` (git-tracked,
+`uri: overleaf-workshop://www.overleaf.com/...project=699eb4a5...`) is this extension's config
+file, and the extension appears to sync *any* local folder containing it against that Overleaf
+project's *current cloud content* — bidirectionally, live, no explicit user action needed each
+time. Confirmed the hard way this session: a **brand new `git clone`** to a non-OneDrive path
+(`~/Projects/VLM-LGP`) got silently overwritten back to the same stale pre-rerun numbers within
+minutes of cloning, plus a pile of old-draft assets reappeared (`bare_jrnl.tex`, `Flowchart.pdf`,
+`workflow.svg`, etc. — leftovers from an early paper-template era) while several current ones
+were deleted. **The Overleaf cloud project itself is behind both git and any local checkout** —
+it has neither this session's VLM-section prose/figures nor the FMB re-run table data. Do not
+assume a local file is stable just because it's a fresh clone; the exposure is the presence of
+`.overleaf/settings.json`, not which folder or when it was created.
+
+If you hit unexplained reverts again: check `ps aux | grep -i antigravity` — if Antigravity IDE
+is running with this repo (or the OneDrive copy of it) open in a workspace, that's almost
+certainly why. Ask the user to close that workspace (or quit Antigravity) before trusting edits
+to stick, and re-verify the file content immediately after any edit, not just after compiling.
+
+**Also found this session (unrelated to Overleaf, but same symptom of "file changes I didn't
+make")**: the original OneDrive-synced working copy
+(`~/Library/CloudStorage/OneDrive-UniversityofMacau/Publications/VLM-LGP`) has `git status`/
+`git diff`/anything touching `.git/index` hang or fail with `fatal: mmap failed: Operation timed
+out` — reproducible, not transient (retried with 9+ minute timeouts, still hung; killing and
+letting `fileproviderd` restart didn't help either). Root cause not fully isolated, but strongly
+correlated with macOS's File Provider layer backing that OneDrive mount. **Workaround, not a
+fix**: work from a plain local clone instead (`~/Projects/VLM-LGP`, `git status` there is
+instant) — this is now the actual working copy as of 2026-08-31; the OneDrive folder is left
+alone as a reference/backup, not touched further. If a future session is asked to work in the
+OneDrive path again and hits the same hang, don't fight it — clone fresh to a local path instead
+of debugging the mount.
+
 ### Done (2026-08-24): Results section prose, written top to bottom
 
 All Results subsections now have real prose, not just headers + tables (they previously had
@@ -308,6 +375,65 @@ this framing if the method description is touched again.
 Compiles clean with `latexmk -pdf`; only pre-existing warnings remain (the Eq. 2 overfull hbox,
 one cosmetic underfull hbox in the Setup paragraph, and the undefined `cite_komo_2014`
 citation) — no new ones introduced by this pass.
+
+---
+
+### Done (2026-08-31): Table VI/VII — Combined column added, FMB Smart/Global numbers refreshed
+
+Working copy is now `~/Projects/VLM-LGP` (plain local clone, not OneDrive — see the historical
+note above under the FMB-scenarios TODO for why). Two commits on `writing_paper`, each a clean
+revert point on its own:
+
+- `ce243933` — added the `Combined` (monolithic, no decomposition) column to `tab:planning_sr`
+  and `tab:planning_time`, using the `d300637e` re-run data. This commit still has the *old*
+  (pre-refresh) Smart/Global numbers, so `git show ce243933` or `git diff ce243933~1 ce243933`
+  is the clean "what did Combined add" diff.
+- `bf477920` — refreshed the FMB Smart/Global cells in both tables (and the two prose sentences
+  that quote them) from the old exclusion-based-denominator/300s-timeout numbers to numbers
+  recomputed directly from the raw `trial_meta.json` files (N=50/cell, no exclusions, no
+  wall-clock cap — same methodology already used for Combined). Cube-stacking Smart/Global was
+  **not** touched (this re-run only covered FMB + the cube-stacking Combined column).
+
+**To revert either change**: `git revert bf477920` (undo just the numeric refresh, keep
+Combined) or `git revert bf477920 ce243933` (undo both, back to the original two-column table).
+Both revert cleanly since neither commit touches anything outside these two tables + the one
+paragraph.
+
+**Old vs. new FMB numbers** (Smart/Global only — Combined and VLM-MSGraph columns unchanged
+since their introduction):
+
+| Magnitude | Cond | Smart (old→new) | Global (old→new) |
+|---|---|---|---|
+| 3 objects | NR | 95.0 → 96.0 | 95.0 → 92.0 |
+| 3 objects | R | 100.0 → 96.0 | 95.0 → 62.0 |
+| 4 objects | NR | 96.7 → 98.0 | 83.3 → 22.0 |
+| 4 objects | R | 96.7 → 100.0 | 73.3 → 12.0 |
+| 5 objects | NR | 98.0 → 96.0 | 66.0 → 0.0 |
+| 5 objects | R | 98.0 → 96.0 | 15.0 (3/20, excluded-denominator) → 0.0 (0/50) |
+
+Solving times (seconds, successful trials only) roughly **tripled for Smart** (e.g. 3objs NR
+74.6 → 209.3) — this is the 300s-timeout removal surfacing genuinely-slower successful solves
+that the old cap either excluded or cut off, not a regression. Global's 5-object cells lost
+their only remaining successful trials entirely (both conditions now 0%, so `tab:planning_time`
+shows `---` there instead of the old 131.0/284.8).
+
+Pooled FMB prose numbers: Smart $97.5\% \to 97.0\%$, Global $71.2\% \to 31.3\%$ (both
+recomputed by summing the fresh per-cell success counts across all 300 FMB trials —
+Smart 291/300, Global 94/300).
+
+**Why the gap between old and new is this large**: the old numbers used an exclusion-based
+denominator (scenario-mode groups with 0/N success were dropped from the denominator rather
+than counted as 0%) specifically to work around the 3 broken scenarios documented in the TODO
+above. Once that bug was fixed and everything re-run at N=50/cell with no exclusions, Global's
+real collapse at scale (it's memory-bound, same as Combined, just less severely) is no longer
+hidden by the exclusion methodology — this is expected and is the whole point of the re-run,
+not a sign something is wrong with the new numbers.
+
+**If this needs verifying again**: the exact recomputation commands are in this session's
+transcript (`python3` one-liners over
+`experiments/evaluations/LGP/FMB/*/*/trial_*_{nr,r}/{lgp_split_smart,lgp_split_global,
+lgp_combined}/trial_meta.json`, keying off each file's `success` and `runtime_s` fields) — not
+saved as a script anywhere, so re-derive from scratch rather than searching for one.
 
 ---
 
