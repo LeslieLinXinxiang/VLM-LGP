@@ -1,0 +1,12 @@
+{
+  "tag": "4objs/s002/trial_10_nr",
+  "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/002/trial_10.md",
+  "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s002/random_trials/trial_10_nr.g",
+  "success": false,
+  "runtime_s": 47.83,
+  "exit_code": -9,
+  "timeout": false,
+  "memory_exceeded": true,
+  "memory_peak_mb": 16033.62,
+  "mode": "lgp_combined"
+}

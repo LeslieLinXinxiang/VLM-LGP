@@ -4,17 +4,17 @@
   "gripper": "l_gripper",
   "trajectory_log_path": "/home/leslie/Projects/VLM_LGP/generated/pick_waypoint_trajectory.log",
   "results": {
-    "mesh_5": {
+    "tri_2": {
       "object_type": "unknown",
       "pick_action": "pick_touch",
-      "status": "feasible",
-      "message": "solver feasible"
+      "status": "error",
+      "message": "i_fcl.cpp:FclInterface:83(-2) CHECK_EQ failed: 'shape->radius()'=0.001 'shape->coll_cvxRadius'=0 -- should be equal"
     }
   },
   "summary": {
     "total": 1,
-    "feasible": 1,
+    "feasible": 0,
     "infeasible": 0,
-    "error": 0
+    "error": 1
   }
 }

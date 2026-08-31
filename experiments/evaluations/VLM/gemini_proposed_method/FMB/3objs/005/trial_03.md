@@ -39,7 +39,7 @@
       "color": "yellow",
       "edges": [
         {
-          "supporter": 1,
+          "supporter": 0,
           "position": "left"
         }
       ]
@@ -50,7 +50,7 @@
       "color": "magenta",
       "edges": [
         {
-          "supporter": 1,
+          "supporter": 0,
           "position": "right"
         }
       ]

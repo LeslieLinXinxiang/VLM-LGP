@@ -1,85 +1,12 @@
 {
   "tag": "5objs/s002/trial_06_nr",
-  "vlm_gt": {
-    "objects": [
-      {
-        "edges": [],
-        "id": 0,
-        "object": "base"
-      },
-      {
-        "color": "green",
-        "edges": [
-          {
-            "position": "front",
-            "supporter": 0
-          }
-        ],
-        "id": 1,
-        "object": "Shape 2"
-      },
-      {
-        "color": "yellow",
-        "edges": [
-          {
-            "position": "back",
-            "supporter": 0
-          }
-        ],
-        "id": 2,
-        "object": "Shape 2"
-      },
-      {
-        "color": "blue",
-        "edges": [
-          {
-            "position": "left",
-            "supporter": 1
-          },
-          {
-            "position": "left",
-            "supporter": 2
-          }
-        ],
-        "id": 3,
-        "object": "Shape 4"
-      },
-      {
-        "color": "cyan",
-        "edges": [
-          {
-            "supporter": 1
-          },
-          {
-            "supporter": 2
-          }
-        ],
-        "id": 4,
-        "object": "Shape 4"
-      },
-      {
-        "color": "red",
-        "edges": [
-          {
-            "position": "right",
-            "supporter": 1
-          },
-          {
-            "position": "right",
-            "supporter": 2
-          }
-        ],
-        "id": 5,
-        "object": "Shape 4"
-      }
-    ]
-  },
+  "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/002/trial_06.md",
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s002/random_trials/trial_06_nr.g",
-  "mode": "lgp_split_smart",
   "success": true,
-  "runtime_s": 98.91,
+  "runtime_s": 330.62,
   "exit_code": 0,
   "timeout": false,
   "memory_exceeded": false,
-  "memory_peak_mb": 232.46
+  "memory_peak_mb": 229.39,
+  "mode": "lgp_split_smart"
 }

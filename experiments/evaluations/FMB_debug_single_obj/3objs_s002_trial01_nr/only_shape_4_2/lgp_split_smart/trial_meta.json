@@ -1,0 +1,30 @@
+{
+  "tag": "3objs/s002/trial_01_nr/only_shape_4_2",
+  "vlm_gt": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "base"
+      },
+      {
+        "id": 1,
+        "object": "Shape 4",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "center"
+          }
+        ]
+      }
+    ]
+  },
+  "scene_g": "/tmp/claude-1000/-home-leslie-Projects-VLM-LGP/4a7a0da5-8f87-429e-8229-6ee3c885e8a5/scratchpad/3objs_s002_trial01_nr_swapped.g",
+  "mode": "lgp_split_smart",
+  "success": true,
+  "runtime_s": 36.773415088653564,
+  "exit_code": 0,
+  "timeout": false,
+  "memory_exceeded": false,
+  "memory_peak_mb": 253.52,
+  "output_state_exists": true
+}

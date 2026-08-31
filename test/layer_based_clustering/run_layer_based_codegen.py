@@ -128,10 +128,16 @@ class LayerBasedClustering:
             for nid in self.graph.node_ids
             if nid != 0 and 0 in self.graph.supporters.get(nid, [])
         ]
+        # A root with NO explicit position label is the scene's anchor/base object (e.g.
+        # FMB's "Shape 2" board that other pieces are placed relative to) - it should be
+        # scheduled FIRST, not last. An earlier version ranked the missing-label case as 9
+        # (worse than left/center/right), which put the anchor object last whenever other
+        # same-layer siblings had explicit left/right labels - the opposite of the intended
+        # "place the base piece down before the pieces around it" ordering.
         pos_rank = {"left": 0, "center": 1, "middle": 1, "right": 2}
         roots.sort(
             key=lambda r: (
-                pos_rank.get(self.graph.edge_position.get((0, r), ""), 9),
+                pos_rank.get(self.graph.edge_position.get((0, r), ""), -1),
                 r,
             )
         )

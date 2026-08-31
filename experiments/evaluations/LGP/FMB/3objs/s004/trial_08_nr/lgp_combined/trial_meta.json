@@ -2,11 +2,11 @@
   "tag": "3objs/s004/trial_08_nr",
   "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/004/trial_08.md",
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s004/random_trials/trial_08_nr.g",
-  "success": false,
-  "runtime_s": 100.31,
-  "exit_code": -9,
+  "success": true,
+  "runtime_s": 305.3,
+  "exit_code": 0,
   "timeout": false,
-  "memory_exceeded": true,
-  "memory_peak_mb": 19007.52,
+  "memory_exceeded": false,
+  "memory_peak_mb": 6840.58,
   "mode": "lgp_combined"
 }

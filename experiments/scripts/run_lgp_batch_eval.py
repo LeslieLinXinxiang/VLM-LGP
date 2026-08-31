@@ -140,7 +140,10 @@ def main():
     parser.add_argument("--limit-trials", type=int, default=10)
     parser.add_argument("--start-scenario", type=str, default="s01", help="Start from scenario ID (e.g. s02)")
     parser.add_argument("--skip-existing", action="store_true", help="Skip trials that already have completed outputs")
+    parser.add_argument("--combined-only", action="store_true", help="Only run lgp_combined (monolithic terminal), skip smart/global")
     args = parser.parse_args()
+
+    lgp_modes = ["lgp_combined"] if args.combined_only else ["lgp_split_smart", "lgp_split_global"]
 
     for mag in args.mags:
         # mag is "4cubes", "5cubes" etc.
@@ -191,10 +194,8 @@ def main():
                     trial_work_dir.mkdir(parents=True, exist_ok=True)
                     
                     if args.skip_existing:
-                        smart_done = (trial_work_dir / "lgp_split_smart" / "trial_meta.json").exists()
-                        global_done = (trial_work_dir / "lgp_split_global" / "trial_meta.json").exists()
-                        if smart_done and global_done:
-                            print(f"[{mag}/{s_folder}/{trial_name}] Both modes already completed, skipping preprocessing.")
+                        if all((trial_work_dir / m / "trial_meta.json").exists() for m in lgp_modes):
+                            print(f"[{mag}/{s_folder}/{trial_name}] All modes already completed, skipping preprocessing.")
                             continue
 
                     # 1. Preprocess
@@ -208,25 +209,26 @@ def main():
                     scene_ready = Path(res["scene_named_path"])
                     current_inventory = res["layout"] # <--- USE FRESH MEMORY DATA
                     
-                    # 2. Run Modes (Smart then Global)
-                    for lgp_mode in ["lgp_split_smart", "lgp_split_global"]:
+                    # 2. Run Modes (Smart then Global, or just Combined if --combined-only)
+                    for lgp_mode in lgp_modes:
                         mode_dir = trial_work_dir / lgp_mode
                         if (mode_dir / "trial_meta.json").exists():
                             print(f"  - {lgp_mode} already done, skipping.")
                             continue
-                        
+
                         # [FIX] Force clear old LGP/FOL files to prevent repeating actions from previous magnitude runs
                         if mode_dir.exists():
                             shutil.rmtree(mode_dir)
                         mode_dir.mkdir(parents=True, exist_ok=True)
-                        
-                        policy = "active_runtime" if lgp_mode == "lgp_split_smart" else "follow_lgp"
+
                         # "smart" → active_runtime manages collisions at runtime, so genericCollisions must be false
-                        # "global" → solver uses full global collision set from start, genericCollisions must be true
+                        # "global"/"combined" → solver uses full global collision set from start, genericCollisions must be true
+                        policy = "active_runtime" if lgp_mode == "lgp_split_smart" else "follow_lgp"
                         coll_mode = "smart" if lgp_mode == "lgp_split_smart" else "global"
-                        
+                        combine_terminals = (lgp_mode == "lgp_combined")
+
                         # [OPTIMIZATION] generate_step_files is now faster as cluster_res is pre-computed
-                        generate_step_files(phase1_json=phase1_json, prompt1_output=p1, prompt2_output=p2, out_dir=str(mode_dir), inventory_data=current_inventory, collision_mode=coll_mode)
+                        generate_step_files(phase1_json=phase1_json, prompt1_output=p1, prompt2_output=p2, out_dir=str(mode_dir), inventory_data=current_inventory, collision_mode=coll_mode, combine_terminals=combine_terminals)
                         
                         print(f"  - Running {lgp_mode} (policy={policy})...")
                         solver_res = _run_solver(exec_dir=mode_dir, scene_g=scene_ready, max_mem_mb=args.max_mem_mb, timeout_s=args.timeout_s, kill_at_system_mem_pct=99, collision_policy=policy)

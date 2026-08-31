@@ -1,6 +1,79 @@
 {
   "status": "ok",
   "scene_path": "/home/leslie/Projects/VLM_LGP/generated/scene/scene_named.g",
-  "infeasible_objects": {},
+  "infeasible_objects": {
+    "cube_1": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "cube",
+      "reachability_score": 0.5823791133658077,
+      "gmm_score": 0.30396518894301283,
+      "esdf_score": 1.0
+    },
+    "cube_3": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "cube",
+      "reachability_score": 0.5909134015710102,
+      "gmm_score": 0.31818900261835037,
+      "esdf_score": 1.0
+    },
+    "cube_4": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "cube",
+      "reachability_score": 0.5908582162818854,
+      "gmm_score": 0.3180970271364756,
+      "esdf_score": 1.0
+    },
+    "cube_2": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "cube",
+      "reachability_score": 0.5305305304257191,
+      "gmm_score": 0.21755088404286513,
+      "esdf_score": 1.0
+    },
+    "rect_2": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "rectprism",
+      "reachability_score": 0.5359212218340932,
+      "gmm_score": 0.22653536972348864,
+      "esdf_score": 1.0
+    },
+    "rect_1": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "rectprism",
+      "reachability_score": 0.5636253063214907,
+      "gmm_score": 0.27270884386915106,
+      "esdf_score": 1.0
+    },
+    "tri_1": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "triprism",
+      "reachability_score": 0.610257482499233,
+      "gmm_score": 0.3504291374987215,
+      "esdf_score": 1.0
+    },
+    "tri_2": {
+      "status": "infeasible",
+      "message": "komo_policy_gate_infeasible",
+      "pick_action": "pick_touch",
+      "object_type": "triprism",
+      "reachability_score": 0.5773086961268425,
+      "gmm_score": 0.29551449354473747,
+      "esdf_score": 1.0
+    }
+  },
   "errors": {}
 }

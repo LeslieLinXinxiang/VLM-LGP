@@ -1,52 +1,12 @@
 {
   "tag": "3objs/s003/trial_08_r",
-  "vlm_gt": {
-    "objects": [
-      {
-        "edges": [],
-        "id": 0,
-        "object": "base"
-      },
-      {
-        "color": "yellow",
-        "edges": [
-          {
-            "position": "left",
-            "supporter": 0
-          }
-        ],
-        "id": 1,
-        "object": "Shape 3"
-      },
-      {
-        "color": "cyan",
-        "edges": [
-          {
-            "supporter": 0
-          }
-        ],
-        "id": 2,
-        "object": "Shape 3"
-      },
-      {
-        "color": "magenta",
-        "edges": [
-          {
-            "position": "right",
-            "supporter": 0
-          }
-        ],
-        "id": 3,
-        "object": "Shape 3"
-      }
-    ]
-  },
+  "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/003/trial_08.md",
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s003/random_trials/trial_08_r.g",
-  "mode": "lgp_split_smart",
   "success": true,
-  "runtime_s": 58.91,
+  "runtime_s": 239.83,
   "exit_code": 0,
   "timeout": false,
   "memory_exceeded": false,
-  "memory_peak_mb": 230.03
+  "memory_peak_mb": 234.13,
+  "mode": "lgp_split_smart"
 }

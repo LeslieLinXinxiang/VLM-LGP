@@ -40,7 +40,8 @@
       "color": "cyan",
       "edges": [
         {
-          "supporter": 1
+          "supporter": 0,
+          "position": "center"
         }
       ]
     },
@@ -50,7 +51,7 @@
       "color": "blue",
       "edges": [
         {
-          "supporter": 1,
+          "supporter": 0,
           "position": "left"
         }
       ]
@@ -61,7 +62,7 @@
       "color": "yellow",
       "edges": [
         {
-          "supporter": 1,
+          "supporter": 0,
           "position": "right"
         }
       ]

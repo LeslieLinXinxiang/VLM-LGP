@@ -1,0 +1,12 @@
+{
+  "tag": "5objs/s005/trial_07_r",
+  "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/5objs/005/trial_07.md",
+  "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/5objs/s005/random_trials/trial_07_r.g",
+  "success": false,
+  "runtime_s": 250.89,
+  "exit_code": -9,
+  "timeout": false,
+  "memory_exceeded": true,
+  "memory_peak_mb": 16005.28,
+  "mode": "lgp_combined"
+}

@@ -1,4 +1,4 @@
 fol: <step_3_batch_1.fol>
-terminal: " (on Table_Center shape_4_1) "
+terminal: " (on Table_Left shape_4_1) "
 genericCollisions: true
 coll: []

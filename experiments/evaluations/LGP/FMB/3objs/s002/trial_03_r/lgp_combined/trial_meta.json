@@ -3,10 +3,10 @@
   "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/3objs/002/trial_03.md",
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_03_r.g",
   "success": false,
-  "runtime_s": 157.37,
+  "runtime_s": 570.34,
   "exit_code": -9,
   "timeout": false,
   "memory_exceeded": true,
-  "memory_peak_mb": 19046.62,
+  "memory_peak_mb": 16001.72,
   "mode": "lgp_combined"
 }

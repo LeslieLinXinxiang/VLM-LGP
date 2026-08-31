@@ -658,21 +658,30 @@ Magnitude & NR & R \\
 %               earlier run via generate_lgp_plots.py, NOT the same data as this figure. Excluded.
 % Regenerate  : python3 experiments/scripts/generate_final_plots.py
 % ------------------------------------------------------------------
+% ------------------------------------------------------------------
+% Combined column: monolithic single-terminal LGP solve (all objects merged into one goal),
+% re-run with NO wall-clock timeout (16GB memory cap only) to separate genuine infeasibility
+% from under-provisioned search time. 4cubes: N=100 real trials (0/100 across all 5 scenarios,
+% both NR/R). 5-8cubes: NOT executed -- since 4cubes (the easiest magnitude) already produced
+% zero successes, larger magnitudes are assumed to also fail (memory-bound: combined's search
+% tree grows with object count, and 4cubes already exhausts the 16GB cap) and recorded as 0.0
+% without running the solver, per Leslie's explicit decision (2026-08-30/31).
+% ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
-\caption{Cube-stacking planning success rate (\%): Smart (ours) vs Global LGP, under no-redundancy (NR) and redundancy (R) conditions. N=1000 tasks total.}
+\caption{Cube-stacking planning success rate (\%): Smart (ours), Global LGP, and monolithic Combined, under no-redundancy (NR) and redundancy (R) conditions. Smart/Global: N=1000 tasks total. Combined: N=100 at 4 cubes (all real trials, re-run with no wall-clock limit); 5--8 cubes are recorded as 0.0 without execution, since 4 cubes already fails completely and larger magnitudes are strictly harder.}
 \label{tab:cube_sr}
-\begin{tabular}{lcccc}
+\begin{tabular}{lcccccc}
 \toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Cubes & NR & R & NR & R \\
+ & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Combined} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Cubes & NR & R & NR & R & NR & R \\
 \midrule
-4 & 100.0 & 100.0 & 100.0 & 78.0 \\
-5 & 100.0 & 100.0 & \phantom{0}96.7 & 56.0 \\
-6 & 100.0 & 100.0 & 100.0 & 57.1 \\
-7 & 100.0 & 100.0 & \phantom{0}93.3 & \phantom{0}3.7 \\
-8 & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 \\
+4 & 100.0 & 100.0 & 100.0 & 78.0 & \phantom{00}0.0 & \phantom{00}0.0 \\
+5 & 100.0 & 100.0 & \phantom{0}96.7 & 56.0 & \phantom{00}0.0 & \phantom{00}0.0 \\
+6 & 100.0 & 100.0 & 100.0 & 57.1 & \phantom{00}0.0 & \phantom{00}0.0 \\
+7 & 100.0 & 100.0 & \phantom{0}93.3 & \phantom{0}3.7 & \phantom{00}0.0 & \phantom{00}0.0 \\
+8 & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 & \phantom{00}0.0 & \phantom{00}0.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -702,27 +711,40 @@ Cubes & NR & R & NR & R \\
 % ------------------------------------------------------------------
 % FIGURE: fig:fmb_scalability
 % Source data : experiments/outputs/fmb_plots/fmb_success_time_comparison.png
-% Generator   : experiments/scripts/generate_fmb_plot.py (mean-based; eval-dir = evaluations/LGP/FMB,
-%               N=620 trial_meta.json currently on disk -- fully traceable and reproducible)
-% Cross-check : success-rate values closely match tab:fmb_sr; solving-time values closely match
-%               tab:fmb_time, EXCEPT the 5-object Global-R bar reads ~15% in this chart vs 6.0%
-%               in the Arxived table -- open discrepancy. Leslie decided (2026-08-18) to keep the
-%               chart as-is without re-verifying against raw logs this round.
-% Regenerate  : python3 experiments/scripts/generate_fmb_plot.py
+% Generator   : experiments/scripts/generate_fmb_plot.py -- STALE as of this table update
+%               (2026-08-30/31): the table below was recomputed directly from a fresh full rerun
+%               of experiments/evaluations/LGP/FMB (all 300 trial-dirs x 3 objs/4objs/5objs x
+%               smart/global/combined), NOT from generate_fmb_plot.py's exclusion-based
+%               aggregation. The figure/script have not been regenerated to match; treat the
+%               figure as out of sync until re-run.
+% Methodology : every cell below is N=50 (no scenario/policy/mode groups excluded from the
+%               denominator -- unlike the previous version of this table). This was possible
+%               because the underlying data was re-run end-to-end with NO wall-clock timeout
+%               (16GB memory cap only), which resolved the handful of scenarios that previously
+%               hit 0/N purely from the old 300s cap (confirmed: those scenarios recover to
+%               90-100% smart success once given enough time -- see session notes). Combined is
+%               a new column: the monolithic single-terminal LGP solve (all objects merged into
+%               one goal), same no-timeout/16GB-cap re-run. Its near-zero rate at 4-5 objects is
+%               NOT a timeout artifact (confirmed via the same no-timeout re-run) -- it is memory-
+%               bound: the merged search tree exhausts the 16GB cap directly.
+% Regenerate  : raw counts from experiments/evaluations/LGP/FMB/*/*/*/{lgp_split_smart,
+%               lgp_split_global,lgp_combined}/trial_meta.json (success field), grouped by
+%               objects/mode/submode. generate_fmb_plot.py should be updated to match before
+%               next use.
 % ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
-\caption{FMB planning success rate (\%): Smart (ours) vs Global LGP, under no-redundancy (NR) and redundancy (R) conditions. Scenario-mode groups with 0/N success are excluded from the denominator (affects Global-R at five objects: 3/20 rather than 3/50).}
+\caption{FMB planning success rate (\%): Smart (ours), Global LGP, and monolithic Combined, under no-redundancy (NR) and redundancy (R) conditions. N=50 per cell, no exclusions. All three methods re-run with no wall-clock timeout (16GB memory cap only) to separate genuine infeasibility from under-provisioned search time.}
 \label{tab:fmb_sr}
-\begin{tabular}{lcccc}
+\begin{tabular}{lcccccc}
 \toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Objects & NR & R & NR & R \\
+ & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Combined} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Objects & NR & R & NR & R & NR & R \\
 \midrule
-3 & \phantom{0}95.0 & 100.0 & \phantom{0}95.0 & 95.0 \\
-4 & \phantom{0}96.7 & \phantom{0}96.7 & \phantom{0}83.3 & 73.3 \\
-5 & \phantom{0}98.0 & \phantom{0}98.0 & \phantom{0}66.0 & 15.0 \\
+3 & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}92.0 & 62.0 & 18.0 & \phantom{0}0.0 \\
+4 & \phantom{0}98.0 & 100.0 & \phantom{0}22.0 & 12.0 & \phantom{0}0.0 & \phantom{0}0.0 \\
+5 & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{00}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -129,16 +129,6 @@ def _run_solver(exec_dir: Path, scene_g: Path, timeout_s: int, max_mem_mb: int, 
 def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb, mode_filter: str | None = None):
     trial_work_dir.mkdir(parents=True, exist_ok=True)
 
-    if mode_filter:
-        done = (trial_work_dir / mode_filter / "output_state.g").exists()
-        if done:
-            return [{"success": True, "cached": True, "mode": mode_filter}]
-    else:
-        smart_done = (trial_work_dir / "lgp_split_smart" / "output_state.g").exists()
-        global_done = (trial_work_dir / "lgp_split_global" / "output_state.g").exists()
-        if smart_done and global_done:
-            return [{"success": True, "cached": True}] * 2
-
     # Phase 0
     phase0 = execute_phase0(
         use_vlm=False,
@@ -192,9 +182,12 @@ def run_one(vlm_md, scene_g, trial_work_dir, timeout_s, max_mem_mb, mode_filter:
     for spec in mode_specs:
         lgp_mode = spec["name"]
         mode_dir = trial_work_dir / lgp_mode
-        if (mode_dir / "output_state.g").exists():
-            print(f"  - {lgp_mode} already done, skipping.")
-            results.append({"success": True, "cached": True, "mode": lgp_mode})
+        if (mode_dir / "trial_meta.json").exists():
+            # A definitive result (success, timeout, or OOM) was already recorded for this
+            # submode - re-running would just reproduce the same outcome. cached=True tells
+            # main() not to overwrite the existing trial_meta.json.
+            print(f"  - {lgp_mode} already has a recorded result, skipping.")
+            results.append({"success": (mode_dir / "output_state.g").exists(), "cached": True, "mode": lgp_mode})
             continue
 
         if mode_dir.exists():
@@ -266,12 +259,13 @@ def main():
                     trial_work_dir = out_base / mag / scen_id / f"trial_{trial_idx:02d}_{mode}"
 
                     if args.mode:
-                        if args.skip_existing and (trial_work_dir / args.mode / "output_state.g").exists():
+                        if args.skip_existing and (trial_work_dir / args.mode / "trial_meta.json").exists():
                             print(f"  [CACHED] {mag}/{scen_id}/trial_{trial_idx:02d}_{mode} [{args.mode}]")
                             skip += 1
                             continue
                     else:
-                        if args.skip_existing and (trial_work_dir / "lgp_split_smart" / "output_state.g").exists() and (trial_work_dir / "lgp_split_global" / "output_state.g").exists():
+                        all_submodes = ["lgp_split_smart", "lgp_split_global", "lgp_combined"]
+                        if args.skip_existing and all((trial_work_dir / m / "trial_meta.json").exists() for m in all_submodes):
                             print(f"  [CACHED] {mag}/{scen_id}/trial_{trial_idx:02d}_{mode}")
                             skip += 1
                             continue

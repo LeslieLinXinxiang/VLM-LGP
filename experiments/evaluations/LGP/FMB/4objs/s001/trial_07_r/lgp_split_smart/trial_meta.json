@@ -1,72 +1,12 @@
 {
   "tag": "4objs/s001/trial_07_r",
-  "vlm_gt": {
-    "objects": [
-      {
-        "edges": [],
-        "id": 0,
-        "object": "base"
-      },
-      {
-        "color": "green",
-        "edges": [
-          {
-            "position": "front",
-            "supporter": 0
-          }
-        ],
-        "id": 1,
-        "object": "Shape 2"
-      },
-      {
-        "color": "red",
-        "edges": [
-          {
-            "position": "back",
-            "supporter": 0
-          }
-        ],
-        "id": 2,
-        "object": "Shape 2"
-      },
-      {
-        "color": "blue",
-        "edges": [
-          {
-            "position": "left",
-            "supporter": 1
-          },
-          {
-            "position": "left",
-            "supporter": 2
-          }
-        ],
-        "id": 3,
-        "object": "Shape 4"
-      },
-      {
-        "color": "yellow",
-        "edges": [
-          {
-            "position": "right",
-            "supporter": 1
-          },
-          {
-            "position": "right",
-            "supporter": 2
-          }
-        ],
-        "id": 4,
-        "object": "Shape 4"
-      }
-    ]
-  },
+  "vlm_md": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/FMB/4objs/001/trial_07.md",
   "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/4objs/s001/random_trials/trial_07_r.g",
-  "mode": "lgp_split_smart",
   "success": true,
-  "runtime_s": 81.04,
+  "runtime_s": 252.42,
   "exit_code": 0,
   "timeout": false,
   "memory_exceeded": false,
-  "memory_peak_mb": 232.97
+  "memory_peak_mb": 231.73,
+  "mode": "lgp_split_smart"
 }

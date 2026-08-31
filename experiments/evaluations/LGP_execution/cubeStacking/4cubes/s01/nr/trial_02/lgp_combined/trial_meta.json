@@ -1,0 +1,15 @@
+{
+  "mode": "lgp_combined",
+  "policy": "follow_lgp",
+  "mag": "4cubes",
+  "case": "cube_n04_s01",
+  "scene": "/home/leslie/Projects/VLM_LGP/experiments/scenes/4cubes/s01/random_trials/trial_02_nr.g",
+  "gt_vlm_source": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/cubeStacking/4cubes/cube_n04_s01/trial_02.md",
+  "success": false,
+  "runtime_s": 99.44013619422913,
+  "exit_code": -9,
+  "timeout": false,
+  "memory_exceeded": true,
+  "memory_peak_mb": 16139.96,
+  "output_state_exists": false
+}

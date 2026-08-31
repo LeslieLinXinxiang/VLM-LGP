@@ -1,4 +1,4 @@
 fol: <step_1_batch_2.fol>
-terminal: " (on Table_Center shape_2_2) "
+terminal: " (on Table_Front shape_2_2) "
 genericCollisions: false
 coll: []

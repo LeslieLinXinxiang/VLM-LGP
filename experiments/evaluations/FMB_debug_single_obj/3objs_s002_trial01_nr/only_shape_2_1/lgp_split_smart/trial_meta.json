@@ -1,0 +1,30 @@
+{
+  "tag": "3objs/s002/trial_01_nr/only_shape_2_1",
+  "vlm_gt": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "base"
+      },
+      {
+        "id": 1,
+        "object": "Shape 2",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "left"
+          }
+        ]
+      }
+    ]
+  },
+  "scene_g": "/home/leslie/Projects/VLM_LGP/experiments/scenes/fmb/3objs/s002/random_trials/trial_01_nr.g",
+  "mode": "lgp_split_smart",
+  "success": true,
+  "runtime_s": 52.912123918533325,
+  "exit_code": 0,
+  "timeout": false,
+  "memory_exceeded": false,
+  "memory_peak_mb": 250.33,
+  "output_state_exists": true
+}

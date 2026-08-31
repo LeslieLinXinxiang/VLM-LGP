@@ -272,6 +272,27 @@ def _terminal(obj_name: str, edges: list, id_to_name: dict, id_to_obj: dict) -> 
         # default: place on supporter directly (cyl_N, cube_N, etc.)
         return f"(on {sup_name} {obj_name})"
     else:
+        # An object with 2+ edges each carries the SAME "position" value on every edge when
+        # the VLM described it as e.g. "this Shape 4 spans both Shape 2 pieces, on the left" -
+        # that own-position label is the disambiguator between multiple bridging objects that
+        # span the SAME pair of supporters (e.g. two Shape 4 pieces both bridging a front-Shape2
+        # and a back-Shape2, one meant for the left side, one for the right). Check it BEFORE
+        # falling back to the supporters'-own-position heuristic below: that heuristic keys
+        # only on the SUPPORTERS' positions (front/back), which is identical for both objects
+        # in exactly this case, and collapsed both to the same "(on Table_Center obj)" terminal
+        # - two different objects targeting the identical point, which is geometrically
+        # unsatisfiable without heavy overlap and made the solver time out searching for a
+        # feasible dual placement instead of failing fast or (worse) silently placing one atop
+        # the other. Only acts when every edge on THIS object agrees; any other case
+        # (no label, or a genuinely mixed label) falls through to the existing logic unchanged.
+        own_pos_set = {e.get("position", "").lower() for e in edges if e.get("position")}
+        if own_pos_set == {"left"}:
+            return f"(on Table_Left {obj_name})"
+        elif own_pos_set == {"right"}:
+            return f"(on Table_Right {obj_name})"
+        elif own_pos_set in ({"center"}, {"middle"}):
+            return f"(on Table_Center {obj_name})"
+
         # FMB Shape custom logic: map multi-supporter slots to Table slots
         # For multiple supporters, check their relative positions on the table
         sup_pos_set = set()
