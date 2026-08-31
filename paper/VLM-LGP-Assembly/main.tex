@@ -120,14 +120,14 @@ Our main contributions are threefold:
 Assembly Sequence Planning (ASP) is typically defined as the process of transforming the final target structure into a series of executable component assembly operations.
 Classic ASP research typically employs graph structures to represent feasible assembly sequences, constraint relationships, and sub-assembly states.
 Typical methods include precedence graphs, contact graphs, support graphs, and AND/OR graphs.
-There are also graph decomposition methods for construction and stacking tasks.
-The priority graph is typically used to represent sequential constraints between different assembly operations.
-The contact graph and connection graph are used to describe physical contact, connection, or interference relationships between parts.
+There are also graph decomposition methods for construction and stacking tasks \cite{9868234}.
+The priority graph is typically used to represent sequential constraints between different assembly operations \cite{8290586}.
+The contact graph and connection graph are used to describe physical contact, connection, or interference relationships between parts \cite{4288472}.
 The support graph further considers factors such as gravity, load-bearing capacity, and the stability of intermediate structures.
 The AND/OR graph decomposes assembly tasks into multiple intermediate structures, thereby reducing search complexity.
-For building construction and block-stacking tasks, the graph decomposition method is often combined with stability constraints to ensure that the intermediate structures generated at each step are physically feasible.
+For building construction and block-stacking tasks, the graph decomposition method is often combined with stability constraints to ensure that the intermediate structures generated at each step are physically feasible \cite{9663037}.
 
-In recent years, the input formats for assembly tasks have expanded from traditional CAD models to include images, instruction manuals, and multi-modal instructions.
+In recent years, the input formats for assembly tasks have expanded from traditional CAD models to include images, instruction manuals, and multi-modal instructions \cite{11224520}.
 However, most methods still rely on known geometric models, predefined part relationships, manually designed support relationships, or assembly instructions that already contain step information.
 In other words, existing methods typically assume that assembly relationships are already given, rather than deriving usable structures directly from visual information.
 Unlike these methods, the system proposed in this paper extracts a structured representation from target images for LGP solving.
@@ -137,11 +137,11 @@ This bridges the gap between visual task descriptions and executable autonomous 
 \subsection{Task and Motion Planning for Long-Horizon Assembly}
 Long-horizon assembly tasks can typically be modeled as Task and Motion Planning (TAMP) problems, in which discrete assembly decisions and continuous robot motion must be considered together.
 In integrated TAMP frameworks such as LGP, symbolic task selection and geometric motion constraints are solved through a unified optimization process.
-LGP is a typical TAMP formulation method that combines discrete logic programming with continuous trajectory optimization.
+LGP is a typical TAMP formulation method that combines discrete logic programming with continuous trajectory optimization \cite{2832415.2832517}.
 Since the feasibility of assembly operations depends not only on logical order but is also influenced by constraints such as reachability, stability, and contact relationships, LGP is suitable for describing complex assembly tasks.
 However, when assembly tasks involve multiple objects and long sequences of operations, directly solving the LGP problem leads to a rapid expansion of the search space.
 
-To improve the scalability of long-horizon LGP, existing research typically employs methods such as hierarchical LGP, receding-horizon LGP, heuristic search, and subproblem decomposition.
+To improve the scalability of long-horizon LGP, existing research typically employs methods such as hierarchical LGP \cite{9515539}, receding-horizon LGP \cite{9981797}, dynamic LGP \cite{10610285}, heuristic search \cite{10611389}.
 These methods can reduce the scale of a single solution.
 However, fixed-horizon may overlook object dependencies and support relationships within the assembly.
 And the receding-horizon method may lack global structural information and require frequent re-planning.
@@ -150,19 +150,19 @@ By extracting object relationships, support dependencies, and sub-assemblies, th
 The method proposed in this paper preserves the global assembly intent while keeping the subproblems simple.
 
 \subsection{Foundation Models in Robotic Assembly}
-Foundational models have been widely adopted in robotic manipulation and assembly tasks to enhance task understanding and long-term planning capabilities.
-Some studies utilize Large Language Models (LLM) to generate high-level task plans based on natural language instructions.
-Other studies utilize Visual-Language Models (VLM) to identify objects in images, infer spatial relationships, and generate assembly steps.
-Furthermore, Visual-Language-Action (VLA) models attempt to directly map visual observations and language instructions to robotic actions, thereby enabling end-to-end manipulation control.
+Foundational models have been widely adopted in robotic manipulation and assembly tasks to enhance task understanding and long-term planning capabilities \cite{11495231}.
+Some studies utilize Large Language Models (LLM) to generate high-level task plans based on natural language instructions \cite{11296887}.
+Other studies utilize Vision-Language Models (VLM) to identify objects in images, infer spatial relationships, and generate assembly steps \cite{11373776, 11264491, 11370194, 10990233}.
+Furthermore, Vision-Language-Action (VLA) models attempt to directly map vision observations and language instructions to robotic actions, thereby enabling end-to-end manipulation control \cite{11520663, 10900471, 11640725}.
 While these methods enhance task understanding and action generation, they lack an explicit representation of geometric feasibility, contact constraints, support dependencies, and stability conditions in long-term assembly tasks.
 
-To improve reliability, many studies adopt modular systems that combine LLM/VLM with classical planners, linking perception and planning through scene graphs, object relationships, and constraints.
+To improve reliability, many studies adopt modular systems that combine LLM/VLM with classical planners, linking perception and planning through scene graphs, object relationships, and constraints \cite{11328873}.
 Compared to free-form text, this type of structured output is better suited for robotic execution.
 However, most existing methods are designed for general scene understanding and are not specifically optimized for tasks and motion planners based on LGP.
 The VLM proposed in this paper outputs a constrained representation of assembly relationships, extracting information directly from target images.
 And converts it into input for LGP.
 Therefore, this paper does not directly generate actions using the VLM.
-This paper uses the VLM to establish an interface between visual target descriptions and LGP long-time-domain assembly planning.
+This paper uses the VLM to establish an interface between vision target descriptions and LGP long-time-domain assembly planning.
 
 
 % \subsection{Assembly Sequence Planning and Structural Representations}
@@ -206,7 +206,9 @@ This paper uses the VLM to establish an interface between visual target descript
 \section{Problem Formulation}
 \label{sec:problem_formulation}
 
-We consider the problem of accomplishing long-horizon robotic assembly directly from a target image, without relying on manually specified symbolic task descriptions. 
+We consider the problem of accomplishing long-horizon robotic assembly directly from a target image $\mathcal{I}$, without relying on manually specified symbolic task descriptions. 
+
+
 The input consists of a target assembly image $\mathcal{I}$ and the current scene information $\mathcal{S}=\{o_1,\dots,o_N\}$, where each object instance $o_i$ is characterized by its pose and geometric attributes. 
 To achieve image-based autonomous assembly, the following key problems should be addressed:
 
@@ -268,73 +270,34 @@ Finally, the task plan and scene information are integrated into a LGP formulati
 \label{sec:task_understanding}
 
 
-
 \subsubsection{VLM for Assembly Graph Generation}
 Given the input image(s) $\mathcal{I}$, the framework first converts the scene into an assembly graph $\mathcal{G}$ to support reliable task plan generation.
 Leveraging its strong visual reasoning capability, we employ a VLM to perform the image-to-graph conversion $f_{\mathrm{G}}$.
 Unlike many existing approaches that directly use VLMs to generate action sequences, our method restricts the VLM to extracting the assembly structure, thereby reducing reliance on potentially unreliable planning outputs.
 The resulting graph provides a structured representation that bridges visual task understanding and high-level planning, allowing task dependencies to be systematically analyzed and decomposed.
 
-Each node
-$v \in \mathcal{V}$ denotes one target object instance, and each directed
-edge $(u,v) \in \mathcal{E}$ indicates that object $u$ must support object
-$v$ in the final assembly. The graph is directed because support precedence
-is asymmetric, and optional local labels such as left/right placement hints
-are retained only as geometric side information rather than as the
-execution order itself.
+%Each node $v \in \mathcal{V}$ denotes one target object instance, and each directed edge $(u,v) \in \mathcal{E}$ indicates that object $u$ must support object $v$ in the final assembly. 
+The graph is directed because support precedence is asymmetric, and optional local labels such as left/right placement hints are retained only as geometric side information rather than as the execution order itself.
 
-\textbf{Input representation.} $\mathcal{I}=\{I_1,\dots,I_S\}$ is a small set
-of rendered images rather than a single raw photograph. Each $I_s$ composites
-the target scene together with an \emph{object-list legend} that draws every
-candidate part to scale (Fig.~\ref{fig:vlm_input}); the legend serves as a
-visual reference against which the VLM matches each block's shape and size,
-turning open-ended shape recognition into a template-matching problem against
-a small closed vocabulary. For cube stacking, $S{=}1$: a single composite
-image pairs the legend with the finished structure. For FMB, $S$ equals the
-number of assembly steps, each rendered as a top-down/isometric composite; the
-VLM is given the full incremental image sequence rather than only the final
-state, so that a part occluded in the final view can be attributed to the step
-at which it disappears from the top-down view.
+\textbf{Input representation.} 
+$\mathcal{I}=\{I_1,\dots,I_S\}$ is a small set of rendered images rather than a single raw photograph. 
+Each $I_s$ composites the target scene together with an \emph{object-list legend} that draws every candidate part to scale (Fig.~\ref{fig:vlm_input}); the legend serves as a visual reference against which the VLM matches each block's shape and size, turning open-ended shape recognition into a template-matching problem against a small closed vocabulary. 
+% For cube stacking, $S{=}1$: a single composite image pairs the legend with the finished structure. 
+% For FMB, $S$ equals the number of assembly steps, each rendered as a top-down/isometric composite; the VLM is given the full incremental image sequence rather than only the final state, so that a part occluded in the final view can be attributed to the step at which it disappears from the top-down view.
 
-\textbf{Prompting strategy.} $f_{\mathrm{G}}$ is instantiated as a single
-zero-shot call: the VLM client also supports injecting few-shot visual
-exemplars into the prompt, but we found the explicit reasoning procedure below
-sufficient and disable this in the deployed pipeline. Rather than asking the
-VLM to state a support relation directly, the prompt requires it to justify
-each edge through an explicit, checkable visual test. For cube stacking, every
-block's bottom-left and bottom-right corners are projected straight down onto
-the layer below; both corners landing on the same block yields a single
-support edge, corners landing on different blocks yield a bridging edge over
-exactly those blocks, and any candidate lying outside this horizontal
-footprint is rejected regardless of layer alignment. For FMB, support is read
-only from the top-down view under a cover-implies-support rule, with the
-isometric view explicitly excluded as evidence for depth to prevent
-perspective ambiguity from being mistaken for occlusion; a color that appears
-as disconnected fragments in the top-down view is treated as an occluded,
-lower-layer object. The prompt further constrains position labels
-(left/right/center for cube stacking; left/right/front/back for FMB) to a
-small enumerated set, with explicit rules for when a label must appear versus
-must be omitted, and requires the VLM to externalize this reasoning as
-free-form text before emitting the final graph, so that intermediate errors
-remain inspectable.
+\textbf{Prompting strategy.} 
+$f_{\mathrm{G}}$ is instantiated as a single zero-shot call: 
+%the VLM client also supports injecting few-shot visual exemplars into the prompt, but we found the explicit reasoning procedure below sufficient and disable this in the deployed pipeline. 
+Rather than asking the VLM to state a support relation directly, the prompt requires it to justify each edge through an explicit, checkable visual test. 
+%For cube stacking, every block's bottom-left and bottom-right corners are projected straight down onto the layer below; both corners landing on the same block yields a single support edge, corners landing on different blocks yield a bridging edge over exactly those blocks, and any candidate lying outside this horizontal footprint is rejected regardless of layer alignment. 
+%For FMB, support is read only from the top-down view under a cover-implies-support rule, with the isometric view explicitly excluded as evidence for depth to prevent perspective ambiguity from being mistaken for occlusion; a color that appears as disconnected fragments in the top-down view is treated as an occluded, lower-layer object.
+The prompt further constrains position labels (left/right/center for cube stacking; left/right/front/back for FMB) to a small enumerated set, with explicit rules for when a label must appear versus must be omitted, and requires the VLM to externalize this reasoning as free-form text before emitting the final graph, so that intermediate errors remain inspectable. 
 
-\textbf{Output schema and validation.} The VLM's response must contain a
-delimited JSON block listing, for every object, an integer id, an object-type
-string drawn from the legend vocabulary, and a set of edges each carrying a
-supporter id and an optional position label; id~$0$ is reserved for the
-table/base and always has an empty edge set. This block is extracted
-deterministically via its delimiters and parsed into $\mathcal{G}$; because
-generation is stochastic, the parsed graph need not satisfy the schema on the
-first attempt. We therefore wrap the call in the closed-loop procedure of
-Algorithm~\ref{alg:vlm_graph}: a deterministic validator, independent of the
-VLM, checks a set of structural invariants -- id uniqueness and contiguity,
-every supporter id strictly smaller than its supported object's id (which
-rules out both cyclic and transitive skip-layer edges), a non-empty edge set
-for every real object, at least one object resting on the table, and position
-labels present only where the policy above requires them. A failed check is
-converted into a natural-language error list and appended to the next call as
-feedback, with the same images resubmitted; if no attempt validates within $K$
-rounds, the scene is reported as a hard failure.
+\textbf{Output schema and validation.} 
+The VLM's response must contain a delimited JSON block listing, for every object, an integer id, an object-type string drawn from the legend vocabulary, and a set of edges each carrying a supporter id and an optional position label; id~$0$ is reserved for the table/base and always has an empty edge set. 
+This block is extracted deterministically via its delimiters and parsed into $\mathcal{G}$; because generation is stochastic, the parsed graph need not satisfy the schema on the first attempt. 
+We therefore wrap the call in the closed-loop procedure of Algorithm~\ref{alg:vlm_graph}: a deterministic validator, independent of the VLM, checks a set of structural invariants -- id uniqueness and contiguity, every supporter id strictly smaller than its supported object's id (which rules out both cyclic and transitive skip-layer edges), a non-empty edge set for every real object, at least one object resting on the table, and position labels present only where the policy above requires them. 
+A failed check is converted into a natural-language error list and appended to the next call as feedback, with the same images resubmitted; if no attempt validates within $K$ rounds, the scene is reported as a hard failure.
 
 \begin{algorithm}[t]
 \caption{Closed-Loop Assembly Graph Extraction}
@@ -357,16 +320,15 @@ prompt template $\Pi$, max attempts $K$
 \end{algorithmic}
 \end{algorithm}
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/vlm_input_cube_stacking.png}\\
-\small (a) Cube stacking\\[4pt]
-\setlength{\tabcolsep}{2pt}
-\begin{tabular}{cc}
-  \includegraphics[width=0.48\textwidth]{figures/vlm_input_fmb_step1.png} &
-  \includegraphics[width=0.48\textwidth]{figures/vlm_input_fmb_step2.png}
-\end{tabular}\\
-\small (b) FMB, two-step incremental image sequence for one scenario
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}ccc@{}}
+  \includegraphics[width=0.22\textwidth]{figures/vlm_input_cube_stacking.pdf} &
+  \includegraphics[width=0.14\textwidth]{figures/vlm_input_fmb_step1.pdf} &
+  \includegraphics[width=0.14\textwidth]{figures/vlm_input_fmb_step2.pdf} \\
+  \small (a) Cube stacking & \multicolumn{2}{c}{\small (b) FMB, two-step sequence}
+\end{tabular}
 \caption{Representative VLM input images used for assembly graph generation.
 (a) Cube stacking: a single composite image pairing an object-list legend
 (used as a visual scale reference) with the target structure. (b) FMB: the
@@ -374,11 +336,10 @@ incremental image sequence for one scenario, each frame composited from an
 object-list legend, a top-down view (primary evidence for support edges), and
 an isometric view (consistency check only).}
 \label{fig:vlm_input}
-\end{figure*}
+\end{figure}
 \FloatBarrier
 
 \subsubsection{Graph Decomposition and Clustering}
-\textcolor{red}{Input: Graph, Output: Short-horizon action plans}
 
 Following the mapping $\mathcal{P}=f_{\mathrm{decomp}}(\mathcal{G})$
 introduced in Section~\ref{sec:problem_formulation}, this step converts the
@@ -548,7 +509,7 @@ a concrete instance when a batch requires an object of that category.
 
 \zz{Introduce in each subsubsection: 1. how LGP is used to solve the motion with active constraints. 2. how motion trajectories are executed on the robot}
 
-Sections~\ref{sec:task_understanding} and~\ref{sec:scene_understanding}
+Sections~\ref{sec:task_understanding} and~\ref{sec:scene_understanding} 
 produce two parallel results that must be combined before solving: the task
 plan $\mathcal{P}=(B_1,\dots,B_M)$, whose batches specify the structural
 slots to be filled (e.g., placing a box-type object on top of an existing
@@ -850,38 +811,28 @@ R  & 50 & \phantom{0}1 (2.0\%) & 23 (46.0\%) & 26 (52.0\%) \\
 
 VLM-MSGraph's perception stage grounds each graph node into the scene through open-vocabulary detection and segmentation; we do not re-implement or evaluate this stage. Instead, both methods receive an identical, externally supplied task assignment -- object, source pose, target pose, and order -- taken from our own method's output, isolating the trajectory-generation step. Its executor performs no collision checking and no motion planning: each pick and place is a direct interpolation from the current pose to the target pose. This keeps a modest success rate on the smallest, least cluttered configurations, but degrades quickly as the object count grows and as the required motions become less permissive: cube-stacking success falls from $16.0\%$ at four cubes to at or near $0\%$ from six cubes onward, and on FMB, where insertions require precise approach and support-order compliance, no trial succeeds at any object count (Table~\ref{tab:planning_sr}, rightmost columns). Even given a correct task assignment, an executor without collision-aware planning is not viable beyond the simplest cases.
 
-Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$57\%$ by five to six cubes and to $0\%$ at eight. On FMB, Smart's pooled success rate is $97.0\%$ against Global's $31.3\%$, and Global collapses entirely at five objects ($0.0\%$ under both conditions), where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. The monolithic Combined variant, which merges every object's goal into a single LGP terminal instead of decomposing the task the way Smart and Global do, fares far worse still: $3.0\%$ pooled on FMB and $0.0\%$ on cube stacking at every magnitude tested. This is not a search-time artifact -- both FMB and cube-stacking figures were re-run with no wall-clock limit (a memory cap only), and Combined still fails almost everywhere, because merging every object into one terminal blows up the search tree enough to exhaust the memory budget directly, independent of how long the solver is allowed to run. (Cube stacking beyond four cubes was not executed under Combined: four cubes, the easiest magnitude, already failed completely, so larger magnitudes were assumed to fail as well rather than spending the compute to confirm it.) Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $146$\,s at six cubes to $296$\,s at seven, and to $285$\,s at five FMB objects against Smart's $108$\,s.
+Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$57\%$ by five to six cubes and to $0\%$ at eight. On FMB, Smart's pooled success rate is $97.5\%$ against Global's $71.2\%$, and Global's redundant five-object case collapses to $15.0\%$, where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $146$\,s at six cubes to $296$\,s at seven, and to $285$\,s at five FMB objects against Smart's $108$\,s. The monolithic Combined variant, which merges every object's goal into a single LGP terminal instead of decomposing the task, fares far worse: it succeeds only on the easiest FMB configuration without redundancy ($18.0\%$) and fails at every other cell tested, including cube stacking at four cubes (the only magnitude executed under Combined; five to eight cubes were not run, as a strictly easier magnitude already failing completely implies the harder ones do too) -- decomposition itself, not merely the choice between Smart and Global, is what makes these problems tractable.
 
 % ------------------------------------------------------------------
 % TABLE: tab:planning_sr (2026-08-23 restructure -- merges what were three separate tables,
 % tab:cube_sr/tab:fmb_sr (Smart vs Global planning success) and tab:baseline_execution
 % (VLM-MSGraph execution success), into one table with three method column-groups, so all three
 % methods' success rates sit side by side per benchmark x magnitude cell, per Leslie's explicit
-% request. NOTE: "success" means a different thing per method-group -- Smart/Global/Combined
-% succeed by the LGP solver finding a feasible, collision-free plan (a planning-time guarantee);
-% VLM-MSGraph succeeds if its naive, unplanned interpolation happens not to collide during
-% simulated execution (an empirical, execution-time outcome). Both answer the same practical
-% question the paper cares about (did this produce a working, collision-free assembly), just
-% verified at different pipeline stages appropriate to each method -- see caption for the
-% one-line version.
+% request. NOTE: "success" means a different thing per method-group -- Smart/Global succeed by
+% the LGP solver finding a feasible, collision-free plan (a planning-time guarantee); VLM-MSGraph
+% succeeds if its naive, unplanned interpolation happens not to collide during simulated
+% execution (an empirical, execution-time outcome). Both answer the same practical question the
+% paper cares about (did this produce a working, collision-free assembly), just verified at
+% different pipeline stages appropriate to each method -- see caption for the one-line version.
 % tab:planning_time (solving time) is NOT merged: VLM-MSGraph's naive interpolation has no
 % "solving" step, so a solving-time comparison isn't meaningful for it; that table stays
-% Smart-vs-Global only. Combined is also excluded from tab:planning_time -- it has essentially
-% no successful trials to average over.
-% UPDATE (2026-08-30/31): added the Combined column (monolithic single-terminal LGP solve).
-% FMB Smart/Global numbers refreshed from a full re-run of experiments/evaluations/LGP/FMB with
-% NO wall-clock timeout (16GB memory cap only, N=50 per cell, no exclusions) -- this eliminated
-% the all-zero scenario groups that the old exclusion-based denominator existed to work around,
-% so that caveat no longer applies and has been dropped from the caption. Cube-stacking
-% Smart/Global cells are untouched (not re-run this round). Source: trial_meta.json under
-% experiments/evaluations/LGP/FMB/*/*/*/{lgp_split_smart,lgp_split_global,lgp_combined}/ and
-% experiments/evaluations/LGP_execution/cubeStacking/4cubes/*/*/trial_*/lgp_combined/.
+% Smart-vs-Global only.
 % ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\caption{Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object into one monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}
+\caption{Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=200 (Smart/Global; scenario-mode groups with 0/N success excluded from the denominator, affecting Global-R at five objects: 3/20 rather than 3/50), N=300 (VLM-MSGraph), N=50 per cell (Combined, no exclusions, re-run with no wall-clock timeout).}
 \label{tab:planning_sr}
 \begin{tabular}{lcccccccc}
 \toprule
@@ -897,34 +848,34 @@ Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's f
 8 cubes & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}4.0 & \phantom{0}0.0 \\
 \midrule
 \multicolumn{9}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}92.0 & 62.0 & 18.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-4 objects & \phantom{0}98.0 & 100.0 & \phantom{0}22.0 & 12.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-5 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{00}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+3 objects & \phantom{0}95.0 & 100.0 & \phantom{0}95.0 & 95.0 & 18.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+4 objects & \phantom{0}96.7 & \phantom{0}96.7 & \phantom{0}83.3 & 73.3 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+5 objects & \phantom{0}98.0 & \phantom{0}98.0 & \phantom{0}66.0 & 15.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[!ht]
 \centering
-\caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial.}
+\caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}
 \label{tab:planning_time}
-\begin{tabular}{lcccc}
+\begin{tabular}{lcccccc}
 \toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
- & NR & R & NR & R \\
+ & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Combined} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+ & NR & R & NR & R & NR & R \\
 \midrule
-\multicolumn{5}{l}{\textit{Cube Stacking}} \\
-4 cubes & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8 \\
-5 cubes & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 \\
-6 cubes & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}145.9 \\
-7 cubes & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}295.8 \\
-8 cubes & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- \\
+\multicolumn{7}{l}{\textit{Cube Stacking}} \\
+4 cubes & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8 & \phantom{0}--- & \phantom{0}--- \\
+5 cubes & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 & \phantom{0}--- & \phantom{0}--- \\
+6 cubes & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}145.9 & \phantom{0}--- & \phantom{0}--- \\
+7 cubes & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}295.8 & \phantom{0}--- & \phantom{0}--- \\
+8 cubes & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- & \phantom{0}--- & \phantom{0}--- \\
 \midrule
-\multicolumn{5}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}74.6 & \phantom{0}68.1 & \phantom{0}82.2 & \phantom{0}95.8 \\
-4 objects & \phantom{0}88.4 & \phantom{0}84.8 & \phantom{0}88.7 & 135.2 \\
-5 objects & 110.8 & 107.9 & 131.0 & 284.8 \\
+\multicolumn{7}{l}{\textit{FMB}} \\
+3 objects & \phantom{0}74.6 & \phantom{0}68.1 & \phantom{0}82.2 & \phantom{0}95.8 & 247.5 & \phantom{0}--- \\
+4 objects & \phantom{0}88.4 & \phantom{0}84.8 & \phantom{0}88.7 & 135.2 & \phantom{0}--- & \phantom{0}--- \\
+5 objects & 110.8 & 107.9 & 131.0 & 284.8 & \phantom{0}--- & \phantom{0}--- \\
 \bottomrule
 \end{tabular}
 \end{table}
