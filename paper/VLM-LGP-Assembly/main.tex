@@ -811,7 +811,7 @@ R  & 50 & \phantom{0}1 (2.0\%) & 23 (46.0\%) & 26 (52.0\%) \\
 
 VLM-MSGraph's perception stage grounds each graph node into the scene through open-vocabulary detection and segmentation; we do not re-implement or evaluate this stage. Instead, both methods receive an identical, externally supplied task assignment -- object, source pose, target pose, and order -- taken from our own method's output, isolating the trajectory-generation step. Its executor performs no collision checking and no motion planning: each pick and place is a direct interpolation from the current pose to the target pose. This keeps a modest success rate on the smallest, least cluttered configurations, but degrades quickly as the object count grows and as the required motions become less permissive: cube-stacking success falls from $16.0\%$ at four cubes to at or near $0\%$ from six cubes onward, and on FMB, where insertions require precise approach and support-order compliance, no trial succeeds at any object count (Table~\ref{tab:planning_sr}, rightmost columns). Even given a correct task assignment, an executor without collision-aware planning is not viable beyond the simplest cases.
 
-Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$57\%$ by five to six cubes and to $0\%$ at eight. On FMB, Smart's pooled success rate is $97.5\%$ against Global's $71.2\%$, and Global's redundant five-object case collapses to $15.0\%$, where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $146$\,s at six cubes to $296$\,s at seven, and to $285$\,s at five FMB objects against Smart's $108$\,s. The monolithic Combined variant, which merges every object's goal into a single LGP terminal instead of decomposing the task, fares far worse: it succeeds only on the easiest FMB configuration without redundancy ($18.0\%$) and fails at every other cell tested, including cube stacking at four cubes (the only magnitude executed under Combined; five to eight cubes were not run, as a strictly easier magnitude already failing completely implies the harder ones do too) -- decomposition itself, not merely the choice between Smart and Global, is what makes these problems tractable.
+Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$57\%$ by five to six cubes and to $0\%$ at eight. On FMB, Smart's pooled success rate is $97.0\%$ against Global's $31.3\%$, and Global collapses entirely at five objects ($0.0\%$ under both conditions), where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $146$\,s at six cubes to $296$\,s at seven, and to $284.6$\,s at four FMB objects under redundancy against Smart's $223.5$\,s, with no successful Global trial left to time at five objects. The monolithic Combined variant, which merges every object's goal into a single LGP terminal instead of decomposing the task, fares far worse: it succeeds only on the easiest FMB configuration without redundancy ($18.0\%$) and fails at every other cell tested, including cube stacking at four cubes (the only magnitude executed under Combined; five to eight cubes were not run, as a strictly easier magnitude already failing completely implies the harder ones do too) -- decomposition itself, not merely the choice between Smart and Global, is what makes these problems tractable.
 
 % ------------------------------------------------------------------
 % TABLE: tab:planning_sr (2026-08-23 restructure -- merges what were three separate tables,
@@ -832,7 +832,7 @@ Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's f
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\caption{Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=200 (Smart/Global; scenario-mode groups with 0/N success excluded from the denominator, affecting Global-R at five objects: 3/20 rather than 3/50), N=300 (VLM-MSGraph), N=50 per cell (Combined, no exclusions, re-run with no wall-clock timeout).}
+\caption{Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}
 \label{tab:planning_sr}
 \begin{tabular}{lcccccccc}
 \toprule
@@ -848,16 +848,16 @@ Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's f
 8 cubes & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}4.0 & \phantom{0}0.0 \\
 \midrule
 \multicolumn{9}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}95.0 & 100.0 & \phantom{0}95.0 & 95.0 & 18.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-4 objects & \phantom{0}96.7 & \phantom{0}96.7 & \phantom{0}83.3 & 73.3 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-5 objects & \phantom{0}98.0 & \phantom{0}98.0 & \phantom{0}66.0 & 15.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+3 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}92.0 & 62.0 & 18.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+4 objects & \phantom{0}98.0 & 100.0 & \phantom{0}22.0 & 12.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+5 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[!ht]
 \centering
-\caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}
+\caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}
 \label{tab:planning_time}
 \begin{tabular}{lcccccc}
 \toprule
@@ -873,9 +873,9 @@ Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's f
 8 cubes & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- & \phantom{0}--- & \phantom{0}--- \\
 \midrule
 \multicolumn{7}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}74.6 & \phantom{0}68.1 & \phantom{0}82.2 & \phantom{0}95.8 & 247.5 & \phantom{0}--- \\
-4 objects & \phantom{0}88.4 & \phantom{0}84.8 & \phantom{0}88.7 & 135.2 & \phantom{0}--- & \phantom{0}--- \\
-5 objects & 110.8 & 107.9 & 131.0 & 284.8 & \phantom{0}--- & \phantom{0}--- \\
+3 objects & 209.3 & 209.5 & 282.2 & 215.5 & 247.5 & \phantom{00}--- \\
+4 objects & 229.3 & 223.5 & 255.2 & 284.6 & \phantom{00}--- & \phantom{00}--- \\
+5 objects & 274.7 & 285.5 & \phantom{00}--- & \phantom{00}--- & \phantom{00}--- & \phantom{00}--- \\
 \bottomrule
 \end{tabular}
 \end{table}
