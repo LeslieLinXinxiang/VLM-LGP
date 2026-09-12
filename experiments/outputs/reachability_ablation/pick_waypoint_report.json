@@ -1,0 +1,104 @@
+{
+  "scene_path": "test/scenes/scene_reachability_ablation.g",
+  "mode": "pick_waypoint_only",
+  "gripper": "l_gripper",
+  "trajectory_log_path": "/home/leslie/Projects/VLM_LGP/generated/pick_waypoint_trajectory.log",
+  "results": {
+    "cube_1": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "cube_2": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "cube_3": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "cube_4": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "far_1": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "infeasible",
+      "message": "solver infeasible"
+    },
+    "far_2": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "infeasible",
+      "message": "solver infeasible"
+    },
+    "far_3": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "infeasible",
+      "message": "solver infeasible"
+    },
+    "rect_1": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_2": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_3": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_4": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_5": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_6": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_7": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    },
+    "rect_8": {
+      "object_type": "box",
+      "pick_action": "pick_touch",
+      "status": "feasible",
+      "message": "solver feasible"
+    }
+  },
+  "summary": {
+    "total": 15,
+    "feasible": 12,
+    "infeasible": 3,
+    "error": 0
+  }
+}

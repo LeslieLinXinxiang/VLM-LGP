@@ -1,0 +1,101 @@
+{
+  "scene": "test/scenes/scene_reachability_ablation.g",
+  "total_objects": 15,
+  "komo_feasible": 12,
+  "komo_infeasible": 3,
+  "naive_rule_would_select_unreachable_pct": 20.0,
+  "with_filter_would_select_unreachable_pct": 0.0,
+  "note": "with-filter is 0% by construction (S_r excludes exactly the KOMO-infeasible set); the naive-rule percentage is the only number that carries information.",
+  "objects": [
+    {
+      "object": "rect_7",
+      "distance_from_base_m": 0.424,
+      "komo_status": "feasible",
+      "naive_order": 1
+    },
+    {
+      "object": "rect_5",
+      "distance_from_base_m": 0.5,
+      "komo_status": "feasible",
+      "naive_order": 2
+    },
+    {
+      "object": "cube_4",
+      "distance_from_base_m": 0.541,
+      "komo_status": "feasible",
+      "naive_order": 3
+    },
+    {
+      "object": "rect_8",
+      "distance_from_base_m": 0.541,
+      "komo_status": "feasible",
+      "naive_order": 4
+    },
+    {
+      "object": "cube_2",
+      "distance_from_base_m": 0.583,
+      "komo_status": "feasible",
+      "naive_order": 5
+    },
+    {
+      "object": "rect_3",
+      "distance_from_base_m": 0.583,
+      "komo_status": "feasible",
+      "naive_order": 6
+    },
+    {
+      "object": "cube_3",
+      "distance_from_base_m": 0.602,
+      "komo_status": "feasible",
+      "naive_order": 7
+    },
+    {
+      "object": "rect_6",
+      "distance_from_base_m": 0.602,
+      "komo_status": "feasible",
+      "naive_order": 8
+    },
+    {
+      "object": "cube_1",
+      "distance_from_base_m": 0.671,
+      "komo_status": "feasible",
+      "naive_order": 9
+    },
+    {
+      "object": "rect_1",
+      "distance_from_base_m": 0.671,
+      "komo_status": "feasible",
+      "naive_order": 10
+    },
+    {
+      "object": "rect_4",
+      "distance_from_base_m": 0.673,
+      "komo_status": "feasible",
+      "naive_order": 11
+    },
+    {
+      "object": "rect_2",
+      "distance_from_base_m": 0.75,
+      "komo_status": "feasible",
+      "naive_order": 12
+    },
+    {
+      "object": "far_3",
+      "distance_from_base_m": 1.092,
+      "komo_status": "infeasible",
+      "naive_order": 13
+    },
+    {
+      "object": "far_2",
+      "distance_from_base_m": 1.414,
+      "komo_status": "infeasible",
+      "naive_order": 14
+    },
+    {
+      "object": "far_1",
+      "distance_from_base_m": 1.492,
+      "komo_status": "infeasible",
+      "naive_order": 15
+    }
+  ]
+}
