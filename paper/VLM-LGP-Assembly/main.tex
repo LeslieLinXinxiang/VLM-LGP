@@ -704,7 +704,7 @@ The absolute gain is small because the front end is already accurate, leaving li
 % "w/"  = same trials with the 4 validator-rejected ones replaced by their regeneration.
 %   Exact, not extrapolated: the retry loop cannot fire on an accepted graph.
 % Error counts (14 -> 10) EXCLUDE the five amnestied cube_n07_s01 trials, consistent with the
-%   manual override already reflected in tab:vlm_accuracy_cube. Do not mix this with the raw
+%   manual override already reflected in tab:vlm_accuracy. Do not mix this with the raw
 %   19-error count used in the replay JSON's validator_passed_but_wrong field.
 % Each rejected case was corrected on its FIRST regeneration; --repeats 5 is the retry budget,
 %   not a sample size (the replay loop stops on the first match).
@@ -827,10 +827,12 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.8\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $95.3\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
+Table~\ref{tab:vlm_accuracy} compares our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.8\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $95.3\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
 
 % ------------------------------------------------------------------
-% TABLES: tab:vlm_accuracy_cube, tab:vlm_accuracy_fmb (2026-08-23 restructure)
+% TABLE: tab:vlm_accuracy (2026-09-12: the per-benchmark tables tab:vlm_accuracy_cube and
+% tab:vlm_accuracy_fmb merged into one, per the advisor's "put everything in one table since we
+% are lacking of space". Benchmark blocks use the same \multicolumn idiom as tab:planning_sr.)
 % Merges what were three separate tables (fig:vlm_accuracy_cube_ours, fig:vlm_accuracy_fmb_ours,
 % fig:vlm_accuracy_baseline) into two Ours-vs-VLM-MSGraph comparison tables, one per benchmark,
 % per Leslie's explicit request that baseline and our-method accuracy share the same column
@@ -850,36 +852,24 @@ Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare o
 % ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
-\caption{Cube-stacking VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude). Our column is the full pipeline, graph validator enabled; Table~\ref{tab:ablation_validator} isolates the validator's contribution.}
-\label{tab:vlm_accuracy_cube}
+\caption{VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Ours: self-referential majority-vote reference, N=5 cases per magnitude, full pipeline with the graph validator enabled (Table~\ref{tab:ablation_validator} isolates the validator's contribution). VLM-MSGraph~\cite{li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}
+\label{tab:vlm_accuracy}
 \begin{tabular}{lcc}
 \toprule
 Magnitude & Ours & VLM-MSGraph \\
 \midrule
-4cubes & 100.0\% & 100.0\% \\
-5cubes & 100.0\% & \phantom{0}90.0\% \\
-6cubes & 100.0\% & \phantom{0}90.0\% \\
-7cubes & 100.0\% & \phantom{0}90.0\% \\
-8cubes & \phantom{0}94.0\% & \phantom{0}90.0\% \\
-\midrule
+\multicolumn{3}{l}{\textit{Cube Stacking}} \\
+4 cubes & 100.0\% & 100.0\% \\
+5 cubes & 100.0\% & \phantom{0}90.0\% \\
+6 cubes & 100.0\% & \phantom{0}90.0\% \\
+7 cubes & 100.0\% & \phantom{0}90.0\% \\
+8 cubes & \phantom{0}94.0\% & \phantom{0}90.0\% \\
 \textbf{Overall} & \textbf{98.8\%} & \textbf{92.0\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\caption{FMB VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude, non-redundant scenarios only). Our column is the full pipeline, graph validator enabled.}
-\label{tab:vlm_accuracy_fmb}
-\begin{tabular}{lcc}
-\toprule
-Magnitude & Ours & VLM-MSGraph \\
 \midrule
-3objs & \phantom{0}94.0\% & 80.0\% \\
-4objs & 100.0\% & 50.0\% \\
-
-5objs & \phantom{0}92.0\% & 10.0\% \\
-\midrule
+\multicolumn{3}{l}{\textit{FMB}} \\
+3 objects & \phantom{0}94.0\% & \phantom{0}80.0\% \\
+4 objects & 100.0\% & \phantom{0}50.0\% \\
+5 objects & \phantom{0}92.0\% & \phantom{0}10.0\% \\
 \textbf{Overall} & \textbf{95.3\%} & \textbf{46.7\%} \\
 \bottomrule
 \end{tabular}
