@@ -1,0 +1,4504 @@
+{
+  "repeats": 10,
+  "stop_on_match": false,
+  "validator_rejected": 4,
+  "validator_passed_but_wrong": 15,
+  "totals": {
+    "answers": 40,
+    "matching_reference": 40,
+    "cases_ever_matched": 4,
+    "cases": 4,
+    "network_failures_excluded": 42
+  },
+  "results": [
+    {
+      "bench": "FMB",
+      "mag": "5objs",
+      "case": "001",
+      "trial": "T04",
+      "rules": [
+        "supporter.not_int",
+        "supporter.not_int"
+      ],
+      "repeats": 10,
+      "regen_valid": 10,
+      "regen_matches_reference": 10,
+      "ever_matched": 1,
+      "call_errors": 9,
+      "answered_repeats": 10,
+      "raw_attempts": 19,
+      "stopped_early_on_match": false,
+      "hit_raw_attempt_cap": false,
+      "input_images": [
+        "experiments/inputs/FMB/5objs/001/001.png",
+        "experiments/inputs/FMB/5objs/001/002.png"
+      ],
+      "validator_report": "- [Object 4] edge.supporter must be integer.\n- [Object 5] edge.supporter must be integer.",
+      "graph_original_wrong": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "base",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Shape 2",
+            "color": "green",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "front"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Shape 2",
+            "color": "red",
+            "edges": [
+              {
+                "supporter": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Shape 2",
+            "color": "yellow",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "back"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Shape 4",
+            "color": "blue",
+            "edges": [
+              {
+                "supporter": 1
+              },
+              {
+                "supporter": 2
+              },
+              {
+                "supporter": 3
+              },
+              {
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Shape 4",
+            "color": "orange",
+            "edges": [
+              {
+                "supporter": 1
+              },
+              {
+                "supporter": 2
+              },
+              {
+                "supporter": 3
+              },
+              {
+                "position": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "graph_reference": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "base",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Shape 2",
+            "color": "green",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "front"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Shape 2",
+            "color": "red",
+            "edges": [
+              {
+                "supporter": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Shape 2",
+            "color": "yellow",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "back"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Shape 4",
+            "color": "blue",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "left"
+              },
+              {
+                "supporter": 2,
+                "position": "left"
+              },
+              {
+                "supporter": 3,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Shape 4",
+            "color": "orange",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "right"
+              },
+              {
+                "supporter": 2,
+                "position": "right"
+              },
+              {
+                "supporter": 3,
+                "position": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "answer_index": 1,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 2,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 3,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 4,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 5,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 6,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 7,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 8,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 9,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 10,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "bench": "FMB",
+      "mag": "5objs",
+      "case": "005",
+      "trial": "T08",
+      "rules": [
+        "geometry.mixed_layer"
+      ],
+      "repeats": 10,
+      "regen_valid": 10,
+      "regen_matches_reference": 10,
+      "ever_matched": 1,
+      "call_errors": 18,
+      "answered_repeats": 10,
+      "raw_attempts": 28,
+      "stopped_early_on_match": false,
+      "hit_raw_attempt_cap": false,
+      "input_images": [
+        "experiments/inputs/FMB/5objs/005/001.png",
+        "experiments/inputs/FMB/5objs/005/002.png"
+      ],
+      "validator_report": "- [Object 5] supporters [1, 2, 3, 4] are at different heights (layers [1, 2]); an object cannot rest on supports at different levels.",
+      "graph_original_wrong": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "base",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Shape 2",
+            "color": "green",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "front"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Shape 2",
+            "color": "red",
+            "edges": [
+              {
+                "supporter": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Shape 2",
+            "color": "yellow",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "back"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Shape 4",
+            "color": "blue",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "left"
+              },
+              {
+                "supporter": 2,
+                "position": "left"
+              },
+              {
+                "supporter": 3,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Shape 4",
+            "color": "orange",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "right"
+              },
+              {
+                "supporter": 2,
+                "position": "right"
+              },
+              {
+                "supporter": 3,
+                "position": "right"
+              },
+              {
+                "supporter": 4,
+                "position": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "graph_reference": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "base",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Shape 2",
+            "color": "green",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "front"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Shape 2",
+            "color": "red",
+            "edges": [
+              {
+                "supporter": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Shape 2",
+            "color": "yellow",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "back"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Shape 4",
+            "color": "blue",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "left"
+              },
+              {
+                "supporter": 2,
+                "position": "left"
+              },
+              {
+                "supporter": 3,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Shape 4",
+            "color": "orange",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "right"
+              },
+              {
+                "supporter": 2,
+                "position": "right"
+              },
+              {
+                "supporter": 3,
+                "position": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "answer_index": 1,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 2,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 3,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 4,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 5,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 6,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 7,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 8,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 9,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 10,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "base",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Shape 2",
+                "color": "green",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "front"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Shape 2",
+                "color": "red",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Shape 2",
+                "color": "yellow",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "back"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Shape 4",
+                "color": "blue",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "left"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Shape 4",
+                "color": "orange",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 2,
+                    "position": "right"
+                  },
+                  {
+                    "supporter": 3,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "bench": "cubeStacking",
+      "mag": "7cubes",
+      "case": "cube_n07_s05",
+      "trial": "T11",
+      "rules": [
+        "geometry.skipped_support"
+      ],
+      "repeats": 10,
+      "regen_valid": 10,
+      "regen_matches_reference": 10,
+      "ever_matched": 1,
+      "call_errors": 6,
+      "answered_repeats": 10,
+      "raw_attempts": 16,
+      "stopped_early_on_match": false,
+      "hit_raw_attempt_cap": false,
+      "input_images": [
+        "experiments/inputs/cubeStacking/7cubes/cube_n07_s05.png"
+      ],
+      "validator_report": "- [Object 7] spans supporters [4, 6] but omits object 5, which stands between them at the same height and must also be a supporter.",
+      "graph_original_wrong": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "table",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "center"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "right"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 2
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 3
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "object": "Long RectPrism",
+            "edges": [
+              {
+                "supporter": 4
+              },
+              {
+                "supporter": 6
+              }
+            ]
+          }
+        ]
+      },
+      "graph_reference": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "table",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "center"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 0,
+                "position": "right"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 2
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 3
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "object": "Long RectPrism",
+            "edges": [
+              {
+                "supporter": 4
+              },
+              {
+                "supporter": 5
+              },
+              {
+                "supporter": 6
+              }
+            ]
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 1,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 2,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 3,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 4,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 5,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 6,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 7,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 8,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 9,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 10,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 0,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 2
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 3
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 4
+                  },
+                  {
+                    "supporter": 5
+                  },
+                  {
+                    "supporter": 6
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "bench": "cubeStacking",
+      "mag": "8cubes",
+      "case": "cube_n08_s04",
+      "trial": "T11",
+      "rules": [
+        "geometry.skipped_support"
+      ],
+      "repeats": 10,
+      "regen_valid": 10,
+      "regen_matches_reference": 10,
+      "ever_matched": 1,
+      "call_errors": 9,
+      "answered_repeats": 10,
+      "raw_attempts": 19,
+      "stopped_early_on_match": false,
+      "hit_raw_attempt_cap": false,
+      "input_images": [
+        "experiments/inputs/cubeStacking/8cubes/cube_n08_s04.png"
+      ],
+      "validator_report": "- [Object 5] spans supporters [2, 4] but omits object 3, which stands between them at the same height and must also be a supporter.",
+      "graph_original_wrong": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "table",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Long RectPrism",
+            "edges": [
+              {
+                "supporter": 0
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "center"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "right"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Long RectPrism",
+            "edges": [
+              {
+                "supporter": 2
+              },
+              {
+                "supporter": 4
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 5,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 5,
+                "position": "center"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 5,
+                "position": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "graph_reference": {
+        "objects": [
+          {
+            "id": 0,
+            "object": "table",
+            "edges": []
+          },
+          {
+            "id": 1,
+            "object": "Long RectPrism",
+            "edges": [
+              {
+                "supporter": 0
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "center"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 1,
+                "position": "right"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "object": "Long RectPrism",
+            "edges": [
+              {
+                "supporter": 2
+              },
+              {
+                "supporter": 3
+              },
+              {
+                "supporter": 4
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 5,
+                "position": "left"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 5,
+                "position": "center"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "object": "Cube",
+            "edges": [
+              {
+                "supporter": 5,
+                "position": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 1,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 2,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 3,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": 4,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 5,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 6,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 7,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 8,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 9,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "answer_index": null,
+          "call_error": "VLM call failed after 8 attempts."
+        },
+        {
+          "answer_index": 10,
+          "valid": true,
+          "rules_fired": [],
+          "matches_reference": true,
+          "graph": {
+            "objects": [
+              {
+                "id": 0,
+                "object": "table",
+                "edges": []
+              },
+              {
+                "id": 1,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 0
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 1,
+                    "position": "right"
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "object": "Long Rectangular Prism",
+                "edges": [
+                  {
+                    "supporter": 2
+                  },
+                  {
+                    "supporter": 3
+                  },
+                  {
+                    "supporter": 4
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "left"
+                  }
+                ]
+              },
+              {
+                "id": 7,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "center"
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "object": "Cube",
+                "edges": [
+                  {
+                    "supporter": 5,
+                    "position": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

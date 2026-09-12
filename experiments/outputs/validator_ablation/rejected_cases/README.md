@@ -1,18 +1,20 @@
 # Validator-rejected trials — case record
 
-Source replay: `experiments/outputs/validator_ablation/replay_20260912_220202.json`  
+Source replay: `experiments/outputs/validator_ablation/replay_20260913_012006.json`  
 Cases: 4 of the 19 mis-scored trials in the 400-trial evaluation (the other 15 pass the validator and are unaffected by the retry loop).
 
 The validator performs internal-consistency checks on the predicted graph only — it uses no ground truth about the target. Each case below was rejected, regenerated with the validator's error report as feedback, and the regenerated graph compared against the reference.
 
-| Benchmark | Magnitude | Case | Wrong trial | Rules fired | Real answers | Net. fails excl. | Fixed |
-|---|---|---|---|---|---|---|---|
-| FMB | 5objs | `001` | T04 | supporter.not_int, supporter.not_int | 1/5 | 1 | yes |
-| FMB | 5objs | `005` | T08 | geometry.mixed_layer | 1/5 | 0 | yes |
-| cubeStacking | 7cubes | `cube_n07_s05` | T11 | geometry.skipped_support | 1/5 | 0 | yes |
-| cubeStacking | 8cubes | `cube_n08_s04` | T11 | geometry.skipped_support | 1/5 | 0 | yes |
+| Benchmark | Magnitude | Case | Wrong trial | Rules fired | Corrected answers | Net. fails excl. |
+|---|---|---|---|---|---|---|
+| FMB | 5objs | `001` | T04 | supporter.not_int, supporter.not_int | 10/10 | 9 |
+| FMB | 5objs | `005` | T08 | geometry.mixed_layer | 10/10 | 18 |
+| cubeStacking | 7cubes | `cube_n07_s05` | T11 | geometry.skipped_support | 10/10 | 6 |
+| cubeStacking | 8cubes | `cube_n08_s04` | T11 | geometry.skipped_support | 10/10 | 9 |
 
-**Regenerated graphs matching the reference: 4/4.**
+**Corrected on regeneration: 40/40 answers (100.0%, Wilson 95% CI [91.2%, 100.0%]) across 4/4 cases.**
+
+Each case was sampled until 10 real answers were collected, matching the 10-seeds-per-scenario protocol used throughout the evaluation, so the rate is comparable with the paper's other numbers.
 
 Per-case JSON files in this directory carry the input image paths, the validator report, and the three graphs (originally wrong / reference / regenerated) verbatim.
 

@@ -253,10 +253,11 @@
   },
   "regenerated_matches_reference": true,
   "replay": {
-    "source": "experiments/outputs/validator_ablation/replay_20260912_220202.json",
-    "repeats_budget": 5,
-    "real_answers_used": 1,
-    "network_failures_excluded": 0,
+    "source": "experiments/outputs/validator_ablation/replay_20260913_012006.json",
+    "repeats_budget": 10,
+    "real_answers_used": 10,
+    "answers_matching_reference": 10,
+    "network_failures_excluded": 6,
     "matched_reference": true
   }
 }

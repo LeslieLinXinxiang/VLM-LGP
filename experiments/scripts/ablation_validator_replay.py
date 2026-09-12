@@ -89,6 +89,11 @@ def main():
     ap.add_argument("--only", type=str, default=None,
                      help="Comma-separated case names to replay (e.g. '001,005'); "
                           "default replays every validator-rejected case.")
+    ap.add_argument("--stop-on-match", action="store_true",
+                     help="End a case as soon as one regenerated graph matches the "
+                          "reference. Cheaper, but yields a single observation per case "
+                          "rather than a rate; the default collects --repeats real "
+                          "answers for every case.")
     args = ap.parse_args()
     only = set(args.only.split(",")) if args.only else None
 
@@ -153,11 +158,11 @@ def main():
 
     # Network failures (core.vlm's RemoteProtocolError retries exhausted) do not
     # count against the accuracy denominator at all — they're not an answer, right
-    # or wrong. Per case, keep asking (with the same fixed feedback) until either
-    # a regenerated graph matches the reference (stop early, it's fixed) or
-    # args.repeats *real* answers have been collected without a match. A generous
-    # raw-attempt safety cap guards against a case where the connection is so
-    # broken that "real answers" never accumulate.
+    # or wrong. Each case is sampled until args.repeats *real* answers have been
+    # collected, so the result is a rate (k/N) rather than a single observation;
+    # --stop-on-match ends a case as soon as one answer matches, which is cheaper
+    # but only shows that a fix is reachable, not how often. A generous raw-attempt
+    # cap guards against a connection so broken that real answers never accumulate.
     MAX_RAW_ATTEMPTS = max(20, args.repeats * 8)
 
     def _run_case(e):
@@ -168,10 +173,12 @@ def main():
                     f"Fix these errors:\n{e['report']}")
         ref_sig = canonicalize_graph(e["ref"])
         vlm = VLMClient()
-        answered = valid_count = call_errors = raw_attempts = 0
+        answered = valid_count = call_errors = raw_attempts = match_count = 0
         matched = False
         attempts_log = []
-        while answered < args.repeats and not matched and raw_attempts < MAX_RAW_ATTEMPTS:
+        while (answered < args.repeats
+               and not (matched and args.stop_on_match)
+               and raw_attempts < MAX_RAW_ATTEMPTS):
             raw_attempts += 1
             try:
                 regen = _generate(vlm, e["bench"], imgs, prompt, feedback)
@@ -186,8 +193,10 @@ def main():
                 attempts_log.append({"answer_index": answered, "valid": ok,
                                      "rules_fired": rules, "matches_reference": match,
                                      "graph": regen})
+                match_count += int(match)
                 print(f"    {e['case']} {e['trial']} answered {answered}/{args.repeats}: "
-                      f"valid={ok} matches_ref={match}", flush=True)
+                      f"valid={ok} matches_ref={match} "
+                      f"(running {match_count}/{answered})", flush=True)
                 if match:
                     matched = True
             except Exception as exc:                      # noqa: BLE001
@@ -197,10 +206,14 @@ def main():
                       flush=True)
         return dict(bench=e["bench"], mag=e["mag"], case=e["case"], trial=e["trial"],
                     rules=e["rules"], repeats=args.repeats,
-                    regen_valid=valid_count, regen_matches_reference=int(matched),
+                    regen_valid=valid_count,
+                    regen_matches_reference=match_count,
+                    ever_matched=int(matched),
                     call_errors=call_errors, answered_repeats=answered,
                     raw_attempts=raw_attempts,
-                    hit_raw_attempt_cap=(not matched and answered < args.repeats),
+                    stopped_early_on_match=bool(matched and args.stop_on_match),
+                    hit_raw_attempt_cap=(answered < args.repeats
+                                         and not (matched and args.stop_on_match)),
                     input_images=[str(p.relative_to(ROOT)) for p in imgs],
                     validator_report=e["report"],
                     graph_original_wrong=e["bad"],
@@ -216,15 +229,33 @@ def main():
 
     stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     path = OUT / f"replay_{stamp}.json"
+    total_match = sum(r["regen_matches_reference"] for r in results)
+    total_answered = sum(r["answered_repeats"] for r in results)
+    total_errors = sum(r["call_errors"] for r in results)
+    ever = sum(r["ever_matched"] for r in results)
     path.write_text(json.dumps({
         "repeats": args.repeats,
+        "stop_on_match": args.stop_on_match,
         "validator_rejected": len(rejected),
         "validator_passed_but_wrong": len(accepted_but_wrong),
+        "totals": {
+            "answers": total_answered,
+            "matching_reference": total_match,
+            "cases_ever_matched": ever,
+            "cases": len(results),
+            "network_failures_excluded": total_errors,
+        },
         "results": results,
     }, indent=2), encoding="utf-8")
-    n_fixed = sum(r["regen_matches_reference"] for r in results)
-    print(f"\ncases where retry-with-feedback eventually matched the reference "
-          f"(within {args.repeats} real answers each): {n_fixed}/{len(results)}")
+
+    print("\nper case (answers matching the reference):")
+    for r in results:
+        print(f"  {r['bench']:<13}{r['case']:<14}{r['trial']}  "
+              f"{r['regen_matches_reference']}/{r['answered_repeats']}"
+              f"   net-fails excluded: {r['call_errors']}")
+    print(f"\nanswers matching the reference: {total_match}/{total_answered}")
+    print(f"cases fixed at least once:      {ever}/{len(results)}")
+    print(f"network failures excluded:      {total_errors}")
     for r in results:
         if r["hit_raw_attempt_cap"]:
             print(f"  WARNING: {r['case']} {r['trial']} hit the raw-attempt cap "
