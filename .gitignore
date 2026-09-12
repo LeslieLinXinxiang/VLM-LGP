@@ -44,3 +44,8 @@ bin/*.exe
 # === 环境变量配置 (机密) ===
 .env
 .env.*
+
+# === Solver run artifacts ===
+# rai/KOMO rewrites these on every run, so a tracked copy makes the working tree
+# dirty after any solve. Keep them local.
+z.log.*
