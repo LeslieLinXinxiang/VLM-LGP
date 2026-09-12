@@ -111,11 +111,12 @@ def _check_support_geometry(obj_by_id):
 
         sup_layers = {layers.get(s) for s in sup}
         if None not in sup_layers and len(sup_layers) > 1:
-            errors.append(
+            errors.append((
+                "geometry.mixed_layer",
                 f"- [Object {obj_id}] supporters {sorted(sup)} are at different heights "
                 f"(layers {sorted(l for l in sup_layers)}); an object cannot rest on supports "
                 f"at different levels."
-            )
+            ))
             continue
 
         slots = {s: _position_slot(s, supporters, positions) for s in sup}
@@ -128,16 +129,17 @@ def _check_support_geometry(obj_by_id):
                 continue
             other_slot = _position_slot(other, supporters, positions)
             if other_slot is not None and low < other_slot < high:
-                errors.append(
+                errors.append((
+                    "geometry.skipped_support",
                     f"- [Object {obj_id}] spans supporters {sorted(sup)} but omits object "
                     f"{other}, which stands between them at the same height and must also "
                     f"be a supporter."
-                )
+                ))
 
     return errors
 
 
-def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
+def validate_plan(plan_json, valid_inventory_list, benchmark="cube", collect=None):
     """
     Validates VLM output with dual-schema compatibility:
     - New schema: {"objects": [{"id", "object", "on"}, ...]}
@@ -146,9 +148,17 @@ def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
     `benchmark` selects the vocabulary ("cube" or "fmb"). All checks are internal
     consistency checks on the predicted graph alone; nothing here uses ground truth
     about the target structure.
+
+    Pass a list as `collect` to receive the identifier of every rule that fired, for
+    ablation bookkeeping. Callers that ignore it see the unchanged (bool, message) pair.
     """
     errors = []
     vocab = BENCHMARK_VOCAB.get(str(benchmark).lower(), BENCHMARK_VOCAB["cube"])
+
+    def fail(rule, message):
+        errors.append(message)
+        if collect is not None:
+            collect.append(rule)
 
     # Prefer object-list schema if present.
     if isinstance(plan_json, dict) and "objects" in plan_json:
@@ -168,19 +178,19 @@ def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
         ids = []
         for obj in objects:
             if not isinstance(obj, dict):
-                errors.append("- object entry must be JSON object.")
+                fail("schema.object_entry", "- object entry must be JSON object.")
                 continue
             ids.append(obj.get("id"))
 
         if any(not isinstance(i, int) for i in ids):
-            errors.append("- all object ids must be integers.")
+            fail("id.not_int", "- all object ids must be integers.")
         if len(ids) != len(set(ids)):
-            errors.append("- object ids must be unique.")
+            fail("id.duplicate", "- object ids must be unique.")
 
         valid_id_set = set(i for i in ids if isinstance(i, int))
         expected_id_set = set(range(len(objects)))
         if valid_id_set != expected_id_set:
-            errors.append("- object ids must be consecutive and exactly 0..N-1.")
+            fail("id.not_contiguous", "- object ids must be consecutive and exactly 0..N-1.")
 
         # New format: objects + edges[{supporter, position?}]
         has_edges_schema = any(isinstance(obj, dict) and "edges" in obj for obj in objects)
@@ -189,13 +199,13 @@ def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
 
             table_obj = obj_by_id.get(0)
             if not isinstance(table_obj, dict):
-                errors.append("- id 0 table object is required in edges schema.")
+                fail("base.missing", "- id 0 table object is required in edges schema.")
             else:
                 if str(table_obj.get("object", "")).lower() != vocab["base_name"]:
-                    errors.append(f"- id 0 object must be '{vocab['base_name']}' in edges schema.")
+                    fail("base.wrong_name", f"- id 0 object must be '{vocab['base_name']}' in edges schema.")
                 table_edges = table_obj.get("edges")
                 if not isinstance(table_edges, list) or table_edges:
-                    errors.append("- id 0 table must have empty 'edges': [].")
+                    fail("base.has_edges", "- id 0 table must have empty 'edges': [].")
 
             has_table_support = False
             for obj in objects:
@@ -210,30 +220,30 @@ def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
                     continue
 
                 if not _is_valid_obj_type(obj_name):
-                    errors.append(f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
+                    fail("type.unknown", f"- [Object {obj_id}] invalid object type: {obj_name!r}.")
 
                 if not isinstance(edges, list) or not edges:
-                    errors.append(f"- [Object {obj_id}] 'edges' must be a non-empty array.")
+                    fail("edges.empty", f"- [Object {obj_id}] 'edges' must be a non-empty array.")
                     continue
 
                 supporter_set = set()
                 for edge in edges:
                     if not isinstance(edge, dict):
-                        errors.append(f"- [Object {obj_id}] edge entry must be JSON object.")
+                        fail("edges.entry", f"- [Object {obj_id}] edge entry must be JSON object.")
                         continue
 
                     supporter = edge.get("supporter")
                     if not isinstance(supporter, int):
-                        errors.append(f"- [Object {obj_id}] edge.supporter must be integer.")
+                        fail("supporter.not_int", f"- [Object {obj_id}] edge.supporter must be integer.")
                         continue
 
                     if supporter not in valid_id_set:
-                        errors.append(f"- [Object {obj_id}] supporter id {supporter} not found.")
+                        fail("supporter.unknown_id", f"- [Object {obj_id}] supporter id {supporter} not found.")
                     if isinstance(obj_id, int) and supporter >= obj_id:
-                        errors.append(f"- [Object {obj_id}] supporter id {supporter} must satisfy supporter < id.")
+                        fail("supporter.order", f"- [Object {obj_id}] supporter id {supporter} must satisfy supporter < id.")
 
                     if supporter in supporter_set:
-                        errors.append(f"- [Object {obj_id}] duplicate supporter id {supporter} in edges.")
+                        fail("supporter.duplicate", f"- [Object {obj_id}] duplicate supporter id {supporter} in edges.")
                     supporter_set.add(supporter)
 
                     if supporter == 0:
@@ -242,16 +252,17 @@ def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
                     if "position" in edge:
                         pos = edge.get("position")
                         if not isinstance(pos, str) or pos.lower() not in allowed_positions:
-                            errors.append(
+                            fail("position.vocab",
                                 f"- [Object {obj_id}] invalid position {pos!r}. Must be one of {sorted(allowed_positions)}."
                             )
 
             if not has_table_support:
-                errors.append(
+                fail("base.no_child",
                     f"- at least one object must be supported by the {vocab['base_name']} (supporter=0)."
                 )
 
-            errors.extend(_check_support_geometry(obj_by_id))
+            for rule, message in _check_support_geometry(obj_by_id):
+                fail(rule, message)
 
             if errors:
                 return False, "\n".join(errors)
@@ -383,34 +394,54 @@ def execute_phase1(target_img_path=None, output_json_path=None, prompt_path=None
     vlm = VLMClient()
     max_attempts = 3
     feedback_buffer = None
-    
+    attempt_log = []
+
+    def _write_attempt_log(outcome):
+        """Per-attempt record of which rules fired, for the validator ablation."""
+        path = os.path.splitext(output_graph_json)[0] + "_attempts.json"
+        with open(path, "w") as f:
+            json.dump({
+                "benchmark": benchmark,
+                "target_image": os.path.basename(target_img_path),
+                "prompt": os.path.basename(prompt_file),
+                "max_attempts": max_attempts,
+                "attempts_used": len(attempt_log),
+                "outcome": outcome,
+                "attempts": attempt_log,
+            }, f, indent=2)
+
     for i in range(max_attempts):
         print(f"\n[Step 3] Planning Iteration {i+1}/{max_attempts}")
         try:
             # Phase 1 VLM Call (Generic Mode)
             plan_json = vlm.generate_assembly_plan(
-                target_img_path, 
-                prompt_file, 
+                target_img_path,
+                prompt_file,
                 example_content=None,  # [DISABLED] incontext examples removed
                 feedback_context=feedback_buffer
             )
-            
+
             # Validate using the relaxed logic
-            is_valid, report = validate_plan(plan_json, mapping_list, benchmark)
-            
+            fired = []
+            is_valid, report = validate_plan(plan_json, mapping_list, benchmark, collect=fired)
+            attempt_log.append({"attempt": i + 1, "valid": is_valid, "rules": fired})
+
             if is_valid:
                 print(f"   >>> [PASS] Inspector approved.")
                 with open(output_graph_json, 'w') as f:
                     json.dump(plan_json, f, indent=2)
+                _write_attempt_log("accepted")
                 return True, output_graph_json
             else:
                 print(f"   >>> [FAIL] Inspector rejected:\n{report}")
                 feedback_buffer = f"[SYSTEM FEEDBACK]:\nFix these errors:\n{report}\nDo not hallucinate."
-                
+
         except Exception as e:
             print(f"[Error] {e}")
+            attempt_log.append({"attempt": i + 1, "valid": False, "rules": ["exception"]})
 
     print("\n[FATAL] VLM failed to converge.")
+    _write_attempt_log("exhausted")
     return False, None
 
 if __name__ == "__main__":
