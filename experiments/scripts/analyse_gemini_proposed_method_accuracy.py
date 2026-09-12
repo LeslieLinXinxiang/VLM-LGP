@@ -60,6 +60,37 @@ def extract_final_block_from_md(md_path: Path):
         return None
 
 
+def _canonical_object_type(name):
+    """Collapse known type-name paraphrases so they compare equal.
+
+    validate_plan's object-type check is a permissive keyword match (see
+    BENCHMARK_VOCAB in pipeline/run_phase1.py), not an exact string — the VLM is
+    free to phrase a type differently across calls as long as it contains the
+    right keyword. Every trial stored in the dataset happens to use one fixed
+    vocabulary ("Cube", "RectPrism", "Long RectPrism", "TriPrism", "table"), but a
+    live regeneration (validator ablation replay, 2026-09-12) produced "Long
+    Rectangular Prism" for a graph structurally identical to a stored "Long
+    RectPrism" answer — canonicalize_graph's literal-string signature scored that
+    as a mismatch despite the supporter/edge structure being exactly right.
+    Falls back to the lowercased/stripped input for anything outside this known
+    set (including FMB's "Shape N" names), so behavior for previously-seen exact
+    strings, and for names this dictionary doesn't recognize, is unchanged.
+    """
+    if not isinstance(name, str):
+        return name
+    n = name.lower().replace(" ", "").replace("-", "").replace("_", "")
+    if "prism" in n:
+        if "tri" in n:
+            return "TRIPRISM"
+        if "rect" in n:  # matches both "rect" and "rectangular"
+            return "LONG_RECTPRISM" if "long" in n else "RECTPRISM"
+    if "cube" in n:
+        return "CUBE"
+    if "cylinder" in n:
+        return "CYLINDER"
+    return n
+
+
 def canonicalize_graph(parsed):
     """
     Build an id-numbering-independent signature for an {"objects": [...]} support
@@ -125,7 +156,7 @@ def canonicalize_graph(parsed):
         # a "color" field at all today, so this is a no-op here now, but keeping the
         # two scripts' comparison semantics identical avoids future drift if that
         # changes.
-        sig = (o.get("object"), tuple(edge_sigs))
+        sig = (_canonical_object_type(o.get("object")), tuple(edge_sigs))
         sig_cache[oid] = sig
         return sig
 

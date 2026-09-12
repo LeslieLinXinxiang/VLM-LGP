@@ -1,0 +1,40 @@
+{
+  "repeats": 5,
+  "validator_rejected": 2,
+  "validator_passed_but_wrong": 0,
+  "results": [
+    {
+      "bench": "FMB",
+      "mag": "5objs",
+      "case": "001",
+      "trial": "T04",
+      "rules": [
+        "supporter.not_int",
+        "supporter.not_int"
+      ],
+      "repeats": 5,
+      "regen_valid": 1,
+      "regen_matches_reference": 1,
+      "call_errors": 0,
+      "answered_repeats": 1,
+      "raw_attempts": 1,
+      "hit_raw_attempt_cap": false
+    },
+    {
+      "bench": "FMB",
+      "mag": "5objs",
+      "case": "005",
+      "trial": "T08",
+      "rules": [
+        "geometry.mixed_layer"
+      ],
+      "repeats": 5,
+      "regen_valid": 1,
+      "regen_matches_reference": 1,
+      "call_errors": 3,
+      "answered_repeats": 1,
+      "raw_attempts": 4,
+      "hit_raw_attempt_cap": false
+    }
+  ]
+}

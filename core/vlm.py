@@ -175,11 +175,20 @@ class VLMClient:
                 time.sleep(5)
         raise RuntimeError(f"VLM call failed after {self.model} retries.")
 
-    def _call_gemini_with_retry(self, prompt_content, is_json_output=True):
-        """Call Gemini API with retry logic"""
+    def _call_gemini_with_retry(self, prompt_content, is_json_output=True, max_attempts=8):
+        """Call Gemini API with retry logic.
+
+        max_attempts is higher than it looks like it should need to be: long
+        generations (max_output_tokens=65536) intermittently hit
+        `httpx.RemoteProtocolError: Server disconnected without sending a response`
+        even on a direct connection with no proxy involved (confirmed empirically,
+        2026-09-12) — this is upstream flakiness, not a proxy or credential issue.
+        Backoff is exponential (capped) so repeated failures don't hammer the
+        endpoint.
+        """
         if not HAS_GEMINI:
             raise ImportError("'google-genai' is not installed, cannot call Gemini API.")
-        for attempt in range(3):
+        for attempt in range(max_attempts):
             try:
                 config = genai_types.GenerateContentConfig(
                     max_output_tokens=65536,
@@ -225,9 +234,9 @@ class VLMClient:
                 import traceback as _tb
                 print(f"\n[VLM] API Error: {type(e).__name__}: {e}")
                 print(_tb.format_exc())
-                time.sleep(2)
+                time.sleep(min(30, 2 ** attempt))
                 continue
-        raise RuntimeError("VLM call failed.")
+        raise RuntimeError(f"VLM call failed after {max_attempts} attempts.")
 
     # --- PHASE 0: MATCHING ---
     def match_objects(self, image_bgr, specs_json_path, prompt_path):

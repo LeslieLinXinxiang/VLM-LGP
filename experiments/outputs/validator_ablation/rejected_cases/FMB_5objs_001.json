@@ -1,0 +1,261 @@
+{
+  "benchmark": "FMB",
+  "magnitude": "5objs",
+  "case": "001",
+  "wrong_trial": "T04",
+  "reference_trial": "T01",
+  "input_images": [
+    "experiments/inputs/FMB/5objs/001/001.png",
+    "experiments/inputs/FMB/5objs/001/002.png"
+  ],
+  "validator_rules_fired": [
+    "supporter.not_int",
+    "supporter.not_int"
+  ],
+  "validator_report": "- [Object 4] edge.supporter must be integer.\n- [Object 5] edge.supporter must be integer.",
+  "graph_original_wrong": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "base",
+        "edges": []
+      },
+      {
+        "id": 1,
+        "object": "Shape 2",
+        "color": "green",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "front"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "object": "Shape 2",
+        "color": "red",
+        "edges": [
+          {
+            "supporter": 0
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "object": "Shape 2",
+        "color": "yellow",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "back"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "object": "Shape 4",
+        "color": "blue",
+        "edges": [
+          {
+            "supporter": 1
+          },
+          {
+            "supporter": 2
+          },
+          {
+            "supporter": 3
+          },
+          {
+            "position": "left"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "object": "Shape 4",
+        "color": "orange",
+        "edges": [
+          {
+            "supporter": 1
+          },
+          {
+            "supporter": 2
+          },
+          {
+            "supporter": 3
+          },
+          {
+            "position": "right"
+          }
+        ]
+      }
+    ]
+  },
+  "graph_reference": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "base",
+        "edges": []
+      },
+      {
+        "id": 1,
+        "object": "Shape 2",
+        "color": "green",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "front"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "object": "Shape 2",
+        "color": "red",
+        "edges": [
+          {
+            "supporter": 0
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "object": "Shape 2",
+        "color": "yellow",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "back"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "object": "Shape 4",
+        "color": "blue",
+        "edges": [
+          {
+            "supporter": 1,
+            "position": "left"
+          },
+          {
+            "supporter": 2,
+            "position": "left"
+          },
+          {
+            "supporter": 3,
+            "position": "left"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "object": "Shape 4",
+        "color": "orange",
+        "edges": [
+          {
+            "supporter": 1,
+            "position": "right"
+          },
+          {
+            "supporter": 2,
+            "position": "right"
+          },
+          {
+            "supporter": 3,
+            "position": "right"
+          }
+        ]
+      }
+    ]
+  },
+  "graph_regenerated": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "base",
+        "edges": []
+      },
+      {
+        "id": 1,
+        "object": "Shape 2",
+        "color": "green",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "front"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "object": "Shape 2",
+        "color": "red",
+        "edges": [
+          {
+            "supporter": 0
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "object": "Shape 2",
+        "color": "yellow",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "back"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "object": "Shape 4",
+        "color": "blue",
+        "edges": [
+          {
+            "supporter": 1,
+            "position": "left"
+          },
+          {
+            "supporter": 2,
+            "position": "left"
+          },
+          {
+            "supporter": 3,
+            "position": "left"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "object": "Shape 4",
+        "color": "orange",
+        "edges": [
+          {
+            "supporter": 1,
+            "position": "right"
+          },
+          {
+            "supporter": 2,
+            "position": "right"
+          },
+          {
+            "supporter": 3,
+            "position": "right"
+          }
+        ]
+      }
+    ]
+  },
+  "regenerated_matches_reference": true,
+  "replay": {
+    "source": "experiments/outputs/validator_ablation/replay_20260912_220202.json",
+    "repeats_budget": 5,
+    "real_answers_used": 1,
+    "network_failures_excluded": 1,
+    "matched_reference": true
+  }
+}

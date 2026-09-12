@@ -1,0 +1,262 @@
+{
+  "benchmark": "cubeStacking",
+  "magnitude": "7cubes",
+  "case": "cube_n07_s05",
+  "wrong_trial": "T11",
+  "reference_trial": "T02",
+  "input_images": [
+    "experiments/inputs/cubeStacking/7cubes/cube_n07_s05.png"
+  ],
+  "validator_rules_fired": [
+    "geometry.skipped_support"
+  ],
+  "validator_report": "- [Object 7] spans supporters [4, 6] but omits object 5, which stands between them at the same height and must also be a supporter.",
+  "graph_original_wrong": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "table",
+        "edges": []
+      },
+      {
+        "id": 1,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "left"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "center"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 1
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 2
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 3
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "object": "Long RectPrism",
+        "edges": [
+          {
+            "supporter": 4
+          },
+          {
+            "supporter": 6
+          }
+        ]
+      }
+    ]
+  },
+  "graph_reference": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "table",
+        "edges": []
+      },
+      {
+        "id": 1,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "left"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "center"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 1
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 2
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 3
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "object": "Long RectPrism",
+        "edges": [
+          {
+            "supporter": 4
+          },
+          {
+            "supporter": 5
+          },
+          {
+            "supporter": 6
+          }
+        ]
+      }
+    ]
+  },
+  "graph_regenerated": {
+    "objects": [
+      {
+        "id": 0,
+        "object": "table",
+        "edges": []
+      },
+      {
+        "id": 1,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "left"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "center"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 0,
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 1
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 2
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "object": "Cube",
+        "edges": [
+          {
+            "supporter": 3
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "object": "Long Rectangular Prism",
+        "edges": [
+          {
+            "supporter": 4
+          },
+          {
+            "supporter": 5
+          },
+          {
+            "supporter": 6
+          }
+        ]
+      }
+    ]
+  },
+  "regenerated_matches_reference": true,
+  "replay": {
+    "source": "experiments/outputs/validator_ablation/replay_20260912_220202.json",
+    "repeats_budget": 5,
+    "real_answers_used": 1,
+    "network_failures_excluded": 0,
+    "matched_reference": true
+  }
+}

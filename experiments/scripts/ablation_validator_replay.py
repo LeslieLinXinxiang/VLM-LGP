@@ -31,12 +31,22 @@ PROMPT = {"cubeStacking": ROOT / "prompts/phase1_graph_planner.md",
           "FMB": ROOT / "prompts/phase1_fmb_graph_planner.md"}
 
 
-def image_for(bench, mag, case):
+def images_for(bench, mag, case):
+    """All input images for one case, in the order the VLM must see them.
+
+    An FMB case is a *sequence*: 001.png places the first layer of objects,
+    002.png adds the next, and the graph describes the final assembled state.
+    Passing only the first image (as an earlier version of this script did) shows
+    the model a strict subset of the structure, and its answer then correctly
+    describes only the objects it was given — which scores as a wrong graph
+    against a reference built from the whole sequence. Mirrors the image handling
+    in run_gemini_proposed_method_fmb_eval.py, which is what produced the stored
+    trials this ablation replays.
+    """
     if bench == "cubeStacking":
-        return ROOT / f"experiments/inputs/cubeStacking/{mag}/{case}.png"
+        return [ROOT / f"experiments/inputs/cubeStacking/{mag}/{case}.png"]
     d = ROOT / f"experiments/inputs/FMB/{mag}/{case}"
-    imgs = sorted(d.glob("*.png"))
-    return imgs[0] if imgs else None
+    return sorted(d.glob("*.png"))
 
 
 def load_graph(md_path):
@@ -76,11 +86,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--repeats", type=int, default=5)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--only", type=str, default=None,
+                     help="Comma-separated case names to replay (e.g. '001,005'); "
+                          "default replays every validator-rejected case.")
     args = ap.parse_args()
+    only = set(args.only.split(",")) if args.only else None
 
     rejected, accepted_but_wrong = [], []
     for bench, mag, case, label, gt, wrong in scored_trials():
         if not wrong:
+            continue
+        if only is not None and case not in only:
             continue
         base = EVAL / bench / mag / case
         bad = load_graph(base / f"trial_{label[1:]}.md")
@@ -103,35 +119,100 @@ def main():
         return
 
     from core.vlm import VLMClient
-    vlm = VLMClient()
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from PIL import Image
+    from core.utils import clean_vlm_json_output
     OUT.mkdir(parents=True, exist_ok=True)
-    results = []
 
-    for e in rejected:
-        img = image_for(e["bench"], e["mag"], e["case"])
+    def _generate(vlm, bench, imgs, prompt_path, feedback):
+        """Regenerate one graph, presenting the images the way the original run did.
+
+        Cube stacking is a single image and goes through generate_assembly_plan
+        unchanged. FMB is a sequence and is assembled here to match
+        run_gemini_proposed_method_fmb_eval.py — same "Step N Image:" labelling and
+        same closing instruction — so the replay differs from the stored trial only
+        by the appended validator feedback.
+        """
+        if bench != "FMB":
+            return vlm.generate_assembly_plan(str(imgs[0]), str(prompt_path),
+                                              example_content=None,
+                                              feedback_context=feedback)
+        template = Path(prompt_path).read_text(encoding="utf-8")
+        content = [template,
+                   "\n--- MISSION START: ACTUAL TASK ---\n",
+                   "Analyze this Sequence of FMB Assembly Images in order:\n"]
+        for idx, ipath in enumerate(imgs):
+            content.append(f"Step {idx + 1} Image:")
+            content.append(Image.open(ipath))
+        content.append("\nNow, output the Topological Graph for the final assembled state:")
+        if feedback:
+            content.append(f"\n{feedback}")
+        raw = vlm._call_vlm_with_retry(content, is_json_output=False)
+        m = re.search(r"## FINAL_JSON_START(.*?)## FINAL_JSON_END", raw or "", re.S)
+        return json.loads(clean_vlm_json_output(m.group(1) if m else raw))
+
+    # Network failures (core.vlm's RemoteProtocolError retries exhausted) do not
+    # count against the accuracy denominator at all — they're not an answer, right
+    # or wrong. Per case, keep asking (with the same fixed feedback) until either
+    # a regenerated graph matches the reference (stop early, it's fixed) or
+    # args.repeats *real* answers have been collected without a match. A generous
+    # raw-attempt safety cap guards against a case where the connection is so
+    # broken that "real answers" never accumulate.
+    MAX_RAW_ATTEMPTS = max(20, args.repeats * 8)
+
+    def _run_case(e):
+        imgs = images_for(e["bench"], e["mag"], e["case"])
         prompt = PROMPT[e["bench"]]
         feedback = ("[SYSTEM FEEDBACK]:\nYour previous answer was rejected.\n"
                     f"Previous answer:\n{json.dumps(e['bad'], indent=1)}\n"
-                    f"Fix these errors:\n{e['report']}\nDo not hallucinate.")
+                    f"Fix these errors:\n{e['report']}")
         ref_sig = canonicalize_graph(e["ref"])
-        fixed = valid = 0
-        for k in range(args.repeats):
+        vlm = VLMClient()
+        answered = valid_count = call_errors = raw_attempts = 0
+        matched = False
+        attempts_log = []
+        while answered < args.repeats and not matched and raw_attempts < MAX_RAW_ATTEMPTS:
+            raw_attempts += 1
             try:
-                regen = vlm.generate_assembly_plan(str(img), str(prompt),
-                                                   example_content=None,
-                                                   feedback_context=feedback)
+                regen = _generate(vlm, e["bench"], imgs, prompt, feedback)
                 rules = []
                 ok, _ = validate_plan(regen, [], "fmb" if e["bench"] == "FMB" else "cube",
                                       collect=rules)
                 match = canonicalize_graph(regen) == ref_sig
-                valid += ok
-                fixed += match
-                print(f"    {e['case']} {e['trial']} rep{k+1}: valid={ok} matches_ref={match}")
+                answered += 1
+                valid_count += int(ok)
+                # Keep the regenerated graph itself, not just the verdict — the whole
+                # point of this ablation is being able to read what the model produced.
+                attempts_log.append({"answer_index": answered, "valid": ok,
+                                     "rules_fired": rules, "matches_reference": match,
+                                     "graph": regen})
+                print(f"    {e['case']} {e['trial']} answered {answered}/{args.repeats}: "
+                      f"valid={ok} matches_ref={match}", flush=True)
+                if match:
+                    matched = True
             except Exception as exc:                      # noqa: BLE001
-                print(f"    {e['case']} {e['trial']} rep{k+1}: ERROR {exc}")
-        results.append(dict(bench=e["bench"], mag=e["mag"], case=e["case"], trial=e["trial"],
-                            rules=e["rules"], repeats=args.repeats,
-                            regen_valid=valid, regen_matches_reference=fixed))
+                call_errors += 1
+                attempts_log.append({"answer_index": None, "call_error": str(exc)})
+                print(f"    {e['case']} {e['trial']} CALL_ERROR (raw attempt {raw_attempts}): {exc}",
+                      flush=True)
+        return dict(bench=e["bench"], mag=e["mag"], case=e["case"], trial=e["trial"],
+                    rules=e["rules"], repeats=args.repeats,
+                    regen_valid=valid_count, regen_matches_reference=int(matched),
+                    call_errors=call_errors, answered_repeats=answered,
+                    raw_attempts=raw_attempts,
+                    hit_raw_attempt_cap=(not matched and answered < args.repeats),
+                    input_images=[str(p.relative_to(ROOT)) for p in imgs],
+                    validator_report=e["report"],
+                    graph_original_wrong=e["bad"],
+                    graph_reference=e["ref"],
+                    attempts=attempts_log)
+
+    results = []
+    with ThreadPoolExecutor(max_workers=len(rejected)) as pool:
+        futures = [pool.submit(_run_case, e) for e in rejected]
+        for fut in as_completed(futures):
+            results.append(fut.result())
+    results.sort(key=lambda r: (r["bench"], r["mag"], r["case"]))
 
     stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     path = OUT / f"replay_{stamp}.json"
@@ -141,9 +222,14 @@ def main():
         "validator_passed_but_wrong": len(accepted_but_wrong),
         "results": results,
     }, indent=2), encoding="utf-8")
-    tot = sum(r["regen_matches_reference"] for r in results)
-    den = sum(r["repeats"] for r in results)
-    print(f"\nregenerated graphs matching the reference: {tot}/{den}")
+    n_fixed = sum(r["regen_matches_reference"] for r in results)
+    print(f"\ncases where retry-with-feedback eventually matched the reference "
+          f"(within {args.repeats} real answers each): {n_fixed}/{len(results)}")
+    for r in results:
+        if r["hit_raw_attempt_cap"]:
+            print(f"  WARNING: {r['case']} {r['trial']} hit the raw-attempt cap "
+                  f"({r['raw_attempts']}) before reaching {args.repeats} real answers "
+                  f"({r['answered_repeats']} obtained) — network reliability, not accuracy.")
     print(f"written: {path}")
 
 

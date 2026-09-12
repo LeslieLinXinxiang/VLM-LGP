@@ -43,6 +43,33 @@ def extract_final_block_from_md(md_path: Path):
         return None
 
 
+def _canonical_object_type(name):
+    """Collapse known type-name paraphrases so they compare equal.
+
+    Kept in sync with the cube-stacking twin of this function in
+    analyse_gemini_proposed_method_accuracy.py (see that file for the full
+    rationale — a live regeneration produced "Long Rectangular Prism" for what
+    every stored trial calls "Long RectPrism", scoring a structurally-identical
+    graph as a mismatch). FMB's own vocabulary ("Shape N", "base") hasn't shown
+    this paraphrase problem, but the two scripts' comparison semantics are meant
+    to stay identical, so the same dictionary is applied here too. Falls back to
+    the lowercased/stripped input for anything outside this known set.
+    """
+    if not isinstance(name, str):
+        return name
+    n = name.lower().replace(" ", "").replace("-", "").replace("_", "")
+    if "prism" in n:
+        if "tri" in n:
+            return "TRIPRISM"
+        if "rect" in n:  # matches both "rect" and "rectangular"
+            return "LONG_RECTPRISM" if "long" in n else "RECTPRISM"
+    if "cube" in n:
+        return "CUBE"
+    if "cylinder" in n:
+        return "CYLINDER"
+    return n
+
+
 def canonicalize_graph(parsed):
     """
     Build an id-numbering-independent signature for an {"objects": [...]} support
@@ -126,7 +153,7 @@ def canonicalize_graph(parsed):
         # confirmed by pixel sampling on FMB 3objs/005 — both names are for the same
         # object, neither is more "right"). Placement, not color-naming, is what this
         # metric scores.
-        sig = (o.get("object"), tuple(edge_sigs))
+        sig = (_canonical_object_type(o.get("object")), tuple(edge_sigs))
         sig_cache[oid] = sig
         return sig
 
