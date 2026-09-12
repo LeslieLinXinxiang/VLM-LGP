@@ -849,34 +849,7 @@ Magnitude & Ours & VLM-MSGraph \\
 \subsection{Execution and Planning: Success Rate and Solving Time}
 \label{subsec:res_exec}
 
-Before comparing decomposition strategies, we first check whether decomposition is needed at all. Solving the smallest FMB configuration (three objects) as a single monolithic LGP problem -- without Smart's active-constraint batching or Global's fixed, layer-based split -- fails almost completely (Table~\ref{tab:ablation_monolithic}): every no-redundancy trial exhausts the memory cap, and only $1$ of $50$ redundancy trials succeeds, the rest split between timeouts and memory exhaustion. Some form of decomposition is thus a precondition for solving these assemblies at all; the remainder of this section compares two decomposition strategies against this monolithic baseline.
-
-% ------------------------------------------------------------------
-% FIGURE: fig:ablation_monolithic
-% Source data : experiments/outputs/fmb_plots/lgp_combined_results.csv (n=100 raw trials)
-% Regenerated : 2026-08-18, aggregated directly from the 100 raw trial_meta.json records at
-%               experiments/evaluations/LGP/FMB/3objs/*/trial_*_{nr,r}/lgp_combined/trial_meta.json
-% Condition   : FMB, 3 objects (easiest tier), fully-monolithic solving -- NO decomposition at all
-%               (neither Smart's active-constraint split nor Global's layer-based split)
-% Validity    : recomputed from raw per-trial records on 2026-08-18; independent of the
-%               cube-stacking raw-data availability issue noted below (separate eval tree)
-% Status      : Leslie-confirmed useful ablation, redrawn 2026-08-18 to fix illegible original
-%               (empty scenario labels, cramped runtime subplot)
-% ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\caption{Fully-monolithic FMB solving (3 objects, no decomposition): outcome breakdown across all 100 trials, 16GB memory cap and 300s timeout. Motivates decomposition itself, prior to the Smart-vs-Global comparison below.}
-\label{tab:ablation_monolithic}
-\begin{tabular}{lcccc}
-\toprule
-Mode & N & Success & Timeout & Mem.-exceeded \\
-\midrule
-NR & 50 & \phantom{0}0 (0.0\%) & \phantom{0}0 & 50 (100.0\%) \\
-R  & 50 & \phantom{0}1 (2.0\%) & 23 (46.0\%) & 26 (52.0\%) \\
-\bottomrule
-\end{tabular}
-\end{table}
-\FloatBarrier
+Before comparing decomposition strategies, we first check whether decomposition is needed at all. Solving the smallest FMB configuration (three objects) as a single monolithic LGP problem -- without Smart's active-constraint batching or Global's fixed, layer-based split -- succeeds in $9$ of $50$ trials without redundancy and in none of the $50$ redundancy trials (Combined columns of Table~\ref{tab:planning_sr}); every failure exhausts the $16$\,GB memory cap rather than the time budget. Some form of decomposition is thus a precondition for solving these assemblies at all; the remainder of this section compares two decomposition strategies against this monolithic baseline.
 
 VLM-MSGraph's perception stage grounds each graph node into the scene through open-vocabulary detection and segmentation; we do not re-implement or evaluate this stage. Instead, both methods receive an identical, externally supplied task assignment -- object, source pose, target pose, and order -- taken from our own method's output, isolating the trajectory-generation step. Its executor performs no collision checking and no motion planning: each pick and place is a direct interpolation from the current pose to the target pose. This keeps a modest success rate on the smallest, least cluttered configurations, but degrades quickly as the object count grows and as the required motions become less permissive: cube-stacking success falls from $16.0\%$ at four cubes to at or near $0\%$ from six cubes onward, and on FMB, where insertions require precise approach and support-order compliance, no trial succeeds at any object count (Table~\ref{tab:planning_sr}, rightmost columns). Even given a correct task assignment, an executor without collision-aware planning is not viable beyond the simplest cases.
 
