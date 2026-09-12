@@ -688,8 +688,46 @@ The real-world experiments are performed using a Franka Emika Panda robotic arm 
 \zz{move your results of different VLMs here, to show the influence of different VLMs}
 
 \subsubsection{Assembly Graph Generation Validator}
+\label{subsubsec:abl_validator}
 
-\zz{here: compare with and without the syntax/rule-based validator, how the accuracy in graph generation is affected}
+During the graph-generation evaluation (Table~\ref{tab:vlm_accuracy}), the validator is triggered in four of the $400$ trials, each in a different case (Table~\ref{tab:ablation_validator}). All four violations are structural: a bridging object that omits a supporter standing between its other supporters at the same height, a bridging object whose supporters lie on different layers, and a support edge without a valid supporter index. Without the validator, the rejected graph is passed downstream as generated, and each of the four cases reaches $90\%$ accuracy. With the validator, the violated rule is returned to the VLM as feedback and the graph is regenerated. We sample this regeneration ten times per case, matching the ten trials per case of the main evaluation; all $40$ regenerated graphs match the reference (Wilson $95\%$ CI $[91.2\%, 100\%]$), raising each case to $100\%$. Graphs that pass the validator never enter the retry loop, so the remaining trials are unaffected, and overall accuracy rises from $98.0\%$ to $98.8\%$ on cube stacking and from $94.0\%$ to $95.3\%$ on FMB.
+
+The validator checks only the internal consistency of the predicted graph and uses neither the target image nor the part list. Errors that leave the graph self-consistent, such as a wrong position label, a misidentified object type, or a missing object, therefore pass it; this is why the three lowest-scoring cases ($70\%$) do not appear in Table~\ref{tab:ablation_validator}.
+
+% ------------------------------------------------------------------
+% TABLE: tab:ablation_validator
+% Source: experiments/outputs/validator_ablation/replay_20260913_012006.json (commit 08aa7d2e)
+%   --repeats 10, stop_on_match=False: 10 real answers per case, 40/40 match the reference.
+%   42 network failures (RemoteProtocolError, no response) excluded; no case hit the attempt cap.
+% "w/o validator" = per-case accuracy of the stored 10 trials (the evaluation's retry loop was
+%   API-error-only), i.e. 9/10 with the rejected trial counted wrong.
+% "w/ validator"  = the rejected trial replaced by its regeneration; 10/10 regenerations correct,
+%   so the case is 10/10. Accepted trials never enter the retry loop and are unchanged.
+% Selection criterion is "the validator rejected a trial", NOT low accuracy: the three 70% cases
+%   (FMB 3objs/004, FMB 5objs/003, cube_n08_s01) contain no rejected graph, and FMB 5objs/004 is
+%   also at 90% without one.
+% ------------------------------------------------------------------
+\begin{table}[!ht]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\caption{Validator ablation on the four cases in which the validator was triggered during evaluation. Accuracy is over the ten trials of each case, without (w/o) and with (w/) the validator; \emph{Regen.} counts regenerated graphs matching the reference, out of ten samples per case.}
+\label{tab:ablation_validator}
+\begin{tabular}{llccc}
+\toprule
+& & \multicolumn{2}{c}{Accuracy} & \\
+\cmidrule(lr){3-4}
+Case & Violated rule & w/o & w/ & Regen. \\
+\midrule
+Cube, 7 cubes, \texttt{s05} & skipped supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
+Cube, 8 cubes, \texttt{s04} & skipped supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
+FMB, 5 obj., \texttt{001} & invalid supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
+FMB, 5 obj., \texttt{005} & mixed-layer supporters & $90.0\%$ & $100.0\%$ & $10/10$ \\
+\midrule
+\textbf{All four} & & $\mathbf{90.0\%}$ & $\mathbf{100.0\%}$ & $\mathbf{40/40}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsubsection{Reachability-Manipulability-Aware Object Ordering}
 
@@ -812,7 +850,7 @@ Table~\ref{tab:vlm_accuracy} compares our method's graph extraction against VLM-
 % ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
-\caption{VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Ours: self-referential majority-vote reference, N=5 cases per magnitude, full pipeline with the graph validator enabled. VLM-MSGraph~\cite{li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}
+\caption{VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Ours: self-referential majority-vote reference, N=5 cases per magnitude, full pipeline with the graph validator enabled (Table~\ref{tab:ablation_validator} isolates its contribution). VLM-MSGraph~\cite{li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}
 \label{tab:vlm_accuracy}
 \begin{tabular}{lcc}
 \toprule
