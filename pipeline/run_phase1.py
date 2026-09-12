@@ -28,13 +28,127 @@ def select_file_gui(initial_dir):
     root.destroy()
     return file_path
 
-def validate_plan(plan_json, valid_inventory_list):
+# Per-benchmark vocabulary. Cube stacking and FMB name their base object differently,
+# draw from different shape vocabularies, and use different position words (FMB has no
+# "center" and adds front/back). Validating FMB against the cube vocabulary rejects every
+# FMB graph, correct ones included.
+BENCHMARK_VOCAB = {
+    "cube": {
+        "base_name": "table",
+        "type_keywords": ("cube", "prism", "cylinder", "table"),
+        "positions": {"left", "center", "right"},
+    },
+    "fmb": {
+        "base_name": "base",
+        "type_keywords": ("shape", "base"),
+        # The FMB prompt asks for the position key to be omitted rather than set to
+        # "center", but ~13% of outputs write it anyway. It carries the same meaning and
+        # phase2_codegen already maps it to Table_Center, so rejecting it would be
+        # stricter than the rest of the pipeline.
+        "positions": {"left", "right", "front", "back", "center"},
+    },
+}
+
+# Position words ordered along the axis the labels describe, so that a bridging object's
+# supporters can be checked for contiguity. Cube stacking spans left-center-right; FMB
+# spans front-(unlabelled centre)-back and left-(unlabelled centre)-right.
+_POSITION_ORDER = {"left": 0, "front": 0, "center": 1, "right": 2, "back": 2}
+
+
+def _support_layers(supporters_by_id):
+    """Layer index per object: 0 for the base, else one above its highest supporter."""
+    layers = {i: 0 for i, sup in supporters_by_id.items() if not sup}
+    for _ in range(len(supporters_by_id)):
+        for i, sup in supporters_by_id.items():
+            if i in layers or not sup:
+                continue
+            if all(s in layers for s in sup):
+                layers[i] = max(layers[s] for s in sup) + 1
+    return layers
+
+
+def _position_slot(obj_id, supporters_by_id, positions_by_id):
+    """Where an object sits on the labelled axis, following single-supporter chains
+    upward until a position label is found. Returns None if the object's placement is
+    not pinned down by any label."""
+    seen = set()
+    node = obj_id
+    while node is not None and node not in seen:
+        seen.add(node)
+        sup = supporters_by_id.get(node, [])
+        if len(sup) != 1:
+            return None
+        label = positions_by_id.get(node, {}).get(sup[0], "")
+        if label in _POSITION_ORDER:
+            return _POSITION_ORDER[label]
+        node = sup[0]
+    return None
+
+
+def _check_support_geometry(obj_by_id):
+    """Two physical-plausibility checks on a bridging object's supporters. Both read
+    only the predicted graph — no ground truth about the target is used.
+
+    1. A rigid object cannot rest on supporters at different heights.
+    2. A rigid object spanning two supports also touches anything of the same height
+       standing between them, so its supporter set must be contiguous along the axis
+       the position labels describe.
+    """
+    supporters, positions = {}, {}
+    for obj_id, obj in obj_by_id.items():
+        edges = [e for e in obj.get("edges", []) if isinstance(e, dict)]
+        supporters[obj_id] = [e.get("supporter") for e in edges if isinstance(e.get("supporter"), int)]
+        positions[obj_id] = {
+            e.get("supporter"): str(e.get("position") or "").lower() for e in edges
+        }
+
+    layers = _support_layers(supporters)
+    errors = []
+
+    for obj_id, sup in supporters.items():
+        if len(sup) < 2:
+            continue
+
+        sup_layers = {layers.get(s) for s in sup}
+        if None not in sup_layers and len(sup_layers) > 1:
+            errors.append(
+                f"- [Object {obj_id}] supporters {sorted(sup)} are at different heights "
+                f"(layers {sorted(l for l in sup_layers)}); an object cannot rest on supports "
+                f"at different levels."
+            )
+            continue
+
+        slots = {s: _position_slot(s, supporters, positions) for s in sup}
+        if any(v is None for v in slots.values()):
+            continue
+        low, high = min(slots.values()), max(slots.values())
+        own_layer = layers.get(sup[0])
+        for other in supporters:
+            if other == obj_id or other in sup or layers.get(other) != own_layer:
+                continue
+            other_slot = _position_slot(other, supporters, positions)
+            if other_slot is not None and low < other_slot < high:
+                errors.append(
+                    f"- [Object {obj_id}] spans supporters {sorted(sup)} but omits object "
+                    f"{other}, which stands between them at the same height and must also "
+                    f"be a supporter."
+                )
+
+    return errors
+
+
+def validate_plan(plan_json, valid_inventory_list, benchmark="cube"):
     """
     Validates VLM output with dual-schema compatibility:
     - New schema: {"objects": [{"id", "object", "on"}, ...]}
     - Legacy schema: {"assembly_nodes": [...]} (kept for compatibility)
+
+    `benchmark` selects the vocabulary ("cube" or "fmb"). All checks are internal
+    consistency checks on the predicted graph alone; nothing here uses ground truth
+    about the target structure.
     """
     errors = []
+    vocab = BENCHMARK_VOCAB.get(str(benchmark).lower(), BENCHMARK_VOCAB["cube"])
 
     # Prefer object-list schema if present.
     if isinstance(plan_json, dict) and "objects" in plan_json:
@@ -47,9 +161,9 @@ def validate_plan(plan_json, valid_inventory_list):
         def _is_valid_obj_type(name):
             if not isinstance(name, str): return False
             n = name.lower().replace(" ", "").replace("-", "")
-            return any(kw in n for kw in ("cube", "prism", "cylinder", "table"))
+            return any(kw in n for kw in vocab["type_keywords"])
 
-        allowed_positions = {"left", "center", "right"}
+        allowed_positions = vocab["positions"]
 
         ids = []
         for obj in objects:
@@ -77,8 +191,8 @@ def validate_plan(plan_json, valid_inventory_list):
             if not isinstance(table_obj, dict):
                 errors.append("- id 0 table object is required in edges schema.")
             else:
-                if str(table_obj.get("object", "")).lower() != "table":
-                    errors.append("- id 0 object must be 'table' in edges schema.")
+                if str(table_obj.get("object", "")).lower() != vocab["base_name"]:
+                    errors.append(f"- id 0 object must be '{vocab['base_name']}' in edges schema.")
                 table_edges = table_obj.get("edges")
                 if not isinstance(table_edges, list) or table_edges:
                     errors.append("- id 0 table must have empty 'edges': [].")
@@ -133,7 +247,11 @@ def validate_plan(plan_json, valid_inventory_list):
                             )
 
             if not has_table_support:
-                errors.append("- at least one object must be supported by table (supporter=0).")
+                errors.append(
+                    f"- at least one object must be supported by the {vocab['base_name']} (supporter=0)."
+                )
+
+            errors.extend(_check_support_geometry(obj_by_id))
 
             if errors:
                 return False, "\n".join(errors)
@@ -229,6 +347,8 @@ def execute_phase1(target_img_path=None, output_json_path=None, prompt_path=None
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     layout_json = os.path.join(root_dir, "generated/phase0_layout.json")
     prompt_file = prompt_path if prompt_path else os.path.join(root_dir, "prompts/phase1_graph_planner.md")
+    # The prompt file identifies the benchmark, which fixes the validator's vocabulary.
+    benchmark = "fmb" if "fmb" in os.path.basename(prompt_file).lower() else "cube"
     test_dir = os.path.join(root_dir, "test")
     if output_json_path:
         output_graph_json = output_json_path
@@ -276,7 +396,7 @@ def execute_phase1(target_img_path=None, output_json_path=None, prompt_path=None
             )
             
             # Validate using the relaxed logic
-            is_valid, report = validate_plan(plan_json, mapping_list)
+            is_valid, report = validate_plan(plan_json, mapping_list, benchmark)
             
             if is_valid:
                 print(f"   >>> [PASS] Inspector approved.")
