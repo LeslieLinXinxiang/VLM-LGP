@@ -595,3 +595,110 @@ structure); each structure run under two redundancy modes, non-redundant and red
 (same-type distractors, object count **doubled**); each structure × mode repeated over
 **10 random seeds**. Also still missing from that section: hardware platform, which VLM,
 and the reachability parameters (σ, d_max, α, τ_ρ).
+
+---
+
+## Validator ablation — in progress, blocked on Gemini credentials (2026-09-12)
+
+### What the validator now does (committed: `90add4c9`, `2724782e`)
+
+`pipeline/run_phase1.py`:
+
+- `BENCHMARK_VOCAB` selects base-object name, shape keywords and position words per
+  benchmark. The old code hardcoded cube stacking, so **every FMB graph was rejected,
+  correct ones included** — the validator had zero discriminating power on FMB. The
+  benchmark is derived from the prompt filename at the call site.
+- `_check_support_geometry()` adds two rules on bridging objects, reading only the
+  predicted graph:
+  - `geometry.mixed_layer` — supporters of one object must sit at the same height
+  - `geometry.skipped_support` — a span must not omit an object standing between its
+    supporters at that height
+- `validate_plan(..., collect=[])` appends the identifier of every rule that fired.
+  The three existing callers pass no `collect` and keep the unchanged 2-tuple return.
+- `execute_phase1` writes `<graph>_attempts.json` beside the graph: attempts used,
+  outcome, and the rules that fired on each attempt.
+
+FMB accepts `center` as a position even though the FMB prompt says to omit the key.
+~13% of FMB outputs write it anyway, it means the same thing, and
+`core/phase2_codegen.py:255` already maps it to `Table_Center` — rejecting it would be
+stricter than the rest of the pipeline. Found only by the full-dataset regression; the
+9-graph sample missed it.
+
+**Regression over all 400 evaluated trials: 0 false positives on the 381 scored correct,
+4 of the 19 scored wrong now rejected.** Rules that fired: `geometry.skipped_support` ×2,
+`supporter.not_int` ×2, `geometry.mixed_layer` ×1.
+
+Deliberately **not** implemented: an object-inventory (bill-of-materials) check. It would
+catch 6 more, but the counts come from hand-authored `experiments/configs/*_target_spec.json`
+rather than any pipeline input, and the target image's legend lists types without
+multiplicities. Keeping the validator to pure internal-consistency checks makes the claim
+"the validator uses no ground truth about the target" defensible without qualification.
+The `valid_inventory_list` parameter is still there if this is revisited.
+
+### Error taxonomy of the 19 wrong trials
+
+`supporter-set` 9, `position-label` 4, `object-type` 3, `object-count` 3. Five of the ten
+cube failures are one documented ambiguity (`cube_n07_s01`, id5 bridging three cubes vs
+resting on the centre one) that is **already manually overridden to 100%** in
+`7cubes/accuracy_report.md` and already reflected in the paper's 98.0%. Genuine cube
+failures are 5, not 10. The other two cube supporter-set failures are *not* the same
+ambiguity — they skip a same-height middle support, which is geometrically impossible, and
+both are now caught by `geometry.skipped_support`.
+
+Excluding the amnestied five: 4 of 14 genuine errors caught. The 4 misses are all
+position-label errors, which need the image.
+
+### Expected effect, computed per case
+
+Upper bound if every caught trial is fixed on regeneration: cube **98.0 → 98.8**,
+FMB **94.0 → 95.3**. Real gain depends on whether the VLM corrects itself given the
+feedback, which is exactly what the replay measures.
+
+### The replay experiment — ready to run, blocked
+
+`experiments/scripts/ablation_validator_replay.py`. For each historical trial the
+validator now rejects, it re-sends the same prompt and image plus the feedback derived
+from the stored wrong graph, then compares the regenerated graph against the reference
+using `canonicalize_graph` from the accuracy analysis. Trials the validator accepts on the
+first pass cannot be affected by the retry loop and are counted separately, not replayed.
+`--dry-run` lists the work without calling the API; `--repeats N` averages over sampling
+noise. Output: `experiments/outputs/validator_ablation/replay_<timestamp>.json`.
+
+Dry run confirms the four cases it will replay:
+
+```
+cubeStacking 7cubes cube_n07_s05 T11  geometry.skipped_support
+cubeStacking 8cubes cube_n08_s04 T11  geometry.skipped_support
+FMB          5objs  001          T04  supporter.not_int
+FMB          5objs  005          T08  geometry.mixed_layer
+```
+
+**Blocker — Gemini credentials.** Every call returns
+`400 FAILED_PRECONDITION: "User location is not supported for the API use."` on the Mac.
+
+What has been ruled out and what has not:
+
+- The local proxy is fine. `GEMINI_PROXY_URL=http://127.0.0.1:7890` is set, and the exit
+  IP is the same with and without it (139.28.232.46, US/California — a supported region),
+  so the VPN is already TUN-mode global. The proxy line changes nothing either way.
+- Two keys were tried, both `AQ.`-prefixed and 53 characters. I argued this was the wrong
+  credential type because AI Studio keys are normally `AIzaSy…`/39 chars, but the user
+  states this is their long-term key, which outweighs a format heuristic.
+- **An earlier "control experiment" of mine was unsound and should not be relied on.**
+  A deliberately malformed `AIzaSy…` key returns `INVALID_ARGUMENT: API key not valid`
+  rather than the location error, and I took that as proof the region is fine. It is not —
+  Google plausibly validates key format before reaching the geo check, so a bad key
+  short-circuits earlier. That test distinguishes nothing.
+
+Two live hypotheses remain: egress routing for this specific endpoint, or a region
+restriction attached to the Google account / Cloud project (which travels with the
+credential and would not be fixed by changing machines).
+
+**Why Ubuntu is still worth trying**: the 400 Gemini trials exist, so this worked from
+some environment, and CLAUDE.md records the FMB re-run as pushed from the Ubuntu box with
+`/home/leslie/Projects/VLM_LGP/` paths. Reachability ablation needs that machine anyway —
+the Mac has no compiled solver (`bin/` holds only sources and a Makefile).
+
+Note: the `.env` on the OneDrive copy is 129 bytes, exactly the three lines the user
+supplied, so **that machine's credentials may be equally stale** — sync the key rather
+than assuming the Ubuntu `.env` is good.
