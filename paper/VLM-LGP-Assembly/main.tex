@@ -37,6 +37,7 @@
 \usepackage{placeins} % \FloatBarrier -- keeps figures from drifting past the References section
 \usepackage{algorithm}
 \usepackage{algpseudocode} % \State, \For, \If, etc. for Algorithm~\ref{alg:vlm_graph}
+\usepackage{paralist}
 
 \newcommand{\zz}[1]{{\color{red}ZZ: #1}}
 
@@ -68,13 +69,13 @@ Graph-Guided Long-Horizon Robotic Assembly via Vision-Language Reasoning and Log
 
 \section{Introduction}
 
-Long-horizon multi-part robotic assembly is a fundamental capability for intelligent manufacturing and embodied robotics, with broad applications in both industrial production and daily household environments~\cite{li2019survey,daneshmand2023industry,zhu2018robot}. 
+Long-horizon multi-part robotic assembly is a fundamental capability for intelligent manufacturing and embodied robotics, with broad applications in both industrial production and daily household environments~\cite{li2019survey,daneshmand2023industry}. 
 Unlike single-step manipulation, these tasks require the robot to accomplish a sequence of interdependent assembly operations while satisfying task dependencies and physical constraints~\cite{jiang2022review}. 
 Automating such processes could greatly expand the practical deployment of robotic assembly systems by reducing manual programming effort and improving adaptability to diverse tasks. 
 However, achieving autonomous long-horizon assembly remains challenging, as the robot must accurately infer the assembly objective, generate a logically consistent task plan, and produce physically feasible motions for each assembly step~\cite{faccio2019collaborative}. 
-Moreover, the tight coupling between high-level task planning and low-level motion planning, together with the long-term dependencies across assembly decisions, further increases the complexity of reliable autonomous assembly~\cite{garrett2021integrated}.
+% Moreover, the tight coupling between high-level task planning and low-level motion planning, together with the long-term dependencies across assembly decisions, further increases the complexity of reliable autonomous assembly~\cite{garrett2021integrated}.
 
-Classical approaches to long-horizon robotic assembly are primarily built on model-based Task and Motion Planning (TAMP)~\cite{zhao2024survey,guo2023recent}, which typically employs symbolic planners, such as those based on Planning Domain Definition Language (PDDL)~\cite{aeronautiques1998pddl,jiang2019task}, to generate task plans, followed by motion planners to compute feasible trajectories for each action.
+Classical approaches to long-horizon robotic assembly are primarily built on model-based Task and Motion Planning (TAMP)~\cite{zhao2024survey,guo2023recent}, which typically employs symbolic planners, such as Planning Domain Definition Language (PDDL)~\cite{aeronautiques1998pddl,jiang2019task}, to generate task plans, followed by motion planners to compute feasible trajectories for each action.
 A representative TAMP approach is Logic-Geometric Programming (LGP)~\cite{marc2015LGP}, which integrates task planning and motion planning into a unified optimization framework, allowing motion feasibility to be considered during task planning rather than as a separate step.
 By explicitly modeling task semantics and constraints, these methods produce interpretable and verifiable planning results~\cite{toussaint2017multi}. 
 However, they heavily rely on manually specified task definitions, object models, and action rules, requiring substantial engineering effort and domain expertise. 
@@ -109,6 +110,15 @@ Our main contributions are threefold:
     \item A formal, precedence-preserving decomposition that produces solver-bounded LGP subproblems;
     \item An end-to-end evaluation of graph quality, planning scalability, and physical execution.
 \end{itemize}
+
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{figures/LGP_method.pdf}
+\caption{The overall workflow of the proposed VLM-LGP framework.}
+\label{fig:workflow}
+\end{figure*}
+
 
 \section{Related Work}
 
@@ -202,441 +212,499 @@ This paper uses the VLM to establish an interface between vision target descript
 % This review should point out the gap in the literature:
 % our proposed VLM produces a constrained assembly relation representation specifically designed for downstream LGP
 
+\begin{figure}[!t]
+\centering
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}cc@{}}
+  \includegraphics[width=0.34\columnwidth]{figures/vlm_input_cube_stacking.pdf} &
+  \includegraphics[width=0.60\columnwidth]{figures/vlm_input_fmb.pdf} \\
+  \small (a) Cube stacking & \small (b) FMB, two-step sequence
+\end{tabular}
+\caption{Examples of target images used in our experiments. (a) Cube stacking: a single composite image pairing an object-list legend
+(used as a visual scale reference) with the target structure. (b) FMB: the
+incremental image sequence for one scenario, each frame composited from an
+object-list legend, a top-down view (primary evidence for support edges), and
+an isometric view (consistency check only). 
+\zz{change (a) so all legends indicated shape are present in the structure}}
+\label{fig:problem_definition_input}
+\vspace{-5mm}
+\end{figure}
+
 
 \section{Problem Formulation}
 \label{sec:problem_formulation}
 
-We consider the problem of accomplishing long-horizon robotic assembly directly from a target image $\mathcal{I}$, without relying on manually specified symbolic task descriptions. 
+We consider the problem of accomplishing long-horizon robotic assembly directly from a target image, without relying on manually specified symbolic task descriptions. 
+We generally assume a single target image $\mathcal{I}$ in which all components are clearly visible. 
+When occlusions prevent the complete assembly structure from being observed, a sequence of target images is provided to collectively specify the desired configuration (see Fig.~\ref{fig:problem_definition_input} for an example).  
+For simplicity, we use $\mathcal{I}$ to denote the visual input in both cases.
+In addition, the current scene is provided as $\mathcal{S}=\{o_1,\dots,o_N\}$, where each $o_i$ denotes a concrete object instance characterized by its type $c(o_i)$, pose, and geometric attributes. 
+Unlike many existing approaches that assume only the required objects are present, we consider a more practical setting where multiple object instances of the same type as well as irrelevant objects may coexist in the scene. 
+Therefore, the components inferred from $\mathcal{I}$ should be associated with suitable object instances in $\mathcal{S}$ before motion execution.
 
-
-The input consists of a target assembly image $\mathcal{I}$ and the current scene information $\mathcal{S}=\{o_1,\dots,o_N\}$, where each object instance $o_i$ is characterized by its pose and geometric attributes. 
-To achieve image-based autonomous assembly, the following key problems should be addressed:
-
-\begin{itemize}
+Based on these inputs, image-based autonomous assembly requires addressing the following key problems:
+\begin{compactitem}[$\bullet$]
 \item First, the target assembly image $\mathcal{I}$ needs to be transformed into a structured representation that captures the desired configuration and enables action sequence generation. 
-In this work, we employ an assembly graph $\mathcal{G}= (\mathcal{V},\mathcal{E})$, obtained as
+In this work, we represent this structure using an assembly graph $\mathcal{G}= (\mathcal{V},\mathcal{E})$, obtained as
 \begin{equation}
 \mathcal{G} = f_{\mathrm{G}}(\mathcal{I}),
-\label{eq:problem_goal}
 \end{equation}
 where $f_{\mathrm{G}}$ denotes the image-to-graph conversion. 
-Each node $v\in\mathcal{V}$ represents an object instance, while each directed edge $(u,v)\in\mathcal{E}$ specifies that object $u$ should be connected to object $v$ as a supporting component.
-\item Second, a high-level task plan $\mathcal{P}$ needs to be derived from the assembly graph $\mathcal{G}$, specifying the sequence of assembly actions and the order in which individual objects should be assembled.
-\item Lastly, the task plan $\mathcal{P}$ needs to be translated into executable robot motions based on the current scene $\mathcal{S}$. 
-This involves selecting the appropriate object for each assembly action and generating collision-free, physically feasible motion trajectories that satisfy the robot's kinematic and dynamic constraints.
-\end{itemize}
-
-%The first problem is to determine the assembly goal from $\mathcal{I}$. 
-%We represent this goal as an object-support graph $\mathcal{G}=(\mathcal{V},\mathcal{E})$, where each node $v\in\mathcal{V}$ denotes one target object instance and each directed edge $(u,v)\in\mathcal{E}$ denotes that object $u$ must support object $v$ in the completed assembly:
-
-% The second problem is to determine a task plan $\mathcal{P}$ for realizing $\mathcal{G}$. 
-
-% We represent $\mathcal{P}=(B_1,\dots,B_M)$ as an ordered sequence of $M$ execution batches, in which every node of $\mathcal{V}$ appears in exactly one batch, each batch respects a solver-imposed size bound, and every node in $B_m$ has all of its supporters already placed in an earlier batch $B_1,\dots,B_{m-1}$:
-% \begin{equation}
-%   \mathcal{P} = f_{\mathrm{decomp}}(\mathcal{G}).
-%   \label{eq:problem_plan}
-% \end{equation}
-
-% The third problem is to associate $\mathcal{G}$ and $\mathcal{P}$ with the current scene $\mathcal{S}$, i.e., to determine which concrete object instance should be used to realize each node $v\in\mathcal{V}$. 
-% This requires a grounding map $\pi:\mathcal{V}\to\mathcal{S}_{\mathrm{feas}}$, where $\mathcal{S}_{\mathrm{feas}}\subseteq\mathcal{S}$ is the subset of instances that are kinematically reachable, and $\pi$ additionally prefers instances that are easier for the robot to manipulate.
-
-% Finally, for each grounded batch $\pi(B_m)$, the system must determine a collision-free, physically feasible motion trajectory $x_m^\ast$ that realizes the corresponding support relations under the kinematic and dynamic constraints of the robot. 
-
-% The overall problem is therefore to find
-% \begin{equation}
-%   \mathcal{G},\quad \mathcal{P},\quad \pi,\quad \{x_m^\ast\}_{m=1}^{M}
-%   \label{eq:problem_all}
-% \end{equation}
-% such that executing $\{x_m^\ast\}_{m=1}^{M}$ on the physical robot yields a final scene configuration consistent with the support relations specified by $\mathcal{G}$.
+Each node $v_i \in\mathcal{V}$ represents a required assembly component with object type $c(v_i)$, while each directed edge $e_{i,j} \in\mathcal{E}$ indicates that object $v_i$ is connected to its supporting object $v_j$ through a spatial relationship $r(e_{i,j}) \in \mathcal{R}$ selected from a predefined set $\mathcal{R}$ of assembly relations.
+\item Second, a high-level task plan $\mathcal{P}$ needs to be derived from the assembly graph $\mathcal{G}$ to determine the required assembly actions and their execution order.
+\item Lastly, the task plan $\mathcal{P}$ needs to be grounded in the current scene $\mathcal{S}$ and translated into executable robot motions.  
+This involves selecting the appropriate concrete object instance for each assembly action and generating collision-free, physically feasible motion trajectories that satisfy the robot's kinematic and dynamic constraints.
+\end{compactitem}
 
 
 \section{Method}
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=\textwidth]{figures/LGP_method.pdf}
-\caption{The overall workflow of the proposed VLM-LGP framework.}
-\label{fig:workflow}
-\end{figure*}
 
-% This section presents the proposed framework for accomplishing long-horizon robotic assembly from a target assembly image.
 As illustrated in Fig.~\ref{fig:workflow}, the framework consists of three components. 
-First, a VLM analyzes the target assembly image to construct an assembly graph and generate a sequence of assembly actions (Sec.~\ref{sec:task_understanding}). 
-Second, the robot perceives the workspace to identify the corresponding objects and prioritize them according to reachability and manipulability (Sec.~\ref{sec:scene_understanding}). 
-Finally, the task plan and scene information are integrated into a LGP formulation to produce feasible motions for each assembly step (Sec.~\ref{sec:motion_execution}). 
-
-\zz{write the method corresponding to the outline given in the last paragraph of the introduction, we have three components, detail each one in one subsection}
+First, the target assembly image is converted into an assembly graph, which is then decomposed into a sequence of short-horizon assembly task plans (Sec.~\ref{sec:task_understanding}). 
+Second, objects in the current scene are prioritized according to reachability and manipulability for facilitating motion execution (Sec.~\ref{sec:scene_understanding}). 
+Finally, the task plans and scene information are integrated into a LGP formulation to produce feasible robot motions for assembly execution (Sec.~\ref{sec:motion_execution}). 
 
 \subsection{Assembly Graph Generation and Decomposition}
 \label{sec:task_understanding}
-
+Leveraging its strong visual reasoning capability, we employ a VLM to perform the image-to-graph conversion $f_{\mathrm{G}}$. 
+The resulting graph $\mathcal{G}$ is further decomposed to derive a high-level assembly task plan $\mathcal{P}$. 
+Unlike many existing approaches that directly use VLMs to generate action sequences, our method restricts the VLM to extracting the assembly structure, thereby reducing the risk of unreliable planning outputs.
 
 \subsubsection{VLM for Assembly Graph Generation}
-Given the input image(s) $\mathcal{I}$, the framework first converts the scene into an assembly graph $\mathcal{G}$ to support reliable task plan generation.
-Leveraging its strong visual reasoning capability, we employ a VLM to perform the image-to-graph conversion $f_{\mathrm{G}}$.
-Unlike many existing approaches that directly use VLMs to generate action sequences, our method restricts the VLM to extracting the assembly structure, thereby reducing reliance on potentially unreliable planning outputs.
-The resulting graph provides a structured representation that bridges visual task understanding and high-level planning, allowing task dependencies to be systematically analyzed and decomposed.
+The VLM-based conversion $f_{\mathrm{G}}$ is performed in a zero-shot manner. 
+To improve generation accuracy, the prompt guides the VLM to focus on identifying individual assembly edges rather than directly predicting the complete graph. 
+Starting from the root nodes, i.e., the base objects of the assembly, connections are progressively inferred layer by layer toward the upper structure. 
+% The spatial relation encoded by each edge $e_{i,j}$ is constrained to a predefined set of connection types $\mathcal{R}$, e.g., $\mathcal{R}=\{\texttt{left\_on},\texttt{right\_on},\texttt{center\_on} \}$, thereby restricting the output space. 
+During generation, each inferred edge is also checked against visual evidence in the target image, including whether the lower object can support the upper one and whether their relative positions are consistent with the inferred relation. 
+These checks help improve the quality of the generated graph.
 
-%Each node $v \in \mathcal{V}$ denotes one target object instance, and each directed edge $(u,v) \in \mathcal{E}$ indicates that object $u$ must support object $v$ in the final assembly. 
-The graph is directed because support precedence is asymmetric, and optional local labels such as left/right placement hints are retained only as geometric side information rather than as the execution order itself.
+To further enhance correctness, we also introduce a rule-based validator to verify the generated assembly graph $\mathcal{G}$ through an iterative self-refinement process. 
+Specifically, the graph is evaluated against a set of predefined structural and syntactic criteria, such as whether all nodes are connected by valid edges, whether isolated nodes exist, and whether the encoded relations $r(e_{i,j})$ belong to $\mathcal{R}$. 
+If any violation is detected, the corresponding validation feedback is provided to the VLM for regenerating the graph. 
+This validation and refinement procedure is repeated until all criteria are satisfied or a maximum number of iterations is reached.
+The final validated assembly graph $\mathcal{G}$ then serves as the basis for subsequent task planning.
 
-\textbf{Input representation.} 
-$\mathcal{I}=\{I_1,\dots,I_S\}$ is a small set of rendered images rather than a single raw photograph. 
-Each $I_s$ composites the target scene together with an \emph{object-list legend} that draws every candidate part to scale (Fig.~\ref{fig:vlm_input}); the legend serves as a visual reference against which the VLM matches each block's shape and size, turning open-ended shape recognition into a template-matching problem against a small closed vocabulary. 
-% For cube stacking, $S{=}1$: a single composite image pairs the legend with the finished structure. 
-% For FMB, $S$ equals the number of assembly steps, each rendered as a top-down/isometric composite; the VLM is given the full incremental image sequence rather than only the final state, so that a part occluded in the final view can be attributed to the step at which it disappears from the top-down view.
 
-\textbf{Prompting strategy.} 
-$f_{\mathrm{G}}$ is instantiated as a single zero-shot call: 
-%the VLM client also supports injecting few-shot visual exemplars into the prompt, but we found the explicit reasoning procedure below sufficient and disable this in the deployed pipeline. 
-Rather than asking the VLM to state a support relation directly, the prompt requires it to justify each edge through an explicit, checkable visual test. 
-%For cube stacking, every block's bottom-left and bottom-right corners are projected straight down onto the layer below; both corners landing on the same block yields a single support edge, corners landing on different blocks yield a bridging edge over exactly those blocks, and any candidate lying outside this horizontal footprint is rejected regardless of layer alignment. 
-%For FMB, support is read only from the top-down view under a cover-implies-support rule, with the isometric view explicitly excluded as evidence for depth to prevent perspective ambiguity from being mistaken for occlusion; a color that appears as disconnected fragments in the top-down view is treated as an occluded, lower-layer object.
-The prompt further constrains position labels (left/right/center for cube stacking; left/right/front/back for FMB) to a small enumerated set, with explicit rules for when a label must appear versus must be omitted, and requires the VLM to externalize this reasoning as free-form text before emitting the final graph, so that intermediate errors remain inspectable. 
-
-\textbf{Output schema and validation.} 
-The VLM's response must contain a delimited JSON block listing, for every object, an integer id, an object-type string drawn from the legend vocabulary, and a set of edges each carrying a supporter id and an optional position label; id~$0$ is reserved for the table/base and always has an empty edge set. 
-This block is extracted deterministically via its delimiters and parsed into $\mathcal{G}$; because generation is stochastic, the parsed graph need not satisfy the schema on the first attempt. 
-We therefore wrap the call in the closed-loop procedure of Algorithm~\ref{alg:vlm_graph}: a deterministic validator, independent of the VLM, checks a set of structural invariants -- id uniqueness and contiguity, every supporter id strictly smaller than its supported object's id (which rules out both cyclic and transitive skip-layer edges), a non-empty edge set for every real object, at least one object resting on the table, and position labels present only where the policy above requires them. 
-A failed check is converted into a natural-language error list and appended to the next call as feedback, with the same images resubmitted; if no attempt validates within $K$ rounds, the scene is reported as a hard failure.
-
-\begin{algorithm}[t]
-\caption{Closed-Loop Assembly Graph Extraction}
-\label{alg:vlm_graph}
-\begin{algorithmic}[1]
-\Require image set $\mathcal{I}=\{I_1,\dots,I_S\}$, VLM $f_{\mathrm{G}}$,
-prompt template $\Pi$, max attempts $K$
-\Ensure assembly graph $\mathcal{G}$, or \textsc{Fail}
-\State $\textit{feedback} \gets \emptyset$
-\For{$k = 1$ \textbf{to} $K$}
-    \State $(\textit{draft}, \mathcal{G}_k) \gets f_{\mathrm{G}}(\mathcal{I}, \Pi, \textit{feedback})$
-        \Comment{draft: free-text reasoning trace}
-    \State $(\textit{valid}, \textit{errors}) \gets \textsc{Validate}(\mathcal{G}_k)$
-    \If{\textit{valid}}
-        \State \Return $\mathcal{G}_k$
-    \EndIf
-    \State $\textit{feedback} \gets \textsc{FormatFeedback}(\textit{errors})$
-\EndFor
-\State \Return \textsc{Fail}
-\end{algorithmic}
-\end{algorithm}
+\zz{an example of the prompt might be needed here or in the result part, $\mathcal{R}=\{\texttt{left\_on},\texttt{right\_on},\texttt{center\_on} \}$ in figure example}
 
 \begin{figure}[!t]
 \centering
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}ccc@{}}
-  \includegraphics[width=0.22\textwidth]{figures/vlm_input_cube_stacking.pdf} &
-  \includegraphics[width=0.14\textwidth]{figures/vlm_input_fmb_step1.pdf} &
-  \includegraphics[width=0.14\textwidth]{figures/vlm_input_fmb_step2.pdf} \\
-  \small (a) Cube stacking & \multicolumn{2}{c}{\small (b) FMB, two-step sequence}
-\end{tabular}
-\caption{Representative VLM input images used for assembly graph generation.
-(a) Cube stacking: a single composite image pairing an object-list legend
-(used as a visual scale reference) with the target structure. (b) FMB: the
-incremental image sequence for one scenario, each frame composited from an
-object-list legend, a top-down view (primary evidence for support edges), and
-an isometric view (consistency check only).}
-\label{fig:vlm_input}
+\includegraphics[width=\columnwidth]{figures/graph_decomposition.pdf}
+\caption{Step-by-step illustration of the assembly graph decomposition on a nine-object example.
+(a) The target structure and its assembly graph. (b) Nodes resting directly on the table are
+identified as root nodes. (c) A node with a single supporter inherits its supporter's branch.
+(d) A node whose supporters trace back to two distinct roots is a bridge node and starts a new
+branch; what matters is the number of distinct root branches, not the number of supporters.
+(e) Nodes are grouped by branch and by depth measured within each branch, and branch order
+follows dependency, so a bridge branch comes last. (f) Each branch is cut into ordered batches
+of at most $N_{\max}$ nodes.}
+\label{fig:graph_decomposition}
+\vspace{-5mm}
 \end{figure}
-\FloatBarrier
 
-\subsubsection{Graph Decomposition and Clustering}
+\subsubsection{Graph Decomposition for Task Planning}
+We then derive the high-level task plan $\mathcal{P}$ by decomposing the assembly graph $\mathcal{G}$.
+Note that, treating each node as an individual planning step would lead to overly fragmented and inefficient execution, whereas directly passing the entire graph $\mathcal{G}$ to LGP results in a large optimization problem that becomes computationally intractable. 
+Hence, to balance planning efficiency and computational complexity, we partition the assembly graph $\mathcal{G}$ into a sequence of smaller subgraphs, with each containing at most $N_{\max}$ nodes. 
 
-Following the mapping $\mathcal{P}=f_{\mathrm{decomp}}(\mathcal{G})$
-introduced in Section~\ref{sec:problem_formulation}, this step converts the
-support graph $\mathcal{G}$ into the task plan
-$\mathcal{P}=(B_1,\dots,B_M)$, i.e., a precedence-consistent sequence of
-short-horizon execution batches. Exposing the full graph to the solver at
-once is impractical, whereas placing objects strictly one at a time is
-unnecessarily slow; the decomposition must also respect support precedence,
-so that no object is scheduled before all of its supporters. We therefore
-compute $f_{\mathrm{decomp}}$ in two stages that operate directly on
-$\mathcal{G}$: a coarse branch grouping followed by a per-branch cutting
-into solver-sized batches.
-
-The first stage, \emph{branch-based grouping}, identifies the coarse
-structural organization of $\mathcal{G}$. We assign each node $v$ a layer
-number by propagating outward from the table root, which is fixed to
-layer~$0$:
+We first perform \textit{branch grouping} to coarsely decompose $\mathcal{G}$ according to assembly dependencies. 
+Specifically, for each node $v\in\mathcal{V}$, we define its set of supporting predecessors as
 \begin{equation}
-  \mathrm{layer}(v) =
-  \begin{cases}
-    0, & \mathrm{supporters}(v)=\varnothing,\\[2pt]
-    1 + \displaystyle\max_{u \in \mathrm{supporters}(v)} \mathrm{layer}(u), & \text{otherwise,}
-  \end{cases}
-  \label{eq:layer}
+\operatorname{pre}(v)=\{u\in\mathcal{V}\mid \exists \, e_{v,u}\in\mathcal{E}\}.
 \end{equation}
-where $\mathrm{supporters}(v)$ is the set of nodes with a direct edge into
-$v$; only the table root has no supporters, so every object resting on the
-table has layer~$1$. Each layer-$1$ node is assigned to a branch according
-to the placement label (e.g., left/right) of its table support, and this
-branch label is propagated to higher layers along the support edges; a node
-whose supporters belong to two or more distinct branches is instead assigned
-to a dedicated \emph{bridge} branch. This stage groups $\mathcal{V}$ into a
-small number of branches without yet committing to an execution order.
+A node with no supporting object, i.e., $\operatorname{pre}(v)=\emptyset$, corresponds to an object placed on the table and is identified as a \textit{root node}. 
+Each root node serves as the starting point of an individual branch, and all nodes that can be traced back to the same root through a unique supporting-predecessor chain are initially grouped into that branch (see Fig.~\ref{fig:graph_decomposition} for an example).
+Formally, for a non-root node with $|\operatorname{pre}(v)|=1$, its branch assignment follows that of its unique predecessor. 
+In contrast, a node satisfying $|\operatorname{pre}(v)|>1$ is defined as a \textit{bridge node}, since its assembly requires all supporting branches to be completed beforehand. 
+Such a node therefore terminates its incoming branches and serves as the starting point of a new branch containing the nodes assembled above it.
+In this way, root and bridge nodes define the structural boundaries that coarsely partition the assembly graph $\mathcal{G}$ into branches while preserving the required assembly dependencies.
 
-The second stage, \emph{layer-based cutting}, turns the grouped graph into
-the ordered batch sequence $\mathcal{P}$. The branches are first ordered so
-that a branch is cut only after every branch it depends on, through
-cross-branch support edges, has already been scheduled. Each branch is then
-cut independently: its nodes are processed in increasing support depth, and
-at each depth the nodes sharing the same in-branch supporter set
+We then perform \textit{branch ordering and partitioning} to obtain the subgraphs used for high-level task planning.
+The branches are first ordered from bottom to top according to their dependencies, such that a branch starting from a bridge node is considered only after all of its supporting branches have been completed.
+Branches at the same dependency level are deterministically ordered using predefined spatial rules, e.g., from left to right, to maintain a consistent planning sequence.
+Within each branch, nodes are grouped by their graph depth measured from the corresponding root or bridge node, such that nodes at the same depth belong to the same group. 
+These groups are then processed in ascending order to ensure that lower-level objects are assembled first. 
+A group containing no more than $N_{\max}$ nodes directly forms a subgraph; otherwise, it is further divided using the same spatial rules into multiple ordered subgraphs, each containing at most $N_{\max}$ nodes.
+The overall decomposition is given as
 \begin{equation}
-  r(v) = \{\, u \in \mathrm{supporters}(v) : \mathrm{branch}(u)=\mathrm{branch}(v) \,\}
-  \label{eq:role}
+\mathcal{G}\rightarrow \{\mathcal{G}_1,\mathcal{G}_2,\ldots,\mathcal{G}_K\},
 \end{equation}
-are collected, ordered by node identifier for a deterministic result, and
-split into batches of at most $B_{\max}=2$ nodes. Concatenating the batches
-of all branches in order yields $\mathcal{P}$. For a nine-object assembly
-with three independent branches (objects $1,3,4$; $2,5,6$; $7,8,9$), this
-procedure yields
+where $\mathcal{G}_k=(\mathcal{V}_k,\mathcal{E}_k)$ denotes the $k$-th subgraph and satisfies $|\mathcal{V}_k|\leq N_{\max}$.
+Each subgraph $\mathcal{G}_k$ defines a short-horizon task plan $\mathcal{P}_k$, and the complete high-level plan $\mathcal{P}$ is given by
 \begin{equation}
-  \mathcal{P} = \big(\{1\},\{3,4\},\{2\},\{5,6\},\{7\},\{8\},\{9\}\big),
-  \label{eq:plan_example}
+\mathcal{P} = (\mathcal{P}_1,\mathcal{P}_2,\ldots,\mathcal{P}_K), \qquad \mathcal{P}_k \equiv \mathcal{G}_k,
 \end{equation}
-where each set is one execution batch $B_m$ submitted to the solver. The
-batch bound $B_{\max}=2$ reflects the scale at which the downstream solver
-remains efficient under our hardware constraints.
+which preserves the required assembly dependencies while limiting the size of subsequent LGP planning problems.
 
 \subsection{Reachability-Manipulability-Aware Scene Understanding}
 \label{sec:scene_understanding}
 
-\zz{Introduce in each subsubsection: 1. how reachability is considered. 2. How manipulability is used to order the list of the manipulable objects}
+Before motion planning, the robot needs to identify suitable concrete object instances corresponding to the components specified in the assembly graph $\mathcal{G}$. 
+To this end, we evaluate each object in the current scene $\mathcal{S}=\{o_1,\dots,o_N\}$ based on reachability and manipulability. 
+Reachability analysis excludes candidates that cannot be feasibly accessed by the robot, while manipulability analysis ranks the remaining ones from high to low according to the ease of manipulation.
+% This process prioritizes objects that are both reachable and easier to manipulate, thereby facilitating subsequent motion planning and execution.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/reachability_filtering.pdf}
+\caption{Reachability filtering. A coarse geometric filter first removes objects in a
+crowded neighborhood, using the local sparsity and clearance terms of the accessibility
+score $\rho$. The retained candidates are then verified by a short-horizon KOMO problem,
+which enforces the terminal grasp condition, the joint limits, and collision avoidance;
+objects admitting no feasible solution are discarded.}
+\label{fig:reachability_filtering}
+\end{figure}
 
 \subsubsection{Reachability Filtering}
-\textcolor{red}{Input: Scene Information, Output: Reachability filtered list of objects}
-
-This step takes the current scene $\mathcal{S}=\{o_1,\dots,o_N\}$ introduced
-in Section~\ref{sec:problem_formulation} and returns the subset
-$\mathcal{S}_{\mathrm{feas}}\subseteq\mathcal{S}$ of object instances that
-the robot can actually reach. We apply two successive filters: a cheap
-geometric prior that discards obviously inaccessible objects, followed by a
-rigorous kinematic check on the survivors.
-
-The first filter assigns each object a scalar geometric score $\rho(o_i)$
-based on its position relative to the surrounding scene geometry, combining a
-density term $\rho_{\mathrm{gmm}}$ and a clearance term $\rho_{\mathrm{esdf}}$.
-The density term is a Gaussian kernel of bandwidth $\sigma = 0.12\,\mathrm{m}$
-evaluated over the pick points of all objects in $\mathcal{S}$:
+To efficiently exclude objects that are difficult for the robot to access, such as those closely surrounded by other objects, we first perform a coarse \textit{geometric filtering} based on the spatial distribution of objects in the current scene $\mathcal{S}$ (see Fig.~\ref{fig:reachability_filtering}).
+For this, we define a geometric accessibility score $\rho(o_i)$ as
 \begin{equation}
-  \rho_{\mathrm{gmm}}(o_i) = \frac{1}{N} \sum_{j=1}^{N}
-    \exp\!\left(-\frac{\|p_i - p_j\|^2}{2\sigma^2}\right),
-  \label{eq:reach_gmm}
-\end{equation}
-where $p_i$ is the pick point of object $o_i$ (the handle sub-frame center
-if available, otherwise the geometric center), and a higher value indicates
-that $o_i$ lies in a geometrically central, more accessible region. The
-clearance term measures the distance to surrounding obstacles, each
-approximated as a bounding sphere with center $c_k$ and radius $r_k$:
-\begin{equation}
-  \rho_{\mathrm{esdf}}(o_i) = \min_k \frac{\max\!\left(0,\ \min\!\left(\|p_i - c_k\| - r_k,\ d_{\max}\right)\right)}{d_{\max}},
-  \label{eq:reach_esdf}
-\end{equation}
-with $d_{\max} = 0.20\,\mathrm{m}$, so that a higher value indicates more
-open space around the object. The two terms are linearly combined into the
-geometric score,
-\begin{equation}
-  \rho(o_i) = \alpha \, \rho_{\mathrm{gmm}}(o_i) + \beta \, \rho_{\mathrm{esdf}}(o_i),
-  \qquad \alpha = 0.6,\ \beta = 0.4,
+  \rho(o_i) = \rho_{\mathrm{spa}}(o_i) + \alpha \rho_{\mathrm{clear}}(o_i),
   \label{eq:reach_fused}
 \end{equation}
-and an object passes this filter if $\rho(o_i) \geq \tau_r = 0.45$.
-
-The second filter verifies kinematic feasibility on the objects that survive
-the geometric prior. For each such candidate $o_i$, we construct a
-single-step KOMO subproblem $\Pi_i^{\mathrm{pick}}$ that asks the solver to
-find a robot configuration from which a grasp of $o_i$ can be initiated,
-using the same KOMO/RAI framework and the full set of kinematic and
-collision constraints as the main solver. The object is retained only if
-this subproblem is feasible:
 \begin{equation}
-  \mathrm{Reach}(o_i) =
-  \mathbb{I}\!\left[\mathrm{Feasible}\!\left(\Pi_i^{\mathrm{pick}}(o_i)\right)\right].
-  \label{eq:reach_check}
+  \rho_{\mathrm{spa}}(o_i) = 1-\frac{1}{N-1}\sum_{\substack{j=1, j\neq i}}^{N}\exp\!\left(  -\frac{\|p_i-p_j\|^2}{2\sigma^2}   \right),
+  \label{eq:reach_gmm}
 \end{equation}
-The two filters are complementary: the geometric prior removes clearly
-unreachable objects at negligible cost, while the pick-waypoint check
-provides rigorous verification only where it is needed. The output is the
-reachable subset
-$\mathcal{S}_{\mathrm{feas}} = \{\, o_i \in \mathcal{S} : \rho(o_i)\ge\tau_r \ \wedge\ \mathrm{Reach}(o_i)=1 \,\}$,
-which is passed to the ordering step below.
+\begin{equation}
+\rho_{\mathrm{clear}}(o_i) = \frac{\min \left( \min_{j\neq i}|p_i-p_j|, d_{\max} \right)}
+{d_{\max}},
+\label{eq:reach_esdf}
+\end{equation}
+where $p_i$ and $p_j$ denote the positions of objects $o_i$ and $o_j$, respectively. 
+$\sigma$ controls the neighborhood scale, $d_{\max}$ is a predefined saturation distance, and $\alpha$ is a weighting factor.
+The local sparsity term $\rho_{\mathrm{spa}}$ characterizes the density of neighboring objects, while the clearance term $\rho_{\mathrm{clear}}$ measures the distance to the nearest neighbor. 
+Higher values of these terms indicate a less crowded neighborhood and greater surrounding free space, respectively.
 
-\begin{figure*}[!t]
-  \centering
-  \includegraphics[width=\textwidth]{figures/Reachability.png}
-  \caption{Reachability screening result: objects passing both the geometric prior and the pick-waypoint feasibility check are retained, while remaining candidates are pruned before downstream LGP solving.}
-  \label{fig:reachability}
-\end{figure*}
+We then perform a detailed reachability analysis for objects satisfying $\rho(o_i)\geq \tau_{\rho}$, where $\tau_{\rho}$ is a predefined threshold. 
+Specifically, for each retained object $o_i$, we determine whether the robot can grasp it through a feasible collision-free motion. 
+This is formulated as a short-horizon motion optimization problem using the robot kinematic model and the k-Order Markov Optimization (KOMO)~\cite{toussaint2014newton}.
+Let $q_{0:T}$ denote the robot joint trajectory and $x_i^{g}$ a desired grasp pose of $o_i$. 
+The reachability problem is given by
+\begin{align}
+q^{*}_{0:T} = \arg\min_{q_{0:T}} \quad & \sum_{t=1}^{T} \|q_{t}- q_{t-1}\|^{2}, \\ 
+\mathrm{s.t.} \quad  & \phi_{\mathrm{grasp}}(q_{T},x_i^{g})=\mathbf{0}, \\
+& q_{\min}\leq q_{t}\leq q_{\max}, \quad t=0,\ldots,T, \\
+& d_{\mathrm{col}}(q_{t}, \mathcal{S})\geq d_{\mathrm{safe}}, \quad t=0,\ldots,T,
+\end{align}
+where $\phi_{\mathrm{grasp}}$ enforces the terminal grasp condition, $q_{\min}$ and $q_{\max}$ specify the joint limits, and $d_{\mathrm{col}}$ denotes the minimum distance between the robot and the scene objects, constrained by the predefined safety margin $d_{\mathrm{safe}}$.
+The objective promotes smooth joint motions, while the constraints ensure kinematic feasibility and collision avoidance. 
+Objects admitting a feasible solution are then collected into a reachable set $\mathcal{S}_{r} = \{ o_i \in \mathcal{S} \mid \rho(o_i)\ge\tau_r \wedge   \exists \, q^{*}_{0:T} \}$, which is subsequently used for manipulability analysis.
+
+
+% To efficiently exclude objects that are difficult for the robot to access, such as those closely surrounded by other objects, we first perform a coarse \textit{geometric filtering} based on the spatial distribution of objects in the current scene $\mathcal{S}$.
+% Specifically, we define a geometric accessibility score $\rho(o_i)$ as
+% \begin{equation}
+%   \rho(o_i) = \rho_{\mathrm{spa}}(o_i) + \alpha \rho_{\mathrm{clear}}(o_i),
+%   \label{eq:reach_fused}
+% \end{equation}
+% where $\rho_{\mathrm{spa}}$ captures the local sparsity around the object $o_i$, $\rho_{\mathrm{clear}}$ measures its clearance from the nearest neighboring object, and $\alpha$ is a weighting factor.
+
+% The local sparsity term $\rho_{\mathrm{spa}}$ is computed using a Gaussian kernel over the object positions
+% \begin{equation}
+%   \rho_{\mathrm{spa}}(o_i) = 1-\frac{1}{N-1}\sum_{\substack{j=1, j\neq i}}^{N}\exp\!\left(  -\frac{\|p_i-p_j\|^2}{2\sigma^2}   \right),
+%   \label{eq:reach_gmm}
+% \end{equation}
+% where $p_i$ and $p_j$ denote the positions of $o_i$ and $o_j$, respectively, and $\sigma$ controls the neighborhood scale.
+% A larger $\rho_{\mathrm{spa}}$ indicates that fewer objects are located close to $o_i$, and hence that the surrounding region is less crowded.
+
+% To explicitly account for the nearest object, the clearance term $\rho_{\mathrm{clear}}$ is calculated as 
+% \begin{equation}
+% \rho_{\mathrm{clear}}(o_i) = \frac{\min \left( \min_{j\neq i}|p_i-p_j|, d_{\max} \right)}
+% {d_{\max}},
+% \label{eq:reach_esdf}
+% \end{equation}
+% where $d_{\max}$ is a predefined saturation distance. 
+% A larger $\rho_{\mathrm{clear}}$ indicates more free space around the object $o_i$, while any nearest-neighbor distance beyond $d_{\max}$ yields the maximum score of $1$.
+
+% \begin{figure*}[!t]
+%   \centering
+%   \includegraphics[width=\textwidth]{figures/Reachability.png}
+%   \caption{Reachability screening result: objects passing both the geometric prior and the pick-waypoint feasibility check are retained, while remaining candidates are pruned before downstream LGP solving.}
+%   \label{fig:reachability}
+% \end{figure*}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/manipulability_ordering.pdf}
+\caption{Manipulability-aware object ordering. For each reachable candidate, an inverse
+kinematics solution gives the grasp configuration, at which the manipulability measure
+$m$ is evaluated. A well-conditioned configuration yields a large, well-rounded
+manipulability ellipsoid and a high score, whereas a near-singular one yields a flattened
+ellipsoid and a low score; candidates are ordered by decreasing $m$.}
+\label{fig:manipulability_ordering}
+\end{figure}
 
 \subsubsection{Manipulability-Aware Object Ordering}
-\textcolor{red}{Input: Reachability filtered list of object, Output: Manipulability ordered list of objects}
 
-This step takes the reachable subset $\mathcal{S}_{\mathrm{feas}}$ and
-orders its instances by how comfortably the robot arm can approach them, so
-that the grounding map $\pi$ of Section~\ref{sec:problem_formulation} can
-prefer easier-to-manipulate instances. For each object
-$o_i \in \mathcal{S}_{\mathrm{feas}}$, we define an approach target slightly
-above the object, solve a damped least-squares inverse kinematics problem
-for that target, and evaluate the positional Yoshikawa manipulability score
-at the resulting configuration $q_i$:
+We further rank the objects in $\mathcal{S}_{r}$ according to their manipulability to favor kinematically advantageous candidates for assembly (see Fig.~\ref{fig:manipulability_ordering}).
+Specifically, for each $o_i \in \mathcal{S}_{r}$, we solve a damped least-squares inverse kinematics problem to obtain a joint configuration $q_i$ corresponding to its desired grasp pose $x_i^{g}$. 
+At $q_i$, the positional Yoshikawa manipulability~\cite{yoshikawa1985manipulability} score is
 \begin{equation}
-  m(o_i) = \sqrt{\det\!\left(J_p(q_i)\,J_p(q_i)^\top\right)},
+  m(o_i) = \sqrt{\det \left(J_p(q_i)\,J_p(q_i)^\top\right)},
   \label{eq:manip}
 \end{equation}
-where $J_p(q_i)$ is the position Jacobian of the robot at $q_i$. A higher
-$m(o_i)$ indicates a more dexterous approach configuration. Within each
-object category, instances are ranked by decreasing $m(o_i)$, and instances
-whose inverse kinematics fails are placed last. The output is thus, for each
-category, a manipulability-ordered list of reachable instances; this
-ordering defines the preference that the grounding map $\pi$ uses to select
-a concrete instance when a batch requires an object of that category.
+where $J_p(q_i)$ denotes the positional component of the Jacobian. 
+A larger $m(o_i)$ indicates greater dexterity around the grasp configuration and thus more flexibility for subsequent motion.
+The objects are thus sorted in descending order of their manipulability scores, yielding a ranked set $\hat{\mathcal{S}}_r = \{o_{(1)}, o_{(2)}, \ldots, o_{(N_r)}\}$, where $ m(o_{(1)}) \geq m(o_{(2)}) \geq \cdots \geq m(o_{(N_r)})$ and $N_r=|\mathcal{S}_r|$. 
+This ordering provides a kinematically informed object preference for the subsequent LGP-based motion planning.
 
-\begin{figure*}[!t]
-  \centering
-  \setlength{\tabcolsep}{2pt}
-  \begin{tabular}{@{}cccc@{}}
-    \includegraphics[width=0.24\textwidth]{figures/Manipulability_1.png} &
-    \includegraphics[width=0.24\textwidth]{figures/Manipulability_2.png} &
-    \includegraphics[width=0.24\textwidth]{figures/Manipulability_3.png} &
-    \includegraphics[width=0.24\textwidth]{figures/Manipulability_4.png} \\
-    \small (a) & \small (b) & \small (c) & \small (d)
-  \end{tabular}
-  \caption{Manipulability scores for four candidate object instances: (a) 3D manipulability field, (b)--(d) orthogonal slices. Higher scores indicate more dexterous approach configurations; instances are ranked accordingly for scene-side grounding.}
-  \label{fig:manipulability}
-\end{figure*}
 
-\subsection{LGP-Based Motion Execution}
+% \begin{figure*}[!t]
+%   \centering
+%   \setlength{\tabcolsep}{2pt}
+%   \begin{tabular}{@{}cccc@{}}
+%     \includegraphics[width=0.24\textwidth]{figures/Manipulability_1.png} &
+%     \includegraphics[width=0.24\textwidth]{figures/Manipulability_2.png} &
+%     \includegraphics[width=0.24\textwidth]{figures/Manipulability_3.png} &
+%     \includegraphics[width=0.24\textwidth]{figures/Manipulability_4.png} \\
+%     \small (a) & \small (b) & \small (c) & \small (d)
+%   \end{tabular}
+%   \caption{Manipulability scores for four candidate object instances: (a) 3D manipulability field, (b)--(d) orthogonal slices. Higher scores indicate more dexterous approach configurations; instances are ranked accordingly for scene-side grounding.}
+%   \label{fig:manipulability}
+% \end{figure*}
+
+\subsection{LGP-Based Motion Planning and Execution}
 \label{sec:motion_execution}
 
-\zz{Introduce in each subsubsection: 1. how LGP is used to solve the motion with active constraints. 2. how motion trajectories are executed on the robot}
+Given the high-level task plan $\mathcal{P}$ and the manipulability-ranked object set $\hat{\mathcal{S}}_r$, we then generate executable robot motions to accomplish the desired assembly task. 
 
-Sections~\ref{sec:task_understanding} and~\ref{sec:scene_understanding} 
-produce two parallel results that must be combined before solving: the task
-plan $\mathcal{P}=(B_1,\dots,B_M)$, whose batches specify the structural
-slots to be filled (e.g., placing a box-type object on top of an existing
-one), and, for each object category, a reachable and manipulability-ordered
-list of concrete scene instances. The grounding map $\pi$ of
-Section~\ref{sec:problem_formulation} merges the two streams: each structural
-slot in the current batch $B_m$ is bound to a concrete instance by scanning
-down the ranked candidate list for the required category until a feasible
-match is found. This produces a fully grounded batch $\pi(B_m)$, i.e., a list
-of concrete object-to-role assignments, which is the input handed to the
-solver.
+
+% For each short-horizon plan $\mathcal{P}_k$, the highest-ranked object of the corresponding type is selected for each required component, thereby instantiating $\mathcal{P}_k$ into a concrete symbolic plan. 
+% LGP then uses this plan to optimize the corresponding manipulation actions and motion trajectories subject to geometric and kinematic constraints. 
+% To improve computational efficiency, we introduce an active-constraint strategy that considers only nearby objects for collision avoidance during optimization. 
+% The resulting trajectories are executed using impedance control, with the short-horizon plans carried out sequentially until the target assembly is completed.
+
+\subsubsection{Symbolic Action Plan Determination}
+For each short-horizon task plan $\mathcal{P}_k$, we first associate its graph-level components with concrete object instances in the current scene to obtain a grounded symbolic action plan.
+Specifically, for each node $v_j \in \mathcal{V}_k$ contained in $\mathcal{P}_k$, we select the highest-ranked unused object in $\hat{\mathcal{S}}_r$ with the same object type as
+\begin{equation}
+o_j^{*} = \underset{o_i\in\hat{\mathcal{S}}_{r}^{\mathrm{ava}}}{\arg\max} \,\, m(o_i), \quad \mathrm{s.t.}\quad c(o_i)=c(v_j),
+\end{equation}
+where $\hat{\mathcal{S}}_{r}^{\mathrm{ava}} \subseteq \hat{\mathcal{S}}_r$ denotes the currently available objects and $c(\cdot)$ represents the object type. 
+Once selected, $o_j^{*}$ is removed from $\hat{\mathcal{S}}_{r}^{\mathrm{ava}}$ to avoid repeated assignment.
+This converts the abstract nodes in $\mathcal{P}_k$ into concrete scene objects while retaining the manipulability-based preference.
+
+Based on this assignment, we construct a symbolic action plan for LGP. 
+Each assembly relation $e_{i,j} \in \mathcal{E}_k$ between nodes $v_i$ and $v_j$ is instantiated using their assigned objects $o_i^{*}$ and $o_j^{*}$, and is represented by a grasp-and-place sequence
+\begin{equation}
+a_{2l-1}=\mathrm{grasp}(o_i^{*}), \quad a_{2l}=\mathrm{place}\left(o_i^{*},o_j^{*},r(e_{i,j}) \right),
+\end{equation}
+where $l$ indexes the assembly relation.
+Following LGP formulation~\cite{marc2015LGP}, each action induces a symbolic state transition
+\begin{equation}
+s_n=\operatorname{succ}(s_{n-1},a_n), \qquad n=1,\ldots,2L_k, \label{eq:lgp_symbolic_transition}
+\end{equation}
+where $s_n$ denotes the symbolic state, $\operatorname{succ}(\cdot)$ is the logical successor function, and $L_k=|\mathcal{E}_k|$. 
+The resulting symbolic action plan is
+\begin{equation}
+\pi_k^{\mathrm{sym}}=(s_0,a_1,s_1,\ldots,a_{2L_k},s_{2L_k}),
+\label{eq:lgp_symbolic_plan}
+\end{equation}
+where each action satisfies the logical preconditions of its preceding state. 
+This plan specifies the interaction modes and associated geometric constraints for subsequent motion optimization.
 
 \subsubsection{LGP with Active Constraints}
-\textcolor{red}{Input: Action Plans and List of Objects, Output: LGP optimization with active constraints for finding motion trajectories}
-
-Native LGP couples symbolic task structure with continuous trajectory
-optimization through a shared representation of predicates, action semantics,
-and decision rules~\cite{marc2015LGP}. In principle this abstraction can
-solve an assembly task from a symbolic goal alone, but in long-horizon
-settings exposing the full generic task domain leads to excessive symbolic
-branching and unnecessary geometric backtracking. We therefore instantiate
-the native LGP abstraction selectively for each grounded batch $\pi(B_m)$,
-compiling only the symbolic relations, object bindings, and decision rules
-required by the support pattern active in that batch. The solver thus
-receives a grounded symbolic-geometric subproblem tailored to $B_m$ rather
-than a monolithic domain covering all possible assembly alternatives.
-
-Discretising a trajectory as $\mathbf{x}_{0:T}=\{x_0,x_1,\dots,x_T\}$ over
-$T$ time steps, we keep the native LGP formulation in its original joint
-form~\cite{marc2015LGP},
+We then employ LGP to optimize concrete robot motions for each short-horizon task plan $\mathcal{P}_k$ by conditioning it on the symbolic action plan $\pi_k^{\mathrm{sym}}$ 
 \begin{align}
-\min_{\substack{x,\,a_{1:K},\\ s_{1:K},\,t_{1:K}}}\quad
-&\int_0^T c\!\left(x(t),\dot{x}(t),\ddot{x}(t)\right)\,dt + \psi\!\left(x(T)\right)
+\min_{\substack{x(\cdot),\,t_{1:2L_k}}}\quad
+&\int_0^{T} c\!\left(x(t),\dot{x}(t),\ddot{x}(t)\right)dt + \psi \left(x(T)\right),
 \label{eq:lgp_obj}\\
 \text{s.t.}\quad
-&\forall k=1{:}K\ \ s_k = \mathrm{succ}(a_k, s_{k-1}),
-\label{eq:lgp_succ}\\
-&s_K\models g,
-\label{eq:lgp_goal}\\
-&\forall_{k=1}^{K}\ h_{\mathrm{switch}}\!\left(x(t_k)\mid a_k,s_{k-1}\right)=0,
+&\forall_{n=1}^{2L_k}\ h_{\mathrm{switch}}\!\left(x(t_n)\mid a_n,s_{n-1}\right)=0,
 \label{eq:lgp_sweq}\\
-&\forall_{k=1}^{K}\ g_{\mathrm{switch}}\!\left(x(t_k)\mid a_k,s_{k-1}\right)\le 0,
+&\forall_{n=1}^{2L_k}\ g_{\mathrm{switch}}\!\left(x(t_n)\mid a_n,s_{n-1}\right)\le 0,
 \label{eq:lgp_swineq}\\
-&\forall t\in[0,T]\ h_{\mathrm{path}}\!\left(x(t),\dot{x}(t)\mid s_{k(t)}\right)=0,
+&\forall t\in[0,T]\ h_{\mathrm{path}}\left(x(t),\dot{x}(t)\mid s_{n(t)}\right)=0,
 \label{eq:lgp_patheq}\\
-&\forall t\in[0,T]\ g_{\mathrm{path}}\!\left(x(t),\dot{x}(t)\mid s_{k(t)}\right)\le 0,
+&\forall t\in[0,T]\ g_{\mathrm{path}}\left(x(t),\dot{x}(t)\mid s_{n(t)}\right)\le 0.
 \label{eq:lgp_pathineq}
 \end{align}
-where $a_{1:K}$, $s_{1:K}$, and $t_{1:K}$ are the action, symbolic-state, and
-switch-time sequences, $g$ is the symbolic goal induced by batch $B_m$, and
-$s_k=\mathrm{succ}(a_k,s_{k-1})$ encodes the logic transitions.
+Here, $x(t)$ denotes the continuous world configuration, including the robot configuration and poses of manipulated objects.
+$T$ is the total execution time of $\mathcal{P}_k$, and $t_n$ is the switching time associated with action $a_n$. 
+The cost $c(\cdot)$ penalizes undesirable motion, such as large velocities and accelerations, while $\psi(\cdot)$ specifies the terminal objective. 
+The switch constraints $h_{\mathrm{switch}}$ and $g_{\mathrm{switch}}$ enforce geometric conditions associated with grasp and place actions, whereas $h_{\mathrm{path}}$ and $g_{\mathrm{path}}$ impose state-dependent constraints, including joint limits and collision avoidance.
+The active symbolic state at time $t$ is indexed by $n(t) = \max\{k : t_n \leq t\}$.
 
-For each grounded batch we then solve the corresponding $k$-order Markov
-Optimization (KOMO) subproblem in its original constrained sum-of-squares
-form~\cite{cite_komo_2014}, i.e., the continuous trajectory-optimization
-component of LGP, computing robot and object motions subject to kinematic,
-task, and collision constraints:
-\begin{align}
-\min_{x_{0:T}}\quad
-&\sum_{t=0}^{T} f_t\!\left(x_{t-k:t}\right)^\top f_t\!\left(x_{t-k:t}\right)
-+\sum_{t,t'} k(t,t')\,x_t^\top x_{t'}
-\label{eq:komo}\\
-\text{s.t.}\quad
-&\forall t:\ g_t\!\left(x_{t-k:t}\right)\le 0,\ h_t\!\left(x_{t-k:t}\right)=0.
-\label{eq:komo_c}
-\end{align}
+LGP then solves the trajectory optimization \eqref{eq:lgp_obj}-\eqref{eq:lgp_pathineq} using KOMO~\cite{marc2015LGP}. 
+Specifically, the trajectory associated with $\mathcal{P}_k$ is discretized into a sequence of waypoints $ X_{\mathcal{P}_k} = \{x_{\mathcal{P}_k}^{0},\ldots,x_{\mathcal{P}_k}^{H_k}\}$, over which the motion objectives and constraints are jointly evaluated. 
+Each action $a_n$ corresponds to a subset of consecutive waypoints $\mathcal{W}_{\mathcal{P}_k,n} = \{h_{n-1}, \ldots, h_n \}$, allowing geometric and collision constraints to be examined locally along each motion segment.
 
-The waypoint-level solve also supplies geometric cues that let the downstream
-full-motion solve be selective about the collision constraints it
-instantiates. Let $x$ denote the full-motion trajectory, $d_{ij}(x)$ the
-minimum pairwise distance between collision proxy frames $f_i$ and $f_j$
-along $x$, and $f_i^w$ the pose of frame $f_i$ at waypoint $w$. The
-trajectory for batch $B_m$ is obtained as
+However, verifying collision avoidance against all objects in scene $\mathcal{S}$ at every waypoint will introduce a large number of unnecessary constraints. 
+To reduce the computational cost, we employ an active-constraint strategy that considers only nearby objects for each motion segment. 
+An object $o_i\in\mathcal{S}$ is included in the active set $\mathcal{O}_{\mathcal{P}_k,n}^{\mathrm{act}}$ for action $a_n$ if its minimum distance to the corresponding waypoints is below an activation threshold $d_{\mathrm{act}}$
 \begin{equation}
-x_m^\ast = \arg\min_x J(x),
-\label{eq:act_obj}
+\mathcal{O}_{\mathcal{P}_k,n}^{\mathrm{act}} = \left\{ o_i\in\mathcal{S} \;\middle|\; \min_{h\in\mathcal{W}_{\mathcal{P}_k,n}} d(x_{\mathcal{P}_k}^{h},o_i) \le d_{\mathrm{act}} \right\}.
 \end{equation}
-subject to collision constraints instantiated only for the active set,
-\begin{equation}
-c_{ij}(x) = d_{\mathrm{safe}} - d_{ij}(x) \leq 0,
-\quad \forall (f_i, f_j) \in \mathcal{C}_{\mathrm{active}}(w),
-\label{eq:act_c}
-\end{equation}
-\begin{equation}
-\mathcal{C}_{\mathrm{active}}(w) =
-\left\{(f_i, f_j)\ \middle|\ d(f_i^w, f_j^w) < r_{\mathrm{active}}\right\},
-\label{eq:act_set}
-\end{equation}
-where $J(x)$ is the downstream motion objective, $d_{\mathrm{safe}}$ the
-prescribed safety margin, and $r_{\mathrm{active}}$ the activation radius
-used to screen candidate collision pairs from the waypoint geometry. Only
-pairs in $\mathcal{C}_{\mathrm{active}}(w)$ become explicit collision
-constraints in the full-motion solve, which reduces unnecessary collision
-checks and shortens solve time without altering the structural plan. The
-output of this step is the collision-free trajectory $x_m^\ast$ for the
-current batch: the decomposition module decides which support relations to
-realize next, and native LGP resolves whether and how they can be executed
-under the current scene geometry.
+Collision constraints in $g_{\mathrm{path}}$ are then imposed only for objects in $\mathcal{O}_{\mathcal{P}_k,n}^{\mathrm{act}}$. 
+The active set is updated for each action, allowing different motion segments to consider different nearby objects.
+The resulting optimized trajectory $x(t)$ is subsequently used for robot execution.
 
-\subsubsection{Motion Execution with Joint-Space Impedance Control}
-\textcolor{red}{Input: motion trajectories, Output: impedance control for joint torques for motion execution}
+% Native LGP couples symbolic task structure with continuous trajectory optimization through a shared representation of predicates, action semantics, and decision rules~\cite{marc2015LGP}. 
+% In principle this abstraction can solve an assembly task from a symbolic goal alone, but in long-horizon settings exposing the full generic task domain leads to excessive symbolic branching and unnecessary geometric backtracking. 
+% We therefore instantiate the native LGP abstraction selectively for each grounded batch $\pi(B_m)$, compiling only the symbolic relations, object bindings, and decision rules required by the support pattern active in that batch. 
+% The solver thus receives a grounded symbolic-geometric subproblem tailored to $B_m$ rather than a monolithic domain covering all possible assembly alternatives.
 
-Once the trajectory $x_m^\ast$ of a batch is obtained, it is parsed into a
-joint-space trajectory and the associated gripper commands and dispatched to
-the robot controller for execution on the physical platform. On our Franka
-manipulator, the controller tracks the planned joint trajectory through the
-arm's built-in joint-space impedance regulation, which converts the tracking
-error into joint torques and yields compliant, safe execution at the torque
-level; this control layer is a standard property of the platform rather than
-a component optimized in this work. The execution layer itself remains
-intentionally thin: it streams the planned motion and gripper switches to the
-robot and updates the scene state for the next planning--solving cycle, after
-which the pipeline proceeds to the following batch $B_{m+1}$.
+% Discretising a trajectory as $\mathbf{x}_{0:T}=\{x_0,x_1,\dots,x_T\}$ over $T$ time steps, we keep the native LGP formulation in its original joint form~\cite{marc2015LGP},
+% \begin{align}
+% \min_{\substack{x,\,a_{1:K},\\ s_{1:K},\,t_{1:K}}}\quad
+% &\int_0^T c\!\left(x(t),\dot{x}(t),\ddot{x}(t)\right)\,dt + \psi\!\left(x(T)\right)
+% \label{eq:lgp_obj}\\
+% \text{s.t.}\quad
+% &\forall k=1{:}K\ \ s_k = \mathrm{succ}(a_k, s_{k-1}),
+% \label{eq:lgp_succ}\\
+% &s_K\models g,
+% \label{eq:lgp_goal}\\
+% &\forall_{k=1}^{K}\ h_{\mathrm{switch}}\!\left(x(t_k)\mid a_k,s_{k-1}\right)=0,
+% \label{eq:lgp_sweq}\\
+% &\forall_{k=1}^{K}\ g_{\mathrm{switch}}\!\left(x(t_k)\mid a_k,s_{k-1}\right)\le 0,
+% \label{eq:lgp_swineq}\\
+% &\forall t\in[0,T]\ h_{\mathrm{path}}\!\left(x(t),\dot{x}(t)\mid s_{k(t)}\right)=0,
+% \label{eq:lgp_patheq}\\
+% &\forall t\in[0,T]\ g_{\mathrm{path}}\!\left(x(t),\dot{x}(t)\mid s_{k(t)}\right)\le 0,
+% \label{eq:lgp_pathineq}
+% \end{align}
+% where $a_{1:K}$, $s_{1:K}$, and $t_{1:K}$ are the action, symbolic-state, and switch-time sequences, $g$ is the symbolic goal induced by batch $B_m$, and $s_k=\mathrm{succ}(a_k,s_{k-1})$ encodes the logic transitions.
+
+% For each grounded batch we then solve the corresponding $k$-order Markov Optimization (KOMO) subproblem in its original constrained sum-of-squares form~\cite{cite_komo_2014}, i.e., the continuous trajectory-optimization component of LGP, computing robot and object motions subject to kinematic, task, and collision constraints:
+% \begin{align}
+% \min_{x_{0:T}}\quad
+% &\sum_{t=0}^{T} f_t\!\left(x_{t-k:t}\right)^\top f_t\!\left(x_{t-k:t}\right)
+% +\sum_{t,t'} k(t,t')\,x_t^\top x_{t'}
+% \label{eq:komo}\\
+% \text{s.t.}\quad
+% &\forall t:\ g_t\!\left(x_{t-k:t}\right)\le 0,\ h_t\!\left(x_{t-k:t}\right)=0.
+% \label{eq:komo_c}
+% \end{align}
+
+% The waypoint-level solve also supplies geometric cues that let the downstream full-motion solve be selective about the collision constraints it instantiates. 
+% Let $x$ denote the full-motion trajectory, $d_{ij}(x)$ the minimum pairwise distance between collision proxy frames $f_i$ and $f_j$ along $x$, and $f_i^w$ the pose of frame $f_i$ at waypoint $w$. 
+% The trajectory for batch $B_m$ is obtained as
+% \begin{equation}
+% x_m^\ast = \arg\min_x J(x),
+% \label{eq:act_obj}
+% \end{equation}
+% subject to collision constraints instantiated only for the active set,
+% \begin{equation}
+% c_{ij}(x) = d_{\mathrm{safe}} - d_{ij}(x) \leq 0,
+% \quad \forall (f_i, f_j) \in \mathcal{C}_{\mathrm{active}}(w),
+% \label{eq:act_c}
+% \end{equation}
+% \begin{equation}
+% \mathcal{C}_{\mathrm{active}}(w) =
+% \left\{(f_i, f_j)\ \middle|\ d(f_i^w, f_j^w) < r_{\mathrm{active}}\right\},
+% \label{eq:act_set}
+% \end{equation}
+% where $J(x)$ is the downstream motion objective, $d_{\mathrm{safe}}$ the prescribed safety margin, and $r_{\mathrm{active}}$ the activation radius used to screen candidate collision pairs from the waypoint geometry. 
+% Only pairs in $\mathcal{C}_{\mathrm{active}}(w)$ become explicit collision constraints in the full-motion solve, which reduces unnecessary collision checks and shortens solve time without altering the structural plan. 
+% The output of this step is the collision-free trajectory $x_m^\ast$ for the current batch: the decomposition module decides which support relations to realize next, and native LGP resolves whether and how they can be executed under the current scene geometry.
+
+\subsubsection{Motion Execution with Impedance Controller}
+For motion execution, we convert the optimized trajectory $x(t)$ into the corresponding robot joint-space reference trajectory $q_d(t)$, together with the gripper commands required by the symbolic actions. 
+The robot then tracks $q_d(t)$ using a joint-space impedance controller~\cite{ott2008passivity}
+\begin{equation}
+\tau = K_p\left(q_d-q\right) + K_d\left(\dot q_d-\dot q\right) + \tau_{\mathrm{com}},
+\end{equation}
+where $q$ and $\dot q$ denote the current joint position and velocity, $K_p$ and $K_d$ are the stiffness and damping matrices, and $\tau_{\mathrm{com}}$ compensates for gravity, inertia, and friction. 
+
+After completing the current task plan $\mathcal{P}_k$, the scene $\mathcal{S}$ is updated to reflect the resulting object configurations before proceeding to the next short-horizon task plan $\mathcal{P}_{k+1}$. 
+The LGP optimization and motion execution are then repeated sequentially until all short-horizon plans are executed and thus the desired long-horizon assembly is achieved.
+
+% Once the trajectory $x_m^\ast$ of a batch is obtained, it is parsed into a joint-space trajectory and the associated gripper commands and dispatched to the robot controller for execution on the physical platform. 
+% On our Franka manipulator, the controller tracks the planned joint trajectory through the arm's built-in joint-space impedance regulation, which converts the tracking error into joint torques and yields compliant, safe execution at the torque level. 
+% This control layer is a standard property of the platform rather than a component optimized in this work. 
+% The execution layer itself remains intentionally thin: it streams the planned motion and gripper switches to the robot and updates the scene state for the next planning--solving cycle, after which the pipeline proceeds to the following batch $B_{m+1}$.
 
 \section{Results}
 \label{sec:results}
 
-\subsection{Experimental Setup and Evaluation Design}
+In this section, we evaluate the proposed framework through comprehensive simulation and real-world experiments, together with ablation studies.
+
+\subsection{Experimental Setup}
 \label{subsec:setup}
 
-We evaluate the proposed framework on a Franka Emika Panda manipulator, with all planning performed through the RAI/KOMO solver. Each planning task is capped at $16$\,GB of memory and $300$\,s of wall-clock time; all reported numbers respect these limits.
+\subsubsection{Tasks} 
+We consider two representative robotic assembly tasks: Block Stacking (BS) and Functional Manipulation Benchmark (FMB)~\cite{luo2024fmb}  (see Fig.~\ref{fig:problem_definition_input}). 
+In BS, blocks of different shapes are assembled into a specified target structure, primarily evaluating long-horizon task reasoning and planning. 
+In FMB, block components must be precisely inserted into corresponding slots on a fixed base, resembling peg-in-hole assembly and additionally requiring accurate motion execution.
+For BS, we vary the number of required components from 4 to 8, while FMB involves 3 to 5 components.  
+Two scene conditions are considered: (1) \textbf{No Redundancy (NR)}, where the scene contains exactly the number of objects required for assembly; and (2) \textbf{With Redundancy (WR)}, where an equal number of random irrelevant objects are additionally placed in the scene.
 
-Two task families probe complementary capabilities. Cube-stacking assemblies, from four to eight cubes, test long-horizon planning, where the number of interdependent placement steps grows with the structure. Assemblies from the Functional Manipulation Benchmark (FMB), from three to five objects, test fine-grained assembly under a strict support order; we resize the benchmark's parts to match our manipulator's workspace. Each task is further run under two scene conditions: no redundancy (NR), where the scene contains exactly the required objects, and redundancy (R), where distractor objects of the same type are added, requiring instance identification before planning.
 
-We compare four methods. \emph{Direct-Action LLM} asks a VLM to output pick-and-place waypoints directly from the target image, without any intermediate representation. \emph{VLM-MSGraph}~\cite{li2025vlm} extracts a structured object-relation graph, as we do, and executes it following the original paper's own trajectory-generation procedure. \emph{Global LGP} decomposes the assembly into layer-based batches by a fixed rule, mirroring how a human would manually partition a long-horizon task into subtasks, and solves each batch's full collision set jointly. \emph{Smart} is our method, combining VLM-driven graph decomposition (Section~\ref{sec:task_understanding}) with active-constraint LGP solving (Section~\ref{sec:motion_execution}).
+% Two task families probe complementary capabilities. 
+% Cube-stacking assemblies, from four to eight cubes, test long-horizon planning, where the number of interdependent placement steps grows with the structure. 
+% Assemblies from the Functional Manipulation Benchmark (FMB), from three to five objects, test fine-grained assembly under a strict support order; we resize the benchmark's parts to match our manipulator's workspace. 
+% Each task is further run under two scene conditions: no redundancy (NR), where the scene contains exactly the required objects, and redundancy (R), where distractor objects of the same type are added, requiring instance identification before planning.
 
-Results are organized in three parts. Section~\ref{subsec:res_vlm} evaluates the VLM front end: structure-extraction accuracy for Direct-Action LLM, VLM-MSGraph, and our method. Section~\ref{subsec:res_exec} evaluates execution: a monolithic-solving ablation, VLM-MSGraph's naive interpolation, and Global LGP against Smart, on both task families. Section~\ref{subsec:res_real} reports physical execution. Each (magnitude, method, condition) configuration is run for $50$ trials, drawn from five scenarios instantiated with ten seeds.
+\subsubsection{Baselines} 
+We compare the proposed framework with three baseline methods:
+(1) \textbf{Direct VLM (D-VLM)}: a VLM directly generates assembly action waypoints from the target image without constructing an assembly graph or using a motion planner;
+(2) \textbf{Full Graph LGP (FG-LGP)}: the generated assembly graph is directly provided to LGP without graph decomposition, resulting in a single long-horizon problem.
+(3) \textbf{VLM-MSGraph}~\cite{li2025vlm}: a recent approach that extracts a structured object-relation graph from visual input and executes the assembly using a learning-based motion planner.
+
+%(4) \emph{Smart} is our method, combining VLM-driven graph decomposition (Section~\ref{sec:task_understanding}) with active-constraint LGP solving (Section~\ref{sec:motion_execution}).
+% decomposes the assembly into layer-based batches by a fixed rule, mirroring how a human would manually partition a long-horizon task into subtasks, and solves each batch's full collision set jointly. 
+
+\subsubsection{Metrics}
+We primarily evaluate assembly performance using task success rate. 
+For each task and component count, we consider 5 different target structures, each examined using 10 random seeds, and the overall success rate is reported. 
+Additionally, we measure the computational time of each framework component. 
+
+
+
+% We primarily use the task success rate to evaluate assembly performance. 
+% For each task and component count, we consider 5 different target structures and conduct 10 trials with different random seeds for each structure, reporting the overall success rate across all trials. 
+% We additionally measure the computational time of each component of the proposed framework to evaluate its computational efficiency.
+
+\subsubsection{Parameters and Hardware}
+The following parameters are used in our experiments: ...
+All simulation experiments are conducted in MuJoCo on a local PC equipped with an xxx CPU and an NVIDIA GeForce xxxx GPU with xxx GB memory. 
+Each planning task is capped at $16$\,GB of memory and $300$\,s of wall-clock time.
+The real-world experiments are performed using a Franka Emika Panda robotic arm controlled by the same PC.
+
+\zz{give details of hardware platform and parameters, which VLM is used?}
+
+%We evaluate the proposed framework on a Franka Emika Panda manipulator, with all planning performed through the RAI/KOMO solver. 
+%Each planning task is capped at $16$\,GB of memory and $300$\,s of wall-clock time; all reported numbers respect these limits.
+
+\subsection{Assembly Performance}
+
+\subsubsection{Assembly Graph Generation}
+
+\zz{here give results: about using different VLM in graph extraction accuracy, try to put everything in one table since we are lacking of space}
+
+\subsubsection{Task Planning and Motion Execution}
+
+\zz{here give results: about the motion execution success rates, in terms of using LGP things, put things in one table}
+
+\subsubsection{Real-World Experiments}
+
+\zz{give figures of real-world experiments}
+
+\subsection{Ablation Studies}
+
+\subsubsection{VLM for Graph Generation}
+
+\zz{move your results of different VLMs here, to show the influence of different VLMs}
+
+\subsubsection{Assembly Graph Generation Validator}
+
+\zz{here: compare with and without the syntax/rule-based validator, how the accuracy in graph generation is affected}
+
+\subsubsection{Reachability-Manipulability-Aware Object Ordering}
+
+\zz{here: compare the influence of reachability and manipulability, design some cases to show that undesirable object grasping is avoided. better give some metrics/numbers to show the influence, like how many percentages/trails that we prevent that}
+
+\subsubsection{Active Constraints for LGP}
+
+\zz{here: compare with and without active constraints (your previous global LGP), in terms of computational time, show that active constraints indeed accelerate things}
+
+
+% Results are organized in three parts. 
+% Section~\ref{subsec:res_vlm} evaluates the VLM front end: structure-extraction accuracy for Direct-Action LLM, VLM-MSGraph, and our method. 
+% Section~\ref{subsec:res_exec} evaluates execution: a monolithic-solving ablation, VLM-MSGraph's naive interpolation, and Global LGP against Smart, on both task families. 
+%Section~\ref{subsec:res_real} reports physical execution. 
+%Each (magnitude, method, condition) configuration is run for $50$ trials, drawn from five scenarios instantiated with ten seeds.
 
 \subsection{VLM Front-End: Graph-Generation Accuracy}
 \label{subsec:res_vlm}
@@ -644,6 +712,7 @@ Results are organized in three parts. Section~\ref{subsec:res_vlm} evaluates the
 \textit{Direct-Action LLM.} Asking the VLM to output pick-and-place waypoints directly from the target image, without any intermediate representation, fails outright: the returned sequences are syntactically valid but geometrically inconsistent -- grasp points miss the target objects, waypoints intersect the table or previously placed parts, and placement heights violate the support order. No trial completes an assembly, so we report no success-rate table for this baseline; the failure confirms that current VLMs cannot be trusted with exact, metrically precise motion generation (Section~\ref{sec:task_understanding}).
 
 Table~\ref{tab:vlm_backbone_selection} compares four candidate VLMs on FMB graph extraction. Gemini-3-Flash and Qwen3.6-Plus are the only models to reach $100\%$ on both test batches; Qwen3.5-Plus and Qwen3.5-Flash trail substantially. Given comparable accuracy between the top two, we adopt Gemini-3-Flash as the VLM front end for the remainder of this work.
+\zz{move this to the ablation study}
 
 % ------------------------------------------------------------------
 % FIGURE: fig:vlm_backbone_selection
@@ -672,6 +741,7 @@ Table~\ref{tab:vlm_backbone_selection} compares four candidate VLMs on FMB graph
 % Regenerate  : generator script not located -- flag if you find/recall it, so this can be reproduced.
 % ------------------------------------------------------------------
 \begin{table}[!ht]
+\footnotesize
 \centering
 \caption{Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}
 \label{tab:vlm_backbone_selection}
@@ -686,7 +756,6 @@ Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
 \bottomrule
 \end{tabular}
 \end{table}
-\FloatBarrier
 
 FMB structures frequently include bridging relations, where one object spans multiple supporters and is partially occluded in any single view of the final assembly. Table~\ref{tab:vlm_input_format} compares two ways of presenting such structures to the VLM, on two representative bridging scenes: a single composite image of the final assembly, which requires inferring occluded support from color fragmentation, versus a sequence of one image per build step. Sequential input reaches $100\%$ on both scenes; single-image input drops to $80$--$90\%$, with errors concentrated on the occluded bridging relations. We adopt sequential, per-step image input for all FMB experiments in this work.
 
@@ -717,7 +786,6 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 \bottomrule
 \end{tabular}
 \end{table}
-\FloatBarrier
 
 Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.0\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $94.0\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
 
@@ -769,6 +837,7 @@ Magnitude & Ours & VLM-MSGraph \\
 \midrule
 3objs & \phantom{0}94.0\% & 80.0\% \\
 4objs & 100.0\% & 50.0\% \\
+
 5objs & \phantom{0}88.0\% & 10.0\% \\
 \midrule
 \textbf{Overall} & \textbf{94.0\%} & \textbf{46.7\%} \\
@@ -928,6 +997,10 @@ We validate the pipeline on the physical robot. Representative cube-stacking and
 
 % This choice follows the capability boundary of current VLMs: they are comparatively reliable at inferring relational structure, support dependencies, and coarse left-right or above-below organization, but less stable when required to output exact geometry, long symbolic code, or mathematically precise layouts. 
 
+\bibliographystyle{IEEEtran}
+\bibliography{ref}
+
+\zz{video content: (1) Experimental setup needs to show an overview of all five target structures for all object numbers and for both tasks (BS:(4-8)$\times$5 = 25 structures, FMB:(3-5)$\times$5 = 15 structures). (2) }
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
@@ -949,8 +1022,7 @@ We validate the pipeline on the physical robot. Representative cube-stacking and
 
 
 
-\bibliographystyle{IEEEtran}
-\bibliography{ref}
+
 
 
 

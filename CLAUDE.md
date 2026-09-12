@@ -7,7 +7,14 @@ might still be relevant next time.
 
 ---
 
-## Current phase: Results section fully written (tables + prose) — pushed, needs Overleaf sync
+## Current phase (2026-09-12): method figures done, ablation experiments next
+
+See **"Paper figures and ablation plan (2026-09-12)"** at the bottom of this file for the
+live task list. Everything above that section is historical record.
+
+---
+
+## Earlier phase: Results section fully written (tables + prose) — pushed, needs Overleaf sync
 
 Full design/rationale lives in
 [docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md](docs/ops/VLM_MSGRAPH_BASELINE_EXPERIMENT_DESIGN_2026-08-16.md)
@@ -450,3 +457,141 @@ saved as a script anywhere, so re-derive from scratch rather than searching for 
   Being actively restructured (moved from `bare_jrnl.tex` to an IEEE conference `main.tex`
   template as of ~2026-08-20) — unrelated to the experiment pipeline, don't touch it as a
   side effect of experiment work.
+
+---
+
+## Paper figures and ablation plan (2026-09-12)
+
+Advisor (周老师) reorganized the Results skeleton and the Method text himself; the `\zz{}`
+placeholders in `paper/VLM-LGP-Assembly/main.tex` are his and map 1:1 to the tasks below.
+Target: draft next week, submit within ~2 weeks (before Mid-Autumn).
+
+### Method text changed under us — read this before touching reachability
+
+The advisor rewrote `\subsubsection{Reachability Filtering}`. The new formulation is
+**two stages, no ESDF, no obstacles, no reach-envelope**:
+
+- geometric accessibility score `ρ(o_i) = ρ_spa(o_i) + α·ρ_clear(o_i)`, kept as a cheap
+  pre-filter (`ρ ≥ τ_ρ`)
+- `ρ_spa = 1 − (1/(N−1)) Σ_{j≠i} exp(−‖p_i−p_j‖²/2σ²)` — note the leading `1 −`: crowded
+  now scores **low** (the code has the opposite sign)
+- `ρ_clear = min(min_{j≠i}|p_i−p_j|, d_max)/d_max` — distance to the nearest **other
+  object**, not to an obstacle frame
+- then a short-horizon KOMO solve (grasp condition + joint limits + `d_col ≥ d_safe`);
+  `S_r = {ρ ≥ τ_ρ ∧ ∃q*}`
+
+His reasoning on WeChat: "komo 就行了，本来这些也都包含在 komo 的 constraints 里了", but
+"score 留着". ESDF was explicitly dropped ("就当不存在吧").
+
+**Code is behind the text (deliberately deferred — does not block submission):**
+1. `core/reachability_field.py` `_build_gmm_scores` has no `1 −` (sign inverted vs. the
+   paper) and includes the self-kernel with a `1/N` mean instead of `1/(N−1)` over `j≠i`
+2. `_build_esdf_scores` measures distance to obstacle-tagged frames. **Verified: only 3 of
+   300 scene `.g` files contain any obstacle frame, and all 3 are test fixtures** — so in
+   every experiment scene `esdf ≡ 1.0` and that term has zero discriminating power
+3. Consequence: with `esdf ≡ 1.0`, `score = 0.6·gmm + 0.4`, so pruning needs `gmm < 0.083`,
+   i.e. roughly 12+ well-separated objects. **The pre-filter has never fired in their
+   benchmarks** — a real report showed all 8 objects scoring 0.53–0.61 (all above τ=0.45)
+   and every rejection carrying `reason: komo_policy_gate_infeasible`
+4. `α` and `τ_ρ` must be re-tuned after the fix — the old `0.45` is meaningless for the new
+   formula's range
+5. `split_infeasible_objects_from_reachability` loops over the full `layout_list`, so KOMO
+   currently runs on every object rather than only on pre-filter survivors. Making it a
+   true cascade is **output-neutral** (the merge only ever downgrades to infeasible), so it
+   needs no re-run — unlike fixes 1–3, which change which objects are pruned
+
+Manipulability text vs. code, still unresolved: the paper ranks into a single global
+`Ŝ_r`, the code ranks **per object category**; the paper ranks by `m` alone, the pipeline
+(`pipeline/run_phase0.py:220-227`) orders by `reachability_score × manipulability_score`.
+
+### Figures
+
+Done and inserted into `main.tex`:
+- `figures/graph_decomposition.pdf` → `fig:graph_decomposition`, 6-panel walkthrough of
+  root / branch propagation / bridge / grouping / batch cutting, single column
+- `figures/reachability_filtering.pdf` → `fig:reachability_filtering`, two stages
+- `figures/manipulability_ordering.pdf` → `fig:manipulability_ordering`, two arm
+  configurations + manipulability ellipsoid + reference circle + `m` vs. arm-extension inset
+- `figures/vlm_input_fmb.pdf` / `vlm_input_cube_stacking.pdf` → `fig:problem_definition_input`
+
+Figure conventions settled over many rounds — follow them for any new figure:
+white background, panel borders `#E5E7EB` 1.5px radius 8, blue `#DBEAFE`/`#2563EB`, orange
+`#FFEDD5`/`#EA580C`, green `#D1FAE5`/`#059669`, grey `#E5E7EB`/`#9CA3AF`, reject mark
+`#DC2626`, sans-serif, **no dark panels, no shadows/gradients, no photorealistic robot
+arm**. Text must be ≥30px on a 1200px-wide canvas (≈7pt once scaled to a 3.4in column).
+Figure titles must match the corresponding `\subsubsection{}` heading verbatim.
+
+**PARKED — overview figure (`figures/LGP_method.pdf`, `fig:workflow`) redesign.** Advisor:
+simplify it, the detail now lives in the three figures above, and "画图的时候对应上每个模块
+的名字和 notations". Agreed plan:
+
+- formatting (from 心雨): drop the grey background band; centre each module title; solid
+  borders; fix the arrows
+- the arrow problem is structural: the real dataflow is **two parallel branches that
+  converge**, not a left-to-right strip —
+  `I → [VLM graph gen] --G--> [decomposition] --P-->` and
+  `S → [reachability filtering] --S_r--> [manipulability ordering] --Ŝ_r-->`
+  both feed `[symbolic action plan] → [LGP + active constraints] --q*--> [impedance exec]`
+- label the arrows with the paper's notation (`I, S, G, P, S_r, Ŝ_r, q*`) so they read as
+  dataflow rather than sequence
+- cut: the branch-clustering scatter plot (it depicts `KMeansBranchClustering`, not the
+  root/bridge algorithm the text describes), the layer-cutting sub-diagram, the ✓/✗
+  reachability quad, the ranked-candidate shapes, the execution-order arc diagram
+- rename every box to its `\subsubsection{}` name (current overview labels are all stale,
+  and "0.1 Manipulability-Aware Ordering" actually depicts reachability)
+
+Also outstanding: `main.tex:228` — redesign the cube-stacking target structure in
+`fig:problem_definition_input(a)` so every shape in the legend (Cube / RectPrism / Long
+Rect / TriPrism) actually appears. Easiest fix is to reuse the 9-object structure from
+`fig:graph_decomposition`, which uses all four and gives the paper one running example.
+
+### Ablations — machine requirements
+
+**No compiled solver on the Mac**: `bin/` holds only `main.cpp`, `pick_waypoint_check.cpp`
+and a Makefile. `core/phase0_parser.py` looks for `bin/pick_waypoint_check.exe`. Anything
+needing KOMO/LGP must run on the Ubuntu box (or be built here first).
+
+1. **Graph validator** (`main.tex:692`) — VLM API only, no simulator, no solver. Runs
+   anywhere with network + key. Toggle is the retry loop in `pipeline/run_phase1.py`
+   (`validate_plan` + `max_attempts = 3`). Decide up front how to score the
+   without-validator runs whose JSON does not parse at all. Output: table, no figure.
+2. **Reachability filtering** (`main.tex:696`) — needs `pick_waypoint_check` (a single-step
+   KOMO solve per object, seconds) as the feasibility ground truth, but **not** the full
+   LGP solver. Advisor wants a scene + a table + a small schematic comparison figure
+   ("同一场景，没有 filter 时去抓够不到的那个，有 filter 时改抓另一个"); he said a rendered
+   simulation image is not required.
+3. **Active constraints** (`main.tex:700`) — **no new runs needed, the data already
+   exists.** Verified in `experiments/scripts/run_fmb_batch_eval.py:150-175`: the
+   clustering/plan is computed **once** and all three modes consume the same plan object.
+   `lgp_split_smart` vs `lgp_split_global` therefore differ **only** in collision policy
+   (`active_runtime` vs `follow_lgp`) — a clean active-constraints ablation. And
+   `lgp_split_global` vs `lgp_combined` differ only in `combine_terminals`, giving a clean
+   decomposition ablation for free.
+
+Per-stage timing still missing (advisor asked for it explicitly, and insisted on real
+numbers even if sub-millisecond): reachability and manipulability timed **separately**,
+plus LGP, ~10+ runs, report means. VLM/graph-generation timing is **excluded** by
+agreement (API call, network variance, no consistent measurement). Manipulability timing is
+pure Python (`test/manipulability/urdf_static_manipulability.py`) and can run on the Mac;
+reachability timing needs the solver binary.
+
+### Naming — advisor was explicit and unhappy about the current names
+
+- **"Global" must move out of the main baselines into the ablation section** as the
+  no-active-constraints condition. Delete the "模拟人为拆分 / mirroring how a human would
+  manually partition" framing from `main.tex` — it is simply false, the decomposition is
+  identical to ours (confirmed in the runner above), and the advisor called it out.
+- **"Combined" → "full graph LGP"** ("为啥这个你要起个名字叫 combined… 你直接就 full graph
+  LGP 不就完了吗").
+- Our method is **"Ours"** or **"Proposed"** in tables.
+- The advisor revised naming in Experimental Setup himself; a **final consistency audit**
+  (figures ↔ his setup text) is a separate end-of-writing task.
+
+### Experimental setup facts he had to drag out of us — write them into `main.tex:665`
+
+Cube Stacking 4/5/6/7/8 (5 magnitudes) and FMB 3/4/5 (3 magnitudes); **5 independently
+designed target structures per magnitude** (s01–s05, not parameter variants of one
+structure); each structure run under two redundancy modes, non-redundant and redundant
+(same-type distractors, object count **doubled**); each structure × mode repeated over
+**10 random seeds**. Also still missing from that section: hardware platform, which VLM,
+and the reachability parameters (σ, d_max, α, τ_ρ).
