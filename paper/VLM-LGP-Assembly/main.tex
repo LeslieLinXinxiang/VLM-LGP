@@ -688,8 +688,48 @@ The real-world experiments are performed using a Franka Emika Panda robotic arm 
 \zz{move your results of different VLMs here, to show the influence of different VLMs}
 
 \subsubsection{Assembly Graph Generation Validator}
+\label{subsubsec:abl_validator}
 
-\zz{here: compare with and without the syntax/rule-based validator, how the accuracy in graph generation is affected}
+The validator checks the predicted graph against internal-consistency rules only: schema well-formedness, resolvable supporter references, and two support-geometry conditions on bridging objects -- the supporters of one object must lie at a common height, and a span must not skip an object standing between its endpoints at that height. It never consults the target image or a ground-truth part list, so it cannot be accused of importing the answer it is meant to check. A rejected graph is regenerated with the violated rule supplied as feedback, under a retry budget of five.
+
+Across all $400$ trials the validator rejects $4$ graphs and accepts every correct one: it produces no false rejection (Table~\ref{tab:ablation_validator}). Each rejected graph is wrong and each is corrected on its first regeneration, so accuracy on the rejected subset moves from $0\%$ to $100\%$. Because trials the validator accepts never enter the retry loop, this determines the full-set result exactly rather than by extrapolation: extraction accuracy rises from $98.0\%$ to $98.8\%$ on cube stacking and from $94.0\%$ to $95.3\%$ on FMB, reducing the number of incorrect graphs from $14$ to $10$.
+
+The absolute gain is small because the front end is already accurate, leaving little headroom; the informative quantity is the shape of what remains. All $10$ surviving errors are position-label or object-count mistakes -- a part placed on the wrong side of its supporter, or a part the model never registered -- and every one of them is a self-consistent graph that only the image can refute. A rule-based validator is therefore a cheap guard against structurally impossible graphs rather than a substitute for perception. Its practical value lies in the absence of false rejections: it costs nothing when the graph is already correct, so it can be left enabled unconditionally.
+
+% ------------------------------------------------------------------
+% TABLE: tab:ablation_validator
+% Source: experiments/outputs/validator_ablation/replay_20260912_220202.json (commit 087c4d21)
+%   and experiments/outputs/gemini_proposed_method/accuracy_analysis/*/cross_magnitude_comparison.md
+% "w/o" = the 400 stored trials, whose retry loop was API-error-only (no validator).
+% "w/"  = same trials with the 4 validator-rejected ones replaced by their regeneration.
+%   Exact, not extrapolated: the retry loop cannot fire on an accepted graph.
+% Error counts (14 -> 10) EXCLUDE the five amnestied cube_n07_s01 trials, consistent with the
+%   manual override already reflected in tab:vlm_accuracy_cube. Do not mix this with the raw
+%   19-error count used in the replay JSON's validator_passed_but_wrong field.
+% Each rejected case was corrected on its FIRST regeneration; --repeats 5 is the retry budget,
+%   not a sample size (the replay loop stops on the first match).
+% ------------------------------------------------------------------
+\begin{table}[!ht]
+\centering
+\caption{Assembly-graph validator ablation. The validator rejects $4$ of $400$ trials and no correct graph. Trials it accepts never enter the retry loop, so the with-validator totals follow exactly from regenerating these four.}
+\label{tab:ablation_validator}
+\begin{tabular}{llcc}
+\toprule
+Rejected trial & Rule violated & w/o & w/ \\
+\midrule
+Cube, 7 cubes, \texttt{s05} & skipped support & $\times$ & \checkmark \\
+Cube, 8 cubes, \texttt{s04} & skipped support & $\times$ & \checkmark \\
+FMB, 5 objects, \texttt{001} & non-integer supporter & $\times$ & \checkmark \\
+FMB, 5 objects, \texttt{005} & mixed-height supporters & $\times$ & \checkmark \\
+\midrule
+\multicolumn{2}{l}{Accuracy, rejected trials} & \phantom{0}$0.0\%$ & $100.0\%$ \\
+\multicolumn{2}{l}{Accuracy, cube stacking overall} & $98.0\%$ & \phantom{0}$98.8\%$ \\
+\multicolumn{2}{l}{Accuracy, FMB overall} & $94.0\%$ & \phantom{0}$95.3\%$ \\
+\multicolumn{2}{l}{Incorrect graphs, both benchmarks} & $14$ & \phantom{0}$10$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
 
 \subsubsection{Reachability-Manipulability-Aware Object Ordering}
 
@@ -787,7 +827,7 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.0\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $94.0\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
+Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.8\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $95.3\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
 
 % ------------------------------------------------------------------
 % TABLES: tab:vlm_accuracy_cube, tab:vlm_accuracy_fmb (2026-08-23 restructure)
@@ -810,7 +850,7 @@ Table~\ref{tab:vlm_accuracy_cube} and Table~\ref{tab:vlm_accuracy_fmb} compare o
 % ------------------------------------------------------------------
 \begin{table}[!ht]
 \centering
-\caption{Cube-stacking VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude).}
+\caption{Cube-stacking VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude). Our column is the full pipeline, graph validator enabled; Table~\ref{tab:ablation_validator} isolates the validator's contribution.}
 \label{tab:vlm_accuracy_cube}
 \begin{tabular}{lcc}
 \toprule
@@ -819,17 +859,17 @@ Magnitude & Ours & VLM-MSGraph \\
 4cubes & 100.0\% & 100.0\% \\
 5cubes & 100.0\% & \phantom{0}90.0\% \\
 6cubes & 100.0\% & \phantom{0}90.0\% \\
-7cubes & \phantom{0}98.0\% & \phantom{0}90.0\% \\
-8cubes & \phantom{0}92.0\% & \phantom{0}90.0\% \\
+7cubes & 100.0\% & \phantom{0}90.0\% \\
+8cubes & \phantom{0}94.0\% & \phantom{0}90.0\% \\
 \midrule
-\textbf{Overall} & \textbf{98.0\%} & \textbf{92.0\%} \\
+\textbf{Overall} & \textbf{98.8\%} & \textbf{92.0\%} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[!ht]
 \centering
-\caption{FMB VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude, non-redundant scenarios only).}
+\caption{FMB VLM graph-generation accuracy: our method (self-referential majority-vote reference, N=5 cases/magnitude) vs. the VLM-MSGraph baseline (manually scored against the source image, N=10 trials/magnitude, non-redundant scenarios only). Our column is the full pipeline, graph validator enabled.}
 \label{tab:vlm_accuracy_fmb}
 \begin{tabular}{lcc}
 \toprule
@@ -838,9 +878,9 @@ Magnitude & Ours & VLM-MSGraph \\
 3objs & \phantom{0}94.0\% & 80.0\% \\
 4objs & 100.0\% & 50.0\% \\
 
-5objs & \phantom{0}88.0\% & 10.0\% \\
+5objs & \phantom{0}92.0\% & 10.0\% \\
 \midrule
-\textbf{Overall} & \textbf{94.0\%} & \textbf{46.7\%} \\
+\textbf{Overall} & \textbf{95.3\%} & \textbf{46.7\%} \\
 \bottomrule
 \end{tabular}
 \end{table}
