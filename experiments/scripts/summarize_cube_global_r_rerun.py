@@ -17,10 +17,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "experiments/outputs/LGP_execution_stats/cube_global_r_no_timeout_rerun.md"
 
-# Values currently reported in cross_magnitude_comparison.md (R mode, lgp_split_global),
-# produced under the 300s cap. Kept inline so the comparison is self-contained.
-PAPER = {"6cubes": {"sr": 58.0, "median_s": 149.3},
-         "7cubes": {"sr": 2.0, "median_s": 295.8}}
+# Values currently printed in the paper's tab:planning_sr / tab:planning_time (R mode,
+# Global column), produced under the 300s cap. Kept inline so the comparison is
+# self-contained. Note these differ from cross_magnitude_comparison.md (58.0 / 2.0):
+# the paper's cube cells use an exclusion-based denominator -- 57.1% is 28/49 and 3.7%
+# is 1/27, not k/50 -- whereas the FMB block of the same table is already computed with
+# no exclusions. The re-run below is a clean N=50 with no exclusions, which brings these
+# two cube cells onto the same footing as the FMB block.
+PAPER = {"6cubes": {"sr": 57.1, "time_s": 145.9, "n": 49},
+         "7cubes": {"sr": 3.7, "time_s": 295.8, "n": 27}}
 
 RERUN_ARGS = "--mags 6cubes 7cubes --mode r --lgp-modes lgp_split_global --timeout-s 3600 --max-mem-mb 16000"
 
@@ -66,7 +71,22 @@ def main():
     L.append("")
     L.append(f"Command: `python3 experiments/scripts/run_lgp_batch_eval.py {RERUN_ARGS}`")
     L.append("")
-    L.append("## Success rate")
+    L.append("## What to change in the paper")
+    L.append("")
+    L.append("Both tables, **Global / R column, Cube Stacking block** — no other cell moves.")
+    L.append("")
+    L.append("| Table | Row | Currently | Change to |")
+    L.append("|---|---|---|---|")
+    for mag in sorted(st):
+        s = st[mag]
+        sr = 100.0 * s["ok"] / s["n"]
+        L.append(f"| `tab:planning_sr` | {mag[0]} cubes | {PAPER[mag]['sr']:.1f} | **{sr:.1f}** |")
+    for mag in sorted(st):
+        s = st[mag]
+        med = statistics.median(s["ok_t"]) if s["ok_t"] else 0.0
+        L.append(f"| `tab:planning_time` | {mag[0]} cubes | {PAPER[mag]['time_s']:.1f} | **{med:.1f}** |")
+    L.append("")
+    L.append("### Success rate, in full")
     L.append("")
     L.append("| Magnitude | In the paper (300s cap) | Re-run (no cap) | Change |")
     L.append("|---|---|---|---|")
@@ -74,7 +94,13 @@ def main():
         s = st[mag]
         sr = 100.0 * s["ok"] / s["n"]
         old = PAPER[mag]["sr"]
-        L.append(f"| {mag} | {old:.1f}% | **{sr:.1f}%** ({s['ok']}/{s['n']}) | {sr - old:+.1f} |")
+        L.append(f"| {mag} | {old:.1f}% ({old/100*PAPER[mag]['n']:.0f}/{PAPER[mag]['n']}) "
+                 f"| **{sr:.1f}%** ({s['ok']}/{s['n']}) | {sr - old:+.1f} |")
+    L.append("")
+    L.append("The old denominators are not 50: the paper's cube cells drop errored trials")
+    L.append("from the denominator, so 57.1% is 28/49 and 3.7% is 1/27. The re-run is a clean")
+    L.append("N=50 with no exclusions, matching how the FMB block of the same table is already")
+    L.append("computed, so these two cells stop being the odd ones out.")
     L.append("")
     L.append("## Why")
     L.append("")
@@ -89,14 +115,17 @@ def main():
     L.append("No trial timed out at the raised 3600s limit, so the remaining failures are")
     L.append("genuine 16GB memory exhaustion rather than an imposed time budget.")
     L.append("")
-    L.append("## Median solving time (successful trials)")
+    L.append("## Solving time (successful trials)")
     L.append("")
     L.append("| Magnitude | In the paper | Re-run |")
     L.append("|---|---|---|")
     for mag in sorted(st):
         s = st[mag]
         med = statistics.median(s["ok_t"]) if s["ok_t"] else 0.0
-        L.append(f"| {mag} | {PAPER[mag]['median_s']:.1f}s | **{med:.1f}s** |")
+        L.append(f"| {mag} | {PAPER[mag]['time_s']:.1f}s | **{med:.1f}s** |")
+    L.append("")
+    L.append("Seven cubes rises because the successes the old cap cut off were the slow ones;")
+    L.append("the cell now averages over 19 trials instead of 1.")
     L.append("")
     L.append("## Per scenario (successes / trials)")
     L.append("")
@@ -108,11 +137,38 @@ def main():
     L.append("seeds, so Global's failures track the structure of the target rather than the")
     L.append("random trial.")
     L.append("")
+    L.append("## Prose that quotes these numbers")
+    L.append("")
+    L.append("The Execution-and-Planning paragraph states Global falls \"to $56$--$57\\%$ by")
+    L.append("five to six cubes\" and that its time grows \"from $146$\\,s at six cubes to")
+    L.append("$296$\\,s at seven\". With the re-run, six cubes is $58.0\\%$ / $175.7$\\,s and")
+    L.append("seven cubes is $38.0\\%$ / $379.9$\\,s, so both clauses need rewording. The claim")
+    L.append("they support -- Global degrades with scale and most severely under redundancy --")
+    L.append("still holds: seven cubes is still far below Smart's $100\\%$, and eight cubes is")
+    L.append("still $0\\%$.")
+    L.append("")
     L.append("## Scope")
     L.append("")
     L.append("Only `lgp_split_global` in R mode at 6 and 7 cubes was re-run. Smart, NR mode,")
     L.append("and the other magnitudes still carry their original 300s-capped results, so the")
-    L.append("cube-stacking table mixes two time budgets until those are re-run as well.")
+    L.append("cube-stacking table mixes two time budgets.")
+    L.append("")
+    L.append("Re-running the rest was considered and declined. Smart cannot be affected: its")
+    L.append("median solving time is 19--53s against the 300s cap, and it already succeeds on")
+    L.append("every cell, so there is nothing for extra time to change. Four and five cubes sit")
+    L.append("at 23--64s, likewise far from the cap. That leaves Global at eight cubes, which")
+    L.append("reports $0\\%$ under redundancy with an average peak of 16.4GB -- bounded by the")
+    L.append("16GB memory cap, not by time, so lifting the time budget would not move it.")
+    L.append("")
+    L.append("## The raw data for the other cells no longer exists")
+    L.append("")
+    L.append("The per-trial `trial_meta.json` files behind the rest of the cube-stacking table")
+    L.append("were never committed -- across all branches and all of history, git has only one")
+    L.append("cube `lgp_split_smart` record and no `lgp_split_global` record predating this")
+    L.append("re-run -- and they are no longer on disk. The derived statistics in")
+    L.append("`cross_magnitude_comparison.md` survive and are what the paper reports, but they")
+    L.append("cannot be re-derived, audited, or checked for the `timeout` flag. The two cells")
+    L.append("re-run here are the only cube-stacking cells with recoverable raw data.")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(L) + "\n", encoding="utf-8")
     print(f"written: {OUT.relative_to(ROOT)}")
