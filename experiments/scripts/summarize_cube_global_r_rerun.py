@@ -18,14 +18,13 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "experiments/outputs/LGP_execution_stats/cube_global_r_no_timeout_rerun.md"
 
 # Values currently printed in the paper's tab:planning_sr / tab:planning_time (R mode,
-# Global column), produced under the 300s cap. Kept inline so the comparison is
-# self-contained. Note these differ from cross_magnitude_comparison.md (58.0 / 2.0):
-# the paper's cube cells use an exclusion-based denominator -- 57.1% is 28/49 and 3.7%
-# is 1/27, not k/50 -- whereas the FMB block of the same table is already computed with
-# no exclusions. The re-run below is a clean N=50 with no exclusions, which brings these
-# two cube cells onto the same footing as the FMB block.
-PAPER = {"6cubes": {"sr": 57.1, "time_s": 145.9, "n": 49},
-         "7cubes": {"sr": 3.7, "time_s": 295.8, "n": 27}}
+# Global column). Kept inline so the comparison is self-contained. They differ from the
+# corresponding rows of cross_magnitude_comparison.md (58.0 / 2.0), and neither resolves
+# to k/50, so they were computed over some smaller denominator -- which one cannot be
+# recovered from a rounded percentage, and the trials behind them are not in this
+# checkout. The re-run below is a clean N=50 with nothing dropped.
+PAPER = {"6cubes": {"sr": 57.1, "time_s": 145.9},
+         "7cubes": {"sr": 3.7, "time_s": 295.8}}
 
 RERUN_ARGS = "--mags 6cubes 7cubes --mode r --lgp-modes lgp_split_global --timeout-s 3600 --max-mem-mb 16000"
 
@@ -94,13 +93,14 @@ def main():
         s = st[mag]
         sr = 100.0 * s["ok"] / s["n"]
         old = PAPER[mag]["sr"]
-        L.append(f"| {mag} | {old:.1f}% ({old/100*PAPER[mag]['n']:.0f}/{PAPER[mag]['n']}) "
-                 f"| **{sr:.1f}%** ({s['ok']}/{s['n']}) | {sr - old:+.1f} |")
+        L.append(f"| {mag} | {old:.1f}% | **{sr:.1f}%** ({s['ok']}/{s['n']}) | {sr - old:+.1f} |")
     L.append("")
-    L.append("The old denominators are not 50: the paper's cube cells drop errored trials")
-    L.append("from the denominator, so 57.1% is 28/49 and 3.7% is 1/27. The re-run is a clean")
-    L.append("N=50 with no exclusions, matching how the FMB block of the same table is already")
-    L.append("computed, so these two cells stop being the odd ones out.")
+    L.append("The re-run is a clean N=50 -- every trial counted, nothing dropped -- which is")
+    L.append("how the FMB block of the same table is computed. Neither printed value resolves")
+    L.append(f"to k/50 ({PAPER['6cubes']['sr']}% and {PAPER['7cubes']['sr']}% are not "
+             "multiples of 2 percentage points), so the two cells were previously computed")
+    L.append("over a smaller denominator, but the exact one cannot be read off a rounded")
+    L.append("percentage and the underlying trials are not in this checkout.")
     L.append("")
     L.append("## Why")
     L.append("")
@@ -160,15 +160,26 @@ def main():
     L.append("reports $0\\%$ under redundancy with an average peak of 16.4GB -- bounded by the")
     L.append("16GB memory cap, not by time, so lifting the time budget would not move it.")
     L.append("")
-    L.append("## The raw data for the other cells no longer exists")
+    L.append("## Open: where the other cube cells' numbers come from")
     L.append("")
-    L.append("The per-trial `trial_meta.json` files behind the rest of the cube-stacking table")
-    L.append("were never committed -- across all branches and all of history, git has only one")
-    L.append("cube `lgp_split_smart` record and no `lgp_split_global` record predating this")
-    L.append("re-run -- and they are no longer on disk. The derived statistics in")
-    L.append("`cross_magnitude_comparison.md` survive and are what the paper reports, but they")
-    L.append("cannot be re-derived, audited, or checked for the `timeout` flag. The two cells")
-    L.append("re-run here are the only cube-stacking cells with recoverable raw data.")
+    L.append("Not a task for this change, and nothing else should be edited on account of it.")
+    L.append("Recorded only so the question is not re-derived from scratch later.")
+    L.append("")
+    L.append("The per-trial `trial_meta.json` for the other cube cells is not in this checkout,")
+    L.append("and no `lgp_split_global` record predating this re-run appears anywhere in git")
+    L.append("history. Those runs were done, so the data exists in some form elsewhere -- it")
+    L.append("simply is not here, which is why the cells were not verified against raw data")
+    L.append("the way the FMB and VLM-MSGraph blocks were (both check out exactly, 18/18 and")
+    L.append("16/16 against their raw trials).")
+    L.append("")
+    L.append("One thing to be aware of when that data turns up: the Global/NR figures in")
+    L.append("`tab:planning_sr` (100.0, 96.7, 100.0, 93.3, 60.0) are higher than the")
+    L.append("corresponding rows of `cross_magnitude_comparison.md` (80.0, 58.0, 60.0, 56.0,")
+    L.append("60.0), which reports 50 trials per cell. The success counts implied by both are")
+    L.append("the same -- 40, 29, 30, 28, 30 -- so the two differ only in denominator, the")
+    L.append("paper's being 40 or 30 where the report uses 50. Whether that reflects a later")
+    L.append("re-run or a different denominator convention cannot be settled from this")
+    L.append("checkout; the source of the Global/NR column is the thing to check.")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(L) + "\n", encoding="utf-8")
     print(f"written: {OUT.relative_to(ROOT)}")

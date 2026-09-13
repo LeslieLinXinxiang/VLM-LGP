@@ -21,13 +21,14 @@ Both tables, **Global / R column, Cube Stacking block** — no other cell moves.
 
 | Magnitude | In the paper (300s cap) | Re-run (no cap) | Change |
 |---|---|---|---|
-| 6cubes | 57.1% (28/49) | **58.0%** (29/50) | +0.9 |
-| 7cubes | 3.7% (1/27) | **38.0%** (19/50) | +34.3 |
+| 6cubes | 57.1% | **58.0%** (29/50) | +0.9 |
+| 7cubes | 3.7% | **38.0%** (19/50) | +34.3 |
 
-The old denominators are not 50: the paper's cube cells drop errored trials
-from the denominator, so 57.1% is 28/49 and 3.7% is 1/27. The re-run is a clean
-N=50 with no exclusions, matching how the FMB block of the same table is already
-computed, so these two cells stop being the odd ones out.
+The re-run is a clean N=50 -- every trial counted, nothing dropped -- which is
+how the FMB block of the same table is computed. Neither printed value resolves
+to k/50 (57.1% and 3.7% are not multiples of 2 percentage points), so the two cells were previously computed
+over a smaller denominator, but the exact one cannot be read off a rounded
+percentage and the underlying trials are not in this checkout.
 
 ## Why
 
@@ -81,12 +82,23 @@ at 23--64s, likewise far from the cap. That leaves Global at eight cubes, which
 reports $0\%$ under redundancy with an average peak of 16.4GB -- bounded by the
 16GB memory cap, not by time, so lifting the time budget would not move it.
 
-## The raw data for the other cells no longer exists
+## Open: where the other cube cells' numbers come from
 
-The per-trial `trial_meta.json` files behind the rest of the cube-stacking table
-were never committed -- across all branches and all of history, git has only one
-cube `lgp_split_smart` record and no `lgp_split_global` record predating this
-re-run -- and they are no longer on disk. The derived statistics in
-`cross_magnitude_comparison.md` survive and are what the paper reports, but they
-cannot be re-derived, audited, or checked for the `timeout` flag. The two cells
-re-run here are the only cube-stacking cells with recoverable raw data.
+Not a task for this change, and nothing else should be edited on account of it.
+Recorded only so the question is not re-derived from scratch later.
+
+The per-trial `trial_meta.json` for the other cube cells is not in this checkout,
+and no `lgp_split_global` record predating this re-run appears anywhere in git
+history. Those runs were done, so the data exists in some form elsewhere -- it
+simply is not here, which is why the cells were not verified against raw data
+the way the FMB and VLM-MSGraph blocks were (both check out exactly, 18/18 and
+16/16 against their raw trials).
+
+One thing to be aware of when that data turns up: the Global/NR figures in
+`tab:planning_sr` (100.0, 96.7, 100.0, 93.3, 60.0) are higher than the
+corresponding rows of `cross_magnitude_comparison.md` (80.0, 58.0, 60.0, 56.0,
+60.0), which reports 50 trials per cell. The success counts implied by both are
+the same -- 40, 29, 30, 28, 30 -- so the two differ only in denominator, the
+paper's being 40 or 30 where the report uses 50. Whether that reflects a later
+re-run or a different denominator convention cannot be settled from this
+checkout; the source of the Global/NR column is the thing to check.
