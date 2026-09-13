@@ -1,0 +1,46 @@
+# Cube stacking Global-R re-run without the wall-clock cap
+
+The cube-stacking planning results were produced with the runner's default
+300s wall-clock cap, whereas FMB was later re-run with no cap (16GB memory cap
+only). This re-runs the two magnitudes where that gap was expected to matter.
+
+Command: `python3 experiments/scripts/run_lgp_batch_eval.py --mags 6cubes 7cubes --mode r --lgp-modes lgp_split_global --timeout-s 3600 --max-mem-mb 16000`
+
+## Success rate
+
+| Magnitude | In the paper (300s cap) | Re-run (no cap) | Change |
+|---|---|---|---|
+| 6cubes | 58.0% | **58.0%** (29/50) | +0.0 |
+| 7cubes | 2.0% | **38.0%** (19/50) | +36.0 |
+
+## Why
+
+| Magnitude | Timed out | Hit 16GB | Ran >300s | of those, succeeded | Longest |
+|---|---|---|---|---|---|
+| 6cubes | 0 | 1 | 1 | 0 | 753s |
+| 7cubes | 0 | 31 | 20 | 19 | 626s |
+
+No trial timed out at the raised 3600s limit, so the remaining failures are
+genuine 16GB memory exhaustion rather than an imposed time budget.
+
+## Median solving time (successful trials)
+
+| Magnitude | In the paper | Re-run |
+|---|---|---|
+| 6cubes | 149.3s | **175.7s** |
+| 7cubes | 295.8s | **379.9s** |
+
+## Per scenario (successes / trials)
+
+- **6cubes**: `s01` 0/10  `s02` 10/10  `s03` 10/10  `s04` 0/10  `s05` 9/10
+- **7cubes**: `s01` 0/10  `s02` 9/10  `s03` 0/10  `s04` 0/10  `s05` 10/10
+
+Outcomes are close to all-or-nothing per scenario rather than spread across
+seeds, so Global's failures track the structure of the target rather than the
+random trial.
+
+## Scope
+
+Only `lgp_split_global` in R mode at 6 and 7 cubes was re-run. Smart, NR mode,
+and the other magnitudes still carry their original 300s-capped results, so the
+cube-stacking table mixes two time budgets until those are re-run as well.

@@ -141,9 +141,20 @@ def main():
     parser.add_argument("--start-scenario", type=str, default="s01", help="Start from scenario ID (e.g. s02)")
     parser.add_argument("--skip-existing", action="store_true", help="Skip trials that already have completed outputs")
     parser.add_argument("--combined-only", action="store_true", help="Only run lgp_combined (monolithic terminal), skip smart/global")
+    parser.add_argument("--lgp-modes", nargs="+", default=None,
+                        choices=["lgp_split_smart", "lgp_split_global", "lgp_combined"],
+                        help="Explicit list of modes to run. Use when re-running one "
+                             "policy in isolation, e.g. --lgp-modes lgp_split_global, so "
+                             "the untouched policy's existing results are not recomputed. "
+                             "Overrides --combined-only.")
     args = parser.parse_args()
 
-    lgp_modes = ["lgp_combined"] if args.combined_only else ["lgp_split_smart", "lgp_split_global"]
+    if args.lgp_modes:
+        lgp_modes = args.lgp_modes
+    elif args.combined_only:
+        lgp_modes = ["lgp_combined"]
+    else:
+        lgp_modes = ["lgp_split_smart", "lgp_split_global"]
 
     for mag in args.mags:
         # mag is "4cubes", "5cubes" etc.

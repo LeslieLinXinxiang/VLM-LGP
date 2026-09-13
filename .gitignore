@@ -49,3 +49,8 @@ bin/*.exe
 # rai/KOMO rewrites these on every run, so a tracked copy makes the working tree
 # dirty after any solve. Keep them local.
 z.log.*
+
+# Solver stdout per trial — large (≈1.4MB each, 138MB for one cube magnitude pair)
+# and never committed for the FMB dataset either. The verdict, runtime, memory peak
+# and failure flags all live in trial_meta.json, which is tracked.
+experiments/evaluations/**/solver_stdout.log
