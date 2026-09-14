@@ -949,6 +949,40 @@ Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's f
 \bottomrule
 \end{tabular}
 \end{table}
+
+% ------------------------------------------------------------------
+% TABLE: tab:stage_timing (no accompanying prose yet -- to be written by the advisor)
+% Stage 2 and manipulability: experiments/outputs/stage_timing/stage_timing.{md,json}
+% Stage 1 (paper's formula): experiments/outputs/stage_timing/paper_score_timing.{md,json}
+% ------------------------------------------------------------------
+\begin{table}[!ht]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}
+\label{tab:stage_timing}
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{4}{c}{Reachability} & \multicolumn{2}{c}{Manipulability} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-7}
+ & \multicolumn{2}{c}{Stage 1: score} & \multicolumn{2}{c}{Stage 2: KOMO} & & \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & NR & R & NR & R & NR & R \\
+\midrule
+\multicolumn{7}{l}{\textit{Cube Stacking}} \\
+4 cubes & 0.13 & 0.17 & \phantom{0}963.5 & 2042.4 & 10.9 & 20.7 \\
+5 cubes & 0.13 & 0.18 & 1232.2 & 2649.2 & 13.3 & 25.5 \\
+6 cubes & 0.16 & 0.23 & 1499.0 & 3246.1 & 15.8 & 31.3 \\
+7 cubes & 0.16 & 0.24 & 1802.4 & 3883.1 & 18.7 & 35.1 \\
+8 cubes & 0.18 & 0.29 & 2076.1 & 4439.9 & 21.4 & 39.0 \\
+\midrule
+\multicolumn{7}{l}{\textit{FMB}} \\
+3 objects & 0.13 & 0.17 & \phantom{0}785.1 & 1613.1 & \phantom{0}8.7 & 18.2 \\
+4 objects & 0.15 & 0.20 & 1042.0 & 2203.4 & 11.5 & 23.7 \\
+5 objects & 0.16 & 0.23 & 1336.5 & 2748.7 & 14.9 & 28.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
 \FloatBarrier
 
 \subsection{Physical Execution}
