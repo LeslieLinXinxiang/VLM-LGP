@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "method": "gmm_esdf_mvp",
-  "scene_input": "trial_10_r.g",
+  "scene_input": "trial_02_r.g",
   "params": {
     "alpha": 0.6,
     "beta": 0.4,
@@ -13,285 +13,359 @@
   "obstacle_count": 0,
   "objects": [
     {
-      "logical_id": "cube_1",
-      "anon_id": "obj_01",
-      "object_type": "cube",
+      "logical_id": "shape_2_6",
+      "anon_id": "shape_2_1",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.3423,
-        -0.0289,
-        0.665
+        0.2674,
+        0.4293,
+        0.663
       ],
-      "gmm_score": 0.30396518894301283,
+      "gmm_score": 0.1254073040003588,
       "esdf_score": 1.0,
-      "reachability_score": 0.5823791133658077,
+      "reachability_score": 0.47524438240021527,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "cube_3",
-      "anon_id": "obj_02",
-      "object_type": "cube",
+      "logical_id": "shape_2_3",
+      "anon_id": "shape_2_2",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.356,
-        0.1485,
-        0.665
+        -0.1078,
+        -0.3552,
+        0.663
       ],
-      "gmm_score": 0.31818900261835037,
+      "gmm_score": 0.16615738064993382,
       "esdf_score": 1.0,
-      "reachability_score": 0.5909134015710102,
+      "reachability_score": 0.4996944283899603,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "cube_4",
-      "anon_id": "obj_03",
-      "object_type": "cube",
+      "logical_id": "shape_2_4",
+      "anon_id": "shape_2_3",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.4434,
-        0.1362,
-        0.665
+        0.1348,
+        -0.3696,
+        0.663
       ],
-      "gmm_score": 0.3180970271364756,
+      "gmm_score": 0.19570048669551127,
       "esdf_score": 1.0,
-      "reachability_score": 0.5908582162818854,
+      "reachability_score": 0.5174202920173068,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "cube_2",
-      "anon_id": "obj_04",
-      "object_type": "cube",
+      "logical_id": "shape_2_5",
+      "anon_id": "shape_2_4",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.3985,
-        -0.0985,
-        0.665
+        -0.4313,
+        0.168,
+        0.663
       ],
-      "gmm_score": 0.21755088404286513,
+      "gmm_score": 0.10978163951373551,
       "esdf_score": 1.0,
-      "reachability_score": 0.5305305304257191,
+      "reachability_score": 0.4658689837082413,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "rect_2",
-      "anon_id": "obj_05",
-      "object_type": "rectprism",
+      "logical_id": "shape_2_2",
+      "anon_id": "shape_2_5",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.3063,
-        0.1763,
-        0.665
+        -0.1771,
+        0.3201,
+        0.663
       ],
-      "gmm_score": 0.22653536972348864,
+      "gmm_score": 0.14340502595343682,
       "esdf_score": 1.0,
-      "reachability_score": 0.5359212218340932,
+      "reachability_score": 0.4860430155720621,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "rect_1",
-      "anon_id": "obj_06",
-      "object_type": "rectprism",
+      "logical_id": "shape_2_1",
+      "anon_id": "shape_2_6",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.4256,
-        -0.0718,
-        0.665
+        -0.1358,
+        0.1597,
+        0.663
       ],
-      "gmm_score": 0.27270884386915106,
+      "gmm_score": 0.14418664505526282,
       "esdf_score": 1.0,
-      "reachability_score": 0.5636253063214907,
+      "reachability_score": 0.48651198703315773,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "tri_1",
-      "anon_id": "obj_07",
-      "object_type": "triprism",
-      "sample_point_source": "center",
+      "logical_id": "shape_4_3",
+      "anon_id": "shape_4_1",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        0.3794,
-        0.0436,
-        0.665
+        0.2711,
+        -0.2544,
+        0.7125
       ],
-      "gmm_score": 0.3504291374987215,
+      "gmm_score": 0.14919403889107738,
       "esdf_score": 1.0,
-      "reachability_score": 0.610257482499233,
+      "reachability_score": 0.48951642333464646,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
     {
-      "logical_id": "tri_2",
-      "anon_id": "obj_08",
-      "object_type": "triprism",
-      "sample_point_source": "center",
+      "logical_id": "shape_4_2",
+      "anon_id": "shape_4_2",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.4184,
-        0.0967,
-        0.665
+        -0.2369,
+        -0.2007,
+        0.7125
       ],
-      "gmm_score": 0.29551449354473747,
+      "gmm_score": 0.12839789222032894,
       "esdf_score": 1.0,
-      "reachability_score": 0.5773086961268425,
+      "reachability_score": 0.47703873533219737,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "shape_4_4",
+      "anon_id": "shape_4_3",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
+      "sample_point_xyz": [
+        0.3601,
+        0.2604,
+        0.7125
+      ],
+      "gmm_score": 0.1253337613189608,
+      "esdf_score": 1.0,
+      "reachability_score": 0.4752002567913765,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    {
+      "logical_id": "shape_4_1",
+      "anon_id": "shape_4_4",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
+      "sample_point_xyz": [
+        0.0509,
+        -0.2734,
+        0.7125
+      ],
+      "gmm_score": 0.20559598713302635,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5233575922798158,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     }
   ],
   "decisions": {
-    "cube_1": {
-      "logical_id": "cube_1",
-      "anon_id": "obj_01",
-      "object_type": "cube",
+    "shape_2_6": {
+      "logical_id": "shape_2_6",
+      "anon_id": "shape_2_1",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.3423,
-        -0.0289,
-        0.665
+        0.2674,
+        0.4293,
+        0.663
       ],
-      "gmm_score": 0.30396518894301283,
+      "gmm_score": 0.1254073040003588,
       "esdf_score": 1.0,
-      "reachability_score": 0.5823791133658077,
+      "reachability_score": 0.47524438240021527,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "cube_3": {
-      "logical_id": "cube_3",
-      "anon_id": "obj_02",
-      "object_type": "cube",
+    "shape_2_3": {
+      "logical_id": "shape_2_3",
+      "anon_id": "shape_2_2",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.356,
-        0.1485,
-        0.665
+        -0.1078,
+        -0.3552,
+        0.663
       ],
-      "gmm_score": 0.31818900261835037,
+      "gmm_score": 0.16615738064993382,
       "esdf_score": 1.0,
-      "reachability_score": 0.5909134015710102,
+      "reachability_score": 0.4996944283899603,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "cube_4": {
-      "logical_id": "cube_4",
-      "anon_id": "obj_03",
-      "object_type": "cube",
+    "shape_2_4": {
+      "logical_id": "shape_2_4",
+      "anon_id": "shape_2_3",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.4434,
-        0.1362,
-        0.665
+        0.1348,
+        -0.3696,
+        0.663
       ],
-      "gmm_score": 0.3180970271364756,
+      "gmm_score": 0.19570048669551127,
       "esdf_score": 1.0,
-      "reachability_score": 0.5908582162818854,
+      "reachability_score": 0.5174202920173068,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "cube_2": {
-      "logical_id": "cube_2",
-      "anon_id": "obj_04",
-      "object_type": "cube",
+    "shape_2_5": {
+      "logical_id": "shape_2_5",
+      "anon_id": "shape_2_4",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        0.3985,
-        -0.0985,
-        0.665
+        -0.4313,
+        0.168,
+        0.663
       ],
-      "gmm_score": 0.21755088404286513,
+      "gmm_score": 0.10978163951373551,
       "esdf_score": 1.0,
-      "reachability_score": 0.5305305304257191,
+      "reachability_score": 0.4658689837082413,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "rect_2": {
-      "logical_id": "rect_2",
-      "anon_id": "obj_05",
-      "object_type": "rectprism",
+    "shape_2_2": {
+      "logical_id": "shape_2_2",
+      "anon_id": "shape_2_5",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.3063,
-        0.1763,
-        0.665
+        -0.1771,
+        0.3201,
+        0.663
       ],
-      "gmm_score": 0.22653536972348864,
+      "gmm_score": 0.14340502595343682,
       "esdf_score": 1.0,
-      "reachability_score": 0.5359212218340932,
+      "reachability_score": 0.4860430155720621,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "rect_1": {
-      "logical_id": "rect_1",
-      "anon_id": "obj_06",
-      "object_type": "rectprism",
+    "shape_2_1": {
+      "logical_id": "shape_2_1",
+      "anon_id": "shape_2_6",
+      "object_type": "shape_2",
       "sample_point_source": "center",
       "sample_point_xyz": [
-        -0.4256,
-        -0.0718,
-        0.665
+        -0.1358,
+        0.1597,
+        0.663
       ],
-      "gmm_score": 0.27270884386915106,
+      "gmm_score": 0.14418664505526282,
       "esdf_score": 1.0,
-      "reachability_score": 0.5636253063214907,
+      "reachability_score": 0.48651198703315773,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "tri_1": {
-      "logical_id": "tri_1",
-      "anon_id": "obj_07",
-      "object_type": "triprism",
-      "sample_point_source": "center",
+    "shape_4_3": {
+      "logical_id": "shape_4_3",
+      "anon_id": "shape_4_1",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        0.3794,
-        0.0436,
-        0.665
+        0.2711,
+        -0.2544,
+        0.7125
       ],
-      "gmm_score": 0.3504291374987215,
+      "gmm_score": 0.14919403889107738,
       "esdf_score": 1.0,
-      "reachability_score": 0.610257482499233,
+      "reachability_score": 0.48951642333464646,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     },
-    "tri_2": {
-      "logical_id": "tri_2",
-      "anon_id": "obj_08",
-      "object_type": "triprism",
-      "sample_point_source": "center",
+    "shape_4_2": {
+      "logical_id": "shape_4_2",
+      "anon_id": "shape_4_2",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
       "sample_point_xyz": [
-        -0.4184,
-        0.0967,
-        0.665
+        -0.2369,
+        -0.2007,
+        0.7125
       ],
-      "gmm_score": 0.29551449354473747,
+      "gmm_score": 0.12839789222032894,
       "esdf_score": 1.0,
-      "reachability_score": 0.5773086961268425,
+      "reachability_score": 0.47703873533219737,
       "threshold": 0.45,
-      "decision": "infeasible",
-      "reason": "komo_policy_gate_infeasible"
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "shape_4_4": {
+      "logical_id": "shape_4_4",
+      "anon_id": "shape_4_3",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
+      "sample_point_xyz": [
+        0.3601,
+        0.2604,
+        0.7125
+      ],
+      "gmm_score": 0.1253337613189608,
+      "esdf_score": 1.0,
+      "reachability_score": 0.4752002567913765,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
+    },
+    "shape_4_1": {
+      "logical_id": "shape_4_1",
+      "anon_id": "shape_4_4",
+      "object_type": "shape_4",
+      "sample_point_source": "handle",
+      "sample_point_xyz": [
+        0.0509,
+        -0.2734,
+        0.7125
+      ],
+      "gmm_score": 0.20559598713302635,
+      "esdf_score": 1.0,
+      "reachability_score": 0.5233575922798158,
+      "threshold": 0.45,
+      "decision": "feasible",
+      "reason": "score>=tau_r"
     }
   },
   "policy_gate": {
     "enabled": true,
     "status": "ok",
-    "infeasible_count": 8,
+    "infeasible_count": 0,
     "error_count": 0,
     "reference": "action_pick/action_pick_cylinder constraints in manipTools.cpp"
+  },
+  "timing_s": {
+    "stage1_geometric_score": 0.00041391499962628586,
+    "stage2_komo_gate": 2.756848082000033,
+    "stage2_objects_checked": 10,
+    "stage1_pruned": 0
   }
 }

@@ -1,6 +1,7 @@
 import json
 import math
 import os
+import time as _time
 import re
 import subprocess
 import sys
@@ -271,7 +272,19 @@ def split_infeasible_objects_from_reachability(
             continue
 
         status = state.get("status", "unknown")
-        if status != "feasible":
+        if status == "error":
+            # A solver error is not a reachability verdict. Folding it into `infeasible`
+            # is how an FCL assertion in the collision-model build silently presented as
+            # "the robot cannot reach this object" for every object in the scene, which
+            # is both wrong and invisible downstream. Keep it in `errors`, where it marks
+            # the report `partial` and stays visible.
+            errors[logical_id] = {
+                "status": "error",
+                "message": state.get("message", ""),
+                "pick_action": state.get("pick_action", ""),
+                "object_type": state.get("object_type", ""),
+            }
+        elif status != "feasible":
             infeasible[logical_id] = {
                 "status": status,
                 "message": state.get("message", ""),
@@ -286,6 +299,18 @@ def split_infeasible_objects_from_reachability(
         "infeasible_objects": infeasible,
         "errors": errors,
     }
+
+
+def _score_decision_by_logical_id(score_report: Dict) -> Dict[str, str]:
+    """Map logical_id -> the geometric score's decision ("feasible"/"infeasible")."""
+    out: Dict[str, str] = {}
+    if not isinstance(score_report, dict):
+        return out
+    for row in score_report.get("objects", []) or []:
+        lid = row.get("logical_id")
+        if lid:
+            out[lid] = row.get("decision", "infeasible")
+    return out
 
 
 def split_infeasible_objects_from_reachability_field(
@@ -305,6 +330,11 @@ def split_infeasible_objects_from_reachability_field(
     Returns:
       (infeasible_report_compatible, reachability_score_report)
     """
+    # The two stages are timed separately: stage 1 is a closed-form geometric score
+    # over object positions, stage 2 runs a KOMO solve per object. They differ by
+    # orders of magnitude, so a single combined number would hide what the cheap
+    # pre-filter actually buys.
+    _t0 = _time.perf_counter()
     score_report = compute_reachability_scores_from_unnamed_g(
         scene_path=unnamed_g_path,
         layout_list=layout_list,
@@ -314,18 +344,34 @@ def split_infeasible_objects_from_reachability_field(
         seed=seed,
     )
 
+    _t_score_s = _time.perf_counter() - _t0
+
     policy_gate_report: Dict = {
         "status": "skipped",
         "reason": "disabled",
         "infeasible_objects": {},
         "errors": {},
     }
+    # True cascade: the KOMO gate only sees objects the geometric score kept. Running it
+    # over the full list instead made the pre-filter cost-neutral -- it changed which
+    # object was chosen but never reduced the number of KOMO solves, which is the saving
+    # the two-stage design exists to produce. The merge below only ever downgrades an
+    # object to infeasible, so restricting the gate's input cannot flip any object from
+    # infeasible to feasible: objects the score already rejected stay rejected whether or
+    # not the gate re-examines them.
+    _survivors = [
+        it for it in layout_list
+        if _score_decision_by_logical_id(score_report).get(it.get("logical_id")) == "feasible"
+    ]
+    _t_komo_s = 0.0
     if use_komo_policy_gate:
+        _t1 = _time.perf_counter()
         policy_gate_report = split_infeasible_objects_from_reachability(
             root_dir=root_dir,
             scene_named_g_path=scene_named_g_path,
-            layout_list=layout_list,
+            layout_list=_survivors,
         )
+        _t_komo_s = _time.perf_counter() - _t1
 
     policy_infeasible = (policy_gate_report.get("infeasible_objects") or {}) if isinstance(policy_gate_report, dict) else {}
     policy_errors = (policy_gate_report.get("errors") or {}) if isinstance(policy_gate_report, dict) else {}
@@ -367,5 +413,11 @@ def split_infeasible_objects_from_reachability_field(
         "infeasible_count": len(policy_infeasible),
         "error_count": len(policy_errors),
         "reference": "action_pick/action_pick_cylinder constraints in manipTools.cpp",
+    }
+    score_report["timing_s"] = {
+        "stage1_geometric_score": _t_score_s,
+        "stage2_komo_gate": _t_komo_s,
+        "stage2_objects_checked": len(_survivors) if use_komo_policy_gate else 0,
+        "stage1_pruned": len(layout_list) - len(_survivors),
     }
     return compatible_report, score_report

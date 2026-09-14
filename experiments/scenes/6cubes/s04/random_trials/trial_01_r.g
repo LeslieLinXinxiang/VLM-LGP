@@ -46,5 +46,5 @@ obj_09_Right(obj_09) { Q:"t(0.026 0 0.016)", shape:marker, size:[.01], color:[0 
 obj_10 (table) { Q:"t(-0.4131 0.1837 0.065) d(65.10 0 0 1)", joint:rigid, shape:ssBox, size:[0.065, 0.03, 0.03, 0.001], color:[.9 .6 .1], contact:1, mass:0.4, logical:{ is_object, is_box, is_place } }
 obj_10_Left(obj_10) { Q:"t(-0.026 0 0.016)", shape:marker, size:[.01], color:[0 1 1 0], logical:{ is_place:True } }
 obj_10_Right(obj_10) { Q:"t(0.026 0 0.016)", shape:marker, size:[.01], color:[0 1 1 0], logical:{ is_place:True } }
-obj_11 (table) { Q:"t(0.4472 0.0784 0.065) d(-164.89 0 0 1)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", size:[0.03, 0.03, 0.03, 0.001], color:[.9 .6 .1], contact:1, mass:0.2, logical:{ is_object, is_box } }
-obj_12 (table) { Q:"t(-0.3183 0.0260 0.065) d(-104.88 0 0 1)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", size:[0.03, 0.03, 0.03, 0.001], color:[.9 .6 .1], contact:1, mass:0.2, logical:{ is_object, is_box } }
+obj_11 (table) { Q:"t(0.4472 0.0784 0.065) d(-164.89 0 0 1)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", size:[0.03, 0.03, 0.03, 0.0], color:[.9 .6 .1], contact:1, mass:0.2, logical:{ is_object, is_box } }
+obj_12 (table) { Q:"t(-0.3183 0.0260 0.065) d(-104.88 0 0 1)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", size:[0.03, 0.03, 0.03, 0.0], color:[.9 .6 .1], contact:1, mass:0.2, logical:{ is_object, is_box } }

@@ -3,6 +3,7 @@ print(">>> [DEBUG] Module pipelines.run_phase0 is loading...")
 
 import sys
 import os
+import time as _time
 import json
 import shutil # [NEW] 用于文件复制
 
@@ -175,7 +176,15 @@ def execute_phase0(
             parse_and_inject(unnamed_g, mapping_dict, scene_named_g)
             _normalize_scene_include(scene_named_g, root_dir)
 
+            _t_reachability_s = float("nan")
+            _t_manipulability_s = float("nan")
+            _n_manip_scored = 0
+            _reach_split = {}
             print(f"[Step 3] Reachability split mode={reachability_mode}")
+            # Stage timings are reported back to the caller so the reachability and
+            # manipulability costs can be measured on the real pipeline path rather
+            # than re-created in a separate harness.
+            _t_reach0 = _time.perf_counter()
             if reachability_mode == "gmm_esdf_mvp":
                 infeasible_report, score_report = split_infeasible_objects_from_reachability_field(
                     root_dir=root_dir,
@@ -188,6 +197,7 @@ def execute_phase0(
                     seed=reachability_seed,
                     use_komo_policy_gate=use_komo_policy_gate,
                 )
+                _reach_split = (score_report.get("timing_s") or {}) if isinstance(score_report, dict) else {}
                 _save_layout(score_report, reachability_score_json)
                 print(f">>> PHASE 0 COMPLETE. Reachability Score: {reachability_score_json}")
             else:
@@ -197,6 +207,7 @@ def execute_phase0(
                     layout_list=layout_list,
                 )
             _save_layout(infeasible_report, infeasible_json)
+            _t_reachability_s = _time.perf_counter() - _t_reach0
 
             # [NEW] Physics-Aware Re-ordering (Manipulability + Reachability)
             if not disable_physics_reordering:
@@ -205,11 +216,17 @@ def execute_phase0(
                 
                 try:
                     # 1. Compute manipulability
+                    _t_manip0 = _time.perf_counter()
                     manip_report = compute_static_manipulability_report(
                         layout_path=layout_json,
                         infeasible_path=infeasible_json,
                         g_path=unnamed_g,
                         urdf_path=urdf_path
+                    )
+                    _t_manipulability_s = _time.perf_counter() - _t_manip0
+                    _n_manip_scored = sum(
+                        1 for _o in manip_report.get("objects", [])
+                        if _o.get("manipulability_score") is not None
                     )
                     
                     # 2. Merge scores and re-sort layout_list
@@ -269,6 +286,14 @@ def execute_phase0(
                 "unnamed_scene_path": unnamed_g,
                 "reachability_mode": reachability_mode,
                 "reachability_score_path": reachability_score_json if reachability_mode == "gmm_esdf_mvp" else None,
+                "timing_s": {
+                    "reachability": _t_reachability_s,
+                    "manipulability": _t_manipulability_s,
+                    "n_objects": len(layout_list),
+                    "manip_objects_scored": _n_manip_scored,
+                    "reach_stage1_score": _reach_split.get("stage1_geometric_score"),
+                    "reach_stage2_komo": _reach_split.get("stage2_komo_gate"),
+                },
             }
         except Exception as e:
             print(f"[ERROR] Direct unnamed.g pipeline failed: {e}")

@@ -702,3 +702,164 @@ the Mac has no compiled solver (`bin/` holds only sources and a Makefile).
 Note: the `.env` on the OneDrive copy is 129 bytes, exactly the three lines the user
 supplied, so **that machine's credentials may be equally stale** — sync the key rather
 than assuming the Ubuntu `.env` is good.
+
+---
+
+## Per-stage timing measured; table ready to paste, NOT yet in the paper (2026-09-14)
+
+Measured on the Ubuntu box. **The only thing left is pasting one table plus one paragraph
+into `main.tex`** — everything it needs is below, so this can be finished from any machine
+without re-running anything or re-deriving any number.
+
+### The task that remains
+
+Paste `tab:stage_timing` into `subsec:res_exec`, after `tab:planning_time` (both are about
+solving time, so the reader's context is already right). Rendered preview and the same
+source: https://claude.ai/code/artifact/17212e1b-1784-4f5c-87f3-362a5d7bed4e
+
+```latex
+\begin{table}[!ht]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Per-stage wall-clock cost of scene understanding, in milliseconds, by benchmark,
+magnitude, and redundancy condition. Reachability filtering comprises the geometric
+accessibility score (stage~1) and the short-horizon KOMO feasibility solve (stage~2).
+Means over $10$ scenes per cell.}
+\label{tab:stage_timing}
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{4}{c}{Reachability} & \multicolumn{2}{c}{Manipulability} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-7}
+ & \multicolumn{2}{c}{Stage 1: score} & \multicolumn{2}{c}{Stage 2: KOMO} & & \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & NR & R & NR & R & NR & R \\
+\midrule
+\multicolumn{7}{l}{\textit{Cube Stacking}} \\
+4 cubes & 0.13 & 0.17 & \phantom{0}963.5 & 2042.4 & 10.9 & 20.7 \\
+5 cubes & 0.13 & 0.18 & 1232.2 & 2649.2 & 13.3 & 25.5 \\
+6 cubes & 0.16 & 0.23 & 1499.0 & 3246.1 & 15.8 & 31.3 \\
+7 cubes & 0.16 & 0.24 & 1802.4 & 3883.1 & 18.7 & 35.1 \\
+8 cubes & 0.18 & 0.29 & 2076.1 & 4439.9 & 21.4 & 39.0 \\
+\midrule
+\multicolumn{7}{l}{\textit{FMB}} \\
+3 objects & 0.13 & 0.17 & \phantom{0}785.1 & 1613.1 & \phantom{0}8.7 & 18.2 \\
+4 objects & 0.15 & 0.20 & 1042.0 & 2203.4 & 11.5 & 23.7 \\
+5 objects & 0.16 & 0.23 & 1336.5 & 2748.7 & 14.9 & 28.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+```
+
+Accompanying paragraph:
+
+```latex
+Table~\ref{tab:stage_timing} reports the cost of the two scene-understanding stages.
+Within reachability filtering, the geometric accessibility score is closed-form over
+object positions and stays below $0.3$\,ms throughout, whereas the KOMO feasibility
+solve runs one short-horizon optimisation per object and reaches $4.4$\,s at sixteen
+objects. Manipulability ordering, an inverse-kinematics solve and a Jacobian
+determinant per object, costs tens of milliseconds. All three scale linearly with the
+number of objects: the redundancy condition doubles the object count and roughly
+doubles each stage's cost.
+```
+
+Layout decisions already settled with the user, do not relitigate: `Reachability` is a
+spanning header over both stages; all values in milliseconds; decimal places differ
+between column groups (the groups are four orders of magnitude apart) but are consistent
+within a column, padded with `\phantom{0}`.
+
+**Deliberately left out of the table and the paragraph**: that stage 1 currently prunes
+nothing and so saves no KOMO calls. The user's call — these scenes are all feasible by
+construction, and the reachability ablation is where that point gets made. Do not add it
+back here.
+
+### Where the numbers come from
+
+- `experiments/outputs/stage_timing/stage_timing.{md,json}` — stage 2 and manipulability,
+  measured inside `execute_phase0` on the real pipeline path (`experiments/scripts/measure_stage_timing.py`)
+- `experiments/outputs/stage_timing/paper_score_timing.{md,json}` — stage 1, measured
+  separately (`experiments/scripts/measure_paper_score_timing.py`)
+
+Stage 1 is timed separately **because the pipeline's own score is not the paper's**. The
+paper's formula is implemented as `compute_paper_accessibility_scores` in
+`core/reachability_field.py`; the legacy `compute_reachability_scores_from_unnamed_g`
+differs in three ways (no leading `1 -`, self-kernel included and divided by `N` rather
+than `N-1`, and a second term measuring distance to obstacle frames rather than to the
+nearest object — identically `1.0` in every experiment scene). The paper's function is
+**not** wired into the pipeline: swapping it in changes which objects get pruned, which
+changes object selection in the main experiments. That swap needs `tau_rho` re-calibrated
+first (the legacy `0.45` is meaningless for the new formula's `1..2` range) and is a
+separate decision.
+
+VLM/graph-generation timing stays excluded by agreement (network-bound).
+
+### Three bugs fixed along the way — these DO change pipeline behaviour
+
+1. **Triangular prism collision geometry.** The prism is declared `shape:mesh` but carried
+   a 4th `size` element (the sphere-swept radius, `0.001`). rai reads that as the shape's
+   `radius()`, a mesh never gets a matching `coll_cvxRadius`, and FCL then asserts
+   `radius()==coll_cvxRadius` while building the collision model. That failure takes down
+   the whole scene's collision setup, so **every object's grasp solve errored, not just the
+   prism's**. Fixed in the generator (`experiments/scripts/generate_random_multi_scenes.py`)
+   and across **180 existing cube scene files, 270 occurrences**. FMB was never affected —
+   its meshes carry no `size` at all.
+   **Trap**: deleting the 4th element is not enough, rai falls back to a non-zero default.
+   It has to be written explicitly as `0.0`. Verify after editing; the first attempt looked
+   applied but still errored.
+2. **The gate treated solver errors as infeasibility.** `core/phase0_parser.py` had
+   `if status != "feasible": infeasible[...]`, so the FCL error above presented as "the
+   robot cannot reach this object" for every object, invisibly. Errors now go to `errors`
+   and mark the report `partial`.
+3. **Stage 2 was not a cascade.** It ran KOMO over the full layout instead of over stage
+   1's survivors. Now a true cascade. Output-neutral by construction: the merge only ever
+   downgrades to infeasible, so objects stage 1 already rejected stay rejected.
+
+Effect on one representative scene (`7cubes/s01/trial_01_nr`): 7 objects infeasible and
+0 manipulability scores before, **0 infeasible and 7 scored after**. Across the sweep,
+cube manipulability coverage went from 60–75% of objects to ~100%.
+
+**Consequence the user has not yet decided on**: the existing cube LGP results were
+produced while manipulability ordering was effectively inert on the affected scenes
+(everything pruned, nothing to rank). Whether to re-run cube is open. Do not re-run
+unilaterally.
+
+### Reachability ablation — parked pending 周老师's feedback
+
+Built and working, not yet written up:
+
+- Scenes: `experiments/scenes/reachability_ablation/scene_{A_crowding,B_outofreach}.g`
+- Renderers: `bin/render_scene.cpp` (static) and `bin/render_grasp.cpp` (applies the solved
+  grasp configuration, and renders it **even when KOMO reports infeasible** — the optimizer
+  still returns the least-violating configuration, which for an out-of-reach target is the
+  arm stretched to its limit and falling short, exactly the picture the figure needs).
+  Makefile targets `render-scene` / `render-grasp`.
+- Figures: `experiments/outputs/reachability_ablation/renders/{A1,A2,B1,B2}*.png`
+
+Design settled with the user: two scenes, one per stage; stage 1 is justified as a
+**safety** filter (on real hardware a gripper cannot safely enter a tight cluster) rather
+than as a predictor of KOMO infeasibility — measured fact, two cubes stay KOMO-feasible
+down to a 2 mm surface gap, and a fully surrounded object is still feasible at 5 cm
+spacing. Stage 2's scene is the crisp one: two objects with **identical** geometric scores
+(`rho = 2.000` both) where KOMO accepts one and rejects the other, so stage 1 cannot
+distinguish them even in principle.
+
+Measured reach envelope of this Panda setup, useful for any future scene design: an
+annulus, roughly `0.09 m < r < 0.95 m` from the base, feasible at every azimuth tested at
+`r = 0.40 m`. There is therefore **no way to place an isolated object that is both near and
+unreachable** — inside `r < 0.09 m` it intersects the base's own collision capsule.
+
+**Camera note for rai rendering**: `ConfigurationViewer::focus()` only moves the look-at
+point, it does not change elevation, and the default camera sits nearly horizontal which
+flattens the layout. Use `displayCamera()` with `setPosition` + `focus(x, makeUpright=true)`.
+A camera placed behind the arm is fully occluded by it; scene A needed a low front-side
+angle.
+
+### Gotchas worth not rediscovering
+
+- `generated/` is a hardcoded shared path. Running a diagnostic while a batch job is going
+  reads half-written files; one such race produced a completely convincing but false
+  "every object errors" result that cost a detour to undo.
+- Never `pkill -f <pattern>` where the pattern also appears in your own command line —
+  `pkill -f measure_stage_timing` killed the wrapper shell that was about to start the
+  replacement run.

@@ -37,4 +37,4 @@ obj_06 (table) { Q:"t(0.3920 0.0340 0.065) d(92.95 0 0 1)", joint:rigid, shape:s
 obj_06_Left(obj_06) { Q:"t(-0.038 0 0.016)", shape:marker, size:[.01], color:[0 1 1 0], logical:{ is_place:True } }
 obj_06_Right(obj_06) { Q:"t(0.038 0 0.016)", shape:marker, size:[.01], color:[0 1 1 0], logical:{ is_place:True } }
 obj_06_Center(obj_06) { Q:"t(0 0 0.016)", shape:marker, size:[.01], color:[0 1 1 0], logical:{ is_place:True } }
-obj_07 (table) { Q:"t(-0.3821 0.0311 0.065) d(-174.03 0 0 1)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", size:[0.03, 0.03, 0.03, 0.001], color:[.9 .6 .1], contact:1, mass:0.2, logical:{ is_object, is_box } }
+obj_07 (table) { Q:"t(-0.3821 0.0311 0.065) d(-174.03 0 0 1)", joint:rigid, shape:mesh, mesh:"/home/leslie/Projects/VLM_LGP/generated/triangular_prism.obj", size:[0.03, 0.03, 0.03, 0.0], color:[.9 .6 .1], contact:1, mass:0.2, logical:{ is_object, is_box } }

@@ -432,8 +432,13 @@ _TABLE_PATTERN = re.compile(
     r'(?m)^\s*table\s*\([^)]*\)\s*\{[^\n]*Q\s*:\s*"([^"]+)"',
     re.IGNORECASE,
 )
+# Match any frame carrying the is_object tag, rather than frames whose name happens
+# to look like obj_<digits>. Cube-stacking scenes name objects obj_01..obj_NN, but FMB
+# names them shape_2_1, shape_3_2, ... — under the name-based pattern no FMB pose was
+# ever found, so every FMB object fell through to "missing_object_pose_in_g" and the
+# manipulability stage scored nothing on that benchmark.
 _OBJ_PATTERN = re.compile(
-    r'(?m)^\s*(obj_\d+)\s*\([^)]*\)\s*\{[^\n]*Q\s*:\s*"([^"]+)"',
+    r'(?m)^\s*([A-Za-z_]\w*)\s*\([^)]*\)\s*\{[^\n]*?Q\s*:\s*"([^"]+)"[^\n]*is_object',
     re.IGNORECASE,
 )
 

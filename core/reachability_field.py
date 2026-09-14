@@ -320,3 +320,80 @@ def compute_reachability_scores_from_unnamed_g(
         "objects": out_objects,
         "decisions": decisions,
     }
+
+
+def compute_paper_accessibility_scores(
+    scene_path: str,
+    layout_list: List[Dict],
+    sigma: float = 0.12,
+    d_max: float = 0.20,
+    alpha: float = 1.0,
+) -> Dict:
+    """Geometric accessibility score exactly as written in the paper.
+
+        rho(o_i)      = rho_spa(o_i) + alpha * rho_clear(o_i)
+        rho_spa(o_i)  = 1 - (1/(N-1)) * sum_{j != i} exp(-||p_i - p_j||^2 / (2 sigma^2))
+        rho_clear(o_i)= min( min_{j != i} |p_i - p_j| , d_max ) / d_max
+
+    This differs from compute_reachability_scores_from_unnamed_g in three ways, which is
+    why it exists separately rather than as a flag on that function:
+
+    * the legacy score has no leading ``1 -``, so a crowded object scores HIGH there and
+      LOW here -- the sign of the whole term is flipped;
+    * it averages the kernel over all N entries including the self-kernel (which is
+      always 1) instead of over the N-1 others;
+    * its second term measures distance to obstacle-tagged frames rather than to the
+      nearest other object, and no experiment scene carries such a frame, so that term is
+      identically 1.0 throughout and contributes nothing.
+
+    Returned rows carry rho_spa, rho_clear and rho; no thresholding is applied, since the
+    paper's tau_rho has to be re-calibrated for this formula's range (roughly 1..2) and
+    the legacy 0.45 is meaningless here.
+    """
+    frames = _parse_scene_frames(scene_path)
+    memo: Dict[str, np.ndarray] = {}
+
+    ids: List[str] = []
+    pts: List[np.ndarray] = []
+    types: List[str] = []
+    for item in layout_list:
+        if not isinstance(item, dict):
+            continue
+        anon, logical_id = item.get("anon_id"), item.get("logical_id")
+        if not anon or not logical_id or anon not in frames:
+            continue
+        ids.append(logical_id)
+        pts.append(_world_pos(anon, frames, memo))
+        types.append(item.get("object_type", "unknown"))
+
+    n = len(pts)
+    rows: List[Dict] = []
+    if n == 0:
+        return {"objects": rows, "params": {"sigma": sigma, "d_max": d_max, "alpha": alpha}}
+
+    P = np.asarray(pts, dtype=float)
+    diff = P[:, None, :] - P[None, :, :]
+    d2 = np.sum(diff * diff, axis=2)
+    d = np.sqrt(np.maximum(d2, 0.0))
+    np.fill_diagonal(d2, np.nan)          # exclude j == i from both terms
+    np.fill_diagonal(d, np.nan)
+
+    if n == 1:
+        rho_spa = np.ones(1)
+        rho_clear = np.ones(1)
+    else:
+        kernel = np.exp(-0.5 * np.nan_to_num(d2, nan=np.inf) / max(1e-12, sigma * sigma))
+        rho_spa = 1.0 - np.nansum(kernel, axis=1) / float(n - 1)
+        nn = np.nanmin(d, axis=1)
+        rho_clear = np.minimum(nn, d_max) / d_max
+
+    rho = rho_spa + alpha * rho_clear
+    for i, lid in enumerate(ids):
+        rows.append({
+            "logical_id": lid,
+            "object_type": types[i],
+            "rho_spa": float(rho_spa[i]),
+            "rho_clear": float(rho_clear[i]),
+            "rho": float(rho[i]),
+        })
+    return {"objects": rows, "params": {"sigma": sigma, "d_max": d_max, "alpha": alpha}}

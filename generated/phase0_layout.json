@@ -1,130 +1,144 @@
 [
   {
-    "anon_id": "obj_01",
-    "logical_id": "cube_1",
-    "shape": "box",
-    "object_type": "cube",
-    "size_signature": [
-      0.03,
-      0.03,
-      0.03
-    ],
-    "color_rgb": [
-      0.9,
-      0.6,
-      0.1
-    ]
-  },
-  {
-    "anon_id": "obj_04",
-    "logical_id": "cube_2",
-    "shape": "box",
-    "object_type": "cube",
-    "size_signature": [
-      0.03,
-      0.03,
-      0.03
-    ],
-    "color_rgb": [
-      0.9,
-      0.6,
-      0.1
-    ]
-  },
-  {
-    "anon_id": "obj_02",
-    "logical_id": "cube_3",
-    "shape": "box",
-    "object_type": "cube",
-    "size_signature": [
-      0.03,
-      0.03,
-      0.03
-    ],
-    "color_rgb": [
-      0.9,
-      0.6,
-      0.1
-    ]
-  },
-  {
-    "anon_id": "obj_03",
-    "logical_id": "cube_4",
-    "shape": "box",
-    "object_type": "cube",
-    "size_signature": [
-      0.03,
-      0.03,
-      0.03
-    ],
-    "color_rgb": [
-      0.9,
-      0.6,
-      0.1
-    ]
-  },
-  {
-    "anon_id": "obj_06",
-    "logical_id": "rectprism_1",
-    "shape": "box",
-    "object_type": "rectprism",
-    "size_signature": [
-      0.065,
-      0.03,
-      0.03
-    ],
-    "color_rgb": [
-      0.9,
-      0.6,
-      0.1
-    ]
-  },
-  {
-    "anon_id": "obj_05",
-    "logical_id": "rectprism_2",
-    "shape": "box",
-    "object_type": "rectprism",
-    "size_signature": [
-      0.065,
-      0.03,
-      0.03
-    ],
-    "color_rgb": [
-      0.9,
-      0.6,
-      0.1
-    ]
-  },
-  {
-    "anon_id": "obj_07",
-    "logical_id": "triprism_1",
+    "anon_id": "shape_2_1",
+    "logical_id": "shape_2_1",
     "shape": "mesh",
-    "object_type": "triprism",
-    "size_signature": [
-      0.03,
-      0.03,
-      0.03
-    ],
+    "object_type": "shape_2",
+    "size_signature": [],
     "color_rgb": [
-      0.9,
-      0.6,
-      0.1
+      0.2,
+      1.0,
+      0.2,
+      1.0
     ]
   },
   {
-    "anon_id": "obj_08",
-    "logical_id": "triprism_2",
+    "anon_id": "shape_2_3",
+    "logical_id": "shape_2_2",
     "shape": "mesh",
-    "object_type": "triprism",
+    "object_type": "shape_2",
+    "size_signature": [],
+    "color_rgb": [
+      0.2,
+      1.0,
+      0.2,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "shape_2_4",
+    "logical_id": "shape_2_3",
+    "shape": "mesh",
+    "object_type": "shape_2",
+    "size_signature": [],
+    "color_rgb": [
+      0.2,
+      1.0,
+      0.2,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "shape_2_2",
+    "logical_id": "shape_2_4",
+    "shape": "mesh",
+    "object_type": "shape_2",
+    "size_signature": [],
+    "color_rgb": [
+      0.2,
+      1.0,
+      0.2,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "shape_2_5",
+    "logical_id": "shape_2_5",
+    "shape": "mesh",
+    "object_type": "shape_2",
+    "size_signature": [],
+    "color_rgb": [
+      0.2,
+      1.0,
+      0.2,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "shape_2_6",
+    "logical_id": "shape_2_6",
+    "shape": "mesh",
+    "object_type": "shape_2",
+    "size_signature": [],
+    "color_rgb": [
+      0.2,
+      1.0,
+      0.2,
+      1.0
+    ]
+  },
+  {
+    "anon_id": "shape_4_3",
+    "logical_id": "shape_4_1",
+    "shape": "box",
+    "object_type": "shape_4",
     "size_signature": [
-      0.03,
-      0.03,
-      0.03
+      0.025,
+      0.025,
+      0.025
     ],
     "color_rgb": [
-      0.9,
-      0.6,
-      0.1
+      1.0,
+      0.5,
+      0.2
+    ]
+  },
+  {
+    "anon_id": "shape_4_1",
+    "logical_id": "shape_4_2",
+    "shape": "box",
+    "object_type": "shape_4",
+    "size_signature": [
+      0.025,
+      0.025,
+      0.025
+    ],
+    "color_rgb": [
+      1.0,
+      0.5,
+      0.2
+    ]
+  },
+  {
+    "anon_id": "shape_4_4",
+    "logical_id": "shape_4_3",
+    "shape": "box",
+    "object_type": "shape_4",
+    "size_signature": [
+      0.025,
+      0.025,
+      0.025
+    ],
+    "color_rgb": [
+      1.0,
+      0.5,
+      0.2
+    ]
+  },
+  {
+    "anon_id": "shape_4_2",
+    "logical_id": "shape_4_4",
+    "shape": "box",
+    "object_type": "shape_4",
+    "size_signature": [
+      0.025,
+      0.025,
+      0.025
+    ],
+    "color_rgb": [
+      1.0,
+      0.5,
+      0.2
     ]
   }
 ]

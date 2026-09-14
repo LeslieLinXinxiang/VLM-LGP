@@ -31,7 +31,15 @@ def load_region_config(config_path: str) -> dict:
         "triangular": {
             "shape": "mesh",
             "mesh": "generated/triangular_prism.obj",
-            "size": [0.03, 0.03, 0.03, 0.001], # Approximate bounding box size
+            # Sphere-swept radius must be an explicit 0.0 on a mesh shape. rai reads the
+            # 4th element as the
+            # shape's radius(), but a mesh never gets a matching coll_cvxRadius, so any
+            # non-zero value makes FCL assert radius()==coll_cvxRadius while building the
+            # collision model; that failure takes down the whole scene's collision setup,
+            # so every object's grasp solve errors, not just this one. Omitting the element
+            # is not enough -- rai then falls back to a non-zero default -- it has to be
+            # written as 0.0.
+            "size": [0.03, 0.03, 0.03, 0.0], # Approximate bounding box size
             "logical_tags": "is_object, is_box",
             "mass": 0.2
         }

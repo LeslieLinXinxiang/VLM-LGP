@@ -1,0 +1,149 @@
+{
+  "repeats_per_scene": 200,
+  "rows": [
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "4cubes",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 4,
+      "mean_s": 0.00013255173299967283,
+      "std_s": 1.4220404817629784e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "4cubes",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 8,
+      "mean_s": 0.00016524494700070135,
+      "std_s": 1.6366673454397055e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "5cubes",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 5,
+      "mean_s": 0.00013142969849923249,
+      "std_s": 8.580567795590746e-06
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "5cubes",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 10,
+      "mean_s": 0.0001813005130002239,
+      "std_s": 1.803710129148359e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "6cubes",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 6,
+      "mean_s": 0.0001575977995003086,
+      "std_s": 1.3126276596595575e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "6cubes",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 12,
+      "mean_s": 0.00023183291699933761,
+      "std_s": 2.5535782419344834e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "7cubes",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 7,
+      "mean_s": 0.0001621440790008819,
+      "std_s": 1.4471782016463164e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "7cubes",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 14,
+      "mean_s": 0.00024211930249930447,
+      "std_s": 2.8501111956013437e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "8cubes",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 8,
+      "mean_s": 0.00018426787699854687,
+      "std_s": 1.3537127309078943e-05
+    },
+    {
+      "benchmark": "Cube Stacking",
+      "magnitude": "8cubes",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 16,
+      "mean_s": 0.00028755479450001074,
+      "std_s": 2.8286985569378906e-05
+    },
+    {
+      "benchmark": "FMB",
+      "magnitude": "3objs",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 3,
+      "mean_s": 0.00013354026099932526,
+      "std_s": 8.559308226304884e-06
+    },
+    {
+      "benchmark": "FMB",
+      "magnitude": "3objs",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 6,
+      "mean_s": 0.00017279478299951734,
+      "std_s": 1.7387269787302526e-05
+    },
+    {
+      "benchmark": "FMB",
+      "magnitude": "4objs",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 4,
+      "mean_s": 0.00014707347849980578,
+      "std_s": 6.179164805461636e-06
+    },
+    {
+      "benchmark": "FMB",
+      "magnitude": "4objs",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 8,
+      "mean_s": 0.00019955030399978568,
+      "std_s": 1.2060297218137114e-05
+    },
+    {
+      "benchmark": "FMB",
+      "magnitude": "5objs",
+      "condition": "NR",
+      "n_scenes": 10,
+      "n_objects": 5,
+      "mean_s": 0.0001598655990005682,
+      "std_s": 4.081607920037972e-06
+    },
+    {
+      "benchmark": "FMB",
+      "magnitude": "5objs",
+      "condition": "R",
+      "n_scenes": 10,
+      "n_objects": 10,
+      "mean_s": 0.00022782303049962137,
+      "std_s": 9.267593401478968e-06
+    }
+  ]
+}
