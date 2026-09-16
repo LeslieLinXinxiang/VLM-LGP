@@ -660,25 +660,25 @@ The real-world experiments are performed using a Franka Emika Panda robotic arm 
 
 \begin{table}[t]
 \centering
-\caption{VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Ours: self-referential majority-vote reference, N=5 cases per magnitude, full pipeline with the graph validator enabled (Table~\ref{tab:ablation_validator} isolates its contribution). VLM-MSGraph~\cite{li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}
+\caption{VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Self-referential majority-vote reference, N=5 cases per magnitude. \textit{w/o Validator}: retry loop is API-error-only. \textit{Ours}: full pipeline with the rule-based graph validator enabled, correcting the four trials it rejects (Section~\ref{subsubsec:abl_validator}). VLM-MSGraph~\cite{li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}
 \label{tab:vlm_accuracy}
 \begin{tabular}{lccc}
 \toprule
-Magnitude & Ours & VLM-MSGraph & \\
+Magnitude & w/o Validator & Ours & VLM-MSGraph \\
 \midrule
-\multicolumn{3}{l}{\textit{Cube Stacking}} \\
-4 cubes & 100.0\% & 100.0\% \\
-5 cubes & 100.0\% & \phantom{0}90.0\% \\
-6 cubes & 100.0\% & \phantom{0}90.0\% \\
-7 cubes & 100.0\% & \phantom{0}90.0\% \\
-8 cubes & \phantom{0}94.0\% & \phantom{0}90.0\% \\
-\textbf{Overall} & \textbf{98.8\%} & \textbf{92.0\%} \\
+\multicolumn{4}{l}{\textit{Cube Stacking}} \\
+4 cubes & 100.0\% & 100.0\% & 100.0\% \\
+5 cubes & 100.0\% & 100.0\% & \phantom{0}90.0\% \\
+6 cubes & 100.0\% & 100.0\% & \phantom{0}90.0\% \\
+7 cubes & \phantom{0}98.0\% & 100.0\% & \phantom{0}90.0\% \\
+8 cubes & \phantom{0}92.0\% & \phantom{0}94.0\% & \phantom{0}90.0\% \\
+\textbf{Overall} & \textbf{98.0\%} & \textbf{98.8\%} & \textbf{92.0\%} \\
 \midrule
-\multicolumn{3}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}94.0\% & \phantom{0}80.0\% \\
-4 objects & 100.0\% & \phantom{0}50.0\% \\
-5 objects & \phantom{0}92.0\% & \phantom{0}10.0\% \\
-\textbf{Overall} & \textbf{95.3\%} & \textbf{46.7\%} \\
+\multicolumn{4}{l}{\textit{FMB}} \\
+3 objects & \phantom{0}94.0\% & \phantom{0}94.0\% & \phantom{0}80.0\% \\
+4 objects & 100.0\% & 100.0\% & \phantom{0}50.0\% \\
+5 objects & \phantom{0}88.0\% & \phantom{0}92.0\% & \phantom{0}10.0\% \\
+\textbf{Overall} & \textbf{94.0\%} & \textbf{95.3\%} & \textbf{46.7\%} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -723,9 +723,9 @@ Table~\ref{tab:vlm_backbone_selection} compares four candidate VLMs on FMB graph
 \subsubsection{Assembly Graph Generation Validator}
 \label{subsubsec:abl_validator}
 
-During the graph-generation evaluation (Table~\ref{tab:vlm_accuracy}), the validator is triggered in four of the $400$ trials, each in a different case (Table~\ref{tab:ablation_validator}). All four violations are structural: a bridging object that omits a supporter standing between its other supporters at the same height, a bridging object whose supporters lie on different layers, and a support edge without a valid supporter index. Without the validator, the rejected graph is passed downstream as generated, and each of the four cases reaches $90\%$ accuracy. With the validator, the violated rule is returned to the VLM as feedback and the graph is regenerated. We sample this regeneration ten times per case, matching the ten trials per case of the main evaluation; all $40$ regenerated graphs match the reference (Wilson $95\%$ CI $[91.2\%, 100\%]$), raising each case to $100\%$. Graphs that pass the validator never enter the retry loop, so the remaining trials are unaffected, and overall accuracy rises from $98.0\%$ to $98.8\%$ on cube stacking and from $94.0\%$ to $95.3\%$ on FMB.
+During the graph-generation evaluation (Table~\ref{tab:vlm_accuracy}), the validator is triggered in four of the $400$ trials, each in a different case. All four violations are structural: a bridging object that omits a supporter standing between its other supporters at the same height, a bridging object whose supporters lie on different layers, and a support edge without a valid supporter index. Without the validator, the rejected graph is passed downstream as generated, and each of the four cases reaches $90\%$ accuracy. With the validator, the violated rule is returned to the VLM as feedback and the graph is regenerated. We sample this regeneration ten times per case, matching the ten trials per case of the main evaluation; all $40$ regenerated graphs match the reference (Wilson $95\%$ CI $[91.2\%, 100\%]$), raising each case to $100\%$. Graphs that pass the validator never enter the retry loop, so the remaining trials are unaffected, and overall accuracy rises from $98.0\%$ to $98.8\%$ on cube stacking and from $94.0\%$ to $95.3\%$ on FMB.
 
-The validator checks only the internal consistency of the predicted graph and uses neither the target image nor the part list. Errors that leave the graph self-consistent, such as a wrong position label, a misidentified object type, or a missing object, therefore pass it; this is why the three lowest-scoring cases ($70\%$) do not appear in Table~\ref{tab:ablation_validator}.
+The validator checks only the internal consistency of the predicted graph and uses neither the target image nor the part list. Errors that leave the graph self-consistent, such as a wrong position label, a misidentified object type, or a missing object, therefore pass it; this is why the three lowest-scoring cases ($70\%$) are not among the four the validator catches.
 
 % ------------------------------------------------------------------
 % TABLE: tab:ablation_validator
@@ -740,6 +740,8 @@ The validator checks only the internal consistency of the predicted graph and us
 %   (FMB 3objs/004, FMB 5objs/003, cube_n08_s01) contain no rejected graph, and FMB 5objs/004 is
 %   also at 90% without one.
 % ------------------------------------------------------------------
+\iffalse  % folded into tab:vlm_accuracy's w/o-Validator column; kept for the
+% per-case rule/Regen. detail if that level of granularity is wanted back later.
 \begin{table}[t]
 \centering
 \footnotesize
@@ -761,6 +763,7 @@ FMB, 5 obj., \texttt{005} & mixed-layer supporters & $90.0\%$ & $100.0\%$ & $10/
 \bottomrule
 \end{tabular}
 \end{table}
+\fi
 
 \subsubsection{Reachability-Manipulability-Aware Object Ordering}
 
