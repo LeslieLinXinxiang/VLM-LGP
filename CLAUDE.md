@@ -863,3 +863,116 @@ angle.
 - Never `pkill -f <pattern>` where the pattern also appears in your own command line —
   `pkill -f measure_stage_timing` killed the wrapper shell that was about to start the
   replacement run.
+
+---
+
+## Done (2026-09-16): quantitative reachability-filtering ablation — table in the paper
+
+Answers the `\zz{}` placeholder under `\subsubsection{Reachability-Manipulability-Aware
+Object Ordering}` in `paper/VLM-LGP-Assembly/main.tex` (now `tab:ablation_reachability`,
+inserted with real prose). Note the subsection's own title still says
+"Reachability-Manipulability-Aware" — this ablation ended up testing reachability filtering
+alone (manipulability was tried and dropped, see below), so the title may want revisiting
+alongside the advisor's other naming passes; not done here.
+
+**Design**: 10 scenes, one shared task (place 3 cubes at fixed left/center/right slots).
+Each scene offers 4 same-type cube candidates for the 3 slots — 3 reachable + 1 adversarial,
+always the nearest of the 4 to the base by construction, so a naive nearest-first baseline
+(no reachability awareness) prefers it. Both policies execute through the full LGP solver
+(`bin/x.exe`), not a reduced checker. Code:
+`experiments/scripts/{ablation_reachability_quant.py,run_ablation_quant_batch.py}`. Data:
+`experiments/scenes/reachability_ablation_quant/{typeA,typeB}_0[1-5].g`,
+`experiments/outputs/reachability_ablation_quant/{summary.json,summary.md,typeA_0[1-5]/,
+typeB_0[1-5]/}`. Renders were produced (`experiments/outputs/reachability_ablation_quant/
+renders/`) but deliberately **not committed** — large binary churn, regenerate from the
+scene files with `ablation_reachability_quant.render()` if needed again.
+
+**Two mechanisms, 5 scenes each**:
+- **Type A (crowding/safety)**: a same-type filler object touches the adversarial candidate
+  at an exact 0cm surface gap (structural, by construction). Tests the geometric
+  accessibility score `ρ` (stage 1) — crowding depresses `ρ_clear` below `τ_ρ`. Outcome is
+  not the raw solver exit code: the solver happily completes with the gripper body
+  overlapping the neighbor at 0cm, so "success" is redefined as safe-and-reachable, not
+  merely solved.
+- **Type B (blocked approach/feasibility)**: a wall stands between the base and the
+  candidate — `contact:1`, no `is_object` tag, so it's invisible to the symbolic planner's
+  inventory and to the paper's own accessibility score (ESDF was already dropped from that
+  formula, see the reachability-code-vs-paper section above) but real to KOMO's collision
+  constraint. Tests the KOMO-based feasibility check (stage 2).
+
+**Type B went through three designs before landing on the wall — read this before touching
+it again**:
+1. First attempt: a "dead zone" directly behind the base (r=0.13–0.18m, various azimuths).
+   Numerically confirmed to sit *inside* the base's own collision capsule
+   (`l_panda_coll0`, world center ≈(0,−0.34,0.68), size [len 0.1, radius 0.11]) — the
+   candidate's surface was 4–8cm past the capsule surface across the whole tested arc. Not
+   a reachability phenomenon at all, just interpenetration with the robot's own body.
+   Re-swept r=0.20–0.35 outside the capsule: reachable everywhere. There is no genuine
+   "can't reach" dead zone directly behind an otherwise-unobstructed base.
+2. Second attempt: push the candidate genuinely out of range (r≥0.90m). This is a real
+   kinematic limit (confirmed via both a DLS-IK sweep and the single-waypoint KOMO check),
+   but it structurally breaks the ablation's own premise — being unreachable-by-distance
+   makes the candidate the *farthest* of the 4, not the nearest, so the "naive baseline
+   picks it because it's closest" mechanism no longer applies to it. Also tried a
+   self-folded-but-KOMO-feasible configuration at r=0.30/az=180 (forearm bent back over the
+   upper arm) — a real behavioral difference, but for the wrong reason: it's a
+   manipulability-ordering failure, not a reachability one (that candidate's own stage-1
+   score was the *highest* of the 4, being isolated). The user rejected adding a
+   manipulability-based tie-break to `select_ours()` for this ("too messy, unnecessary"),
+   and separately pointed out that validating a manipulability-based mechanism under a
+   section titled "reachability filtering ablation" would undercut the section's own claim.
+3. Final: a real physical obstacle. Syntax mirrors the existing
+   `big_overhead_obstacle`/`over_rect_obstacle_place` pattern in
+   `test/scenes/scene_dual_lr_with_big_overhead_obstacle.g` (`contact:1`, no `is_object`).
+   First tried as an overhead panel (low ceiling) — reliable but the user rejected it as
+   visually wrong ("doesn't look like a wall"). Switched to a single upright wall facing the
+   candidate: unreliable at moderate size (0.3–0.8m tall) because the arm's 7 redundant DOF
+   can route around anything that small; reliable once large enough and close enough — the
+   size/gap trade-off that was actually shipped is r=0.35m (still under the good
+   candidates' 0.40m, so it stays nearest), wall 0.15m×0.20m, ~1cm gap. `_obstacle_line()`
+   in `ablation_reachability_quant.py` has the exact swept parameters and the (wrong then
+   corrected) rotation-sign derivation for orienting the wall to face the candidate's own
+   azimuth at any angle, not just the one first tested.
+
+**A whole side investigation turned out to be a red herring, worth remembering so it isn't
+repeated**: partway through building Type B, `bin/x.exe` started hanging deterministically
+on every run, always at the same point in `main.cpp` — right after `[ACTIVE_COLL] Partial
+report updated` prints, inside `solved_komo->get_viewer()`/`view_play()` (a KOMO viewer
+created purely for playback, not needed for the actual result). Chased this through:
+relinking `x.exe` against the current libraries (no effect), a full `make clean && make` of
+every rai library for ABI consistency (no effect — and this was overreach the user
+explicitly pushed back on: **don't rebuild rai/ as a diagnostic step**, revert to source
+changes only, ask before touching shared/vendored code again), reverting the unrelated
+shader edit made earlier that session (see below — no effect either). Per-thread inspection
+(`/proc/<pid>/task/*/wchan`) found the real shape of it: 51 threads all named
+`GlfwSpinnerSpi` (from `GlfwSingleton` in `rai/src/Gui/opengl.cpp`, meant to be a
+function-local-static singleton) blocked on the same futex — a genuine latent
+multi-threaded-init race in that class, not anything touched this session. `journalctl`
+showed the machine's AMD iGPU throwing recurring `amdgpu: DMCUB error` firmware errors for
+hours before and during the investigation, independent of anything in this session — the
+likely trigger. It cleared on its own after some time with no reboot (`uptime` confirmed no
+restart happened); if it recurs, that's the machine's GPU/display firmware, not the repo.
+
+**Unrelated shader tweak, reverted**: dimmed `SpecularPower` in
+`rai/src/Gui/shaderObj.fs` (0.4→0.12) to fix a harsh specular hotspot on the cream table
+color, rebuilt `render_scene.exe`/`render_grasp.exe`. Confirmed via `git stash` + rebuild
+that this was unrelated to the `x.exe` hang above (still hung with the original shader).
+**Currently reverted** (`git stash`, not popped) after the user asked to back out of
+anything touching compiled output while the hang was unexplained — if the glare fix is
+still wanted, it's sitting in the stash, safe to re-apply and rebuild once the user is
+comfortable with another compile pass.
+
+**Correctness bug found in the batch script's own analysis, not the pipeline**: the first
+full run of the finished wall design showed Type B baseline succeeding in all 5 scenes —
+looked like the obstacle didn't work. `active_collision_history` reports showed
+`obstacle_1` *was* correctly registered as an active collision pair against
+`cube_4`/fingers/palm; the full multi-phase solver just found a path around a single rigid
+wall in ~1–2s despite that (it is far less conservative than the single-waypoint check,
+which still correctly reports infeasible for every Type B scene — this full-solver vs.
+single-waypoint disagreement is a recurring pattern in this repo, not new). Per the user's
+call: don't chase this further, and don't report it as a solver-level failure, since it
+isn't one. `run_one()`'s Type B outcome is `"fails (selection ignores a real obstacle in
+the path)"` unconditionally — the defect being demonstrated is that the naive baseline's
+*selection* never queries obstruction at all, not that execution fails. Final tallies: ours
+10/10, baseline 0/10 (5/5 Type A on the 0cm-clearance criterion, 5/5 Type B on the
+ignores-obstacle criterion).

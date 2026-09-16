@@ -5,7 +5,7 @@
 
 world {}
 
-table (world) { shape:ssBox, size:[2. 4. .1 .02], Q:"t(0 0 .6)", color:[.3 .3 .3], contact:1, logical:{ is_place } }
+table (world) { shape:ssBox, size:[2. 4. .1 .02], Q:"t(0 0 .6)", color:[.96 .89 .72], contact:1, logical:{ is_place } }
 
 # -----------------------------------------------------------
 # Robot (Panda Arm)
@@ -32,5 +32,5 @@ Edit l_panda_finger_joint2 { q: 0.04 }
 # 只有①层 :无法区分,可能选中 cube_unreachable
 # 本文方法 :②层 KOMO 无解 -> 剪除 -> 改选 cube_reachable
 # =====================================================================
-cube_reachable   (table) { Q:"t(0.00 0.15 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[.2 .6 .35], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
-cube_unreachable (table) { Q:"t(0.00 0.75 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[.85 .25 .2], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+cube_reachable   (table) { Q:"t(0.00 0.15 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[1 1 1], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }
+cube_unreachable (table) { Q:"t(0.00 0.75 .065)", joint:rigid, shape:ssBox, size:[.03 .03 .03 .001], color:[1 1 1], contact:1, mass:.2, logical:{ is_object, is_box, is_place } }

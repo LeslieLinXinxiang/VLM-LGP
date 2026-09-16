@@ -1,0 +1,478 @@
+[
+  {
+    "scene": "typeA_01",
+    "type": "A",
+    "bad_azimuth": -60,
+    "rho": {
+      "cube_4": 0.89,
+      "filler_1": 0.893,
+      "cube_1": 1.924,
+      "cube_2": 1.957,
+      "cube_3": 1.946
+    },
+    "dist_to_base": {
+      "cube_4": 0.3,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.366735935211182,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 222.71,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 9.20708966255188,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 225.69,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (unsafe: 0cm clearance from neighboring object)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeA_02",
+    "type": "A",
+    "bad_azimuth": -80,
+    "rho": {
+      "cube_4": 0.906,
+      "filler_1": 0.906,
+      "cube_1": 1.929,
+      "cube_2": 1.957,
+      "cube_3": 1.97
+    },
+    "dist_to_base": {
+      "cube_4": 0.3,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.359194278717041,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 226.87,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 9.130398988723755,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 226.47,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (unsafe: 0cm clearance from neighboring object)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeA_03",
+    "type": "A",
+    "bad_azimuth": -100,
+    "rho": {
+      "cube_4": 0.907,
+      "filler_1": 0.907,
+      "cube_1": 1.93,
+      "cube_2": 1.957,
+      "cube_3": 1.972
+    },
+    "dist_to_base": {
+      "cube_4": 0.3,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.3901948928833,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 222.92,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 9.427555322647095,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 225.39,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (unsafe: 0cm clearance from neighboring object)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeA_04",
+    "type": "A",
+    "bad_azimuth": -120,
+    "rho": {
+      "cube_4": 0.908,
+      "filler_1": 0.908,
+      "cube_1": 1.93,
+      "cube_2": 1.957,
+      "cube_3": 1.972
+    },
+    "dist_to_base": {
+      "cube_4": 0.3,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.330029964447021,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 228.6,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 9.584692239761353,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 226.73,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (unsafe: 0cm clearance from neighboring object)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeA_05",
+    "type": "A",
+    "bad_azimuth": -140,
+    "rho": {
+      "cube_4": 0.907,
+      "filler_1": 0.907,
+      "cube_1": 1.93,
+      "cube_2": 1.957,
+      "cube_3": 1.972
+    },
+    "dist_to_base": {
+      "cube_4": 0.3,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.363695859909058,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 222.36,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 9.480729103088379,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 230.73,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (unsafe: 0cm clearance from neighboring object)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeB_01",
+    "type": "B",
+    "bad_azimuth": -60,
+    "rho": {
+      "cube_4": 1.968,
+      "cube_1": 1.904,
+      "cube_2": 1.943,
+      "cube_3": 1.933
+    },
+    "dist_to_base": {
+      "cube_4": 0.35,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.371750593185425,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 222.91,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 9.651195526123047,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 226.8,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (selection ignores a real obstacle in the path)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeB_02",
+    "type": "B",
+    "bad_azimuth": -80,
+    "rho": {
+      "cube_4": 1.998,
+      "cube_1": 1.906,
+      "cube_2": 1.943,
+      "cube_3": 1.961
+    },
+    "dist_to_base": {
+      "cube_4": 0.35,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.356918334960938,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 225.45,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 8.395703315734863,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 224.52,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (selection ignores a real obstacle in the path)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeB_03",
+    "type": "B",
+    "bad_azimuth": -100,
+    "rho": {
+      "cube_4": 2.0,
+      "cube_1": 1.906,
+      "cube_2": 1.943,
+      "cube_3": 1.963
+    },
+    "dist_to_base": {
+      "cube_4": 0.35,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.371559858322144,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 225.85,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 8.417933702468872,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 223.59,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (selection ignores a real obstacle in the path)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeB_04",
+    "type": "B",
+    "bad_azimuth": -120,
+    "rho": {
+      "cube_4": 2.0,
+      "cube_1": 1.906,
+      "cube_2": 1.943,
+      "cube_3": 1.963
+    },
+    "dist_to_base": {
+      "cube_4": 0.35,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.363938808441162,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 224.05,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 13.899068355560303,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 229.54,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (selection ignores a real obstacle in the path)",
+    "ours_outcome": "succeeds"
+  },
+  {
+    "scene": "typeB_05",
+    "type": "B",
+    "bad_azimuth": -140,
+    "rho": {
+      "cube_4": 2.0,
+      "cube_1": 1.906,
+      "cube_2": 1.943,
+      "cube_3": 1.963
+    },
+    "dist_to_base": {
+      "cube_4": 0.35,
+      "cube_1": 0.4,
+      "cube_2": 0.45,
+      "cube_3": 0.5
+    },
+    "ours_selection": [
+      "cube_1",
+      "cube_2",
+      "cube_3"
+    ],
+    "baseline_selection": [
+      "cube_4",
+      "cube_1",
+      "cube_2"
+    ],
+    "ours_result": {
+      "success": true,
+      "runtime_s": 8.346713542938232,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 227.55,
+      "output_state_exists": true
+    },
+    "baseline_result": {
+      "success": true,
+      "runtime_s": 13.835509777069092,
+      "exit_code": 0,
+      "timeout": false,
+      "memory_exceeded": false,
+      "memory_peak_mb": 228.72,
+      "output_state_exists": true
+    },
+    "baseline_outcome": "fails (selection ignores a real obstacle in the path)",
+    "ours_outcome": "succeeds"
+  }
+]

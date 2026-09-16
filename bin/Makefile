@@ -23,3 +23,7 @@ render-grasp: render_grasp.exe
 
 render_grasp.exe: render_grasp.o $(BUILDS)
 	$(LINK) $(LDFLAGS) -o $@ render_grasp.o $(LIBS)
+
+probe-frame: probe_frame.exe
+probe_frame.exe: probe_frame.o $(BUILDS)
+	$(LINK) $(LDFLAGS) -o $@ probe_frame.o $(LIBS)
