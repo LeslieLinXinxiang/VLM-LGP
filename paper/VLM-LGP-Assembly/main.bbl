@@ -1,0 +1,253 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{#1}
+\csname url@rmstyle\endcsname
+\providecommand{\newblock}{\relax}
+\providecommand{\bibinfo}[2]{#2}
+\providecommand\BIBentrySTDinterwordspacing{\spaceskip=0pt\relax}
+\providecommand\BIBentryALTinterwordstretchfactor{4}
+\providecommand\BIBentryALTinterwordspacing{\spaceskip=\fontdimen2\font plus
+\BIBentryALTinterwordstretchfactor\fontdimen3\font minus
+  \fontdimen4\font\relax}
+\providecommand\BIBforeignlanguage[2]{{%
+\expandafter\ifx\csname l@#1\endcsname\relax
+\typeout{** WARNING: IEEEtran.bst: No hyphenation pattern has been}%
+\typeout{** loaded for the language `#1'. Using the pattern for}%
+\typeout{** the default language instead.}%
+\else
+\language=\csname l@#1\endcsname
+\fi
+#2}}
+
+\bibitem{li2019survey}
+R.~Li and H.~Qiao, ``A survey of methods and strategies for high-precision
+  robotic grasping and assembly tasks—some new trends,'' \emph{IEEE/ASME
+  Transactions on Mechatronics}, vol.~24, no.~6, pp. 2718--2732, 2019.
+
+\bibitem{daneshmand2023industry}
+M.~Daneshmand, F.~Noroozi, C.~Corneanu, F.~Mafakheri, and P.~Fiorini,
+  ``Industry 4.0 and prospects of circular economy: a survey of robotic
+  assembly and disassembly,'' \emph{The International Journal of Advanced
+  Manufacturing Technology}, vol. 124, no.~9, pp. 2973--3000, 2023.
+
+\bibitem{jiang2022review}
+Y.~Jiang, Z.~Huang, B.~Yang, and W.~Yang, ``A review of robotic assembly
+  strategies for the full operation procedure: planning, execution and
+  evaluation,'' \emph{Robotics and Computer-Integrated Manufacturing}, vol.~78,
+  p. 102366, 2022.
+
+\bibitem{faccio2019collaborative}
+M.~Faccio, M.~Bottin, and G.~Rosati, ``Collaborative and traditional robotic
+  assembly: a comparison model,'' \emph{The International Journal of Advanced
+  Manufacturing Technology}, vol. 102, no.~5, pp. 1355--1372, 2019.
+
+\bibitem{zhao2024survey}
+Z.~Zhao, S.~Cheng, Y.~Ding, Z.~Zhou, S.~Zhang, D.~Xu, and Y.~Zhao, ``A survey
+  of optimization-based task and motion planning: From classical to learning
+  approaches,'' \emph{IEEE/ASME Transactions On Mechatronics}, vol.~30, no.~4,
+  pp. 2799--2825, 2024.
+
+\bibitem{guo2023recent}
+H.~Guo, F.~Wu, Y.~Qin, R.~Li, K.~Li, and K.~Li, ``Recent trends in task and
+  motion planning for robotics: A survey,'' \emph{ACM Computing Surveys},
+  vol.~55, no. 13s, pp. 1--36, 2023.
+
+\bibitem{aeronautiques1998pddl}
+C.~Aeronautiques, A.~Howe, C.~Knoblock, I.~D. McDermott, A.~Ram, M.~Veloso,
+  D.~Weld, D.~W. Sri, A.~Barrett, D.~Christianson, \emph{et~al.}, ``Pddl—the
+  planning domain definition language,'' \emph{Technical Report, Tech. Rep.},
+  1998.
+
+\bibitem{jiang2019task}
+Y.-q. Jiang, S.-q. Zhang, P.~Khandelwal, and P.~Stone, ``Task planning in
+  robotics: an empirical comparison of pddl-and asp-based systems,''
+  \emph{Frontiers of Information Technology \& Electronic Engineering},
+  vol.~20, no.~3, pp. 363--373, 2019.
+
+\bibitem{marc2015LGP}
+M.~Toussaint, ``Logic-geometric programming: an optimization-based approach to
+  combined task and motion planning,'' in \emph{Proceedings of the 24th
+  International Conference on Artificial Intelligence}.\hskip 1em plus 0.5em
+  minus 0.4em\relax AAAI Press, 2015, p. 1930–1936.
+
+\bibitem{toussaint2017multi}
+M.~Toussaint and M.~Lopes, ``Multi-bound tree search for logic-geometric
+  programming in cooperative manipulation domains,'' in \emph{2017 IEEE
+  International Conference on Robotics and Automation (ICRA)}.\hskip 1em plus
+  0.5em minus 0.4em\relax IEEE, 2017, pp. 4044--4051.
+
+\bibitem{gkournelos2024llm}
+C.~Gkournelos, C.~Konstantinou, and S.~Makris, ``An llm-based approach for
+  enabling seamless human-robot collaboration in assembly,'' \emph{CIRP
+  Annals}, vol.~73, no.~1, pp. 9--12, 2024.
+
+\bibitem{ao2025llm}
+J.~Ao, F.~Wu, Y.~Wu, A.~Swiki, and S.~Haddadin, ``Llm-as-bt-planner: Leveraging
+  llms for behavior tree generation in robot task planning,'' in \emph{2025
+  IEEE International Conference on Robotics and Automation (ICRA)}.\hskip 1em
+  plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 1233--1239.
+
+\bibitem{zhou2024isr}
+Z.~Zhou, J.~Song, K.~Yao, Z.~Shu, and L.~Ma, ``Isr-llm: Iterative self-refined
+  large language model for long-horizon sequential task planning,'' in
+  \emph{2024 IEEE International Conference on Robotics and Automation
+  (ICRA)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2024, pp. 2081--2088.
+
+\bibitem{wang2025large}
+J.~Wang, E.~Shi, H.~Hu, C.~Ma, Y.~Liu, X.~Wang, Y.~Yao, X.~Liu, B.~Ge, and
+  S.~Zhang, ``Large language models for robotics: Opportunities, challenges,
+  and perspectives,'' \emph{Journal of Automation and Intelligence}, vol.~4,
+  no.~1, pp. 52--64, 2025.
+
+\bibitem{qi2026llm}
+J.~Qi, L.~Lu, F.~Wang, H.-Y. Lee, D.~Navarro-Alarcon, Z.~Zhang, and P.~Zhou,
+  ``Llm-driven symbolic planning and hierarchical imitation learning for
+  long-horizon deformable object assembly,'' \emph{Robotics and
+  Computer-Integrated Manufacturing}, vol.~97, p. 103096, 2026.
+
+\bibitem{9868234}
+V.~N. Hartmann, A.~Orthey, D.~Driess, O.~S. Oguz, and M.~Toussaint,
+  ``Long-horizon multi-robot rearrangement planning for construction
+  assembly,'' \emph{IEEE Transactions on Robotics}, vol.~39, no.~1, pp.
+  239--252, 2023.
+
+\bibitem{8290586}
+A.~B. Gunji, B.~B. B. V.~L. Deepak, C.~M. V. A.~R. Bahubalendruni, and D.~B.~B.
+  Biswal, ``An optimal robotic assembly sequence planning by assembly subsets
+  detection method using teaching learning-based optimization algorithm,''
+  \emph{IEEE Transactions on Automation Science and Engineering}, vol.~15,
+  no.~3, pp. 1369--1385, 2018.
+
+\bibitem{4288472}
+P.~Tang and J.~Xiao, ``Automatic generation of a high-level contact state graph
+  for assembly between curved objects,'' in \emph{2007 IEEE International
+  Symposium on Assembly and Manufacturing}, 2007, pp. 197--202.
+
+\bibitem{9663037}
+H.~Chen, W.~Wan, K.~Koyama, and K.~Harada, ``Planning to build block structures
+  with unstable intermediate states using two manipulators,'' \emph{IEEE
+  Transactions on Automation Science and Engineering}, vol.~19, no.~4, pp.
+  3777--3793, 2022.
+
+\bibitem{11224520}
+Z.~Wang, Q.~Pan, Y.~Zhou, R.~Jiang, J.~Ma, B.~He, and X.~Li, ``Long-sequence
+  task planning for flexible assembly with spatio-temporal scene graph,''
+  \emph{IEEE Transactions on Automation Science and Engineering}, vol.~22, pp.
+  23\,594--23\,606, 2025.
+
+\bibitem{2832415.2832517}
+M.~Toussaint, ``Logic-geometric programming: an optimization-based approach to
+  combined task and motion planning,'' in \emph{Proceedings of the 24th
+  International Conference on Artificial Intelligence}, ser. IJCAI'15.\hskip
+  1em plus 0.5em minus 0.4em\relax AAAI Press, 2015, p. 1930–1936.
+
+\bibitem{9515539}
+A.~T. Le, P.~Kratzer, S.~Hagenmayer, M.~Toussaint, and J.~Mainprice,
+  ``Hierarchical human-motion prediction and logic-geometric programming for
+  minimal interference human-robot tasks,'' in \emph{2021 30th IEEE
+  International Conference on Robot and Human Interactive Communication
+  (RO-MAN)}, 2021, pp. 7--14.
+
+\bibitem{9981797}
+C.~V. Braun, J.~Ortiz-Haro, M.~Toussaint, and O.~S. Oguz, ``Rhh-lgp: Receding
+  horizon and heuristics-based logic-geometric programming for task and motion
+  planning,'' in \emph{2022 IEEE/RSJ International Conference on Intelligent
+  Robots and Systems (IROS)}, 2022, pp. 13\,761--13\,768.
+
+\bibitem{10610285}
+T.~Xue, A.~Razmjoo, and S.~Calinon, ``D-lgp: Dynamic logic-geometric program
+  for reactive task and motion planning,'' in \emph{2024 IEEE International
+  Conference on Robotics and Automation (ICRA)}, 2024, pp. 14\,888--14\,894.
+
+\bibitem{10611389}
+K.~T. Ly, V.~Semenov, M.~Risiglione, W.~Merkt, and I.~Havoutis, ``R-lgp: A
+  reachability-guided logic-geometric programming framework for optimal task
+  and motion planning on mobile manipulators,'' in \emph{2024 IEEE
+  International Conference on Robotics and Automation (ICRA)}, 2024, pp.
+  14\,917--14\,923.
+
+\bibitem{11495231}
+Y.~Ma, Z.~Song, Y.~Zhuang, J.~Hao, and I.~King, ``A survey on
+  vision--language--action models for embodied ai,'' \emph{IEEE Transactions on
+  Neural Networks and Learning Systems}, vol.~37, no.~7, pp. 3031--3051, 2026.
+
+\bibitem{11296887}
+X.~Li, G.~Tian, and Y.~Cui, ``Semantically guided task planning: Supervised
+  vision-language-action model by large language models,'' \emph{IEEE
+  Transactions on Circuits and Systems for Video Technology}, vol.~36, no.~5,
+  pp. 7411--7425, 2026.
+
+\bibitem{11373776}
+Y.~Han, K.~Wu, Q.~Shao, R.~Xiao, Z.~Wang, C.~Jiang, Y.~Xiao, L.~Hu, and Y.~Lou,
+  ``Applevlm: End-to-end autonomous driving with advanced perception and
+  planning-enhanced vision-language models,'' \emph{IEEE Transactions on
+  Intelligent Transportation Systems}, vol.~27, no.~6, pp. 7028--7043, 2026.
+
+\bibitem{11264491}
+H.~Tian, K.~Reddy, Y.~Feng, M.~Quddus, Y.~Demiris, and P.~Angeloudis, ``Large
+  (vision) language models for autonomous vehicles: Current trends and future
+  directions,'' \emph{IEEE Transactions on Intelligent Transportation Systems},
+  vol.~27, no.~1, pp. 187--210, 2026.
+
+\bibitem{11370194}
+G.~Chen, Q.~Yang, J.~Li, C.~L.~P. Chen, and C.~Yang, ``Cooperative control
+  framework for dual-arm robot enhanced by vision language model and
+  reinforcement learning,'' \emph{IEEE Transactions on Automation Science and
+  Engineering}, vol.~23, pp. 4314--4328, 2026.
+
+\bibitem{10990233}
+P.~Hao, S.~Cui, J.~Wei, T.~Lu, Y.~Cai, and S.~Wang, ``Learn-gen-plan: Bridging
+  the gap between vision language models and real-world long-horizon dexterous
+  manipulations,'' \emph{IEEE Transactions on Automation Science and
+  Engineering}, vol.~22, pp. 15\,638--15\,649, 2025.
+
+\bibitem{11520663}
+R.~Römer, Y.~Zhang, Y.~Li, and A.~P. Schoellig, ``Clare: Continual learning
+  for vision-language-action models via autonomous adapter routing and
+  expansion,'' \emph{IEEE Robotics and Automation Letters}, vol.~11, no.~7, pp.
+  8331--8338, 2026.
+
+\bibitem{10900471}
+J.~Wen, Y.~Zhu, J.~Li, M.~Zhu, Z.~Tang, K.~Wu, Z.~Xu, N.~Liu, R.~Cheng,
+  C.~Shen, Y.~Peng, F.~Feng, and J.~Tang, ``Tinyvla: Toward fast,
+  data-efficient vision-language-action models for robotic manipulation,''
+  \emph{IEEE Robotics and Automation Letters}, vol.~10, no.~4, pp. 3988--3995,
+  2025.
+
+\bibitem{11640725}
+Z.~Su, W.~Kong, H.~Dong, and H.~Dong, ``Ig-rft: An interaction-guided rl
+  framework for vla models in long-horizon robotic manipulation,'' \emph{IEEE
+  Transactions on Automation Science and Engineering}, vol.~23, pp.
+  14\,131--14\,146, 2026.
+
+\bibitem{11328873}
+Y.~Yang, Z.~Li, and Z.~Hu, ``Vision-language-action model-based event-triggered
+  admittance control of a mobile manipulator for power substation
+  live-maintaining,'' \emph{IEEE Transactions on Fuzzy Systems}, vol.~34,
+  no.~3, pp. 881--895, 2026.
+
+\bibitem{luo2024fmb}
+J.~Luo, C.~Xu, F.~Liu, L.~Tan, Z.~Lin, J.~Wu, P.~Abbeel, and S.~Levine, ``Fmb:
+  A functional manipulation benchmark for generalizable robotic learning,''
+  \emph{The International Journal of Robotics Research}, vol.~44, no.~4, pp.
+  592--606, 2025.
+
+\bibitem{toussaint2014newton}
+M.~Toussaint, ``Newton methods for k-order markov constrained motion
+  problems,'' \emph{arXiv preprint arXiv:1407.0414}, 2014.
+
+\bibitem{yoshikawa1985manipulability}
+T.~Yoshikawa, ``Manipulability of robotic mechanisms,'' \emph{The International
+  Journal of Robotics Research}, vol.~4, no.~2, pp. 3--9, 1985.
+
+\bibitem{ott2008passivity}
+C.~Ott, A.~Albu-Schaffer, A.~Kugi, and G.~Hirzinger, ``On the passivity-based
+  impedance control of flexible joint robots,'' \emph{IEEE Transactions on
+  Robotics}, vol.~24, no.~2, pp. 416--429, 2008.
+
+\bibitem{li2025vlm}
+S.~Li, Z.~Yan, Z.~Wang, and Y.~Gao, ``Vlm-msgraph: Vision language
+  model-enabled multi-hierarchical scene graph for robotic assembly,''
+  \emph{Robotics and Computer-Integrated Manufacturing}, vol.~94, p. 102978,
+  2025.
+
+\end{thebibliography}

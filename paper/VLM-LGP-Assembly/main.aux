@@ -1,0 +1,170 @@
+\relax 
+\providecommand{\transparent@use}[1]{}
+\citation{li2019survey}
+\citation{daneshmand2023industry}
+\citation{jiang2022review}
+\citation{faccio2019collaborative}
+\citation{zhao2024survey}
+\citation{guo2023recent}
+\citation{aeronautiques1998pddl}
+\citation{jiang2019task}
+\citation{marc2015LGP}
+\citation{toussaint2017multi}
+\citation{gkournelos2024llm}
+\citation{ao2025llm}
+\citation{zhou2024isr}
+\citation{wang2025large}
+\citation{qi2026llm}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\citation{9868234}
+\citation{8290586}
+\citation{4288472}
+\citation{9663037}
+\citation{11224520}
+\citation{2832415.2832517}
+\citation{9515539}
+\citation{9981797}
+\citation{10610285}
+\citation{10611389}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The overall workflow of the proposed VLM-LGP framework. {\color  {red}ZZ: change this figure}}}{2}{}\protected@file@percent }
+\newlabel{fig:workflow}{{1}{2}{}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Assembly Sequence Planning and Structural Representations}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-B}Task and Motion Planning for Long-Horizon Assembly}{2}{}\protected@file@percent }
+\citation{11495231}
+\citation{11296887}
+\citation{11373776}
+\citation{11264491}
+\citation{11370194}
+\citation{10990233}
+\citation{11520663}
+\citation{10900471}
+\citation{11640725}
+\citation{11328873}
+\citation{luo2024fmb}
+\citation{luo2024fmb}
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-C}Foundation Models in Robotic Assembly}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Problem Formulation}{3}{}\protected@file@percent }
+\newlabel{sec:problem_formulation}{{III}{3}{}{section.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Examples of target images used in our experiments. (a) For the Block Stacking (BS) task, where all components are clearly visible, a single target image is provided, with the legend indicating the object type $c(v_i)$. The assembly relation set is defined as $\mathcal  {R}=\{\texttt  {left\_on},\texttt  {right\_on},\texttt  {center\_on} \}$. (b) For the Functional Manipulation Benchmark (FMB)~\cite  {luo2024fmb} task, where occlusions exist, a sequence of target images is provided to collectively specify the assembly structure, with $\mathcal  {R}=\{\texttt  {left\_in},\texttt  {right\_in},\texttt  {center\_in}\}$. {\color  {red}ZZ: how $\mathcal  {R}$ is defined for FMB? alsom change (a) so all legends indicated shape are present in the structure, (b) change color to the same for all blocks}}}{3}{}\protected@file@percent }
+\newlabel{fig:problem_definition_input}{{2}{3}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Method}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example of graph decomposition with $N_{\max }=2$. {\color  {red}ZZ: change this figure}}}{4}{}\protected@file@percent }
+\newlabel{fig:graph_decomposition}{{3}{4}{}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Assembly Graph Generation and Decomposition}{4}{}\protected@file@percent }
+\newlabel{sec:task_understanding}{{IV-A}{4}{}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-A.1}VLM for Assembly Graph Generation}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-A.2}Graph Decomposition for Task Planning}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Reachability-Manipulability-Aware Scene Understanding}{4}{}\protected@file@percent }
+\newlabel{sec:scene_understanding}{{IV-B}{4}{}{subsection.4.2}{}}
+\citation{toussaint2014newton}
+\citation{yoshikawa1985manipulability}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Reachability filtering. {\color  {red}ZZ: change this figure}}}{5}{}\protected@file@percent }
+\newlabel{fig:reachability_filtering}{{4}{5}{}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-B.1}Reachability Filtering}{5}{}\protected@file@percent }
+\newlabel{eq:reach_fused}{{5}{5}{}{equation.5}{}}
+\newlabel{eq:reach_gmm}{{6}{5}{}{equation.6}{}}
+\newlabel{eq:reach_esdf}{{7}{5}{}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-B.2}Manipulability-Aware Object Ordering}{5}{}\protected@file@percent }
+\newlabel{eq:manip}{{12}{5}{}{equation.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}LGP-Based Motion Planning and Execution}{5}{}\protected@file@percent }
+\newlabel{sec:motion_execution}{{IV-C}{5}{}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-C.1}Symbolic Action Plan Determination}{5}{}\protected@file@percent }
+\citation{marc2015LGP}
+\citation{marc2015LGP}
+\citation{ott2008passivity}
+\citation{luo2024fmb}
+\citation{li2025vlm}
+\newlabel{eq:lgp_symbolic_transition}{{15}{6}{}{equation.15}{}}
+\newlabel{eq:lgp_symbolic_plan}{{16}{6}{}{equation.16}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-C.2}LGP with Active Constraints}{6}{}\protected@file@percent }
+\newlabel{eq:lgp_obj}{{17}{6}{}{equation.17}{}}
+\newlabel{eq:lgp_sweq}{{18}{6}{}{equation.18}{}}
+\newlabel{eq:lgp_swineq}{{19}{6}{}{equation.19}{}}
+\newlabel{eq:lgp_patheq}{{20}{6}{}{equation.20}{}}
+\newlabel{eq:lgp_pathineq}{{21}{6}{}{equation.21}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV-C.3}Motion Execution with Impedance Controller}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Results}{6}{}\protected@file@percent }
+\newlabel{sec:results}{{V}{6}{}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-A}Experimental Setup}{6}{}\protected@file@percent }
+\newlabel{subsec:setup}{{V-A}{6}{}{subsection.5.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.1}Tasks}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.2}Baselines}{6}{}\protected@file@percent }
+\citation{li2025vlm}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Self-referential majority-vote reference, N=5 cases per magnitude. \textit  {w/o Validator}: retry loop is API-error-only. \textit  {Ours}: full pipeline with the rule-based graph validator enabled, correcting the four trials it rejects (Section~\ref {subsubsec:abl_validator}). VLM-MSGraph~\cite  {li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}}{7}{}\protected@file@percent }
+\newlabel{tab:vlm_accuracy}{{I}{7}{}{table.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.3}Metrics}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.4}Parameters and Hardware}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Assembly Performance}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.1}Assembly Graph Generation}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.2}Task Planning and Motion Execution}{7}{}\protected@file@percent }
+\citation{li2025vlm}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.3}Real-World Experiments}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Ablation Studies}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.1}VLM for Graph Generation}{8}{}\protected@file@percent }
+\newlabel{subsubsec:abl_validator}{{V-C.2}{8}{}{subsubsection.5.3.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.2}Assembly Graph Generation Validator}{8}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}}{8}{}\protected@file@percent }
+\newlabel{tab:vlm_backbone_selection}{{II}{8}{}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}}{8}{}\protected@file@percent }
+\newlabel{tab:vlm_input_format}{{III}{8}{}{table.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.3}Reachability-Manipulability-Aware Object Ordering}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.4}Active Constraints for LGP}{8}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for cube-stacking assemblies of 4 to 8 cubes on the physical Franka Panda platform.}}{9}{}\protected@file@percent }
+\newlabel{fig:real_cube_stacking}{{5}{9}{}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for FMB assemblies of 3 to 5 objects on the physical Franka Panda platform.}}{9}{}\protected@file@percent }
+\newlabel{fig:real_fmb}{{6}{9}{}{figure.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite  {li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}}{10}{}\protected@file@percent }
+\newlabel{tab:planning_sr}{{IV}{10}{}{table.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}}{10}{}\protected@file@percent }
+\newlabel{tab:planning_time}{{V}{10}{}{table.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}}{10}{}\protected@file@percent }
+\newlabel{tab:stage_timing}{{VI}{10}{}{table.6}{}}
+\bibstyle{IEEEtran}
+\bibdata{ref}
+\bibcite{li2019survey}{1}
+\bibcite{daneshmand2023industry}{2}
+\bibcite{jiang2022review}{3}
+\bibcite{faccio2019collaborative}{4}
+\bibcite{zhao2024survey}{5}
+\bibcite{guo2023recent}{6}
+\bibcite{aeronautiques1998pddl}{7}
+\bibcite{jiang2019task}{8}
+\bibcite{marc2015LGP}{9}
+\bibcite{toussaint2017multi}{10}
+\bibcite{gkournelos2024llm}{11}
+\bibcite{ao2025llm}{12}
+\bibcite{zhou2024isr}{13}
+\bibcite{wang2025large}{14}
+\bibcite{qi2026llm}{15}
+\bibcite{9868234}{16}
+\bibcite{8290586}{17}
+\bibcite{4288472}{18}
+\bibcite{9663037}{19}
+\bibcite{11224520}{20}
+\bibcite{2832415.2832517}{21}
+\bibcite{9515539}{22}
+\bibcite{9981797}{23}
+\bibcite{10610285}{24}
+\bibcite{10611389}{25}
+\bibcite{11495231}{26}
+\bibcite{11296887}{27}
+\bibcite{11373776}{28}
+\bibcite{11264491}{29}
+\bibcite{11370194}{30}
+\bibcite{10990233}{31}
+\bibcite{11520663}{32}
+\bibcite{10900471}{33}
+\bibcite{11640725}{34}
+\bibcite{11328873}{35}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {VI-A}Role of VLM}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
+\bibcite{luo2024fmb}{36}
+\bibcite{toussaint2014newton}{37}
+\bibcite{yoshikawa1985manipulability}{38}
+\bibcite{ott2008passivity}{39}
+\bibcite{li2025vlm}{40}
+\gdef\svg@ink@ver@settings{{\m@ne }{inkscape}{\m@ne }}
+\gdef \@abspage@last{12}
