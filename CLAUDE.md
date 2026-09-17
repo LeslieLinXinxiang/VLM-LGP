@@ -5,7 +5,17 @@ start of a new session (on any machine) to pick up where the last session left o
 Update it before ending a work session — append or revise, don't just delete history that
 might still be relevant next time.
 
----
+**Standing rule (2026-09-17): for paper content, local is authoritative over the Overleaf
+cloud copy.** When `paper/VLM-LGP-Assembly/main.tex` (or its assets) differs from what's on
+disk after a sync, commit the local state rather than re-litigating or asking again — this
+was previously a recurring "which side wins" question (see the Overleaf-sync history below)
+and the user has now settled it for paper content specifically. Note the actual limitation:
+nothing in this environment can write back into Overleaf's cloud editor (no authenticated
+browser session, no control over the Antigravity IDE's Overleaf Workshop extension) — "local
+wins" means committing/keeping the local file as correct, not literally pushing it into
+Overleaf; the user does that side themselves (via Antigravity's own sync, or by pasting into
+the Overleaf web editor after checking its History panel for any not-yet-synced advisor
+edits there first).
 
 ## Current phase (2026-09-12): method figures done, ablation experiments next
 
