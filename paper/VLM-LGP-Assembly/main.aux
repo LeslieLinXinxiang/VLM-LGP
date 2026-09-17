@@ -104,22 +104,24 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.1}VLM for Graph Generation}{8}{}\protected@file@percent }
 \newlabel{subsubsec:abl_validator}{{V-C.2}{8}{}{subsubsection.5.3.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.2}Assembly Graph Generation Validator}{8}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}}{8}{}\protected@file@percent }
-\newlabel{tab:vlm_backbone_selection}{{II}{8}{}{table.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}}{8}{}\protected@file@percent }
-\newlabel{tab:vlm_input_format}{{III}{8}{}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Reachability-filtering ablation. Ten designed scenes, each with four same-type candidates (three needed, one adversarial and always nearest the base). Outcome is whether the selected candidate is safe and reachable, not the solver's raw exit code -- see text.}}{8}{}\protected@file@percent }
+\newlabel{tab:ablation_reachability}{{II}{8}{}{table.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.3}Reachability-Manipulability-Aware Object Ordering}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.4}Active Constraints for LGP}{8}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for cube-stacking assemblies of 4 to 8 cubes on the physical Franka Panda platform.}}{9}{}\protected@file@percent }
 \newlabel{fig:real_cube_stacking}{{5}{9}{}{figure.5}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for FMB assemblies of 3 to 5 objects on the physical Franka Panda platform.}}{9}{}\protected@file@percent }
 \newlabel{fig:real_fmb}{{6}{9}{}{figure.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite  {li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}}{10}{}\protected@file@percent }
-\newlabel{tab:planning_sr}{{IV}{10}{}{table.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}}{10}{}\protected@file@percent }
-\newlabel{tab:planning_time}{{V}{10}{}{table.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}}{10}{}\protected@file@percent }
-\newlabel{tab:stage_timing}{{VI}{10}{}{table.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}}{10}{}\protected@file@percent }
+\newlabel{tab:vlm_backbone_selection}{{III}{10}{}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}}{10}{}\protected@file@percent }
+\newlabel{tab:vlm_input_format}{{IV}{10}{}{table.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite  {li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}}{10}{}\protected@file@percent }
+\newlabel{tab:planning_sr}{{V}{10}{}{table.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}}{10}{}\protected@file@percent }
+\newlabel{tab:planning_time}{{VI}{10}{}{table.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}}{10}{}\protected@file@percent }
+\newlabel{tab:stage_timing}{{VII}{10}{}{table.7}{}}
 \bibstyle{IEEEtran}
 \bibdata{ref}
 \bibcite{li2019survey}{1}
