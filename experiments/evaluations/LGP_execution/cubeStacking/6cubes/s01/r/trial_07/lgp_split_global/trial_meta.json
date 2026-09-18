@@ -5,11 +5,11 @@
   "case": "cube_n06_s01",
   "scene": "/home/leslie/Projects/VLM_LGP/experiments/scenes/6cubes/s01/random_trials/trial_07_r.g",
   "gt_vlm_source": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/cubeStacking/6cubes/cube_n06_s01/trial_02.md",
-  "success": false,
-  "runtime_s": 25.911471605300903,
-  "exit_code": 1,
+  "success": true,
+  "runtime_s": 121.3755099773407,
+  "exit_code": 0,
   "timeout": false,
   "memory_exceeded": false,
-  "memory_peak_mb": 8159.82,
-  "output_state_exists": false
+  "memory_peak_mb": 8343.71,
+  "output_state_exists": true
 }

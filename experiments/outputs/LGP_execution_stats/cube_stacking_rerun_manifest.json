@@ -1,0 +1,121 @@
+{
+  "purpose": "Full rerun of Cube Stacking lgp_split_smart vs lgp_split_global (Table tab:planning_sr / tab:planning_time), replacing numbers that were mathematically impossible under N=50 (96.7%, 93.3%) and whose backing raw data was never committed to git.",
+  "git_commit_at_launch": "bd222e5ab051722337cf0d4d0b8a2de43aa6e6eb",
+  "branch": "writing_paper",
+  "script": "experiments/scripts/run_lgp_batch_eval.py",
+  "command": "python3 experiments/scripts/run_lgp_batch_eval.py --mags 4cubes 5cubes 6cubes 7cubes 8cubes --mode both --timeout-s 3600 --max-mem-mb 16000",
+  "timeout_s": 3600,
+  "max_mem_mb": 16000,
+  "note_on_timeout": "Old default was 300s, the same class of artificial-cap bug already found and fixed for FMB (d300637e). Raised to 3600s here to mirror FMB's 'no wall-clock cap, memory cap only' approach while keeping a sane outer bound; 16GB memory cap is still the effective limiter for the Global policy at high magnitudes.",
+  "scope": "5 magnitudes (4-8 cubes) x 2 redundancy modes (nr, r) x 5 scenarios (s01-s05) x 10 trials x 2 policies (lgp_split_smart, lgp_split_global) = 1000 solver invocations. lgp_combined not rerun (4cubes data already valid; harder magnitudes assumed to fail per existing established logic).",
+  "prior_stale_data_archived_to": "experiments/evaluations/LGP_execution/cubeStacking_STALE_20260918/",
+  "started_at": "2026-09-18T11:56:48.319844",
+  "finished_at": "2026-09-18T21:36:25.490048",
+  "machine": "Ubuntu box, 32 cores, 30GB RAM (per nproc/free at launch time)",
+  "pid": 35792,
+  "log_file": "/tmp/claude-1000/-home-leslie-Projects-VLM-LGP/683edcf2-f26b-4b24-b037-1b60c8bc67d0/scratchpad/cube_stacking_full_rerun.log",
+  "total_wall_time": "9h36m34s",
+  "final_results_summary": {
+    "4cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "4cubes_nr_lgp_split_global": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "4cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "4cubes_r_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "5cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "5cubes_nr_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "5cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "5cubes_r_lgp_split_global": {
+      "success": 48,
+      "n": 50,
+      "rate": 96.0
+    },
+    "6cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "6cubes_nr_lgp_split_global": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "6cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "6cubes_r_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "7cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "7cubes_nr_lgp_split_global": {
+      "success": 48,
+      "n": 50,
+      "rate": 96.0
+    },
+    "7cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "7cubes_r_lgp_split_global": {
+      "success": 19,
+      "n": 50,
+      "rate": 38.0
+    },
+    "8cubes_nr_lgp_split_smart": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "8cubes_nr_lgp_split_global": {
+      "success": 48,
+      "n": 50,
+      "rate": 96.0
+    },
+    "8cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "8cubes_r_lgp_split_global": {
+      "success": 0,
+      "n": 50,
+      "rate": 0.0
+    }
+  },
+  "git_commit_at_finish": null
+}

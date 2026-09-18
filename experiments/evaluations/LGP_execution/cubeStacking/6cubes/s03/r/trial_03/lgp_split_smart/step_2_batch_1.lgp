@@ -1,0 +1,4 @@
+fol: <step_2_batch_1.fol>
+terminal: " (on rectprism_1_Left cube_1) "
+genericCollisions: false
+coll: []

@@ -1,0 +1,4 @@
+fol: <step_7_batch_1.fol>
+terminal: " (on Table_Left rectprism_8) "
+genericCollisions: false
+coll: []

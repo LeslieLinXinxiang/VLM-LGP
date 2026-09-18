@@ -1,0 +1,322 @@
+{
+  "cubeStacking/4cubes/cube_n04_s01": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/4cubes/cube_n04_s02": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/4cubes/cube_n04_s03": {
+    "n_match": 2,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 20.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/4cubes/cube_n04_s04": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/4cubes/cube_n04_s05": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/5cubes/cube_n05_s01": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/5cubes/cube_n05_s02": {
+    "n_match": 1,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 10.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/5cubes/cube_n05_s03": {
+    "n_match": 2,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 20.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/5cubes/cube_n05_s04": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/5cubes/cube_n05_s05": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/6cubes/cube_n06_s01": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/6cubes/cube_n06_s02": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/6cubes/cube_n06_s03": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/6cubes/cube_n06_s04": {
+    "n_match": 2,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 20.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/6cubes/cube_n06_s05": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/7cubes/cube_n07_s01": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 50.0,
+    "n_trials": 10
+  },
+  "cubeStacking/7cubes/cube_n07_s02": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/7cubes/cube_n07_s03": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/7cubes/cube_n07_s04": {
+    "n_match": 6,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 60.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/7cubes/cube_n07_s05": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 90.0,
+    "n_trials": 10
+  },
+  "cubeStacking/8cubes/cube_n08_s01": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 70.0,
+    "n_trials": 10
+  },
+  "cubeStacking/8cubes/cube_n08_s02": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/8cubes/cube_n08_s03": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "cubeStacking/8cubes/cube_n08_s04": {
+    "n_match": 10,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 100.0,
+    "ref_support": 90.0,
+    "n_trials": 10
+  },
+  "cubeStacking/8cubes/cube_n08_s05": {
+    "n_match": 3,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 30.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/3objs/001": {
+    "n_match": 1,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 10.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/3objs/002": {
+    "n_match": 1,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 10.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/3objs/003": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/3objs/004": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 70.0,
+    "n_trials": 10
+  },
+  "FMB/3objs/005": {
+    "n_match": 5,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 50.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/4objs/001": {
+    "n_match": 5,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 50.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/4objs/002": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/4objs/003": {
+    "n_match": 3,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 30.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/4objs/004": {
+    "n_match": 2,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 20.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/4objs/005": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/5objs/001": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 90.0,
+    "n_trials": 10
+  },
+  "FMB/5objs/002": {
+    "n_match": 3,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 30.0,
+    "ref_support": 100.0,
+    "n_trials": 10
+  },
+  "FMB/5objs/003": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 70.0,
+    "n_trials": 10
+  },
+  "FMB/5objs/004": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 90.0,
+    "n_trials": 10
+  },
+  "FMB/5objs/005": {
+    "n_match": 0,
+    "n_parsed": 10,
+    "n_fail": 0,
+    "acc": 0.0,
+    "ref_support": 90.0,
+    "n_trials": 10
+  }
+}

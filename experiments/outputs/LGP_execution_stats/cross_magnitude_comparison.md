@@ -3,27 +3,27 @@
 ## 1. Overall Performance (NR Mode)
 | Magnitude | Policy | Trials | Success Rate | Median Time (s) | Avg Peak Mem (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 4cubes | `lgp_split_smart` | 50 | **100.0%** | 20.2 | 234.5 |
-| 4cubes | `lgp_split_global` | 50 | **80.0%** | 22.6 | 189.5 |
-| 5cubes | `lgp_split_smart` | 50 | **100.0%** | 21.6 | 234.4 |
-| 5cubes | `lgp_split_global` | 50 | **58.0%** | 34.6 | 461.8 |
-| 6cubes | `lgp_split_smart` | 50 | **100.0%** | 28.0 | 239.3 |
-| 6cubes | `lgp_split_global` | 50 | **60.0%** | 33.6 | 166.8 |
-| 7cubes | `lgp_split_smart` | 50 | **100.0%** | 34.1 | 256.5 |
-| 7cubes | `lgp_split_global` | 50 | **56.0%** | 65.3 | 859.8 |
-| 8cubes | `lgp_split_smart` | 50 | **100.0%** | 47.8 | 260.8 |
-| 8cubes | `lgp_split_global` | 50 | **60.0%** | 73.5 | 396.1 |
+| 4cubes | `lgp_split_smart` | 50 | **100.0%** | 10.9 | 230.4 |
+| 4cubes | `lgp_split_global` | 50 | **100.0%** | 11.7 | 231.0 |
+| 5cubes | `lgp_split_smart` | 50 | **100.0%** | 13.3 | 230.9 |
+| 5cubes | `lgp_split_global` | 50 | **98.0%** | 15.0 | 554.7 |
+| 6cubes | `lgp_split_smart` | 50 | **100.0%** | 16.4 | 236.2 |
+| 6cubes | `lgp_split_global` | 50 | **100.0%** | 18.9 | 276.4 |
+| 7cubes | `lgp_split_smart` | 50 | **100.0%** | 19.9 | 247.7 |
+| 7cubes | `lgp_split_global` | 50 | **96.0%** | 23.7 | 1013.3 |
+| 8cubes | `lgp_split_smart` | 50 | **98.0%** | 24.4 | 590.4 |
+| 8cubes | `lgp_split_global` | 50 | **96.0%** | 33.4 | 1273.5 |
 
 ## 2. Overall Performance (R Mode)
 | Magnitude | Policy | Trials | Success Rate | Median Time (s) | Avg Peak Mem (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 4cubes | `lgp_split_smart` | 50 | **100.0%** | 19.3 | 241.4 |
-| 4cubes | `lgp_split_global` | 50 | **78.0%** | 25.6 | 598.4 |
-| 5cubes | `lgp_split_smart` | 50 | **100.0%** | 25.1 | 258.8 |
-| 5cubes | `lgp_split_global` | 50 | **56.0%** | 58.9 | 1962.4 |
-| 6cubes | `lgp_split_smart` | 50 | **100.0%** | 31.7 | 297.6 |
-| 6cubes | `lgp_split_global` | 50 | **58.0%** | 149.3 | 7283.9 |
-| 7cubes | `lgp_split_smart` | 50 | **100.0%** | 46.9 | 1235.5 |
-| 7cubes | `lgp_split_global` | 50 | **2.0%** | 295.8 | 15699.1 |
-| 8cubes | `lgp_split_smart` | 50 | **100.0%** | 53.1 | 1097.0 |
-| 8cubes | `lgp_split_global` | 50 | **0.0%** | 0.0 | 16366.4 |
+| 4cubes | `lgp_split_smart` | 50 | **100.0%** | 10.9 | 236.8 |
+| 4cubes | `lgp_split_global` | 50 | **98.0%** | 15.1 | 866.9 |
+| 5cubes | `lgp_split_smart` | 50 | **100.0%** | 14.0 | 253.0 |
+| 5cubes | `lgp_split_global` | 50 | **96.0%** | 33.2 | 2371.1 |
+| 6cubes | `lgp_split_smart` | 50 | **100.0%** | 17.7 | 281.6 |
+| 6cubes | `lgp_split_global` | 50 | **98.0%** | 102.7 | 7466.4 |
+| 7cubes | `lgp_split_smart` | 50 | **100.0%** | 22.6 | 952.2 |
+| 7cubes | `lgp_split_global` | 50 | **38.0%** | 249.2 | 15806.2 |
+| 8cubes | `lgp_split_smart` | 50 | **100.0%** | 26.7 | 1041.0 |
+| 8cubes | `lgp_split_global` | 50 | **0.0%** | 0.0 | 16507.9 |
