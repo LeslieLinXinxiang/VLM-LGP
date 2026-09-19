@@ -936,29 +936,20 @@ We achieve 100\% while a typical distance-based method fail all.
 We isolate reachability filtering with ten designed scenes sharing one task: place three cubes at fixed left/center/right table positions. Each scene offers four same-type candidate cubes for the three slots -- three reachable and one adversarial, always the nearest of the four to the robot base so that a naive nearest-first baseline (no reachability awareness) prefers it. Five scenes place the adversarial candidate touching a same-type neighbor at zero surface clearance, testing the geometric accessibility score $\rho$; the other five place it behind a modeled obstacle (a rigid body outside the object inventory, so it carries no $\rho$ penalty) that keeps a single-waypoint feasibility check infeasible for that candidate, testing the KOMO-based feasibility check. Both policies execute through the full LGP solver, not a reduced checker. Table~\ref{tab:ablation_reachability} reports the outcome as whether the selected candidate is both safe and reachable, not the solver's raw exit code: the crowded candidate lets the solver complete with the gripper body overlapping the neighboring object at zero clearance, and the obstructed candidate's motion plan still executes because the full solver routes around a single rigid obstacle that the naive baseline never queried for in the first place. Reachability filtering rejects the adversarial candidate in all ten scenes, letting the method fall back to the three well-conditioned alternatives; the naive baseline, which selects by proximity alone, never does.
 
 % ------------------------------------------------------------------
-% TABLE: tab:ablation_reachability
+% FIGURE: fig:ablation_reachability (replaces the commented-out tab:ablation_reachability
+% above per the advisor's call -- the ten scenes are specifically designed to be a clean
+% 10/10 vs 0/10 split, so a schematic figure communicates it better than a data table)
 % Source: experiments/outputs/reachability_ablation_quant/summary.json (writing_paper, 2026-09-16)
-%   10 designed scenes, 4 same-type candidates each (3 needed + 1 adversarial, always nearest
-%   the base). Both policies executed through the full LGP solver (bin/x.exe).
-%   Outcome is safe-and-reachable selection, not the raw solver exit code -- see prose.
 % ------------------------------------------------------------------
-% \begin{table}[t]
-% \centering
-% \footnotesize
-% \setlength{\tabcolsep}{4pt}
-% \caption{Reachability-filtering ablation. Ten designed scenes, each with four same-type candidates (three needed, one adversarial and always nearest the base). Outcome is whether the selected candidate is safe and reachable, not the solver's raw exit code -- see text.}
-% \label{tab:ablation_reachability}
-% \begin{tabular}{lcc}
-% \toprule
-% Mechanism & Ours & Naive baseline \\
-% \midrule
-% Crowding (safety) & $5/5$ & $0/5$ \\
-% Blocked approach (feasibility) & $5/5$ & $0/5$ \\
-% \midrule
-% \textbf{All ten scenes} & $\mathbf{10/10}$ & $\mathbf{0/10}$ \\
-% \bottomrule
-% \end{tabular}
-% \end{table}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/reachability_exp.pdf}
+\caption{Reachability-filtering ablation. Ten designed scenes, each with four
+same-type candidates (three needed, one adversarial and always nearest the
+base). Ours selects a safe, reachable candidate in all ten scenes; a naive
+nearest-first baseline never does.}
+\label{fig:ablation_reachability}
+\end{figure}
 
 {
 \begin{table}[t]

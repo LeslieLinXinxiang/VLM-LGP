@@ -2,7 +2,7 @@ PWD /Users/linxinxiang/Projects/VLM-LGP/paper/VLM-LGP-Assembly
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/linxinxiang/Projects/VLM-LGP/paper/VLM-LGP-Assembly/main.tex
+INPUT main.tex
 OUTPUT main.log
 INPUT ./ieeeconf.cls
 INPUT ieeeconf.cls
@@ -286,6 +286,11 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/times/ptmrc7t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
+INPUT ./figures/reachability_exp.pdf
+INPUT ./figures/reachability_exp.pdf
+INPUT ./figures/reachability_exp.pdf
+INPUT ./figures/reachability_exp.pdf
+INPUT ./figures/reachability_exp.pdf
 INPUT ./figures/Cube_Stacking.pdf
 INPUT ./figures/Cube_Stacking.pdf
 INPUT ./figures/Cube_Stacking.pdf
