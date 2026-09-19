@@ -26,7 +26,7 @@
 \citation{9981797}
 \citation{10610285}
 \citation{10611389}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The overall workflow of the proposed VLM-LGP framework. {\color  {red}ZZ: change this figure}}}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The overall workflow of the proposed framework. {\color  {red}ZZ: change this figure}}}{2}{}\protected@file@percent }
 \newlabel{fig:workflow}{{1}{2}{}{figure.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Assembly Sequence Planning and Structural Representations}{2}{}\protected@file@percent }
@@ -90,38 +90,22 @@
 \newlabel{subsec:setup}{{V-A}{6}{}{subsection.5.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.1}Tasks}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.2}Baselines}{6}{}\protected@file@percent }
-\citation{li2025vlm}
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Self-referential majority-vote reference, N=5 cases per magnitude. \textit  {w/o Validator}: retry loop is API-error-only. \textit  {Ours}: full pipeline with the rule-based graph validator enabled, correcting the four trials it rejects (Section~\ref {subsubsec:abl_validator}). VLM-MSGraph~\cite  {li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}}{7}{}\protected@file@percent }
-\newlabel{tab:vlm_accuracy}{{I}{7}{}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Results of assembly graph generation accuracy. {\color  {red}ZZ: fill in the table for D-VLM}}}{7}{}\protected@file@percent }
+\newlabel{tab:graph_accuracy}{{I}{7}{}{table.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.3}Metrics}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {V-A.4}Parameters and Hardware}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Assembly Performance}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.1}Assembly Graph Generation}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.2}Task Planning and Motion Execution}{7}{}\protected@file@percent }
-\citation{li2025vlm}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.3}Real-World Experiments}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Ablation Studies}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.1}VLM for Graph Generation}{8}{}\protected@file@percent }
-\newlabel{subsubsec:abl_validator}{{V-C.2}{8}{}{subsubsection.5.3.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.2}Assembly Graph Generation Validator}{8}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Reachability-filtering ablation. Ten designed scenes, each with four same-type candidates (three needed, one adversarial and always nearest the base). Outcome is whether the selected candidate is safe and reachable, not the solver's raw exit code -- see text.}}{8}{}\protected@file@percent }
-\newlabel{tab:ablation_reachability}{{II}{8}{}{table.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.3}Reachability-Manipulability-Aware Object Ordering}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.4}Active Constraints for LGP}{8}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for cube-stacking assemblies of 4 to 8 cubes on the physical Franka Panda platform.}}{9}{}\protected@file@percent }
-\newlabel{fig:real_cube_stacking}{{5}{9}{}{figure.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for FMB assemblies of 3 to 5 objects on the physical Franka Panda platform.}}{9}{}\protected@file@percent }
-\newlabel{fig:real_fmb}{{6}{9}{}{figure.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}}{10}{}\protected@file@percent }
-\newlabel{tab:vlm_backbone_selection}{{III}{10}{}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}}{10}{}\protected@file@percent }
-\newlabel{tab:vlm_input_format}{{IV}{10}{}{table.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite  {li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}}{10}{}\protected@file@percent }
-\newlabel{tab:planning_sr}{{V}{10}{}{table.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}}{10}{}\protected@file@percent }
-\newlabel{tab:planning_time}{{VI}{10}{}{table.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}}{10}{}\protected@file@percent }
-\newlabel{tab:stage_timing}{{VII}{10}{}{table.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Graph Generation and Assembly Performance}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.1}Assembly Graph Generation Accuracy}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.2}Task Success Rate}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.3}Computational Time}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-B.4}Real-World Experiments}{7}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Results of task success rate. T.O. indicates that LGP exceeds the predefined memory and time limit without finding a solution. {\color  {red}ZZ: check values}}}{7}{}\protected@file@percent }
+\newlabel{tab:planning_sr}{{II}{7}{}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Computational time of each component. R-Score: reachability score computation. R-KOMO: KOMO-based reachability analysis. Mani.: manipulability ordering. {\color  {red}ZZ: fill in this table}}}{7}{}\protected@file@percent }
+\newlabel{tab:stage_timing}{{III}{7}{}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Ablation Studies}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.1}Ablation study on different VLMs}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.2}Reachability-Manipulability-Aware Object Ordering}{7}{}\protected@file@percent }
 \bibstyle{IEEEtran}
 \bibdata{ref}
 \bibcite{li2019survey}{1}
@@ -144,7 +128,21 @@
 \bibcite{4288472}{18}
 \bibcite{9663037}{19}
 \bibcite{11224520}{20}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Ablation study on different VLMs. FMB: 5 blocks. S1-S5: five structures.{\color  {red}ZZ: change this table} }}{8}{}\protected@file@percent }
+\newlabel{tab:vlm_backbone_selection}{{IV}{8}{}{table.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Ablation study on the active constraints. {\color  {red}ZZ: change this table}}}{8}{}\protected@file@percent }
+\newlabel{tab:planning_time}{{V}{8}{}{table.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V-C.3}Active Constraints for LGP}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {VI-A}Role of VLM}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {VI-B}Limitations and Future Work}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{8}{}\protected@file@percent }
 \bibcite{2832415.2832517}{21}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for cube-stacking assemblies of 4 to 8 cubes on the physical Franka Panda platform. {\color  {red}ZZ: change this figure}}}{9}{}\protected@file@percent }
+\newlabel{fig:real_cube_stacking}{{5}{9}{}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Representative real-robot execution: initial scene and execution-sequence photos for FMB assemblies of 3 to 5 objects on the physical Franka Panda platform. {\color  {red}ZZ: change this figure}}}{9}{}\protected@file@percent }
+\newlabel{fig:real_fmb}{{6}{9}{}{figure.6}{}}
 \bibcite{9515539}{22}
 \bibcite{9981797}{23}
 \bibcite{10610285}{24}
@@ -159,14 +157,10 @@
 \bibcite{10900471}{33}
 \bibcite{11640725}{34}
 \bibcite{11328873}{35}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {VI-A}Role of VLM}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
 \bibcite{luo2024fmb}{36}
 \bibcite{toussaint2014newton}{37}
 \bibcite{yoshikawa1985manipulability}{38}
 \bibcite{ott2008passivity}{39}
 \bibcite{li2025vlm}{40}
 \gdef\svg@ink@ver@settings{{\m@ne }{inkscape}{\m@ne }}
-\gdef \@abspage@last{12}
+\gdef \@abspage@last{10}

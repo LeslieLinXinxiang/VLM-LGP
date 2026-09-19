@@ -33,6 +33,8 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
 \usepackage{url}
 \usepackage{placeins} % \FloatBarrier -- keeps figures from drifting past the References section
 \usepackage{algorithm}
@@ -117,7 +119,7 @@ Our main contributions are threefold:
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/LGP_method.pdf}
-\caption{The overall workflow of the proposed VLM-LGP framework. \zz{change this figure}}
+\caption{The overall workflow of the proposed framework. \zz{change this figure}}
 \label{fig:workflow}
 \vspace{-5mm}
 \end{figure*}
@@ -205,7 +207,7 @@ This paper uses the VLM to establish an interface between vision target descript
 
 % \subsection{Foundation Models in Robotic Assembly}
 
-% Cover:
+% Cover: 
 % - LLM-generated plans
 % - VLM-based scene + task reasoning
 % - direct visuomotor or VLA methods
@@ -627,18 +629,18 @@ Two scene conditions are considered: (1) \textbf{No Redundancy (NR)}, where the 
 
 \subsubsection{Baselines} 
 We compare the proposed framework with three baseline methods:
-(1) \textbf{Direct VLM (D-VLM)}: a VLM directly generates assembly action waypoints from the target image without constructing an assembly graph or using a motion planner;
+(1) \textbf{Direct VLM (D-VLM)}: a VLM directly generates the assembly graph and predicts action waypoints for execution;
 (2) \textbf{Full Graph LGP (FG-LGP)}: the generated assembly graph is directly provided to LGP without graph decomposition, resulting in a single long-horizon problem.
-(3) \textbf{VLM-MSGraph}~\cite{li2025vlm}: a recent approach that extracts a structured object-relation graph from visual input and executes the assembly using a learning-based motion planner.
+(3) \textbf{VLM-MSGraph (V-M)}~\cite{li2025vlm}: a recent approach that extracts a structured object-relation graph from visual input and executes the assembly using an interpolation-based motion planner.
 
 %(4) \emph{Smart} is our method, combining VLM-driven graph decomposition (Section~\ref{sec:task_understanding}) with active-constraint LGP solving (Section~\ref{sec:motion_execution}).
 % decomposes the assembly into layer-based batches by a fixed rule, mirroring how a human would manually partition a long-horizon task into subtasks, and solves each batch's full collision set jointly. 
 
 \subsubsection{Metrics}
-We primarily evaluate assembly performance using task success rate. 
-For each task and component count, we consider 5 different target structures, each examined using 10 randomly initialized scenes $\mathcal{S}$, and the overall success rate is reported. 
-Additionally, we measure the computational time of each framework component. 
-
+We evaluate the proposed framework primarily in terms of assembly graph generation accuracy and task success rate. 
+For each task and component count, we consider 5 target structures. 
+Graph generation is evaluated with 10 random seeds per structure, while assembly execution is tested using 10 randomly initialized scenes $\mathcal{S}$ (with sufficient required components placed within the robot's reachable workspace to ensure the existence of a feasible solution), resulting in 50 trials for each evaluation setting. 
+We also report the computational time of each framework component.
 
 
 % We primarily use the task success rate to evaluate assembly performance. 
@@ -651,81 +653,242 @@ All simulation experiments are conducted in MuJoCo on a local PC equipped with a
 Each planning task is capped at $16$\,GB of memory.
 The real-world experiments are performed using a Franka Emika Panda robotic arm controlled by the same PC.
 
-\zz{give details of hardware platform and parameters, which VLM is used?}
+\zz{give details of hardware platform and parameters, which VLM is used? time limit for LGP?}
 
 %We evaluate the proposed framework on a Franka Emika Panda manipulator, with all planning performed through the RAI/KOMO solver. 
 %Each planning task is capped at $16$\,GB of memory and $300$\,s of wall-clock time; all reported numbers respect these limits.
 
-\subsection{Assembly Performance}
+\subsection{Graph Generation and Assembly Performance}
 
 \begin{table}[t]
 \centering
-\caption{VLM graph-generation accuracy by benchmark and magnitude, on scenarios without duplicate objects. Self-referential majority-vote reference, N=5 cases per magnitude. \textit{w/o Validator}: retry loop is API-error-only. \textit{Ours}: full pipeline with the rule-based graph validator enabled, correcting the four trials it rejects (Section~\ref{subsubsec:abl_validator}). VLM-MSGraph~\cite{li2025vlm}: manually scored against the source image, N=10 trials per magnitude.}
-\label{tab:vlm_accuracy}
-\begin{tabular}{lccc}
+\footnotesize
+\caption{Results of assembly graph generation accuracy. \zz{fill in the table for D-VLM}}
+\label{tab:graph_accuracy}
+\begin{tabular}{l|ccc}
 \toprule
-Magnitude & Ours & w/o Validator & VLM-MSGraph \\
+Tasks & D-VLM & V-M & Ours \\
 \midrule
-\multicolumn{4}{l}{\textit{Cube Stacking}} \\
-4 cubes & 100.0\% & 100.0\% & 100.0\% \\
-5 cubes & 100.0\% & 100.0\% & \phantom{0}90.0\% \\
-6 cubes & 100.0\% & 100.0\% & \phantom{0}90.0\% \\
-7 cubes & 100.0\% & \phantom{0}98.0\% & \phantom{0}90.0\% \\
-8 cubes & \phantom{0}94.0\% & \phantom{0}92.0\% & \phantom{0}90.0\% \\
-\textbf{Overall} & \textbf{98.8\%} & \textbf{98.0\%} & \textbf{92.0\%} \\
+BS: 4 blocks & \textcolor{red}{?} & 100.0\%  & 100.0\% \\
+BS: 5 blocks  & \textcolor{red}{?} & 90.0\% & \textbf{100.0\%} \\
+BS: 6 blocks  & \textcolor{red}{?} & 90.0\% & \textbf{100.0\%} \\
+BS: 7 blocks  & \textcolor{red}{?} & 90.0\% & \textbf{100.0\%} \\
+BS: 8 blocks & \textcolor{red}{?} & 90.0\% & \textbf{94.0\%} \\
 \midrule
-\multicolumn{4}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}94.0\% & \phantom{0}94.0\% & \phantom{0}80.0\% \\
-4 objects & 100.0\% & 100.0\% & \phantom{0}50.0\% \\
-5 objects & \phantom{0}92.0\% & \phantom{0}88.0\% & \phantom{0}10.0\% \\
-\textbf{Overall} & \textbf{95.3\%} & \textbf{94.0\%} & \textbf{46.7\%} \\
+%Average & \textcolor{red}{?} & 92.0\%  & \textbf{98.8\%} \\
+% \midrule
+FMB: 3 blocks & \textcolor{red}{?} & 80.0\% & \textbf{94.0\%}  \\
+FMB: 4 blocks  & \textcolor{red}{?} & 50.0\% & \textbf{100.0\%} \\
+FMB: 5 blocks & \textcolor{red}{?} & 10.0\% & \textbf{92.0\%}  \\
+% \midrule
+% Average  & \textcolor{red}{?} & \textcolor{red}{?} & \textcolor{red}{?} \\
+\bottomrule
+\end{tabular}
+\vspace{-5mm}
+\end{table}
+
+\subsubsection{Assembly Graph Generation Accuracy}
+We first evaluate the accuracy of generating the assembly graph $\mathcal{G}$ from the target image $\mathcal{I}$, with correctness determined through manual inspection. 
+Since FG-LGP uses the same graph generation method as the proposed framework, we compare only with D-VLM and VLM-MSGraph. 
+The results are reported in Table~\ref{tab:graph_accuracy}.
+
+It shows that....FMB worse due to more complex reasoning requiring better prompt guidance and validator guidance...
+
+\zz{fill in the table I with the D-VLM results, and write summary paragraph after values in}
+
+% FMB structures frequently include bridging relations, where one object spans multiple supporters and is partially occluded in any single view of the final assembly. 
+% Table~\ref{tab:vlm_input_format} compares two ways of presenting such structures to the VLM, on two representative bridging scenes: a single composite image of the final assembly, which requires inferring occluded support from color fragmentation, versus a sequence of one image per build step. 
+% Sequential input reaches $100\%$ on both scenes; single-image input drops to $80$--$90\%$, with errors concentrated on the occluded bridging relations. We adopt sequential, per-step image input for all FMB experiments in this work.
+
+% Table~\ref{tab:vlm_accuracy} compares our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.8\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $95.3\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Results of task success rate. T.O. indicates that LGP exceeds the predefined memory and time limit without finding a solution. \zz{check values}}
+\label{tab:planning_sr}
+\begin{tabular}{l|cccccccc}
+\toprule
+\multirow{2}{*}{Tasks} & \multicolumn{2}{c}{D-VLM} & \multicolumn{2}{c}{FG-LGP} & \multicolumn{2}{c}{V-M} & \multicolumn{2}{c}{Ours \textcolor{red}{update?}}\\
+\cmidrule{2-9} & NR & WR & NR & WR & NR & WR & NR & WR \\
+\midrule
+BS: 4 blocks  & 0\% &  0\% & T.O. & T.O. & 16\% & 8\% & 100\% & 100\%\\
+BS: 5 blocks &  0\% &  0\% & T.O. & T.O. & 2\% & 4\% & 100\% & 100\%  \\
+BS: 6 blocks &  0\% &  0\% & T.O. & T.O. & 0\% & 0\% & 100\% & 100\% \\
+BS: 7 blocks & 0\% & 0\% & T.O. & T.O. & 0\% & 0\% & 100\% & 100\%  \\
+BS: 8 blocks &  0\% & 0\% & T.O. & T.O. & 4\% & 0\% & 100\% & 100\% \\
+\midrule
+FMB: 3 blocks & 0\% & 0\% & 18\% & T.O. & 0.0 & 0.0 & 96\%  & 96\%   \\
+FMB: 4 blocks  & 0\% & 0\% & T.O. & T.O. & 0.0 & 0.0 & 98\%  & 100\%  \\
+FMB: 5 blocks & 0\% & 0\% &  T.O. & T.O. & 0.0 & 0.0  & 96\%  & 96\%  \\
+\bottomrule
+\end{tabular}
+\vspace{-2mm}
+\end{table}
+
+% \begin{table}[t]
+% \centering
+% \footnotesize
+% \setlength{\tabcolsep}{3pt}
+% \caption{Results of task success rate. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}
+% \label{tab:planning_sr}
+% \begin{tabular}{lcccccccc}
+% \toprule
+%  & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Combined} & \multicolumn{2}{c}{VLM-MSGraph} \\
+% \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+%  & NR & R & NR & R & NR & R & NR & R \\
+% \midrule
+% \multicolumn{9}{l}{\textit{Cube Stacking}} \\
+% 4 cubes & 100.0 & 100.0 & 100.0 & 78.0 & \phantom{00}0.0 & \phantom{00}0.0 & 16.0 & \phantom{0}8.0 \\
+% 5 cubes & 100.0 & 100.0 & \phantom{0}96.7 & 56.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}2.0 & \phantom{0}4.0 \\
+% 6 cubes & 100.0 & 100.0 & 100.0 & 58.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}0.0 & \phantom{0}0.0 \\
+% 7 cubes & 100.0 & 100.0 & \phantom{0}93.3 & 38.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}0.0 & \phantom{0}0.0 \\
+% 8 cubes & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}4.0 & \phantom{0}0.0 \\
+% \midrule
+% \multicolumn{9}{l}{\textit{FMB}} \\
+% 3 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}92.0 & 62.0 & 18.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+% 4 objects & \phantom{0}98.0 & 100.0 & \phantom{0}22.0 & 12.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+% 5 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
+% \bottomrule
+% \end{tabular}
+% \vspace{-5mm}
+% \end{table}
+
+\subsubsection{Task Success Rate}
+We then evaluate the proposed framework in terms of rates of successfully accomplish the given assembly task.
+
+\zz{fill in table 2 with correct values!!!}
+
+% Before comparing decomposition strategies, we first check whether decomposition is needed at all. Solving the smallest FMB configuration (three objects) as a single monolithic LGP problem -- without Smart's active-constraint batching or Global's fixed, layer-based split -- succeeds in $9$ of $50$ trials without redundancy and in none of the $50$ redundancy trials (Combined columns of Table~\ref{tab:planning_sr}); every failure exhausts the $16$\,GB memory cap rather than the time budget. Some form of decomposition is thus a precondition for solving these assemblies at all; the remainder of this section compares two decomposition strategies against this monolithic baseline.
+
+% VLM-MSGraph's perception stage grounds each graph node into the scene through open-vocabulary detection and segmentation; we do not re-implement or evaluate this stage. 
+% Instead, both methods receive an identical, externally supplied task assignment -- object, source pose, target pose, and order -- taken from our own method's output, isolating the trajectory-generation step. 
+
+%Its executor performs no collision checking and no motion planning: each pick and place is a direct interpolation from the current pose to the target pose. 
+
+%This keeps a modest success rate on the smallest, least cluttered configurations, but degrades quickly as the object count grows and as the required motions become less permissive: cube-stacking success falls from $16.0\%$ at four cubes to at or near $0\%$ from six cubes onward, and on FMB, where insertions require precise approach and support-order compliance, no trial succeeds at any object count (Table~\ref{tab:planning_sr}, rightmost columns). 
+% Even given a correct task assignment, an executor without collision-aware planning is not viable beyond the simplest cases.
+
+% Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. 
+
+
+
+
+%Asking the VLM to output pick-and-place waypoints directly from the target image, without any intermediate representation, fails outright: the returned sequences are syntactically valid but geometrically inconsistent -- grasp points miss the target objects, waypoints intersect the table or previously placed parts, and placement heights violate the support order. 
+%No trial completes an assembly, so we report no success-rate table for this baseline; the failure confirms that current VLMs cannot be trusted with exact, metrically precise motion generation (Section~\ref{sec:task_understanding}).
+
+\begin{table}[!ht]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Computational time of each component. R-Score: reachability score computation. R-KOMO: KOMO-based reachability analysis. Mani.: manipulability ordering. \zz{fill in this table}}
+\label{tab:stage_timing}
+\begin{tabular}{l|cccccccc}
+\toprule
+\multirow{2}{*}{Tasks} & \multicolumn{2}{c}{R-Score (ms) \textcolor{red}{?}} & \multicolumn{2}{c}{R-KOMO (s)} & \multicolumn{2}{c}{Mani. (ms)} & \multicolumn{2}{c}{LGP (s)}\\
+\cmidrule{2-9}
+ & NR & WR & NR & WR & NR & WR & NR & WR\\
+\midrule
+BS: 4 blocks & 0.13 & 0.17 & \phantom{0}963.5 & 2042.4 & 10.9 & 20.7 & \textcolor{red}{?} & \textcolor{red}{?} \\
+BS: 5 blocks & 0.13 & 0.18 & 1232.2 & 2649.2 & 13.3 & 25.5 & \textcolor{red}{?} & \textcolor{red}{?} \\
+BS: 6 blocks & 0.16 & 0.23 & 1499.0 & 3246.1 & 15.8 & 31.3 & \textcolor{red}{?} & \textcolor{red}{?} \\
+BS: 7 blocks & 0.16 & 0.24 & 1802.4 & 3883.1 & 18.7 & 35.1 & \textcolor{red}{?} & \textcolor{red}{?} \\
+BS: 8 blocks & 0.18 & 0.29 & 2076.1 & 4439.9 & 21.4 & 39.0 & \textcolor{red}{?} & \textcolor{red}{?} \\
+\midrule
+FMB: 3 blocks & 0.13 & 0.17 & \phantom{0}785.1 & 1613.1 & \phantom{0}8.7 & 18.2 & \textcolor{red}{?} & \textcolor{red}{?} \\
+FMB: 4 blocks & 0.15 & 0.20 & 1042.0 & 2203.4 & 11.5 & 23.7 & \textcolor{red}{?} & \textcolor{red}{?} \\
+FMB: 5 blocks & 0.16 & 0.23 & 1336.5 & 2748.7 & 14.9 & 28.3 & \textcolor{red}{?} & \textcolor{red}{?} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsubsection{Assembly Graph Generation}
+% \begin{table}[!ht]
+% \centering
+% \footnotesize
+% \setlength{\tabcolsep}{3pt}
+% \caption{Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}
+% \label{tab:stage_timing}
+% \begin{tabular}{lcccccc}
+% \toprule
+%  & \multicolumn{4}{c}{Reachability} & \multicolumn{2}{c}{Manipulability} \\
+% \cmidrule(lr){2-5}\cmidrule(lr){6-7}
+%  & \multicolumn{2}{c}{Stage 1: score} & \multicolumn{2}{c}{Stage 2: KOMO} & & \\
+% \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+%  & NR & R & NR & R & NR & R \\
+% \midrule
+% \multicolumn{7}{l}{\textit{Cube Stacking}} \\
+% 4 cubes & 0.13 & 0.17 & \phantom{0}963.5 & 2042.4 & 10.9 & 20.7 \\
+% 5 cubes & 0.13 & 0.18 & 1232.2 & 2649.2 & 13.3 & 25.5 \\
+% 6 cubes & 0.16 & 0.23 & 1499.0 & 3246.1 & 15.8 & 31.3 \\
+% 7 cubes & 0.16 & 0.24 & 1802.4 & 3883.1 & 18.7 & 35.1 \\
+% 8 cubes & 0.18 & 0.29 & 2076.1 & 4439.9 & 21.4 & 39.0 \\
+% \midrule
+% \multicolumn{7}{l}{\textit{FMB}} \\
+% 3 objects & 0.13 & 0.17 & \phantom{0}785.1 & 1613.1 & \phantom{0}8.7 & 18.2 \\
+% 4 objects & 0.15 & 0.20 & 1042.0 & 2203.4 & 11.5 & 23.7 \\
+% 5 objects & 0.16 & 0.23 & 1336.5 & 2748.7 & 14.9 & 28.3 \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 
-We first examine the accuracy of generating the assembly graph $\mathcal{G}$ from the target image $\mathcal{I}$.
-As FG-LGP use the same assembly graph generation as the proposed method, we only compare our proposed method with directly using VLM for generating the complete graph and with VLM-MSGraph. 
-The results obtained
 
-Asking the VLM to output pick-and-place waypoints directly from the target image, without any intermediate representation, fails outright: the returned sequences are syntactically valid but geometrically inconsistent -- grasp points miss the target objects, waypoints intersect the table or previously placed parts, and placement heights violate the support order. No trial completes an assembly, so we report no success-rate table for this baseline; the failure confirms that current VLMs cannot be trusted with exact, metrically precise motion generation (Section~\ref{sec:task_understanding}).
 
-FMB structures frequently include bridging relations, where one object spans multiple supporters and is partially occluded in any single view of the final assembly. Table~\ref{tab:vlm_input_format} compares two ways of presenting such structures to the VLM, on two representative bridging scenes: a single composite image of the final assembly, which requires inferring occluded support from color fragmentation, versus a sequence of one image per build step. Sequential input reaches $100\%$ on both scenes; single-image input drops to $80$--$90\%$, with errors concentrated on the occluded bridging relations. We adopt sequential, per-step image input for all FMB experiments in this work.
+\subsubsection{Computational Time}
 
-Table~\ref{tab:vlm_accuracy} compares our method's graph extraction against VLM-MSGraph's semantic layer, both scored on scenarios without duplicate objects, as VLM-MSGraph's open-vocabulary matching provides no mechanism for disambiguating them. On cube stacking, a planar layout, both methods are close: $98.8\%$ for ours against $92.0\%$ for VLM-MSGraph. On FMB, where objects must be related across insertion layers under a strict support order, the gap widens sharply -- $95.3\%$ against $46.7\%$, falling to $10.0\%$ at five objects.
+We also measure the computational time of each component of the proposed framework...
 
-\zz{here give results: about using different VLM in graph extraction accuracy, try to put everything in one table since we are lacking of space}
+\zz{fill in table 3 with correct values. LGP is the entire plan time}
 
-\subsubsection{Task Planning and Motion Execution}
-
-Before comparing decomposition strategies, we first check whether decomposition is needed at all. Solving the smallest FMB configuration (three objects) as a single monolithic LGP problem -- without Smart's active-constraint batching or Global's fixed, layer-based split -- succeeds in $9$ of $50$ trials without redundancy and in none of the $50$ redundancy trials (Combined columns of Table~\ref{tab:planning_sr}); every failure exhausts the $16$\,GB memory cap rather than the time budget. Some form of decomposition is thus a precondition for solving these assemblies at all; the remainder of this section compares two decomposition strategies against this monolithic baseline.
-
-VLM-MSGraph's perception stage grounds each graph node into the scene through open-vocabulary detection and segmentation; we do not re-implement or evaluate this stage. Instead, both methods receive an identical, externally supplied task assignment -- object, source pose, target pose, and order -- taken from our own method's output, isolating the trajectory-generation step. Its executor performs no collision checking and no motion planning: each pick and place is a direct interpolation from the current pose to the target pose. This keeps a modest success rate on the smallest, least cluttered configurations, but degrades quickly as the object count grows and as the required motions become less permissive: cube-stacking success falls from $16.0\%$ at four cubes to at or near $0\%$ from six cubes onward, and on FMB, where insertions require precise approach and support-order compliance, no trial succeeds at any object count (Table~\ref{tab:planning_sr}, rightmost columns). Even given a correct task assignment, an executor without collision-aware planning is not viable beyond the simplest cases.
-
-Table~\ref{tab:planning_sr} and Table~\ref{tab:planning_time} compare Global's fixed, layer-based decomposition against Smart's VLM-driven, active-constraint decomposition. Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$58\%$ at five to six cubes, $38\%$ at seven, and $0\%$ at eight. On FMB, Smart's pooled success rate is $97.0\%$ against Global's $31.3\%$, and Global collapses entirely at five objects ($0.0\%$ under both conditions), where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $175$\,s at six cubes to $399$\,s at seven, and to $284.6$\,s at four FMB objects under redundancy against Smart's $223.5$\,s, with no successful Global trial left to time at five objects. The monolithic Combined variant, which merges every object's goal into a single LGP terminal instead of decomposing the task, fares far worse: it succeeds only on the easiest FMB configuration without redundancy ($18.0\%$) and fails at every other cell tested, including cube stacking at four cubes (the only magnitude executed under Combined; five to eight cubes were not run, as a strictly easier magnitude already failing completely implies the harder ones do too) -- decomposition itself, not merely the choice between Smart and Global, is what makes these problems tractable.
-
-\zz{here give results: about the motion execution success rates, in terms of using LGP things, put things in one table}
+%Solving time follows the same pattern: Smart grows slowly with size, while Global grows sharply under redundancy -- from $175$\,s at six cubes to $399$\,s at seven, and to $284.6$\,s at four FMB objects under redundancy against Smart's $223.5$\,s, with no successful Global trial left to time at five objects. 
+%The monolithic Combined variant, which merges every object's goal into a single LGP terminal instead of decomposing the task, fares far worse: it succeeds only on the easiest FMB configuration without redundancy ($18.0\%$) and fails at every other cell tested, including cube stacking at four cubes (the only magnitude executed under Combined; five to eight cubes were not run, as a strictly easier magnitude already failing completely implies the harder ones do too) -- decomposition itself, not merely the choice between Smart and Global, is what makes these problems tractable.
 
 \subsubsection{Real-World Experiments}
 
-We validate the pipeline on the physical robot. Representative cube-stacking and FMB instances are planned by Smart, and the resulting trajectories are parsed into joint-space motions and gripper events and executed on the Franka Panda as described in Section~\ref{sec:motion_execution}. Figures~\ref{fig:real_cube_stacking} and~\ref{fig:real_fmb} show the initial scene and execution sequence for each magnitude.
+We also validate the performance in real-world experiments. 
+Due to page limit only single demonstration is shown with complete recordings given in the supplementary video. 
+
+%We validate the pipeline on the physical robot. Representative cube-stacking and FMB instances are planned by Smart, and the resulting trajectories are parsed into joint-space motions and gripper events and executed on the Franka Panda as described in Section~\ref{sec:motion_execution}. Figures~\ref{fig:real_cube_stacking} and~\ref{fig:real_fmb} show the initial scene and execution sequence for each magnitude.
 
 \zz{give figures of real-world experiments}
 
 \subsection{Ablation Studies}
 
-\subsubsection{VLM for Graph Generation}
 
-Table~\ref{tab:vlm_backbone_selection} compares four candidate VLMs on FMB graph extraction. Gemini-3-Flash and Qwen3.6-Plus are the only models to reach $100\%$ on both test batches; Qwen3.5-Plus and Qwen3.5-Flash trail substantially. Given comparable accuracy between the top two, we adopt Gemini-3-Flash as the VLM front end for the remainder of this work.
+\begin{table}[t]
+\footnotesize
+\centering
+\caption{Ablation study on different VLMs. FMB: 5 blocks. S1-S5: five structures.\zz{change this table} }
+\label{tab:vlm_backbone_selection}
+\begin{tabular}{lccccc}
+\toprule
+VLM & S1 & S2 & S3 & S4 & S5 \\
+\midrule
+Gemini-3-Flash & 100.0\% (10/10) & 100.0\% (10/10) \\
+Qwen3.6-Plus   & 100.0\% (10/10) & 100.0\% (10/10) \\
+Qwen3.5-Plus   & \phantom{0}70.0\% (7/10) & \phantom{0}60.0\% (6/10) \\
+Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
+\textcolor{red}{GPT? Claude?} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
-\subsubsection{Assembly Graph Generation Validator}
-\label{subsubsec:abl_validator}
+\subsubsection{Ablation study on different VLMs}
+We also ablate the FMB for examining the influence of different VLMs...using BS task with 
 
-During the graph-generation evaluation (Table~\ref{tab:vlm_accuracy}), the validator is triggered in four of the $400$ trials, each in a different case. All four violations are structural: a bridging object that omits a supporter standing between its other supporters at the same height, a bridging object whose supporters lie on different layers, and a support edge without a valid supporter index. Without the validator, the rejected graph is passed downstream as generated, and each of the four cases reaches $90\%$ accuracy. With the validator, the violated rule is returned to the VLM as feedback and the graph is regenerated. We sample this regeneration ten times per case, matching the ten trials per case of the main evaluation; all $40$ regenerated graphs match the reference (Wilson $95\%$ CI $[91.2\%, 100\%]$), raising each case to $100\%$. Graphs that pass the validator never enter the retry loop, so the remaining trials are unaffected, and overall accuracy rises from $98.0\%$ to $98.8\%$ on cube stacking and from $94.0\%$ to $95.3\%$ on FMB.
+\zz{what are test1? and test 3? why only qwen? where are other models? gpt? need more models, you can test only 3 fmb scenarios}
 
-The validator checks only the internal consistency of the predicted graph and uses neither the target image nor the part list. Errors that leave the graph self-consistent, such as a wrong position label, a misidentified object type, or a missing object, therefore pass it; this is why the three lowest-scoring cases ($70\%$) are not among the four the validator catches.
+% Table~\ref{tab:vlm_backbone_selection} compares four candidate VLMs on FMB graph extraction. 
+% Gemini-3-Flash and Qwen3.6-Plus are the only models to reach $100\%$ on both test batches; Qwen3.5-Plus and Qwen3.5-Flash trail substantially. Given comparable accuracy between the top two, we adopt Gemini-3-Flash as the VLM front end for the remainder of this work.
+
+
+% \subsubsection{Assembly Graph Generation Validator}
+% \label{subsubsec:abl_validator}
+
+% During the graph-generation evaluation (Table~\ref{tab:vlm_accuracy}), the validator is triggered in four of the $400$ trials, each in a different case. All four violations are structural: a bridging object that omits a supporter standing between its other supporters at the same height, a bridging object whose supporters lie on different layers, and a support edge without a valid supporter index. Without the validator, the rejected graph is passed downstream as generated, and each of the four cases reaches $90\%$ accuracy. With the validator, the violated rule is returned to the VLM as feedback and the graph is regenerated. We sample this regeneration ten times per case, matching the ten trials per case of the main evaluation; all $40$ regenerated graphs match the reference (Wilson $95\%$ CI $[91.2\%, 100\%]$), raising each case to $100\%$. Graphs that pass the validator never enter the retry loop, so the remaining trials are unaffected, and overall accuracy rises from $98.0\%$ to $98.8\%$ on cube stacking and from $94.0\%$ to $95.3\%$ on FMB.
+
+% The validator checks only the internal consistency of the predicted graph and uses neither the target image nor the part list. Errors that leave the graph self-consistent, such as a wrong position label, a misidentified object type, or a missing object, therefore pass it; this is why the three lowest-scoring cases ($70\%$) are not among the four the validator catches.
 
 % ------------------------------------------------------------------
 % TABLE: tab:ablation_validator
@@ -740,32 +903,35 @@ The validator checks only the internal consistency of the predicted graph and us
 %   (FMB 3objs/004, FMB 5objs/003, cube_n08_s01) contain no rejected graph, and FMB 5objs/004 is
 %   also at 90% without one.
 % ------------------------------------------------------------------
-\iffalse  % folded into tab:vlm_accuracy's w/o-Validator column; kept for the
-% per-case rule/Regen. detail if that level of granularity is wanted back later.
-\begin{table}[t]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{2.5pt}
-\caption{Validator ablation on the four cases in which the validator was triggered during evaluation. Accuracy is over the ten trials of each case, without (w/o) and with (w/) the validator; \emph{Regen.} counts regenerated graphs matching the reference, out of ten samples per case.}
-\label{tab:ablation_validator}
-\begin{tabular}{llccc}
-\toprule
-& & \multicolumn{2}{c}{Accuracy} & \\
-\cmidrule(lr){3-4}
-Case & Violated rule & w/o & w/ & Regen. \\
-\midrule
-Cube, 7 cubes, \texttt{s05} & skipped supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
-Cube, 8 cubes, \texttt{s04} & skipped supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
-FMB, 5 obj., \texttt{001} & invalid supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
-FMB, 5 obj., \texttt{005} & mixed-layer supporters & $90.0\%$ & $100.0\%$ & $10/10$ \\
-\midrule
-\textbf{All four} & & $\mathbf{90.0\%}$ & $\mathbf{100.0\%}$ & $\mathbf{40/40}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-\fi
+% \iffalse  % folded into tab:vlm_accuracy's w/o-Validator column; kept for the
+% % per-case rule/Regen. detail if that level of granularity is wanted back later.
+% \begin{table}[t]
+% \centering
+% \footnotesize
+% \setlength{\tabcolsep}{2.5pt}
+% \caption{Validator ablation on the four cases in which the validator was triggered during evaluation. Accuracy is over the ten trials of each case, without (w/o) and with (w/) the validator; \emph{Regen.} counts regenerated graphs matching the reference, out of ten samples per case.}
+% \label{tab:ablation_validator}
+% \begin{tabular}{llccc}
+% \toprule
+% & & \multicolumn{2}{c}{Accuracy} & \\
+% \cmidrule(lr){3-4}
+% Case & Violated rule & w/o & w/ & Regen. \\
+% \midrule
+% Cube, 7 cubes, \texttt{s05} & skipped supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
+% Cube, 8 cubes, \texttt{s04} & skipped supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
+% FMB, 5 obj., \texttt{001} & invalid supporter & $90.0\%$ & $100.0\%$ & $10/10$ \\
+% FMB, 5 obj., \texttt{005} & mixed-layer supporters & $90.0\%$ & $100.0\%$ & $10/10$ \\
+% \midrule
+% \textbf{All four} & & $\mathbf{90.0\%}$ & $\mathbf{100.0\%}$ & $\mathbf{40/40}$ \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+% \fi
 
 \subsubsection{Reachability-Manipulability-Aware Object Ordering}
+
+Design 5 scenes with BS - 3 required objects with 1 redundant object? ?? 
+We achieve 100\% while a typical distance-based method fail all. 
 
 We isolate reachability filtering with ten designed scenes sharing one task: place three cubes at fixed left/center/right table positions. Each scene offers four same-type candidate cubes for the three slots -- three reachable and one adversarial, always the nearest of the four to the robot base so that a naive nearest-first baseline (no reachability awareness) prefers it. Five scenes place the adversarial candidate touching a same-type neighbor at zero surface clearance, testing the geometric accessibility score $\rho$; the other five place it behind a modeled obstacle (a rigid body outside the object inventory, so it carries no $\rho$ penalty) that keeps a single-waypoint feasibility check infeasible for that candidate, testing the KOMO-based feasibility check. Both policies execute through the full LGP solver, not a reduced checker. Table~\ref{tab:ablation_reachability} reports the outcome as whether the selected candidate is both safe and reachable, not the solver's raw exit code: the crowded candidate lets the solver complete with the gripper body overlapping the neighboring object at zero clearance, and the obstructed candidate's motion plan still executes because the full solver routes around a single rigid obstacle that the naive baseline never queried for in the first place. Reachability filtering rejects the adversarial candidate in all ten scenes, letting the method fall back to the three well-conditioned alternatives; the naive baseline, which selects by proximity alone, never does.
 
@@ -776,25 +942,82 @@ We isolate reachability filtering with ten designed scenes sharing one task: pla
 %   the base). Both policies executed through the full LGP solver (bin/x.exe).
 %   Outcome is safe-and-reachable selection, not the raw solver exit code -- see prose.
 % ------------------------------------------------------------------
+% \begin{table}[t]
+% \centering
+% \footnotesize
+% \setlength{\tabcolsep}{4pt}
+% \caption{Reachability-filtering ablation. Ten designed scenes, each with four same-type candidates (three needed, one adversarial and always nearest the base). Outcome is whether the selected candidate is safe and reachable, not the solver's raw exit code -- see text.}
+% \label{tab:ablation_reachability}
+% \begin{tabular}{lcc}
+% \toprule
+% Mechanism & Ours & Naive baseline \\
+% \midrule
+% Crowding (safety) & $5/5$ & $0/5$ \\
+% Blocked approach (feasibility) & $5/5$ & $0/5$ \\
+% \midrule
+% \textbf{All ten scenes} & $\mathbf{10/10}$ & $\mathbf{0/10}$ \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+
+{
 \begin{table}[t]
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\caption{Reachability-filtering ablation. Ten designed scenes, each with four same-type candidates (three needed, one adversarial and always nearest the base). Outcome is whether the selected candidate is safe and reachable, not the solver's raw exit code -- see text.}
-\label{tab:ablation_reachability}
-\begin{tabular}{lcc}
+\caption{Ablation study on the active constraints. \zz{change this table}}
+\label{tab:planning_time}
+\resizebox{\columnwidth}{!}{\begin{tabular}{l|cccccccc}
 \toprule
-Mechanism & Ours & Naive baseline \\
+ & \multicolumn{4}{c}{Task Success Rate} & \multicolumn{4}{c}{LGP Computational Time (s)} \\
+\cmidrule(r){2-5}\cmidrule(l){6-9}
+Tasks & \multicolumn{2}{c}{Ours} & \multicolumn{2}{c}{w/o AC} & \multicolumn{2}{c}{Ours} & \multicolumn{2}{c}{w/o AC} \\
+\cmidrule(r){2-5}\cmidrule(l){6-9}
+ & NR & WR & NR & WR & NR & WR & NR & WR\\
 \midrule
-Crowding (safety) & $5/5$ & $0/5$ \\
-Blocked approach (feasibility) & $5/5$ & $0/5$ \\
+BS: 4 blocks & & & & & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8  \\
+BS: 5 blocks & & & & & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 \\
+BS: 6 blocks & & & & & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}174.8   \\
+BS: 7 blocks & & & & & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}399.2  \\
+BS: 8 blocks & & & & & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}---   \\
 \midrule
-\textbf{All ten scenes} & $\mathbf{10/10}$ & $\mathbf{0/10}$ \\
+FMB: 3 blocks & & & & & 209.3 & 209.5 & 282.2 & 215.5   \\
+FMB: 4 blocks & & & & & 229.3 & 223.5 & 255.2 & 284.6  \\
+FMB: 5 blocks & & & & & 274.7 & 285.5 & \phantom{00}--- & \phantom{00}---  \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
+}
+
+% \begin{table}[!ht]
+% \centering
+% \caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}
+% \label{tab:planning_time}
+% \begin{tabular}{lcccccc}
+% \toprule
+%  & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{} \\
+% \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+%  & NR & R & NR & R & NR & R \\
+% \midrule
+% \multicolumn{7}{l}{\textit{Cube Stacking}} \\
+% 4 cubes & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8 & \phantom{0}--- & \phantom{0}--- \\
+% 5 cubes & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 & \phantom{0}--- & \phantom{0}--- \\
+% 6 cubes & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}174.8 & \phantom{0}--- & \phantom{0}--- \\
+% 7 cubes & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}399.2 & \phantom{0}--- & \phantom{0}--- \\
+% 8 cubes & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- & \phantom{0}--- & \phantom{0}--- \\
+% \midrule
+% \multicolumn{7}{l}{\textit{FMB}} \\
+% 3 objects & 209.3 & 209.5 & 282.2 & 215.5 & 247.5 & \phantom{00}--- \\
+% 4 objects & 229.3 & 223.5 & 255.2 & 284.6 & \phantom{00}--- & \phantom{00}--- \\
+% 5 objects & 274.7 & 285.5 & \phantom{00}--- & \phantom{00}--- & \phantom{00}--- & \phantom{00}--- \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 
 \subsubsection{Active Constraints for LGP}
+
+
+Smart solves every cube-stacking configuration at $100\%$; Global degrades with scale, most severely under redundancy, falling to $56$--$58\%$ at five to six cubes, $38\%$ at seven, and $0\%$ at eight. 
+On FMB, Smart's pooled success rate is $97.0\%$ against Global's $31.3\%$, and Global collapses entirely at five objects ($0.0\%$ under both conditions), where the solver must disambiguate distractors while exhaustively checking collisions within an already large batch. 
 
 \zz{here: compare with and without active constraints (your previous global LGP), in terms of computational time, show that active constraints indeed accelerate things}
 
@@ -826,22 +1049,6 @@ Blocked approach (feasibility) & $5/5$ & $0/5$ \\
 % Sampling    : N=10 per model-test cell (per the chart's own counts, e.g. "10/10", "7/10").
 % Regenerate  : generator script not located -- flag if you find/recall it, so this can be reproduced.
 % ------------------------------------------------------------------
-\begin{table}[t]
-\footnotesize
-\centering
-\caption{Small-scale VLM backbone selection experiment comparing candidate models on FMB graph-generation accuracy, N=10 trials per model-test cell; motivates the choice of Gemini-3-Flash as the VLM front-end used throughout the rest of this section.}
-\label{tab:vlm_backbone_selection}
-\begin{tabular}{lcc}
-\toprule
-Model & Test-1 & Test-3 \\
-\midrule
-Gemini-3-Flash & 100.0\% (10/10) & 100.0\% (10/10) \\
-Qwen3.6-Plus   & 100.0\% (10/10) & 100.0\% (10/10) \\
-Qwen3.5-Plus   & \phantom{0}70.0\% (7/10) & \phantom{0}60.0\% (6/10) \\
-Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 
 
@@ -859,19 +1066,19 @@ Qwen3.5-Flash  & \phantom{00}0.0\% (0/10) & \phantom{00}0.0\% (0/10) \\
 % Sampling    : N=10 trials per scene per format (40 VLM calls total).
 % Regenerate  : python3 test/fmb_VLM_test/evaluate_fmb_vlm_accuracy.py
 % ------------------------------------------------------------------
-\begin{table}[t]
-\centering
-\caption{FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}
-\label{tab:vlm_input_format}
-\begin{tabular}{lcc}
-\toprule
- & Single-Image & Sequential-Image \\
-\midrule
-Test 6 & \phantom{0}80.0\% (8/10) & 100.0\% (10/10) \\
-Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
-\bottomrule
-\end{tabular}
-\end{table}
+% \begin{table}[t]
+% \centering
+% \caption{FMB support-graph accuracy for Gemini-3-Flash under two image-input formats, on two representative bridging-relation scenes, N=10 trials per cell.}
+% \label{tab:vlm_input_format}
+% \begin{tabular}{lcc}
+% \toprule
+%  & Single-Image & Sequential-Image \\
+% \midrule
+% Test 6 & \phantom{0}80.0\% (8/10) & 100.0\% (10/10) \\
+% Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 
 
 % ------------------------------------------------------------------
@@ -914,91 +1121,14 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 % "solving" step, so a solving-time comparison isn't meaningful for it; that table stays
 % Smart-vs-Global only.
 % ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\caption{Success rate (\%) by benchmark, magnitude, and redundancy condition. Smart, Global, and Combined succeed via constrained LGP planning (Combined merges every object's goal into a single monolithic terminal instead of decomposing the task); VLM-MSGraph~\cite{li2025vlm} is evaluated by whether its naive interpolation executes without collision, given the same scenes and task assignment. Cube stacking: N=1000 (Smart/Global), N=500 (VLM-MSGraph), N=100 at four cubes / not executed at five--eight cubes (Combined, see text). FMB: N=50 per cell (Smart/Global/Combined, no exclusions -- re-run with no wall-clock timeout, 16GB memory cap only), N=300 (VLM-MSGraph).}
-\label{tab:planning_sr}
-\begin{tabular}{lcccccccc}
-\toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Combined} & \multicolumn{2}{c}{VLM-MSGraph} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
- & NR & R & NR & R & NR & R & NR & R \\
-\midrule
-\multicolumn{9}{l}{\textit{Cube Stacking}} \\
-4 cubes & 100.0 & 100.0 & 100.0 & 78.0 & \phantom{00}0.0 & \phantom{00}0.0 & 16.0 & \phantom{0}8.0 \\
-5 cubes & 100.0 & 100.0 & \phantom{0}96.7 & 56.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}2.0 & \phantom{0}4.0 \\
-6 cubes & 100.0 & 100.0 & 100.0 & 58.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}0.0 & \phantom{0}0.0 \\
-7 cubes & 100.0 & 100.0 & \phantom{0}93.3 & 38.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}0.0 & \phantom{0}0.0 \\
-8 cubes & 100.0 & 100.0 & \phantom{0}60.0 & \phantom{0}0.0 & \phantom{00}0.0 & \phantom{00}0.0 & \phantom{0}4.0 & \phantom{0}0.0 \\
-\midrule
-\multicolumn{9}{l}{\textit{FMB}} \\
-3 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}92.0 & 62.0 & 18.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-4 objects & \phantom{0}98.0 & 100.0 & \phantom{0}22.0 & 12.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-5 objects & \phantom{0}96.0 & \phantom{0}96.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & \phantom{0}0.0 & 0.0 & 0.0 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
-\begin{table}[!ht]
-\centering
-\caption{Average solving time in seconds over successful trials. Cube stacking Global-R at eight cubes has no successful trial; Global has no successful FMB trial at five objects (either condition); Combined has no successful trial at any cube-stacking magnitude, and none on FMB except 3 objects (NR).}
-\label{tab:planning_time}
-\begin{tabular}{lcccccc}
-\toprule
- & \multicolumn{2}{c}{Smart (Ours)} & \multicolumn{2}{c}{Global} & \multicolumn{2}{c}{Combined} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
- & NR & R & NR & R & NR & R \\
-\midrule
-\multicolumn{7}{l}{\textit{Cube Stacking}} \\
-4 cubes & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8 & \phantom{0}--- & \phantom{0}--- \\
-5 cubes & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 & \phantom{0}--- & \phantom{0}--- \\
-6 cubes & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}174.8 & \phantom{0}--- & \phantom{0}--- \\
-7 cubes & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}399.2 & \phantom{0}--- & \phantom{0}--- \\
-8 cubes & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}--- & \phantom{0}--- & \phantom{0}--- \\
-\midrule
-\multicolumn{7}{l}{\textit{FMB}} \\
-3 objects & 209.3 & 209.5 & 282.2 & 215.5 & 247.5 & \phantom{00}--- \\
-4 objects & 229.3 & 223.5 & 255.2 & 284.6 & \phantom{00}--- & \phantom{00}--- \\
-5 objects & 274.7 & 285.5 & \phantom{00}--- & \phantom{00}--- & \phantom{00}--- & \phantom{00}--- \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 % ------------------------------------------------------------------
 % TABLE: tab:stage_timing (no accompanying prose yet -- to be written by the advisor)
 % Stage 2 and manipulability: experiments/outputs/stage_timing/stage_timing.{md,json}
 % Stage 1 (paper's formula): experiments/outputs/stage_timing/paper_score_timing.{md,json}
 % ------------------------------------------------------------------
-\begin{table}[!ht]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\caption{Per-stage computation time (ms). Reachability filtering comprises the geometric accessibility score (stage~1) and the KOMO feasibility check (stage~2). Means over $10$ scenes per cell.}
-\label{tab:stage_timing}
-\begin{tabular}{lcccccc}
-\toprule
- & \multicolumn{4}{c}{Reachability} & \multicolumn{2}{c}{Manipulability} \\
-\cmidrule(lr){2-5}\cmidrule(lr){6-7}
- & \multicolumn{2}{c}{Stage 1: score} & \multicolumn{2}{c}{Stage 2: KOMO} & & \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}
- & NR & R & NR & R & NR & R \\
-\midrule
-\multicolumn{7}{l}{\textit{Cube Stacking}} \\
-4 cubes & 0.13 & 0.17 & \phantom{0}963.5 & 2042.4 & 10.9 & 20.7 \\
-5 cubes & 0.13 & 0.18 & 1232.2 & 2649.2 & 13.3 & 25.5 \\
-6 cubes & 0.16 & 0.23 & 1499.0 & 3246.1 & 15.8 & 31.3 \\
-7 cubes & 0.16 & 0.24 & 1802.4 & 3883.1 & 18.7 & 35.1 \\
-8 cubes & 0.18 & 0.29 & 2076.1 & 4439.9 & 21.4 & 39.0 \\
-\midrule
-\multicolumn{7}{l}{\textit{FMB}} \\
-3 objects & 0.13 & 0.17 & \phantom{0}785.1 & 1613.1 & \phantom{0}8.7 & 18.2 \\
-4 objects & 0.15 & 0.20 & 1042.0 & 2203.4 & 11.5 & 23.7 \\
-5 objects & 0.16 & 0.23 & 1336.5 & 2748.7 & 14.9 & 28.3 \\
-\bottomrule
-\end{tabular}
-\end{table}
+
 
 
 
@@ -1014,8 +1144,8 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 % ------------------------------------------------------------------
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/Cube_Stacking.png}
-\caption{Representative real-robot execution: initial scene and execution-sequence photos for cube-stacking assemblies of 4 to 8 cubes on the physical Franka Panda platform.}
+\includegraphics[width=\textwidth]{figures/Cube_Stacking.pdf}
+\caption{Representative real-robot execution: initial scene and execution-sequence photos for cube-stacking assemblies of 4 to 8 cubes on the physical Franka Panda platform. \zz{change this figure}}
 \label{fig:real_cube_stacking}
 \end{figure*}
 
@@ -1031,11 +1161,10 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 % ------------------------------------------------------------------
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/FMB.png}
-\caption{Representative real-robot execution: initial scene and execution-sequence photos for FMB assemblies of 3 to 5 objects on the physical Franka Panda platform.}
+\includegraphics[width=\textwidth]{figures/FMB.pdf}
+\caption{Representative real-robot execution: initial scene and execution-sequence photos for FMB assemblies of 3 to 5 objects on the physical Franka Panda platform. \zz{change this figure}}
 \label{fig:real_fmb}
 \end{figure*}
-\FloatBarrier
 
 \section{Discussion}
 
@@ -1043,6 +1172,10 @@ Test 7 & \phantom{0}90.0\% (9/10) & 100.0\% (10/10) \\
 
 \subsection{Role of VLM}
 
+
+\subsection{Limitations and Future Work}
+
+grasp pose predefined
 
 \section{Conclusion}
 
