@@ -692,7 +692,7 @@ We first evaluate the accuracy of generating the assembly graph $\mathcal{G}$ fr
 Since FG-LGP uses the same graph generation method as the proposed framework, we compare only with D-VLM and VLM-MSGraph. 
 The results are reported in Table~\ref{tab:graph_accuracy}.
 
-It shows that....FMB worse due to more complex reasoning requiring better prompt guidance and validator guidance...
+D-VLM, which prompts a VLM to output the same structured graph with no prompt engineering, decomposition guidance, or validator, trails both baselines across nearly every cell. On cube stacking its accuracy varies substantially across the five target structures at each magnitude rather than declining smoothly with object count, reflecting sensitivity to the specific configuration rather than sheer complexity. The gap widens sharply on FMB, where relating objects across insertion layers under a strict support order requires reasoning D-VLM's plain prompt cannot reliably reproduce; V-M and Ours, which add structured extraction and a validator respectively, both hold up far better. This confirms that our accuracy gain comes from the structured graph-extraction pipeline, not from the underlying VLM's raw capability alone.
 
 \zz{fill in the table I with the D-VLM results, and write summary paragraph after values in}
 
