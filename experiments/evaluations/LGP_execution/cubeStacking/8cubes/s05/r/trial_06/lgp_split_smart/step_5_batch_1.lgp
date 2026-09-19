@@ -1,0 +1,4 @@
+fol: <step_5_batch_1.fol>
+terminal: " (on rectprism_3 rectprism_6) "
+genericCollisions: false
+coll: []

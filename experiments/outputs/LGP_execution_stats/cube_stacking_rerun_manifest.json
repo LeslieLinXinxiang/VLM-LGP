@@ -1,0 +1,131 @@
+{
+  "purpose": "Full rerun of Cube Stacking lgp_split_smart vs lgp_split_global (Table tab:planning_sr / tab:planning_time), replacing numbers that were mathematically impossible under N=50 (96.7%, 93.3%) and whose backing raw data was never committed to git.",
+  "git_commit_at_launch": "bd222e5ab051722337cf0d4d0b8a2de43aa6e6eb",
+  "branch": "writing_paper",
+  "script": "experiments/scripts/run_lgp_batch_eval.py",
+  "command": "python3 experiments/scripts/run_lgp_batch_eval.py --mags 4cubes 5cubes 6cubes 7cubes 8cubes --mode both --timeout-s 3600 --max-mem-mb 16000",
+  "timeout_s": 3600,
+  "max_mem_mb": 16000,
+  "note_on_timeout": "Old default was 300s, the same class of artificial-cap bug already found and fixed for FMB (d300637e). Raised to 3600s here to mirror FMB's 'no wall-clock cap, memory cap only' approach while keeping a sane outer bound; 16GB memory cap is still the effective limiter for the Global policy at high magnitudes.",
+  "scope": "5 magnitudes (4-8 cubes) x 2 redundancy modes (nr, r) x 5 scenarios (s01-s05) x 10 trials x 2 policies (lgp_split_smart, lgp_split_global) = 1000 solver invocations. lgp_combined not rerun (4cubes data already valid; harder magnitudes assumed to fail per existing established logic).",
+  "prior_stale_data_archived_to": "experiments/evaluations/LGP_execution/cubeStacking_STALE_20260918/",
+  "started_at": "2026-09-18T11:56:48.319844",
+  "finished_at": "2026-09-18T21:36:25.490048",
+  "machine": "Ubuntu box, 32 cores, 30GB RAM (per nproc/free at launch time)",
+  "pid": 35792,
+  "log_file": "/tmp/claude-1000/-home-leslie-Projects-VLM-LGP/683edcf2-f26b-4b24-b037-1b60c8bc67d0/scratchpad/cube_stacking_full_rerun.log",
+  "total_wall_time": "9h36m34s",
+  "final_results_summary": {
+    "4cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "4cubes_nr_lgp_split_global": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "4cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "4cubes_r_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "5cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "5cubes_nr_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "5cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "5cubes_r_lgp_split_global": {
+      "success": 48,
+      "n": 50,
+      "rate": 96.0
+    },
+    "6cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "6cubes_nr_lgp_split_global": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "6cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "6cubes_r_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "7cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "7cubes_nr_lgp_split_global": {
+      "success": 48,
+      "n": 50,
+      "rate": 96.0
+    },
+    "7cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "7cubes_r_lgp_split_global": {
+      "success": 19,
+      "n": 50,
+      "rate": 38.0
+    },
+    "8cubes_nr_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "8cubes_nr_lgp_split_global": {
+      "success": 49,
+      "n": 50,
+      "rate": 98.0
+    },
+    "8cubes_r_lgp_split_smart": {
+      "success": 50,
+      "n": 50,
+      "rate": 100.0
+    },
+    "8cubes_r_lgp_split_global": {
+      "success": 0,
+      "n": 50,
+      "rate": 0.0
+    }
+  },
+  "git_commit_at_finish": null,
+  "post_hoc_fix_2026-09-19": {
+    "what": "8cubes/s02/nr/trial_01 (both lgp_split_smart and lgp_split_global) originally failed with a 16-17GB memory-cap kill. Root cause: experiments/scenes/8cubes/s02/random_trials/trial_01_nr.g had obj_03's Left/Right placement markers misnamed 'rect_1_Left'/'rect_1_Right' instead of following the 'obj_03_Left'/'obj_03_Right' convention every sibling object in the same scene uses. core/utils.py::parse_and_inject renames markers by matching the '{obj_id}_{suffix}' pattern, so the misnamed markers were never renamed to 'rectprism_4_Left'/'rectprism_4_Right', leaving codegen's terminal '(on rectprism_4_Left cube_1)' referencing a frame absent from the scene. The FOL/LGP parser logs this as a WARNING ('parsing parent ... unknown') rather than failing cleanly, and the search then balloons memory linearly (~360MB/s) until the 16GB cap kills it -- the memory exhaustion is a downstream symptom, not the actual defect.",
+    "verified_isolated": "Grepped all 4-8cubes scene files for the same non-'{obj_id}_' marker-naming pattern; this is the only occurrence in the whole dataset.",
+    "fix": "Renamed the two marker frames in trial_01_nr.g to follow the standard convention, then reran both policies for this one scene in isolation to confirm.",
+    "before_after": {
+      "lgp_split_smart": {"before": {"success": false, "runtime_s": 54.8, "memory_peak_mb": 16949.99}, "after": {"success": true, "runtime_s": 24.6, "memory_peak_mb": 249.83}},
+      "lgp_split_global": {"before": {"success": false, "runtime_s": 502.0, "memory_peak_mb": 16016.76}, "after": {"success": true, "runtime_s": 37.4, "memory_peak_mb": 656.96}}
+    },
+    "effect_on_8cubes_nr_final_results": "lgp_split_smart 98.0%->100.0% (50/50), lgp_split_global 96.0%->98.0% (49/50). final_results_summary above already reflects the corrected numbers."
+  }
+}

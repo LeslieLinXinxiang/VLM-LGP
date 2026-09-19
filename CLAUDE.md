@@ -986,3 +986,225 @@ the path)"` unconditionally — the defect being demonstrated is that the naive 
 *selection* never queries obstruction at all, not that execution fails. Final tallies: ours
 10/10, baseline 0/10 (5/5 Type A on the 0cm-clearance criterion, 5/5 Type B on the
 ignores-obstacle criterion).
+
+---
+
+## Done (2026-09-18): D-VLM baseline full run, and Cube Stacking Smart/Global full rerun
+## (tab:planning_sr / tab:planning_time fixed — paper numbers were stale and partly
+## impossible)
+
+### D-VLM baseline (`prompts/baseline_d_vlm.md`) — full-scale run complete
+
+Same scope as the paper's own method evaluation: cube stacking {4..8}cubes × {s01..s05},
+FMB {3..5}objs × {001..005}, 10 trials each, 400 calls. Script:
+`experiments/scripts/run_baseline_d_vlm_full.py`. Data:
+`experiments/evaluations/VLM/D-VLM_baseline/`, summary in `full_run_summary.json`.
+
+**Result: 196/400 (49.0%) overall.**
+
+| Benchmark | Magnitude | Accuracy |
+|---|---|---|
+| cubeStacking | 4cubes | 84.0% |
+| cubeStacking | 5cubes | 66.0% |
+| cubeStacking | 6cubes | 64.0% |
+| cubeStacking | 7cubes | 52.0% |
+| cubeStacking | 8cubes | 86.0% |
+| FMB | 3objs | 14.0% |
+| FMB | 4objs | 20.0% |
+| FMB | 5objs | 6.0% |
+
+The 86.0% at 8cubes looked counter-intuitive next to 7cubes' 52.0%, so it was
+investigated in depth (not assumed to be noise or a scoring bug) before accepting it:
+
+- Per-scenario breakdown showed a bimodal pattern, present at **every** magnitude, not
+  just 8cubes: a scenario is either ~10/10 or ~0/10 across its 10 trials, rarely
+  in-between. 8cubes/s01-s04 were independently reproduced at 10/10 **twice** (once in the
+  first full run, once in a from-scratch rerun of just those 5 scenarios) — ruling out a
+  one-off fluke or API caching artifact. Only 8cubes/s05 is genuinely hard, and even it
+  varied between runs (0/10 the first time, 3/10 on rerun) — real sampling noise on the
+  hard case, not on the easy ones.
+- Leave-one-out on the 5 scenarios confirmed no single scenario is "carrying" the
+  aggregate: dropping any of s01-s04 individually still leaves 75.0%, because the other
+  three are still 100%. It is 4 genuinely-easy structures, not 1 lucky one.
+- Spot-checked raw JSON byte-for-byte against the reference: s01, s02, s04 are **exact
+  literal matches** across all 10 trials, no scoring leniency involved at all. s03 needed
+  the existing "position on a multi-supporter/bridging edge doesn't count toward the
+  signature" rule (`canonicalize_graph` in `analyse_gemini_proposed_method_accuracy.py`) —
+  this rule is not something invented for D-VLM, it's the same rule used to score the
+  paper's own method everywhere else in this pipeline, so it isn't a double standard.
+  Applying a hypothetically stricter rule (keeping bridge-edge positions literal) pulls
+  every magnitude down by a similar amount (e.g. 6cubes 64.0%→38.0%, 8cubes 80.0%→62.0%
+  on the first run's numbers) — 8cubes doesn't become an outlier under the strict rule
+  either, confirming the leniency isn't specifically inflating this one magnitude.
+- 7cubes being the worst (52.0%) rather than a smooth 4→8 decline is the same
+  scenario-variance story in reverse: only 2 of its 5 scenarios are "easy" for D-VLM,
+  versus 4 of 5 at 8cubes. This looks like it's a property of which specific target
+  structures the scene generator happened to produce at each magnitude (visually
+  regular/symmetric ones seem to be easy for the model regardless of object count), not a
+  property of object count itself.
+
+Committed to git together with the cube stacking rerun below.
+
+### Cube stacking grasp-pose spot check (all 4 shape families) — one real interference bug found
+
+Ran one real `lgp_split_smart` solve end-to-end on `8cubes/s01` (a scene that happens to
+contain all four shape families: Cube, RectPrism, Long RectPrism, TriPrism, in one
+6-layer pyramid), then rendered the solved grasp (pick) configuration for one instance of
+each shape plus the final placed state, for visual inspection. Script (one-off, not a
+batch tool): `experiments/scripts/verify_cube_shape_grasps.py`. Renders:
+`experiments/outputs/cube_shape_grasp_check/renders/`.
+
+- **Cube, RectPrism, Long RectPrism**: grasp poses look correct — fingers straddle the
+  object with a reasonable gap, no visible interpenetration from any angle checked.
+- **TriPrism: confirmed finger–mesh interpenetration.** Checked from two independent
+  camera angles (not a viewing-angle illusion) — the gripper fingertip visibly clips into
+  the wedge's sloped top face at the solved grasp configuration. Likely cause (not yet
+  confirmed): TriPrism is the only shape family declared `shape:mesh` (a real triangular
+  mesh) rather than `shape:ssBox`; the pick solver (`ManipulationHelper::action_pick`,
+  used by both the real pipeline and `bin/render_grasp.cpp`) probably reasons about the
+  grasp using a simplified/bounding-box proxy that doesn't respect the sloped mesh
+  surface. This is a different bug class from the already-documented FMB concave-mesh
+  collision-inflation issue (that one was about `contype`/convex-decomposition inflating
+  *phantom* solid volume; this one is the opposite — the solver isn't accounting for real
+  mesh geometry it should be respecting).
+- **Final placed structure** (the completed 8-object pyramid): looks structurally sound —
+  no toppling, no gross interpenetration visible — including where the TriPrism ends up
+  resting on the Long RectPrism at the top.
+- **Not yet done**: testing more TriPrism instances at different orientations/positions to
+  determine whether this is systematic (every triprism grasp, always) or specific to this
+  one pose. Don't assume either answer without checking.
+
+### Cube Stacking Smart/Global full rerun — `tab:planning_sr`/`tab:planning_time` fixed
+
+Directly resolves the data-integrity problem investigated earlier this session (see
+inline chat, not written up as its own dated section — short version: `main.tex`'s old
+Global-NR cells of 96.7% and 93.3% at 5 and 7 cubes are **mathematically impossible under
+N=50** — 50 trials only produces multiples of 2%, and 96.7/93.3 exactly match N=30
+fractions (29/30, 28/30) instead. Traced the provenance: the one commit that ever touched
+this table's backing data (`a3210988`) only committed ~270 files for cube stacking, almost
+all of them VLM `.md` reference copies — the full N=50-per-cell raw `trial_meta.json` data
+behind the previously-existing `cross_magnitude_comparison.md` report was **never
+committed to git**, only the aggregate report was. That raw data has since been deleted or
+overwritten on disk by later work and is unrecoverable. A later commit (`d300637e`)'s
+message claims to "rerun FMB+cube stacking without artificial timeout", but the actual
+diff only added a `--combined-only` flag to `run_lgp_batch_eval.py` — cube stacking's
+Smart/Global data was never actually regenerated, despite the misleading message.
+
+**FMB was checked too and is clean, not touched**: recomputed all 12 FMB cells directly
+from raw `trial_meta.json` and they match `main.tex`'s `tab:planning_sr` FMB block exactly,
+N=50 every cell, raw data is git-tracked, and confirmed no lingering artificial-timeout
+effect (67 of the successful 5-object trials run past the old 300s cap, up to 458s, and
+zero `timeout:true` flags anywhere in the FMB tree).
+
+**What was rerun**: `experiments/scripts/run_lgp_batch_eval.py --mags 4cubes 5cubes 6cubes
+7cubes 8cubes --mode both --timeout-s 3600 --max-mem-mb 16000` — all 5 magnitudes × 2
+redundancy modes × 5 scenarios × 10 trials × 2 policies (`lgp_split_smart`,
+`lgp_split_global`) = 1000 solver invocations. `lgp_combined` was not rerun (existing
+4-cube data is still valid; harder magnitudes are assumed to fail per the
+already-established "a strictly easier magnitude failing completely implies the harder
+ones do too" rule). Timeout raised from the old default of 300s (the same class of bug
+already fixed for FMB) to 3600s, mirroring FMB's "no meaningful wall-clock cap, memory cap
+is the real limiter" approach while keeping a sane outer bound. Ran on this Ubuntu box, 32
+cores / 30GB RAM, git commit `bd222e5a` at launch. **Total wall time: 9h 36m** — much
+faster than a pessimistic estimate given mid-run (that estimate assumed slow OOM creep at
+8cubes; in practice `lgp_split_global` failures at 8cubes/R are fast ~40s memory-cap kills,
+not long hangs).
+
+**Traceability**: old (partial/stale) data moved aside to
+`experiments/evaluations/LGP_execution/cubeStacking_STALE_20260918/`, not deleted, so the
+"what did we find broken" evidence trail survives. New raw `trial_meta.json` data +
+`cross_magnitude_comparison.md` regenerated via `generate_final_plots.py`, committed
+together this time (the root cause of the original problem was aggregate-only commits).
+Full manifest — exact command, git commit, machine spec, start/end timestamps, per-cell
+final counts — at `experiments/outputs/LGP_execution_stats/cube_stacking_rerun_manifest.json`.
+
+**Old (stale, impossible-N=50) vs. new (verified N=50, no artificial cap) numbers:**
+
+| Magnitude | Smart NR (old→new) | Smart R | Global NR (old→new) | Global R (old→new) |
+|---|---|---|---|---|
+| 4 cubes | 100.0→100.0 | 100.0→100.0 | 100.0→100.0 | 78.0→98.0 |
+| 5 cubes | 100.0→100.0 | 100.0→100.0 | 96.7→98.0 | 56.0→96.0 |
+| 6 cubes | 100.0→100.0 | 100.0→100.0 | 100.0→100.0 | 58.0→98.0 |
+| 7 cubes | 100.0→100.0 | 100.0→100.0 | 93.3→96.0 | 38.0→38.0 |
+| 8 cubes | 100.0→100.0 | 100.0→100.0 | 60.0→98.0 | 0.0→0.0 |
+
+**The direction of the fix is the opposite of what happened to FMB.** For FMB, removing
+the artificial timeout *revealed* Global's real collapse (numbers went down — the old
+exclusion methodology had been hiding failures). For cube stacking, removing the timeout
+*reveals Global is much more capable than previously measured* — the old 300s cap was
+cutting off solves that just needed more time, not ones that were actually infeasible.
+Global NR is now 96–100% at every magnitude (previously looked like it degraded
+gradually from 4 cubes on); Global only truly collapses at high magnitude **and**
+redundancy specifically (7–8 cubes, R mode) — the two benchmarks fail for genuinely
+different reasons, which is itself worth keeping in mind if this pattern gets discussed in
+the paper.
+
+Initially this rerun showed Smart at 98.0% (49/50) on 8cubes/NR, one genuine-looking
+memory-cap failure. **That single failure was investigated the next day (2026-09-19) and
+turned out to be a fixable scene bug, not real solver behavior** — see the subsection right
+below this one for the full diagnosis. The table above and everywhere else in this file
+already reflects the corrected, post-fix numbers (Smart 100% everywhere, 8cubes Global NR
+98.0% not 96.0%); don't be confused if an earlier commit message or a stale local copy of
+this file shows 98.0%/96.0% instead.
+
+**`main.tex` updated** (`tab:planning_sr`, `tab:planning_time`, and the paragraph right
+before them in `subsec:res_exec`) with the numbers above (including the 2026-09-19 fix
+below), using the same per-column `\phantom{}` padding convention as the rest of the table.
+FMB rows/prose untouched (already verified correct, see above). Combined and VLM-MSGraph
+columns untouched (not part of this rerun). **Not yet compiled** — this machine has no
+LaTeX toolchain (`latexmk`/`pdflatex` both absent from `PATH`); the Mac had a full TeX Live
+2026 install per the 2026-08-23 entry above, so compile-and-check-for-new-overfull/underfull
+warnings there before trusting the PDF, per the established practice in this file.
+
+### Follow-up (2026-09-19): the one Smart failure was a scene bug, not a real memory limit
+
+The single 8cubes/NR Smart failure from the rerun above (`s02/trial_01`,
+`memory_exceeded: true`, peak 16.95GB) was investigated by reproducing it standalone with
+live memory sampling, not just re-reading the old `trial_meta.json`. Confirmed
+deterministic: memory climbs linearly at ~360MB/s from process start and hits the 16GB
+kill at ~45s every time, both on the original run and a fresh rerun.
+
+**Root cause, found via the solver's own stdout, not guessed**: right before the kill, the
+log shows `WARNING:graph.cpp:getParents:845(-1) parsing parent 'rectprism_4_Left' --
+unknown`, immediately after entering `step_4_batch_1.lgp`. Codegen's terminal for that step
+is `(on rectprism_4_Left cube_1)` — it expects a `_Left` placement marker on `rectprism_4`.
+That marker exists in the scene (`experiments/scenes/8cubes/s02/random_trials/
+trial_01_nr.g`) but was authored as `rect_1_Left(obj_03)` / `rect_1_Right(obj_03)` instead
+of following the `{obj_id}_{suffix}` convention every sibling object in the same scene uses
+(`obj_04_Left`, `obj_05_Left`, ...). `core/utils.py::parse_and_inject`'s rename step matches
+markers by that convention when renaming `obj_03`→`rectprism_4`, so the misnamed markers
+were silently skipped and never renamed — codegen's terminal ends up pointing at a frame
+that plainly doesn't exist post-rename. The FOL/LGP parser treats an unresolvable parent as
+a `WARNING`, not a hard failure, and whatever search path that puts it on balloons memory
+linearly until the 16GB cap kills it — **the OOM is a downstream symptom of a dangling
+reference, not evidence that this configuration genuinely needs that much memory.**
+
+Grepped all four/five/six/seven/eight-cube scene files for the same
+non-`{obj_id}_`-prefixed marker-naming pattern — this is the only occurrence in the entire
+dataset, an isolated scene-authoring glitch, not a systemic generator bug.
+
+**Fix and verification**: renamed the two markers in `trial_01_nr.g` to
+`obj_03_Left`/`obj_03_Right`, then reran both policies for this exact scene in isolation
+(not the whole batch) to confirm:
+
+| Policy | Before | After |
+|---|---|---|
+| `lgp_split_smart` | fail, 54.8s, 16950MB peak | success, 24.6s, 250MB peak |
+| `lgp_split_global` | fail, 502.0s, 16017MB peak | success, 37.4s, 657MB peak |
+
+Both collapse from a 16GB OOM to a completely unremarkable solve once the dangling
+reference is fixed — strong confirmation this was the actual cause, not correlation.
+
+**Effect on the numbers**: 8cubes/NR `lgp_split_smart` 98.0%→**100.0%** (50/50, Smart is
+now 100% in literally every cell again), `lgp_split_global` 96.0%→**98.0%** (49/50). All
+tables/files above (the old-vs-new comparison table, `main.tex`, the manifest, the
+regenerated `cross_magnitude_comparison.md`) already carry the corrected numbers. The full
+before/after and root-cause writeup is also saved machine-readable in
+`experiments/outputs/LGP_execution_stats/cube_stacking_rerun_manifest.json`'s
+`post_hoc_fix_2026-09-19` key.
+
+**Scope of this fix**: only `8cubes/s02/random_trials/trial_01_nr.g` and its two trial
+outputs were touched. The other 998 trials from the 2026-09-18 rerun are untouched and
+still valid — this was a single isolated scene defect, confirmed not to recur elsewhere.
+
+Committed to git together with the D-VLM baseline full-run data from the previous entry.

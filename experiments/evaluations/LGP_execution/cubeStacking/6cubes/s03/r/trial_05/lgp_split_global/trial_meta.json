@@ -6,10 +6,10 @@
   "scene": "/home/leslie/Projects/VLM_LGP/experiments/scenes/6cubes/s03/random_trials/trial_05_r.g",
   "gt_vlm_source": "/home/leslie/Projects/VLM_LGP/experiments/evaluations/VLM/gemini_proposed_method/cubeStacking/6cubes/cube_n06_s03/trial_02.md",
   "success": true,
-  "runtime_s": 147.67846083641052,
+  "runtime_s": 95.03355264663696,
   "exit_code": 0,
   "timeout": false,
   "memory_exceeded": false,
-  "memory_peak_mb": 6134.29,
+  "memory_peak_mb": 6136.23,
   "output_state_exists": true
 }
