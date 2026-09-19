@@ -11,8 +11,8 @@
 | 6cubes | `lgp_split_global` | 50 | **100.0%** | 18.9 | 276.4 |
 | 7cubes | `lgp_split_smart` | 50 | **100.0%** | 19.9 | 247.7 |
 | 7cubes | `lgp_split_global` | 50 | **96.0%** | 23.7 | 1013.3 |
-| 8cubes | `lgp_split_smart` | 50 | **98.0%** | 24.4 | 590.4 |
-| 8cubes | `lgp_split_global` | 50 | **96.0%** | 33.4 | 1273.5 |
+| 8cubes | `lgp_split_smart` | 50 | **100.0%** | 24.5 | 256.4 |
+| 8cubes | `lgp_split_global` | 50 | **98.0%** | 33.5 | 966.3 |
 
 ## 2. Overall Performance (R Mode)
 | Magnitude | Policy | Trials | Success Rate | Median Time (s) | Avg Peak Mem (MB) |

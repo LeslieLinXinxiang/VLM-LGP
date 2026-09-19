@@ -1033,7 +1033,7 @@ investigated in depth (not assumed to be noise or a scoring bug) before acceptin
   regular/symmetric ones seem to be easy for the model regardless of object count), not a
   property of object count itself.
 
-Not yet committed to git as of this writing — do that alongside this CLAUDE.md entry.
+Committed to git together with the cube stacking rerun below.
 
 ### Cube stacking grasp-pose spot check (all 4 shape families) — one real interference bug found
 
@@ -1116,7 +1116,7 @@ final counts — at `experiments/outputs/LGP_execution_stats/cube_stacking_rerun
 | 5 cubes | 100.0→100.0 | 100.0→100.0 | 96.7→98.0 | 56.0→96.0 |
 | 6 cubes | 100.0→100.0 | 100.0→100.0 | 100.0→100.0 | 58.0→98.0 |
 | 7 cubes | 100.0→100.0 | 100.0→100.0 | 93.3→96.0 | 38.0→38.0 |
-| 8 cubes | 100.0→**98.0** | 100.0→100.0 | 60.0→96.0 | 0.0→0.0 |
+| 8 cubes | 100.0→100.0 | 100.0→100.0 | 60.0→98.0 | 0.0→0.0 |
 
 **The direction of the fix is the opposite of what happened to FMB.** For FMB, removing
 the artificial timeout *revealed* Global's real collapse (numbers went down — the old
@@ -1129,19 +1129,72 @@ redundancy specifically (7–8 cubes, R mode) — the two benchmarks fail for ge
 different reasons, which is itself worth keeping in mind if this pattern gets discussed in
 the paper.
 
-Also newly true and worth not missing: **Smart is no longer 100% in every single cell.**
-8cubes/NR has one genuine failure (`s02/trial_01`, confirmed via its own `trial_meta.json`:
-`memory_exceeded: true`, peak 16.95GB, not a timeout, not a bug artifact — a real one-off
-memory spike under the new no-cap methodology). The old "Smart solves every cube-stacking
-configuration at 100%" claim in the Results prose has been softened accordingly.
+Initially this rerun showed Smart at 98.0% (49/50) on 8cubes/NR, one genuine-looking
+memory-cap failure. **That single failure was investigated the next day (2026-09-19) and
+turned out to be a fixable scene bug, not real solver behavior** — see the subsection right
+below this one for the full diagnosis. The table above and everywhere else in this file
+already reflects the corrected, post-fix numbers (Smart 100% everywhere, 8cubes Global NR
+98.0% not 96.0%); don't be confused if an earlier commit message or a stale local copy of
+this file shows 98.0%/96.0% instead.
 
 **`main.tex` updated** (`tab:planning_sr`, `tab:planning_time`, and the paragraph right
-before them in `subsec:res_exec`) with the new numbers above, using the same per-column
-`\phantom{}` padding convention as the rest of the table. FMB rows/prose untouched (already
-verified correct, see above). Combined and VLM-MSGraph columns untouched (not part of this
-rerun). **Not yet compiled** — this machine has no LaTeX toolchain (`latexmk`/`pdflatex`
-both absent from `PATH`); the Mac had a full TeX Live 2026 install per the 2026-08-23 entry
-above, so compile-and-check-for-new-overfull/underfull-warnings there before trusting the
-PDF, per the established practice in this file.
+before them in `subsec:res_exec`) with the numbers above (including the 2026-09-19 fix
+below), using the same per-column `\phantom{}` padding convention as the rest of the table.
+FMB rows/prose untouched (already verified correct, see above). Combined and VLM-MSGraph
+columns untouched (not part of this rerun). **Not yet compiled** — this machine has no
+LaTeX toolchain (`latexmk`/`pdflatex` both absent from `PATH`); the Mac had a full TeX Live
+2026 install per the 2026-08-23 entry above, so compile-and-check-for-new-overfull/underfull
+warnings there before trusting the PDF, per the established practice in this file.
 
-Not yet committed to git as of this writing.
+### Follow-up (2026-09-19): the one Smart failure was a scene bug, not a real memory limit
+
+The single 8cubes/NR Smart failure from the rerun above (`s02/trial_01`,
+`memory_exceeded: true`, peak 16.95GB) was investigated by reproducing it standalone with
+live memory sampling, not just re-reading the old `trial_meta.json`. Confirmed
+deterministic: memory climbs linearly at ~360MB/s from process start and hits the 16GB
+kill at ~45s every time, both on the original run and a fresh rerun.
+
+**Root cause, found via the solver's own stdout, not guessed**: right before the kill, the
+log shows `WARNING:graph.cpp:getParents:845(-1) parsing parent 'rectprism_4_Left' --
+unknown`, immediately after entering `step_4_batch_1.lgp`. Codegen's terminal for that step
+is `(on rectprism_4_Left cube_1)` — it expects a `_Left` placement marker on `rectprism_4`.
+That marker exists in the scene (`experiments/scenes/8cubes/s02/random_trials/
+trial_01_nr.g`) but was authored as `rect_1_Left(obj_03)` / `rect_1_Right(obj_03)` instead
+of following the `{obj_id}_{suffix}` convention every sibling object in the same scene uses
+(`obj_04_Left`, `obj_05_Left`, ...). `core/utils.py::parse_and_inject`'s rename step matches
+markers by that convention when renaming `obj_03`→`rectprism_4`, so the misnamed markers
+were silently skipped and never renamed — codegen's terminal ends up pointing at a frame
+that plainly doesn't exist post-rename. The FOL/LGP parser treats an unresolvable parent as
+a `WARNING`, not a hard failure, and whatever search path that puts it on balloons memory
+linearly until the 16GB cap kills it — **the OOM is a downstream symptom of a dangling
+reference, not evidence that this configuration genuinely needs that much memory.**
+
+Grepped all four/five/six/seven/eight-cube scene files for the same
+non-`{obj_id}_`-prefixed marker-naming pattern — this is the only occurrence in the entire
+dataset, an isolated scene-authoring glitch, not a systemic generator bug.
+
+**Fix and verification**: renamed the two markers in `trial_01_nr.g` to
+`obj_03_Left`/`obj_03_Right`, then reran both policies for this exact scene in isolation
+(not the whole batch) to confirm:
+
+| Policy | Before | After |
+|---|---|---|
+| `lgp_split_smart` | fail, 54.8s, 16950MB peak | success, 24.6s, 250MB peak |
+| `lgp_split_global` | fail, 502.0s, 16017MB peak | success, 37.4s, 657MB peak |
+
+Both collapse from a 16GB OOM to a completely unremarkable solve once the dangling
+reference is fixed — strong confirmation this was the actual cause, not correlation.
+
+**Effect on the numbers**: 8cubes/NR `lgp_split_smart` 98.0%→**100.0%** (50/50, Smart is
+now 100% in literally every cell again), `lgp_split_global` 96.0%→**98.0%** (49/50). All
+tables/files above (the old-vs-new comparison table, `main.tex`, the manifest, the
+regenerated `cross_magnitude_comparison.md`) already carry the corrected numbers. The full
+before/after and root-cause writeup is also saved machine-readable in
+`experiments/outputs/LGP_execution_stats/cube_stacking_rerun_manifest.json`'s
+`post_hoc_fix_2026-09-19` key.
+
+**Scope of this fix**: only `8cubes/s02/random_trials/trial_01_nr.g` and its two trial
+outputs were touched. The other 998 trials from the 2026-09-18 rerun are untouched and
+still valid — this was a single isolated scene defect, confirmed not to recur elsewhere.
+
+Committed to git together with the D-VLM baseline full-run data from the previous entry.
