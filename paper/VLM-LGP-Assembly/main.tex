@@ -669,17 +669,17 @@ The real-world experiments are performed using a Franka Emika Panda robotic arm 
 \toprule
 Tasks & D-VLM & V-M & Ours \\
 \midrule
-BS: 4 blocks & \textcolor{red}{?} & 100.0\%  & 100.0\% \\
-BS: 5 blocks  & \textcolor{red}{?} & 90.0\% & \textbf{100.0\%} \\
-BS: 6 blocks  & \textcolor{red}{?} & 90.0\% & \textbf{100.0\%} \\
-BS: 7 blocks  & \textcolor{red}{?} & 90.0\% & \textbf{100.0\%} \\
-BS: 8 blocks & \textcolor{red}{?} & 90.0\% & \textbf{94.0\%} \\
+BS: 4 blocks & 84.0\% & 100.0\%  & 100.0\% \\
+BS: 5 blocks  & 66.0\% & 90.0\% & \textbf{100.0\%} \\
+BS: 6 blocks  & 64.0\% & 90.0\% & \textbf{100.0\%} \\
+BS: 7 blocks  & 52.0\% & 90.0\% & \textbf{100.0\%} \\
+BS: 8 blocks & 86.0\% & 90.0\% & \textbf{94.0\%} \\
 \midrule
 %Average & \textcolor{red}{?} & 92.0\%  & \textbf{98.8\%} \\
 % \midrule
-FMB: 3 blocks & \textcolor{red}{?} & 80.0\% & \textbf{94.0\%}  \\
-FMB: 4 blocks  & \textcolor{red}{?} & 50.0\% & \textbf{100.0\%} \\
-FMB: 5 blocks & \textcolor{red}{?} & 10.0\% & \textbf{92.0\%}  \\
+FMB: 3 blocks & 14.0\% & 80.0\% & \textbf{94.0\%}  \\
+FMB: 4 blocks  & 20.0\% & 50.0\% & \textbf{100.0\%} \\
+FMB: 5 blocks & \phantom{0}6.0\% & 10.0\% & \textbf{92.0\%}  \\
 % \midrule
 % Average  & \textcolor{red}{?} & \textcolor{red}{?} & \textcolor{red}{?} \\
 \bottomrule
@@ -790,15 +790,15 @@ We then evaluate the proposed framework in terms of rates of successfully accomp
 \cmidrule{2-9}
  & NR & WR & NR & WR & NR & WR & NR & WR\\
 \midrule
-BS: 4 blocks & 0.13 & 0.17 & \phantom{0}963.5 & 2042.4 & 10.9 & 20.7 & \textcolor{red}{?} & \textcolor{red}{?} \\
-BS: 5 blocks & 0.13 & 0.18 & 1232.2 & 2649.2 & 13.3 & 25.5 & \textcolor{red}{?} & \textcolor{red}{?} \\
-BS: 6 blocks & 0.16 & 0.23 & 1499.0 & 3246.1 & 15.8 & 31.3 & \textcolor{red}{?} & \textcolor{red}{?} \\
-BS: 7 blocks & 0.16 & 0.24 & 1802.4 & 3883.1 & 18.7 & 35.1 & \textcolor{red}{?} & \textcolor{red}{?} \\
-BS: 8 blocks & 0.18 & 0.29 & 2076.1 & 4439.9 & 21.4 & 39.0 & \textcolor{red}{?} & \textcolor{red}{?} \\
+BS: 4 blocks & 0.13 & 0.17 & 0.96 & 2.04 & 10.9 & 20.7 & 28.7 & 23.3 \\
+BS: 5 blocks & 0.13 & 0.18 & 1.23 & 2.65 & 13.3 & 25.5 & 31.2 & 34.2 \\
+BS: 6 blocks & 0.16 & 0.23 & 1.50 & 3.25 & 15.8 & 31.3 & 36.8 & 42.8 \\
+BS: 7 blocks & 0.16 & 0.24 & 1.80 & 3.88 & 18.7 & 35.1 & 40.9 & 57.7 \\
+BS: 8 blocks & 0.18 & 0.29 & 2.08 & 4.44 & 21.4 & 39.0 & 55.0 & 61.6 \\
 \midrule
-FMB: 3 blocks & 0.13 & 0.17 & \phantom{0}785.1 & 1613.1 & \phantom{0}8.7 & 18.2 & \textcolor{red}{?} & \textcolor{red}{?} \\
-FMB: 4 blocks & 0.15 & 0.20 & 1042.0 & 2203.4 & 11.5 & 23.7 & \textcolor{red}{?} & \textcolor{red}{?} \\
-FMB: 5 blocks & 0.16 & 0.23 & 1336.5 & 2748.7 & 14.9 & 28.3 & \textcolor{red}{?} & \textcolor{red}{?} \\
+FMB: 3 blocks & 0.13 & 0.17 & 0.79 & 1.61 & \phantom{0}8.7 & 18.2 & 209.3 & 209.5 \\
+FMB: 4 blocks & 0.15 & 0.20 & 1.04 & 2.20 & 11.5 & 23.7 & 229.3 & 223.5 \\
+FMB: 5 blocks & 0.16 & 0.23 & 1.34 & 2.75 & 14.9 & 28.3 & 274.7 & 285.5 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -973,11 +973,11 @@ Tasks & \multicolumn{2}{c}{Ours} & \multicolumn{2}{c}{w/o AC} & \multicolumn{2}{
 \cmidrule(r){2-5}\cmidrule(l){6-9}
  & NR & WR & NR & WR & NR & WR & NR & WR\\
 \midrule
-BS: 4 blocks & & & & & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8  \\
-BS: 5 blocks & & & & & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 \\
-BS: 6 blocks & & & & & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}174.8   \\
-BS: 7 blocks & & & & & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}399.2  \\
-BS: 8 blocks & & & & & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}---   \\
+BS: 4 blocks & 100.0\% & 100.0\% & 100.0\% & \phantom{0}98.0\% & 28.7 & 23.3 & \phantom{0}26.9 & \phantom{00}31.8  \\
+BS: 5 blocks & 100.0\% & 100.0\% & \phantom{0}98.0\% & \phantom{0}96.0\% & 31.2 & 34.2 & \phantom{0}38.1 & \phantom{00}63.7 \\
+BS: 6 blocks & 100.0\% & 100.0\% & 100.0\% & \phantom{0}98.0\% & 36.8 & 42.8 & \phantom{0}37.2 & \phantom{0}174.8   \\
+BS: 7 blocks & 100.0\% & 100.0\% & \phantom{0}96.0\% & \phantom{0}38.0\% & 40.9 & 57.7 & \phantom{0}69.0 & \phantom{0}399.2  \\
+BS: 8 blocks & 100.0\% & 100.0\% & \phantom{0}98.0\% & \phantom{00}0.0\% & 55.0 & 61.6 & \phantom{0}77.9 & \phantom{0}---   \\
 \midrule
 FMB: 3 blocks & & & & & 209.3 & 209.5 & 282.2 & 215.5   \\
 FMB: 4 blocks & & & & & 229.3 & 223.5 & 255.2 & 284.6  \\

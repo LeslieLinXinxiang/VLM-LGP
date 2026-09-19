@@ -1,14 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1789788785.60079 "main.aux" "main.bbl" "main" 1789788787.06688 0
+["bibtex main"] 1789790536.94911 "main.aux" "main.bbl" "main" 1789790538.05708 0
   "./IEEEtran.bst" 1789788785.2755 56877 4c81423924dc505d67d7e5fcc3311d54 ""
   "./ref.bib" 1789788784.91715 37678 2e73cb051091407bc49022868f014a6b ""
-  "main.aux" 1789788786.68212 11399 5a26fddfc0db4d10048aea3eadc7decc "pdflatex"
+  "main.aux" 1789790537.77466 11399 5a26fddfc0db4d10048aea3eadc7decc "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1789788785.83049 "/Users/linxinxiang/Projects/VLM-LGP/paper/VLM-LGP-Assembly/main.tex" "main.pdf" "main" 1789788787.06707 0
-  "/Users/linxinxiang/Projects/VLM-LGP/paper/VLM-LGP-Assembly/main.tex" 1789788784.39842 89241 aabd32056ef32d0946b50180f6936192 ""
+["pdflatex"] 1789790537.11851 "main.tex" "main.pdf" "main" 1789790538.05721 0
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -142,17 +141,17 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1773459753 5541377 04880c840ca220163a28f1a3af0ee662 ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1773459667 3636768 f73ff9b9820612f3a8d4146c19606e04 ""
   "/usr/local/texlive/2026/texmf.cnf" 1772409725 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "figures/Cube_Stacking.pdf" 1789650327.48492 1385122 c38cf5f01123649ef4031bd5174b3a0c ""
-  "figures/FMB.pdf" 1789650250.48601 1692372 f7a2c17d2f2b3a70a74b235e3d86c117 ""
-  "figures/LGP_method.pdf" 1789788759.07395 207297 f924c6d935a976a50cc60de3bb41e6f7 ""
-  "figures/graph_decomposition.pdf" 1789635284.89091 474255 2abedd087a2c22374e7d574f4baa0697 ""
-  "figures/reachability_filtering.pdf" 1789635288.09095 171394 e8dc1c25e76180a3a6e2488bb8f9b03b ""
-  "figures/vlm_input_cube_stacking.pdf" 1789635281.20422 35668 7e3186905e2890ae1c0afd95d5959731 ""
-  "figures/vlm_input_fmb.pdf" 1789635280.63315 277915 2bc98802f882b605924e2d9976d9e722 ""
+  "figures/Cube_Stacking.pdf" 1789788814.3103 1385122 c38cf5f01123649ef4031bd5174b3a0c ""
+  "figures/FMB.pdf" 1789788811.46954 1692372 f7a2c17d2f2b3a70a74b235e3d86c117 ""
+  "figures/LGP_method.pdf" 1789788788.18217 207297 f924c6d935a976a50cc60de3bb41e6f7 ""
+  "figures/graph_decomposition.pdf" 1789788805.58884 474255 2abedd087a2c22374e7d574f4baa0697 ""
+  "figures/reachability_filtering.pdf" 1789788807.50471 171394 e8dc1c25e76180a3a6e2488bb8f9b03b ""
+  "figures/vlm_input_cube_stacking.pdf" 1789788803.83517 35668 7e3186905e2890ae1c0afd95d5959731 ""
+  "figures/vlm_input_fmb.pdf" 1789788803.2827 277915 2bc98802f882b605924e2d9976d9e722 ""
   "ieeeconf.cls" 1789788782.9971 197574 c8a8a2004c9762153e255667fc17d954 ""
-  "main.aux" 1789788786.68212 11399 5a26fddfc0db4d10048aea3eadc7decc "pdflatex"
-  "main.bbl" 1789788785.82745 11591 62a90e91e852e84e471148241588e4d1 "bibtex main"
-  "main.tex" 1789788784.39842 89241 aabd32056ef32d0946b50180f6936192 ""
+  "main.aux" 1789790537.77466 11399 5a26fddfc0db4d10048aea3eadc7decc "pdflatex"
+  "main.bbl" 1789790537.11606 11817 441cee010d500dbc12a881c9abed56ba "bibtex main"
+  "main.tex" 1789790527.07314 89125 17f248836e296e1fbd5e31a348a683ad ""
   (generated)
   "main.aux"
   "main.log"
